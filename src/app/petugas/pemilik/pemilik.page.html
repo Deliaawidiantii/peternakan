@@ -1,0 +1,35 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Daftar Pemilik</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="page-pemilik">
+  <div class="search-bar">
+    <ion-searchbar placeholder="Cari Pemilik" [(ngModel)]="query" (ionInput)="filterPemilik()" showCancelButton="never"></ion-searchbar>
+  </div>
+
+
+  <ion-list lines="none">
+    <ion-item *ngFor="let p of filteredPemilik" button detail (click)="openPemilik(p)">
+      <ion-avatar slot="start" [ngStyle]="{'background-color':p.color}" class="avatar">
+        <div class="initials">{{ p.initials }}</div>
+      </ion-avatar>
+
+      <ion-label>
+        <h2 class="name"> {{p.name}} </h2>
+        <p class="village"> {{p.village}} </p>
+      </ion-label>
+
+      <div class="count" slot="end">
+        <span>{{p.count}}</span>
+      </div>
+      <!-- </ion-avatar> -->
+    </ion-item>
+  </ion-list>
+
+
+</ion-content>

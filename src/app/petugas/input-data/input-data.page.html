@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Input Data</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="input-content">
+
+  <h2 class="section-title">Pilih Jenis Data Input</h2>
+
+  <!-- Card Pemilik -->
+  <ion-card class="input-card">
+    <ion-item lines="none">
+      <ion-avatar slot="start" class="icon-box bg-blue">
+        <ion-icon name="person-outline"></ion-icon>
+      </ion-avatar>
+      <ion-label routerLink="/petugas/data-pemilik">
+        <h3>Input Data Pemilik</h3>
+        <p>Tambahkan informasi pemilik ternak</p>
+      </ion-label>
+    </ion-item>
+  </ion-card>
+
+  <!-- Card Kandang -->
+  <ion-card class="input-card">
+    <ion-item lines="none">
+      <ion-avatar slot="start" class="icon-box bg-blue">
+        <ion-icon name="home-outline"></ion-icon>
+      </ion-avatar>
+      <ion-label routerLink="/petugas/data-kandang">
+        <h3>Input Data Kandang</h3>
+        <p>Tambahkan informasi kandang ternak</p>
+      </ion-label>
+    </ion-item>
+  </ion-card>
+
+  <!-- Card Hewan -->
+  <ion-card class="input-card">
+    <ion-item lines="none">
+      <ion-avatar slot="start" class="icon-box bg-blue">
+        <ion-icon name="paw-outline"></ion-icon>
+      </ion-avatar>
+      <ion-label routerLink="/petugas/data-hewan">
+        <h3>Input Data Hewan</h3>
+        <p>Tambahkan informasi hewan ternak</p>
+      </ion-label>
+    </ion-item>
+  </ion-card>
+
+</ion-content>
+

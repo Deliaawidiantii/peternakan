@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit Profil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="edit-profile-content">
+
+  <!-- Foto Profil -->
+  <div class="profile-container" (click)="selectPhoto()">
+    <div class="profile-photo" [ngStyle]="{'background-image': previewUrl ? 'url('+previewUrl + ')' : ''}"></div>
+    <div class="profile-text">
+      <h2>Ganti Foto</h2>
+      <p>Ketuk untuk mengganti foto profil</p>
+    </div>
+  </div>
+
+  <input type="file" #fileInput accept="image/*" hidden (chage)="onFileSelected($event)">
+
+  <!-- Form Input -->
+  <ion-list lines="none" class="form-list">
+    
+    <ion-label position="stacked" class="form-label">Nama Lengkap</ion-label>
+    <ion-item>
+      <ion-input type="text" placeholder="Masukan nama lengkap"></ion-input>
+    </ion-item> 
+
+    <ion-label position="stacked" >NIK</ion-label>
+    <ion-item> 
+      <ion-input type="text" placeholder="Masukan NIK"></ion-input>
+    </ion-item>
+
+    <ion-label position="stacked">Role</ion-label>
+    <ion-item>
+      <ion-input type="text" placeholder="Masukan Role"></ion-input>
+    </ion-item>
+
+    <ion-label position="stacked">Alamat</ion-label>
+    <ion-item>
+      <ion-textarea autoGrow="true" placeholder="Masukan Alamat"></ion-textarea>
+    </ion-item>
+
+    <ion-label position="stacked">Nomor HP</ion-label>
+    <ion-item>
+      <ion-input type="tel" placeholder="Masukan Nomor Hp"></ion-input>
+    </ion-item>
+
+    <ion-label position="stacked">Desa Binaan</ion-label>
+    <ion-item>
+      <ion-select placeholder="Pilih Desa Binaan">
+      <ion-select-option value="one">Pucung</ion-select-option>
+      <ion-select-option value="two">Sawah Baru</ion-select-option>
+      <ion-select-option value="three">Wadas</ion-select-option>
+    </ion-select>
+    </ion-item>
+
+    <ion-label position="stacked">Spesialisasi</ion-label>
+    <ion-item>
+      <ion-input type="text" placeholder="Masukan Spesialisasi"></ion-input>
+    </ion-item>
+
+    <ion-label position="stacked">Status</ion-label>
+    <ion-item>
+      <ion-select placeholder="Pilih status">
+        <ion-select-option value="one">one</ion-select-option>
+        <ion-select-option value="two">two</ion-select-option>
+        <ion-select-option value="three">three</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+
+  <!-- Tombol Simpan -->
+  <div class="button-container">
+    <ion-button expand="block" color="primary">Simpan Perubahan</ion-button>
+  </div>
+  
+</ion-content>

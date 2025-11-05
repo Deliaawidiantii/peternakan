@@ -1,0 +1,55 @@
+.register-page {
+  .container-register {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    .logo {
+       height: 80px;
+      max-height: 96px;
+      margin-bottom: -40px;
+    }
+  }
+
+  ion-card {
+    margin-top: 40px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .title {
+    text-align: center;
+    font-weight: bold;
+    color: #1e3a8a; /* biru tua */
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #4b5563; /* abu-abu */
+    font-size: 0.9rem;
+  }
+
+  .error-box {
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+  }
+
+  .register-btn {
+    margin-top: 20px;
+  }
+
+  .login-link {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 0.9rem;
+
+    a {
+      color: #2563eb;
+      text-decoration: underline;
+    }
+  }
+}

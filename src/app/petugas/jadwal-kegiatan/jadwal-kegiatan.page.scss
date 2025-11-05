@@ -1,0 +1,140 @@
+/* ===== HEADER ===== */
+ion-header {
+  --background: #ffffff;
+  --border-color: transparent;
+  box-shadow: none;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+ion-toolbar {
+  --min-height: 56px;
+}
+
+ion-toolbar ion-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #1e293b;
+}
+
+/* ===== SEGMENT (Tab Daftar / Kalender) ===== */
+ion-segment {
+  --background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  margin-top: 2px;
+}
+
+ion-segment-button {
+  --color: #64748b;
+  --color-checked: #ffffff;
+  --indicator-color: #2563eb;
+  --indicator-box-shadow: 0 3px 10px rgba(37, 99, 235, 0.3);
+  font-weight: 500;
+  text-transform: none;
+}
+
+ion-segment-button.ion-activated {
+  --background-checked: linear-gradient(90deg, #3b82f6, #2563eb);
+  border-radius: 8px;
+}
+
+/* ===== CONTENT ===== */
+.jadwal-page {
+  --background: #f8fafc;
+}
+
+/* ===== LIST ITEM ===== */
+.jadwal-item {
+  background: #ffffff;
+  border-radius: 12px;
+  margin: 10px 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.jadwal-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+ion-item::part(native) {
+  padding: 14px 12px;
+  border-radius: 12px;
+}
+
+/* ===== ICON BOX ===== */
+.icon-box {
+  --border-radius: 10px;
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-box ion-icon {
+  color: #fff;
+  font-size: 1.4rem;
+}
+
+/* ===== TEXT STYLING ===== */
+ion-label h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+
+ion-label p {
+  font-size: 0.85rem;
+  margin: 1px 0;
+  color: #64748b;
+}
+
+/* ===== STATUS COLORS ===== */
+ion-item .value {
+  font-weight: 600;
+}
+
+/* Status berdasarkan teks di <p> kedua */
+ion-item p:nth-of-type(1):contains("Terjadwal") {
+  color: #2563eb; /* Biru */
+  font-weight: 600;
+}
+
+ion-item p:nth-of-type(1):contains("Dilaksanakan") {
+  color: #16a34a; /* Hijau */
+  font-weight: 600;
+}
+
+ion-item p:nth-of-type(1):contains("Dibatalkan") {
+  color: #dc2626; /* Merah */
+  font-weight: 600;
+}
+
+/* ===== CHEVRON ICON ===== */
+ion-icon[slot="end"] {
+  color: #94a3b8;
+  font-size: 1.2rem;
+}
+
+/* ===== ANIMASI MASUK HALUS ===== */
+.jadwal-item {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.jadwal-item:nth-child(1) { animation-delay: 0.05s; }
+.jadwal-item:nth-child(2) { animation-delay: 0.1s; }
+.jadwal-item:nth-child(3) { animation-delay: 0.15s; }
+.jadwal-item:nth-child(4) { animation-delay: 0.2s; }
+.jadwal-item:nth-child(5) { animation-delay: 0.25s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

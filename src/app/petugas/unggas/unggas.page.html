@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Input Data Kelahiran</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="input-kelahiran-content">
+  <ion-list lines="none">
+    <ion-item>
+      <ion-label position="stacked">Tanggal Lahir</ion-label>
+      <ion-input type="date" placeholder="Pilih Tanggal"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">ID Induk</ion-label>
+      <ion-input placeholder="Masukkan ID Induk"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Jenis Unggas</ion-label>
+      <ion-select placeholder="Pilih Jenis">
+        <ion-select-option value="ayam">Ayam</ion-select-option>
+        <ion-select-option value="bebek">Bebek</ion-select-option>
+        <ion-select-option value="angsa">Angsa</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Jumlah Telur</ion-label>
+      <ion-input type="number" placeholder="Masukkan Jumlah"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Jumlah Menetas</ion-label>
+      <ion-input type="number" placeholder="Masukkan Jumlah"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Jumlah Hidup</ion-label>
+      <ion-input type="number" placeholder="Masukkan Jumlah"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">ID Anak Hewan (Jika Ada)</ion-label>
+      <ion-input placeholder="Masukkan ID"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <div class="btn-container">
+    <ion-button expand="block" class="btn-simpan">Simpan</ion-button>
+  </div>
+</ion-content>

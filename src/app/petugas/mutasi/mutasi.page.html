@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mutasi Hewan</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="mutasi-content">
+  <h2 class="judul-section">Semua Mutasi</h2>
+
+  <!-- 🔍 Filter Section -->
+  <div class="filter-container">
+    <ion-item lines="none">
+      <ion-label>Filter Bulan</ion-label>
+      <ion-select
+        placeholder="Pilih Bulan"
+        [(ngModel)]="selectedMonth"
+        (ionChange)="filterData()"
+      >
+        <ion-select-option *ngFor="let month of months" [value]="month">
+          {{ month }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label>Jenis Mutasi</ion-label>
+      <ion-select
+        placeholder="Semua Jenis"
+        [(ngModel)]="selectedType"
+        (ionChange)="filterData()"
+      >
+        <ion-select-option value="">Semua</ion-select-option>
+        <ion-select-option value="Mati">Mati</ion-select-option>
+        <ion-select-option value="Hilang">Hilang</ion-select-option>
+        <ion-select-option value="Dipotong">Dipotong</ion-select-option>
+        <ion-select-option value="Dijual">Dijual</ion-select-option>
+        <ion-select-option value="Dipindahkan">Dipindahkan</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+
+  <!-- 📋 Daftar Mutasi -->
+  <ion-list lines="none">
+    <ion-item
+      button
+      *ngFor="let item of filteredMutasi"
+      (click)="goToDetail(item.id, item.jenis, item.tanggal)"
+    >
+      <ion-label>
+        <h2>ID Hewan: {{ item.id }}</h2>
+        <p>{{ item.jenis }} · {{ item.tanggal }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- ➕ Tombol Tambah -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button color="primary" (click)="tambahMutasi()">
+    <ion-icon name="add-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+</ion-content>

@@ -1,0 +1,142 @@
+/* Wrapper dan Card */
+.wrapper {
+  position: relative;
+  width: 90%;
+  max-width: 380px;
+  margin: 0 auto;
+  margin-top: 190px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.logo img {
+  height: 80px;
+  max-height: 96px;
+}
+
+.card {
+  background: #f9fafb;
+  padding: 50px 30px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Typography */
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1e3a8a;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #4b5563;
+  margin: 10px 0 20px;
+}
+
+.alert {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+/* Input Groups */
+.input-group {
+  margin-bottom: 15px;
+}
+
+.password-group {
+  position: relative;
+}
+
+/* Ion Input Styling */
+ion-input {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 14px;
+  --padding-start: 10px;
+}
+
+ion-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+/* Password Field Styling */
+.password-group ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --highlight-color-focused: transparent;
+  --background: transparent;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0 10px;
+}
+
+.password-group ion-input {
+  padding-right: 40px; /* ruang untuk icon toggle */
+}
+
+/* Sembunyikan icon bawaan browser (jika muncul) */
+.password-group ion-input::part(native)::-ms-reveal,
+.password-group ion-input::part(native)::-ms-clear {
+  display: none !important;
+}
+
+/* Toggle Icon */
+.toggle-icon {
+  font-size: 20px;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+/* Tombol Submit */
+.btn-submit {
+  --background: #2563eb;
+  --background-hover: #1d4ed8;
+  margin-top: 10px;
+}
+
+/* Link dan Register */
+.links,
+.register {
+  margin-top: 15px;
+  font-size: 13px;
+}
+
+.links a,
+.register a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.links a:hover,
+.register a:hover {
+  text-decoration: underline;
+}
+/* Sembunyikan icon bawaan browser modern */
+.password-group input::-webkit-credentials-auto-fill-button,
+.password-group input::-ms-clear,
+.password-group input::-ms-reveal {
+  display: none !important;
+}
+
+/* Sembunyikan icon bawaan dari Shadow DOM Ionic (kalau muncul) */
+.password-group ion-input::part(native)::-ms-reveal,
+.password-group ion-input::part(native)::-ms-clear {
+  display: none !important;
+}

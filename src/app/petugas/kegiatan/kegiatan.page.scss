@@ -1,0 +1,111 @@
+/* ====== Global Page Style ====== */
+ion-content {
+  --background: #f5f8ff; /* lembut dan bersih */
+  font-family: "Inter", "Public Sans", sans-serif;
+  padding: 10px 16px;
+}
+
+/* ====== Header / Toolbar ====== */
+ion-toolbar {
+  --background: linear-gradient(135deg, #3a8fd9, #63bce9);
+  --color: #ffffff;
+  border: none;
+  box-shadow: none;
+}
+
+ion-title {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+ion-buttons ion-icon {
+  font-size: 22px;
+  color: #ffffff;
+}
+
+/* ====== Section Title ====== */
+.section-title {
+  font-weight: 600;
+  font-size: 16px;
+  color: #1e293b;
+  margin-top: 10px;
+}
+
+/* ====== Item Umum ====== */
+ion-item {
+  --background: #ffffff;
+  border-radius: 12px;
+  margin: 8px 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  --inner-padding-end: 10px;
+  transition: transform 0.2s ease;
+}
+
+ion-item:hover {
+  transform: translateY(-2px);
+}
+
+/* ====== Ikon Avatar ====== */
+.icon-bg {
+  background: linear-gradient(135deg, #63bce9, #3a8fd9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+}
+
+.icon-bg ion-icon {
+  color: white;
+  font-size: 22px;
+}
+
+/* ====== Label (Teks) ====== */
+ion-label h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+
+ion-label p {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* ====== Tombol Aksi ====== */
+ion-button[color="light"] {
+  --background: linear-gradient(135deg, #3a8fd9, #63bce9);
+  --color: white;
+  border-radius: 8px;
+  text-transform: none;
+  font-size: 13px;
+  transition: 0.2s ease;
+}
+
+ion-button[color="light"]:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* ====== Spasi antar bagian ====== */
+ion-list-header {
+  margin-top: 14px;
+}
+
+/* ====== Responsif ====== */
+@media (min-width: 768px) {
+  ion-content {
+    padding: 20px 40px;
+  }
+
+  ion-label h2 {
+    font-size: 17px;
+  }
+
+  ion-label p {
+    font-size: 15px;
+  }
+}

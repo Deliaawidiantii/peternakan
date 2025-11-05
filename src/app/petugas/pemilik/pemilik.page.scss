@@ -1,0 +1,51 @@
+.page-pemilik {
+  --background: #f8fafb;
+  font-family: "Noto Sans", sans-serif;
+}
+
+/* 🔍 Search bar */
+.search-wrap {
+  padding: 12px;
+  background: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border-radius: 0 0 12px 12px;
+}
+
+/* 👤 Avatar inisial warna */
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #fff;
+}
+
+.initials {
+  font-size: 18px;
+}
+
+/* 🧾 Nama dan desa */
+ion-label {
+  margin-left: 8px;
+}
+
+.name {
+  font-weight: 600;
+  color: #222;
+  font-size: 16px;
+}
+
+.village {
+  font-size: 13px;
+  color: #666;
+}
+
+/* 🔢 Jumlah ternak */
+.count {
+  font-weight: 600;
+  font-size: 15px;
+  color: #4b5563;
+}

@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Hewan Ternak</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="hewan-page">
+  <!-- Search & Filter Container -->
+  <div class="top-section">
+    <div class="search-wrapper">
+      <ion-icon name="search-outline" class="search-icon"></ion-icon>
+      <input type="text" placeholder="Cari ID atau nama hewan..." class="search-input">
+    </div>
+    
+    <div class="filter-dropdown">
+      <ion-icon name="filter-outline" class="filter-icon"></ion-icon>
+      <select class="filter-select">
+        <option value="">Semua Jenis</option>
+        <option value="sapi">Sapi</option>
+        <option value="kambing"> Kambing</option>
+        <option value="ayam">Ayam</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Hewan List -->
+  <div class="list-header">
+    <h2>Daftar Hewan</h2>
+    <span class="count-badge">3 hewan</span>
+  </div>
+
+  <div class="hewan-grid">
+    <div class="hewan-card" routerLink="/petugas/detail-hewan">
+      <div class="card-body">
+        <h3 class="animal-id">ID: 2023001</h3>
+        <p class="animal-type">Sapi Limosin</p>
+        <div class="animal-meta">
+          <span class="meta-item">
+            <ion-icon name="calendar-outline"></ion-icon>
+            3 Tahun
+          </span>
+          <span class="meta-item">
+            <ion-icon name="male-outline"></ion-icon>
+            Jantan
+          </span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <ion-icon name="location-outline"></ion-icon>
+        <span>Kandang A-12</span>
+      </div>
+    </div>
+
+    <div class="hewan-card" routerLink="/petugas/detail-hewan">
+      <div class="card-body">
+        <h3 class="animal-id">ID: 2023002</h3>
+        <p class="animal-type">Kambing Etawa</p>
+        <div class="animal-meta">
+          <span class="meta-item">
+            <ion-icon name="calendar-outline"></ion-icon>
+            2 Tahun
+          </span>
+          <span class="meta-item">
+            <ion-icon name="female-outline"></ion-icon>
+            Betina
+          </span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <ion-icon name="location-outline"></ion-icon>
+        <span>Kandang B-05</span>
+      </div>
+    </div>
+
+    <div class="hewan-card" routerLink="/petugas/detail-hewan">
+      <div class="card-body">
+        <h3 class="animal-id">ID: 2023003</h3>
+        <p class="animal-type">Ayam Kampung</p>
+        <div class="animal-meta">
+          <span class="meta-item">
+            <ion-icon name="calendar-outline"></ion-icon>
+            1 Tahun
+          </span>
+          <span class="meta-item">
+            <ion-icon name="male-outline"></ion-icon>
+            Jantan
+          </span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <ion-icon name="location-outline"></ion-icon>
+        <span>Kandang C-20</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Add Button -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/petugas/data-hewan" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

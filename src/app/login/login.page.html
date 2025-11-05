@@ -1,0 +1,56 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Wrapper -->
+  <div class="wrapper">
+
+    <!-- logo -->
+    <div class="logo">
+      <img src="assets/icon/logo2.png" alt="Logo" />
+    </div>
+
+    <!-- CARD: pastikan ada pembuka div.card -->
+    <div class="card">
+      <h1 class="title">KARAWANG TERNAK</h1>
+      <p class="subtitle text-center">Smart Farming for Karawang's Future</p>
+
+      <!-- Error -->
+      <div class="alert" *ngIf="false">
+        <ul>
+          <li>Error</li>
+        </ul>
+      </div>
+
+      <!-- Form -->
+      <form>
+        <div class="input-group">
+          <ion-input
+            type="email"
+            placeholder="Email"
+            [(ngModel)]="email"
+            name="email"
+            required
+            clear-input="false">
+          </ion-input>
+        </div>
+        <div class="input-group password-group">
+            <ion-input
+              [type]="showPassword ? 'text' : 'password'"
+              placeholder="Password"
+              [(ngModel)]="password"
+              name="password"
+              required
+              clear-input="false">
+            </ion-input>
+        </div>
+        <ion-button expand="block" class="btn-submit" routerLink="/petugas/tabs/home">SIGN IN</ion-button>
+      </form>
+      <div class="links">
+        <a routerLink="/forgot-password">Lupa Password?</a>
+                                              
+      </div>
+      <div class="register">                                    
+        Belum punya akun? <a routerLink="/register">Registrasi di sini</a>
+      </div>
+    </div> <!-- end .card -->
+
+  </div> <!-- end .wrapper -->
+</ion-content>

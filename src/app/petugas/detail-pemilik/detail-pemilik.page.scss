@@ -1,0 +1,76 @@
+.detail-pemilik-page {
+  --background: #f8fafb;
+  font-family: "Public Sans", "Noto Sans", sans-serif;
+  padding: 16px;
+
+  .pemilik-info {
+    text-align: center;
+    margin-bottom: 20px;
+
+    h2 {
+      color: #0e141b;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    p {
+      color: #4e7397;
+      margin: 2px 0;
+    }
+  }
+
+  ion-card {
+    margin-bottom: 16px;
+
+    ion-card-title {
+      font-weight: bold;
+      color: #0e141b;
+    }
+
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #d0dbe7;
+      padding: 8px 0;
+
+      .label {
+        color: #4e7397;
+        font-size: 14px;
+      }
+
+      .value {
+        color: #0e141b;
+        font-size: 14px;
+      }
+    }
+
+    .hewan-item,
+    .kandang-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+
+      ion-icon {
+        color: #4e7397;
+        font-size: 22px;
+      }
+
+      .nama-hewan {
+        font-weight: 500;
+        color: #0e141b;
+      }
+
+      .jenis-hewan {
+        font-size: 14px;
+        color: #4e7397;
+      }
+
+      p {
+        color: #0e141b;
+        font-size: 15px;
+      }
+    }
+  }
+}

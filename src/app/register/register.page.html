@@ -1,0 +1,83 @@
+<ion-content [fullscreen]="true" class="ion-padding register-page">
+  <div class="container-register">
+    <img src="assets/icon/logo2.png" alt="Logo" class="logo" />
+  </div>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title class="title">KARAWANG TERNAK</ion-card-title>
+      <ion-card-subtitle class="subtitle">Registrasi Petugas</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <!-- Error Message -->
+      <div *ngIf="errors?.length" class="error-box">
+        <ul>
+          <li *ngFor="let error of errors">{{ error }}</li>
+        </ul>
+      </div>
+
+      <!-- Form -->
+      <form (ngSubmit)="onRegister()" #registerForm="ngForm">
+
+        <ion-item>
+          <ion-input type="text" name="nama" placeholder="Nama Lengkap"
+                     [(ngModel)]="form.nama" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input type="text" name="nik" placeholder="NIK"
+                     [(ngModel)]="form.nik" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input type="email" name="email" placeholder="Email"
+                     [(ngModel)]="form.email" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input type="text" name="desa_binaan" placeholder="Desa Binaan"
+                     [(ngModel)]="form.desa_binaan" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input type="text" name="no_telp" placeholder="No. Telepon"
+                     [(ngModel)]="form.no_telp" required></ion-input>
+        </ion-item>
+
+        <!-- Password -->
+        <ion-item>
+          <ion-input [type]="showPassword ? 'text' : 'password'"
+                     name="password"
+                     placeholder="Password"
+                     [(ngModel)]="form.password"
+                     required></ion-input>
+          <ion-button fill="clear" slot="end" (click)="togglePassword()" type="button">
+            <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+          </ion-button>
+        </ion-item>
+
+        <!-- Konfirmasi Password -->
+        <ion-item>
+          <ion-input [type]="showConfirmPassword ? 'text' : 'password'"
+                     name="password_confirmation"
+                     placeholder="Konfirmasi Password"
+                     [(ngModel)]="form.password_confirmation"
+                     required></ion-input>
+          <ion-button fill="clear" slot="end" (click)="toggleConfirmPassword()" type="button">
+            <ion-icon [name]="showConfirmPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+          </ion-button>
+        </ion-item>
+
+        <ion-button expand="block" type="submit" color="primary" class="register-btn" >
+          REGISTER
+        </ion-button>
+      </form>
+
+      <p class="login-link">
+        Sudah punya akun?
+        <a routerLink="/login">Login</a>
+      </p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

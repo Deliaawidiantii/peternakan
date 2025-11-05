@@ -1,0 +1,95 @@
+.custom-bg {
+  --background: #f8fafc;
+  font-family: "Public Sans", "Noto Sans", sans-serif;
+}
+
+/* item styling */
+.case-item {
+  margin-bottom: 8px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  padding: 6px 4px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.case-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.case-item ion-label h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0d171b;
+  margin-bottom: 4px;
+}
+
+.case-item ion-label p {
+  font-size: 14px;
+  color: #5f7d90;
+  margin: 2px 0;
+}
+
+/* Status badges */
+.status {
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 13px;
+}
+
+.status.waiting {
+  background-color: #fff3cd;
+  color: #a67c00;
+}
+
+.status.rejected {
+  background-color: #fde2e2;
+  color: #b40000;
+}
+
+.status.verified {
+  background-color: #d4f8d4;
+  color: #118a3a;
+}
+
+/* Icons */
+.icon {
+  font-size: 28px;
+}
+
+.waiting-icon {
+  color: #ffbf00;
+}
+
+.rejected-icon {
+  color: #e63946;
+}
+
+.verified-icon {
+  color: #2b9348;
+}
+
+/* Footer */
+.footer-tabs {
+  border-top: 1px solid #e7eff3;
+  background-color: #ffffff;
+}
+
+.footer-tabs ion-button {
+  flex-direction: column;
+  color: #8aa0b3;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: none;
+}
+
+.footer-tabs ion-button ion-icon {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+
+.footer-tabs .active-tab {
+  color: #0d171b;
+}

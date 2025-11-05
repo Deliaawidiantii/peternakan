@@ -1,0 +1,46 @@
+<ion-header collapse="condense">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeComponent()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        Kembali
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Diagnosa</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="custom-bg ion-padding">
+  <ion-list lines="none" class="case-list">
+    <ion-item class="case-card" *ngFor="let kasus of daftarKasus">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="8">
+            <p class="case-date">Tanggal Diagnosa: {{ kasus.tanggal }}</p>
+            <p class="case-id">ID Hewan: {{ kasus.id }}</p>
+            <p class="case-type">Jenis Penyakit: {{ kasus.penyakit }}</p>
+
+            <ion-button
+              fill="solid"
+              class="update-btn"
+              size="small"
+              routerLink="/petugas/update-status-penyakit"
+            >
+              Update
+            </ion-button>
+          </ion-col>
+
+          <ion-col size="4" class="image-col">
+            <div class="case-image-wrapper">
+              <p class="case-judul">Terdiagnosa</p>
+              <div
+                class="case-image"
+                [style.backgroundImage]="'url(' + kasus.foto + ')'"
+              ></div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-content>

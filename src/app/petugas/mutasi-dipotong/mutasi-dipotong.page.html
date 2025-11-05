@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/mutasi"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mutasi Hewan (dipotong)</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <h2 class="judul-section">Input Data Pemotongan Hewan</h2>
+
+  <!-- 🐮 ID Hewan -->
+  <ion-item lines="none" class="input-item">
+    <ion-label position="stacked">ID Hewan</ion-label>
+    <ion-input placeholder="Masukkan ID Hewan" [(ngModel)]="idHewan"></ion-input>
+  </ion-item>
+
+
+  <ion-item class="input-item">
+      <ion-label position="stacked">Tanggal Pemotongan</ion-label>
+      <ion-input placeholder="Pilih Tanggal" type="date"></ion-input>
+    </ion-item>
+
+  <ion-item class="input-item">
+        <ion-label position="stacked">Tujuan Potong</ion-label>
+        <ion-select placeholder="Pilih Tujuan">
+          <ion-select-option value="konsumsi">Konsumsi Pribadi</ion-select-option>
+          <ion-select-option value="pasar">Dijual ke Pasar / Konsumen</ion-select-option>
+          <ion-select-option value="sumbangan">Disumbangkan (Qurban / Aqiqah / Sosial)</ion-select-option>
+          <ion-select-option value="restoran">Kebutuhan Restoran / Catering</ion-select-option>
+          <ion-select-option value="industri">Kebutuhan Industri / Produksi</ion-select-option>
+        </ion-select>
+  </ion-item>
+
+  <ion-item class="input-item">
+        <ion-label position="stacked">Berat Daging (kg)</ion-label>
+        <ion-input type="number" placeholder="Masukkan Berat"></ion-input>
+  </ion-item>
+
+  <!-- 💾 Tombol Simpan -->
+  <div class="btn-container">
+    <ion-button expand="block" color="primary" (click)="simpanData()">
+      Simpan
+    </ion-button>
+  </div>
+
+</ion-content>

@@ -1,0 +1,77 @@
+<header>
+   <ion-toolbar color="light"> 
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Input Data Kelahiran</ion-title>
+    </ion-toolbar>
+  </header>
+
+
+
+<ion-content class="input-kelahiran-content">
+  <ion-list lines="none">
+    <!-- Tanggal Lahir -->
+    <ion-item>
+      <ion-label position="stacked">Tanggal Lahir</ion-label>
+      <ion-input placeholder="Pilih Tanggal" type="date"></ion-input>
+    </ion-item>
+
+    <!-- ID Induk -->
+    <ion-item>
+      <ion-label position="stacked">ID Induk</ion-label>
+      <ion-input placeholder="Masukkan ID Induk"></ion-input>
+    </ion-item>
+
+    <!-- Jenis Ruminansia -->
+    <ion-item>
+      <ion-label position="stacked">Jenis Ruminansia</ion-label>
+      <ion-select placeholder="Pilih Jenis">
+        <ion-select-option value="sapi">Sapi</ion-select-option>
+        <ion-select-option value="kambing">Kambing</ion-select-option>
+        <ion-select-option value="domba">Domba</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Jumlah Anak -->
+    <ion-item>
+      <ion-label position="stacked">Jumlah Anak</ion-label>
+      <ion-input placeholder="Masukkan Jumlah" type="number"></ion-input>
+    </ion-item>
+
+    <!-- ID Anak -->
+    <ion-item>
+      <ion-label position="stacked">ID Anak Hewan (Jika Ada)</ion-label>
+      <ion-input placeholder="Masukkan ID"></ion-input>
+    </ion-item>
+
+    <!-- Jenis Kelamin Anak -->
+    <ion-item>
+      <ion-label position="stacked">Jenis Kelamin Anak</ion-label>
+      <ion-select placeholder="Pilih Jenis Kelamin">
+        <ion-select-option value="jantan">Jantan</ion-select-option>
+        <ion-select-option value="betina">Betina</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Berat Lahir -->
+    <ion-item>
+      <ion-label position="stacked">Berat Lahir</ion-label>
+      <ion-input placeholder="Masukkan Berat" type="number"></ion-input>
+    </ion-item>
+
+    <!-- Status Kelahiran -->
+    <ion-item>
+      <ion-label position="stacked">Status Kelahiran</ion-label>
+      <ion-select placeholder="Pilih Status">
+        <ion-select-option value="hidup">Hidup</ion-select-option>
+        <ion-select-option value="mati">Mati</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <!-- Tombol Simpan -->
+  <div class="btn-container">
+    <ion-button expand="block" class="btn-simpan">Simpan</ion-button>
+  </div>
+</ion-content>

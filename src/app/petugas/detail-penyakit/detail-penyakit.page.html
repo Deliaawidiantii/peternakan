@@ -1,0 +1,79 @@
+<ion-header class="custom-header">
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    
+    <ion-title>Detail Kasus</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="custom-bg ion-padding">
+
+  <ion-card class="info-card">
+    <ion-card-header>
+      <ion-card-title>Informasi Hewan</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="info-row">
+        <p class="label">Jenis Hewan</p>
+        <p class="value">Sapi</p>
+      </div>
+      <div class="info-row">
+        <p class="label">Nama Hewan</p>
+        <p class="value">Mawar</p>
+      </div>
+      <div class="info-row">
+        <p class="label">Usia</p>
+        <p class="value">3 tahun</p>
+      </div>
+      <div class="info-row">
+        <p class="label">Jenis Kelamin</p>
+        <p class="value">Betina</p>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="info-card">
+    <ion-card-header>
+      <ion-card-title>Gejala</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Demam tinggi, nafsu makan menurun, lesu, keluar cairan dari hidung dan mata.</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="info-card">
+    <ion-card-header>
+      <ion-card-title>Diagnosa Admin</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Penyakit Septicemia Epizootica (SE).</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="info-card">
+    <ion-card-header>
+      <ion-card-title>Obat yang Diberikan</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Antibiotik (Ceftiofur), antiinflamasi (Flunixin), vitamin B kompleks.</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="info-card">
+    <ion-card-header>
+      <ion-card-title>Catatan Admin</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Pastikan hewan mendapatkan istirahat yang cukup dan asupan nutrisi yang baik. Pantau suhu tubuh secara berkala.</p>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="btn-container" routerLink="/petugas/update-status-penyakit">
+    <ion-button expand="block" class="update-btn">
+      Update Status Perkembangan Penyakit
+    </ion-button>
+  </div>
+</ion-content>
+

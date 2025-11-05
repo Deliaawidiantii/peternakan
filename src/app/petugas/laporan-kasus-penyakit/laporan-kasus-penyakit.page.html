@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-toolbar color="light">
+    
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Laporan Kasus Baru</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="custom-page ion-padding">
+  <!-- Nama Pemilik -->
+  <ion-item lines="none" class="input-item">
+    <ion-input placeholder="Nama Pemilik"></ion-input>
+  </ion-item>
+
+  <!-- Kelompok Hewan -->
+  <ion-item lines="none" class="input-item">
+    <ion-select placeholder="Kelompok Hewan">
+      <ion-select-option value="one">Kelompok Hewan</ion-select-option>
+      <ion-select-option value="two">Two</ion-select-option>
+      <ion-select-option value="three">Three</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Jenis Hewan -->
+  <ion-item lines="none" class="input-item">
+    <ion-select placeholder="Jenis Hewan">
+      <ion-select-option value="one">Jenis Hewan</ion-select-option>
+      <ion-select-option value="two">Two</ion-select-option>
+      <ion-select-option value="three">Three</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- ID Hewan -->
+  <ion-item lines="none" class="input-item">
+    <ion-input placeholder="ID Hewan"></ion-input>
+  </ion-item>
+
+  <!-- Tanggal -->
+  <ion-item lines="none" class="input-item">
+    <ion-input placeholder="Tanggal" type="date"></ion-input>
+  </ion-item>
+
+  <!-- Deskripsi Gejala -->
+  <ion-item lines="none" class="input-item">
+    <ion-textarea placeholder="Deskripsi Gejala"></ion-textarea>
+  </ion-item>
+
+  <!-- Unggah Foto -->
+  <h3 class="section-title">Unggah Foto Hewan</h3>
+  <div class="upload-box">
+    <p class="upload-title">Tambahkan Foto</p>
+    <p class="upload-desc">Unggah foto hewan yang sakit untuk analisis</p>
+    <ion-button expand="block" fill="outline" color="medium" class="upload-btn">
+      Pilih Foto
+    </ion-button>
+  </div>
+
+  <!-- Informasi Penyakit -->
+  <h3 class="section-title">Informasi Penyakit</h3>
+  <ion-list class="info-list">
+    <ion-item lines="none" class="info-item">
+      <ion-avatar slot="start" class="info-icon">
+        <ion-icon name="help-circle-outline"></ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h2>Menunggu Diagnosa</h2>
+        <p>Penyakit</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item lines="none" class="info-item">
+      <ion-avatar slot="start" class="info-icon">
+        <ion-icon name="help-circle-outline"></ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h2>Menunggu Diagnosa</h2>
+        <p>Diagnosa</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item lines="none" class="info-item">
+      <ion-avatar slot="start" class="info-icon">
+        <ion-icon name="help-circle-outline"></ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h2>Menunggu Diagnosa</h2>
+        <p>Obat</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Tombol Kirim -->
+  <div class="submit-section">
+    <ion-button expand="block" color="primary" class="submit-btn">
+      Kirim Laporan
+    </ion-button>
+  </div>
+</ion-content>

@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar >
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Riwayat Perkembangan Penyakit</ion-title>
+  </ion-toolbar>
+
+  <!-- Status Tab ala Shopee -->
+  <div class="status-container">
+    <div class="status-item" [ngClass]="{ 'active': selectedComponent === 'terdiagnosa' }" (click)="openComponent('terdiagnosa')">
+      <p>Terdiagnosa</p>
+    </div>
+
+    <div class="status-item" [ngClass]="{ 'active': selectedComponent === 'dalamPerkembangan' }" (click)="openComponent('dalamPerkembangan')">
+      <p>Perkembangan</p>
+    </div>
+
+    <div class="status-item" [ngClass]="{ 'active': selectedComponent === 'sembuh' }" (click)="openComponent('sembuh')">
+      <p>Sembuh</p>
+    </div>
+
+    <div class="status-item" [ngClass]="{ 'active': selectedComponent === 'mati' }" (click)="openComponent('mati')">
+      <p>Mati</p>
+    </div>
+
+    <div class="status-item" [ngClass]="{ 'active': selectedComponent === 'selesai' }" (click)="openComponent('selesai')">
+      <p>Selesai</p>
+    </div>
+
+  </div>
+</ion-header>
+
+<ion-content class="custom-bg">
+  <ng-container *ngIf="!selectedComponent">
+    <ion-text class="section-title">Silakan pilih status perkembangan penyakit di atas</ion-text>
+  </ng-container>
+
+  <!-- Komponen Dinamis -->
+  <ng-container *ngIf="selectedComponent === 'terdiagnosa'">
+    <app-terdiagnosa (close)="backToMain()"></app-terdiagnosa>
+  </ng-container>
+
+  <ng-container *ngIf="selectedComponent === 'dalamPerkembangan'">
+    <app-dalam-perkembangan (close)="backToMain()"></app-dalam-perkembangan>
+  </ng-container>
+
+  <ng-container *ngIf="selectedComponent === 'sembuh'">
+    <app-sembuh (close)="backToMain()"></app-sembuh>
+  </ng-container>
+
+  <ng-container *ngIf="selectedComponent === 'mati'">
+    <app-mati (close)="backToMain()"></app-mati>
+  </ng-container>
+
+  <ng-container *ngIf="selectedComponent === 'selesai'">
+    <app-selesai (close)="backToMain()"></app-selesai>
+  </ng-container>
+</ion-content>

@@ -1,0 +1,64 @@
+/* Container status horizontal di dalam toolbar */
+.status-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+  background-color: #fff;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* Item status */
+.status-item {
+  flex: 1;
+  text-align: center;
+  padding: 6px 0;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+/* Ikon dan label */
+.status-item ion-icon {
+  font-size: 20px;
+  color: #666;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.status-item p {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+}
+
+/* Status aktif */
+.status-item.active ion-icon,
+.status-item.active p {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+.status-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  width: 50%;
+  height: 2px;
+  background-color: #e74c3c;
+  border-radius: 2px;
+}
+
+/* Responsif */
+@media screen and (max-width: 600px) {
+  .status-item ion-icon {
+    font-size: 18px;
+  }
+
+  .status-item p {
+    font-size: 11px;
+  }
+}

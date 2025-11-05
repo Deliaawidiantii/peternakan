@@ -1,0 +1,174 @@
+
+ion-header.custom-header {
+  background: linear-gradient(135deg, #007bff, #00b4d8);
+  color: #fff;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+  padding-top: env(safe-area-inset-top);
+}
+
+ion-toolbar {
+  --background: transparent;
+  --border-width: 0;
+  min-height: 80px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+}
+
+.header-text h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+  color: #fff;
+}
+
+.header-text p {
+  font-size: 0.85rem;
+  margin: 2px 0 0;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Tombol scan */
+.scan-btn {
+  --background: rgba(255, 255, 255, 0.2);
+  --color: #fff;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.25s ease;
+}
+
+.scan-btn ion-icon {
+  font-size: 24px;
+}
+
+.scan-btn:hover {
+  transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+// Menu 
+ion-list-header {
+  margin-top: 10px;
+  font-weight: 600;
+  color: #444;
+  font-size: 15px;
+}
+
+ion-grid {
+  margin-top: 8px;
+}
+
+
+.menu-box {
+  background-color: #f0f7ff;
+  border-radius: 10%;
+  text-align: center;
+  width: 90px;
+  height: 90px;
+  margin: 12px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.menu-box img {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+  border-radius: 50%;
+  margin-bottom: 6px;
+}
+
+
+/* Hover / tap effect */
+.menu-box:hover,
+.menu-box:active {
+  background: #007bff32;
+  transform: translateY(-4px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  
+}
+
+
+/* Icon di tengah */
+.menu-box ion-icon {
+  font-size: 28px;
+  color: #ff7b00;
+  margin-bottom: 4px;
+}
+
+/* Label di bawah ikon */
+.menu-box p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Grid lebih rapat */
+ion-col {
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+
+}
+
+
+/* ===== Laporan Terbaru ===== */
+ion-list {
+  margin-top: 12px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.04);
+}
+
+ion-item {
+  --background: #fff;
+  margin: 4px 0;
+  border-radius: 8px;
+}
+
+ion-avatar img {
+  border-radius: 50%;
+}
+
+.status {
+  color: #22c55e;
+  font-weight: 600;
+}
+
+/* ===== Responsif mobile ===== */
+@media (max-width: 480px) {
+  .menu-box {
+    width: 80px;
+    height: 80px;
+  }
+
+  .menu-box ion-icon {
+    font-size: 24px;
+  }
+
+  .menu-box p {
+    font-size: 12px;
+  }
+}
+
+
+

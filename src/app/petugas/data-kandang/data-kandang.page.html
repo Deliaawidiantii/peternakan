@@ -1,0 +1,83 @@
+ <!-- <ion-header [translucent]="true">
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Tambah Kandang Baru</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="data-kandang-content">
+
+   <ion-toolbar color="">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Tambah Kandang Baru</ion-title> 
+  </ion-toolbar>
+
+  <!-- Form Input -->
+  <ion-list lines="none" class="list-data-pemilik">
+
+    
+    
+    <ion-label position="stacked" class="form-label">ID Kandang</ion-label>
+    <ion-item>
+      <ion-input type="text" placeholder="Masukan ID Kandang"></ion-input>
+    </ion-item> 
+
+    <ion-label position="stacked" >Nama Kandang</ion-label>
+    <ion-item> 
+      <ion-input type="text" placeholder="Masukan Nama Kandang"></ion-input>
+    </ion-item>
+
+    <ion-label position="stacked">Kapasitas</ion-label>
+    <ion-item>
+      <ion-textarea autoGrow="true" placeholder="Masukan Kapasitas"></ion-textarea>
+    </ion-item>
+
+       <ion-label position="stacked">Desa</ion-label>
+    <ion-item>
+      <ion-select placeholder="Pilih Desa">
+      <ion-select-option value="one">Pucung</ion-select-option>
+      <ion-select-option value="two">Kotabaru</ion-select-option>
+    </ion-select>
+    </ion-item>
+
+    <ion-label position="stacked">Lokasi</ion-label>
+    <ion-item>
+      <ion-input type="tel" placeholder="Masukan Lokasi"></ion-input>
+    </ion-item>
+
+    <ion-label position="stacked">Komoditas</ion-label>
+    <ion-item>
+      <ion-select placeholder="Pilih Komoditas">
+      <ion-select-option value="one">Laki-laki</ion-select-option>
+      <ion-select-option value="two">Perempuan</ion-select-option>
+    </ion-select>
+    </ion-item>
+
+    <ion-label position="stacked">Status Kandang</ion-label>
+    <ion-item>
+      <ion-select placeholder="Pilih Status Kandang">
+        <ion-select-option value="one">Individu</ion-select-option>
+        <ion-select-option value="two">Kelompok</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-label position="stacked">Pilih Foto</ion-label>
+    <ion-item>
+      <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+    </ion-item>
+
+    <img *ngIf="previewUrl" [src]="previewUrl" alt="Preview Foto CODO" style="max-width: 100%; height: auto; margin-top: 10px;"/>
+
+  </ion-list>
+
+  <!-- Tombol Simpan -->
+  <div class="button-container">
+    <ion-button expand="block" color="primary">Simpan</ion-button>
+  </div>
+  
+</ion-content>
+

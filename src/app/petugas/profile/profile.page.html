@@ -1,0 +1,100 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button>
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Profil</ion-title>
+    <ion-buttons slot="end" routerLink="/petugas/edit-profile">
+      <ion-button>
+        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="profile-content">
+  <div class="profile-header">
+    <div
+      class="profile-avatar"
+      style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuASb4UEvWMjP05QjJPXTFf7Wja6X0lwnKXEji2JCIVct2uKWVnSIg5-qMFjmBrAXDlc4f8pwPYv1z2AAJAzT_jiJdQl_H61NBlEHrSgDIStWsyVDkPih6SWILa1XUNCtj2zuQo83gokx9wSWTQ1bj0Ff0L8z9Wdiy93hrxl8HJRy3_FZfvIXf0RHOOqazzclKqMxplPF1gaBRkf8w59R9c_adi-54plzmrR56eKjaYcllFe335APfHqdJDl0OHkoCgdslOB6Ij_2MM');"
+    ></div>
+    <div class="profile-info">
+      <h2>Budi Santoso</h2>
+      <p>NIP: 1234567890</p>
+      <p>Petugas Lapangan</p>
+    </div>
+  </div>
+
+  <!-- Informasi Pribadi -->
+  <div class="section">
+    <h3>Informasi Pribadi</h3>
+    <ion-card>
+
+      <ion-item lines="none">
+        <ion-icon name="location-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h4>Alamat</h4>
+          <p>Karawang Barat</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon name="business-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h4>Desa Binaan</h4>
+          <p>Karawang</p>
+        </ion-label>
+      </ion-item>
+
+        <ion-item lines="none">
+        <ion-icon name="call-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h4>No.Hp</h4>
+          <p>123456789</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon name="paw-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h4>Spesialisasi</h4>
+          <p>Peternakan Sapi</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon name="checkmark-circle-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h4>Status</h4>
+          <p>Aktif</p>
+        </ion-label>
+      </ion-item>
+    </ion-card>
+  </div>
+
+  <!-- Riwayat Aktivitas -->
+  <div class="section">
+    <h3>Riwayat Aktivitas</h3>
+    <ion-card>
+      <ion-item lines="none">
+        <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h4>Total Kunjungan</h4>
+          <p>150 kunjungan</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon name="document-text-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h4>Laporan Dibuat</h4>
+          <p>20 laporan</p>
+        </ion-label>
+      </ion-item>
+    </ion-card>
+  </div>
+</ion-content>
+
+

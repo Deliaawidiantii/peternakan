@@ -1,0 +1,65 @@
+
+<ion-content class="data-pemilik-content">
+
+  <ion-toolbar color="">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Tambah Pemilik Baru</ion-title> 
+  </ion-toolbar> 
+  
+
+  <!-- Form Input -->
+  <ion-list lines="none" class="list-data-pemilik">
+    
+   
+    <ion-label position="stacked" class="form-label">NIK</ion-label>
+    <ion-item>
+      <ion-input type="text" placeholder="Masukan NIK"></ion-input>
+    </ion-item> 
+
+    <ion-label position="stacked" >Nama</ion-label>
+    <ion-item> 
+      <ion-input type="text" placeholder="Masukan Nama"></ion-input>
+    </ion-item>
+
+    <ion-label position="stacked">Alamat</ion-label>
+    <ion-item>
+      <ion-textarea autoGrow="true" placeholder="Masukan Alamat"></ion-textarea>
+    </ion-item>
+
+    <ion-label position="stacked">Nomor HP</ion-label>
+    <ion-item>
+      <ion-input type="tel" placeholder="Masukan Nomor Hp"></ion-input>
+    </ion-item>
+
+     <ion-label position="stacked">Tanggal Lahir</ion-label>
+    <ion-item>
+      <ion-textarea autoGrow="true" placeholder="Masukan Tanggal Lahir"></ion-textarea>
+    </ion-item>
+
+    <ion-label position="stacked">Jenis Kelamin</ion-label>
+    <ion-item>
+      <ion-select placeholder="Pilih Jenis Kelamin">
+      <ion-select-option value="one">Laki-laki</ion-select-option>
+      <ion-select-option value="two">Perempuan</ion-select-option>
+    </ion-select>
+    </ion-item>
+
+    <!-- <ion-label position="stacked">Peran</ion-label>
+    <ion-item>
+      <ion-select placeholder="Pilih peran">
+        <ion-select-option value="one">Pemilik</ion-select-option>
+        <ion-select-option value="two">Pemelihara</ion-select-option>
+      </ion-select>
+    </ion-item> -->
+
+  </ion-list>
+
+  <!-- Tombol Simpan -->
+  <div class="button-container">
+    <ion-button expand="block" color="primary">Simpan</ion-button>
+  </div>
+  
+</ion-content>
+

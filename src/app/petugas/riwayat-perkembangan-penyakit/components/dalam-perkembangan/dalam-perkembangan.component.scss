@@ -1,0 +1,117 @@
+/* Background dan padding konten */
+.custom-bg {
+  background-color: #f9f9f9;
+  min-height: 100%;
+}
+
+/* Styling list dan card */
+.case-list {
+  margin-top: 10px;
+}
+
+.case-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+  padding: 12px;
+}
+
+/* Teks informasi kasus */
+.case-date,
+.case-id,
+.case-type {
+  font-size: 14px;
+  margin: 4px 0;
+  color: #333;
+}
+
+.case-date {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.case-id {
+  font-weight: 500;
+}
+
+.case-type {
+  font-style: italic;
+  color: #555;
+}
+
+/* Tombol update */
+.update-btn {
+  margin-top: 8px;
+  --background: #28a745;
+  --color: #fff;
+  --border-radius: 8px;
+  font-size: 13px;
+  text-transform: none;
+}
+
+/* Kolom gambar */
+.image-col {
+  position: relative;
+}
+
+/* Bungkus gambar */
+.case-image-wrapper {
+  position: relative;
+}
+
+/* Label status di atas gambar */
+.case-judul {
+  position: absolute;
+  top: -35px;
+  right: 6px;
+  // background-color: #e74c3c;
+  color: #e74c3c;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  z-index: 2;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Gambar kasus */
+.case-image {
+  width: 100%;
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-top: 20px;
+}
+
+/* Hover efek */
+.case-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Responsif untuk layar kecil */
+@media screen and (max-width: 600px) {
+  .case-image {
+    height: 80px;
+  }
+
+  .case-date,
+  .case-id,
+  .case-type {
+    font-size: 13px;
+  }
+
+  .update-btn {
+    font-size: 12px;
+  }
+
+  .case-judul {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+}

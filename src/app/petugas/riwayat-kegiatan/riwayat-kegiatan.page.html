@@ -1,0 +1,80 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <!-- <ion-buttons slot="start">
+      <ion-button fill="clear">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Riwayat Kegiatan</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="riwayat-page">
+  <!-- Pencarian -->
+  <div class="search-container">
+    <ion-searchbar placeholder="Cari kegiatan..."></ion-searchbar>
+  </div>
+
+  <!-- Filter -->
+  <div class="filter-container">
+    <ion-chip outline color="primary">
+      <ion-label>Periode Waktu</ion-label>
+      <ion-icon name="chevron-down-outline"></ion-icon>
+    </ion-chip>
+
+    <ion-chip outline color="primary">
+      <ion-label>Status</ion-label>
+      <ion-icon name="chevron-down-outline"></ion-icon>
+    </ion-chip>
+  </div>
+
+  <!-- Riwayat Kegiatan -->
+  <div class="riwayat-list">
+    <div class="riwayat-card">
+      <div class="card-icon">
+        <ion-icon name="medkit-outline"></ion-icon>
+      </div>
+      <div class="card-info">
+        <h3>Vaksinasi Ternak</h3>
+        <p>15 Mei 2024</p>
+      </div>
+      <span class="status selesai">Selesai</span>
+    </div>
+
+    <div class="riwayat-card">
+      <div class="card-icon">
+        <ion-icon name="heart-outline"></ion-icon>
+      </div>
+      <div class="card-info">
+        <h3>Pemeriksaan Kesehatan Rutin</h3>
+        <p>10 Mei 2024</p>
+      </div>
+      <span class="status selesai">Selesai</span>
+    </div>
+
+    <div class="riwayat-card">
+      <div class="card-icon cancel">
+        <ion-icon name="flask-outline"></ion-icon>
+      </div>
+      <div class="card-info">
+        <h3>Pengambilan Sampel Darah</h3>
+        <p>5 Mei 2024</p>
+      </div>
+      <span class="status batal">Dibatalkan</span>
+    </div>
+
+    <div class="riwayat-card">
+      <div class="card-icon">
+        <ion-icon name="nutrition-outline"></ion-icon>
+      </div>
+      <div class="card-info">
+        <h3>Pemberian Vitamin</h3>
+        <p>1 Mei 2024</p>
+      </div>
+      <span class="status selesai">Selesai</span>
+    </div>
+  </div>
+</ion-content>

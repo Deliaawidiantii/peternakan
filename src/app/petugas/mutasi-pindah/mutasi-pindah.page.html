@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/mutasi"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mutasi Hewan (pindah)</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <h2 class="judul-section">Input Data Pemindahan Hewan</h2>
+
+  <!-- 🐮 ID Hewan -->
+  <ion-item lines="none" class="input-item">
+    <ion-label position="stacked">ID Hewan</ion-label>
+    <ion-input placeholder="Masukkan ID Hewan" [(ngModel)]="idHewan"></ion-input>
+  </ion-item>
+
+
+  <ion-item class="input-item">
+      <ion-label position="stacked">Tanggal Pindah</ion-label>
+      <ion-input placeholder="Pilih Tanggal" type="date"></ion-input>
+    </ion-item>
+
+     <ion-item class="input-item">
+        <ion-label position="stacked">Alamat Asal</ion-label>
+        <ion-input type="number" placeholder="Masukkan Alamat"></ion-input>
+  </ion-item>
+
+
+  <ion-item lines="none" class="input-group">
+    <ion-label position="stacked">Lokasi Asal</ion-label>
+    <ion-input [value]="latitude + ', ' + longitude" readonly></ion-input>
+
+    <ion-input placeholder="Masukkan Lokasi"></ion-input>
+  </ion-item>
+
+  <ion-button expand="block" color="secondary" (click)="getLokasi()">
+    Dapatkan Lokasi Saat Ini
+  </ion-button>
+
+  
+   <!-- <ion-item class="input-item">
+        <ion-label position="stacked">Lokasi Asal</ion-label>
+        <ion-input type="number" placeholder="Masukkan Loksi Asal"></ion-input>
+  </ion-item> -->
+
+     <ion-item class="input-item">
+        <ion-label position="stacked">Lokasi Tujuan</ion-label>
+        <ion-input type="number" placeholder="Masukkan Lokasi Tujuan"></ion-input>
+  </ion-item>
+
+  <ion-item lines="none" class="input-group">
+    <ion-label position="stacked">Lokasi Tujuan</ion-label>
+    <ion-input [value]="latitude + ', ' + longitude" readonly></ion-input>
+
+    <ion-input placeholder="Masukkan Lokasi"></ion-input>
+  </ion-item>
+
+  <ion-button expand="block" color="secondary" (click)="getLokasi()">
+    Dapatkan Lokasi Saat Ini
+  </ion-button>
+
+
+   <ion-item class="input-item">
+        <ion-label position="stacked">Lokasi Tujuan</ion-label>
+        <ion-input type="number" placeholder="Masukkan Nama Pembeli"></ion-input>
+  </ion-item>
+
+
+  <ion-item class="input-item">
+        <ion-label position="stacked">Deskripsi Tambahan (Opsional)</ion-label>
+        <ion-input type="number" placeholder="Masukan deksripsi tambahan"></ion-input>
+  </ion-item>
+
+  <!-- 💾 Tombol Simpan -->
+  <div class="btn-container">
+    <ion-button expand="block" color="primary" (click)="simpanData()">
+      Simpan
+    </ion-button>
+  </div>
+
+</ion-content>

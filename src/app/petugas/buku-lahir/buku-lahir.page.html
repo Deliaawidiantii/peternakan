@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/petugas"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Catatan Kelahiran</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="buku-lahir-page">
+  <!-- 🔍 Input Pencarian -->
+  <div class="search-container">
+    <ion-searchbar placeholder="Cari catatan kelahiran..."></ion-searchbar>
+  </div>
+
+  <!-- 🔽 Filter -->
+  <div class="filter-container">
+    <ion-button fill="outline" class="filter-btn">
+      Periode Waktu
+      <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+    </ion-button>
+
+    <ion-button fill="outline" class="filter-btn">
+      Jenis Hewan
+      <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+    </ion-button>
+  </div>
+
+  <!-- 🐄 Daftar Kelahiran -->
+  <ion-list>
+    <ion-list-header>
+      <ion-label class="judul-section">Kelahiran Terbaru</ion-label>
+    </ion-list-header>
+
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <img
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuAu2woTfUFWjXO4IMPyKEhoXVtq7ZyC5SCrNstITE2cBZ8I2MWMx8GIsQz7Jy5A7ZoJwt_YY8xM272oi8PzeXSxZOvHgW3jvLYX3IGuM_mhGHGSXLjLS9tM7a3hSJ7UqsC0VfbxwvrB24-9RYx6cYYSVl2BWz8aps3X0_g4fUYX1HpzLG0W2AzL58L-uYnA1YDe-yAQc5bYESNm6sulBb6v5ZRBHxPccZd0lrLK7eaaAHh4W-E3wMP6ooK4vqzRUQGdeNXYMJ5OOym5"
+        />
+      </ion-avatar>
+      <ion-label>
+        <h2>2024-07-20 | Anak: #A123 | Sapi | Hidup</h2>
+        <p>Induk: Sapi Betina #123</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <img
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlIN5mu5B5ZRsddupUSCLr26PWTHNNUVGZ3sguvQ-laDF8ta0ApYbBRs6D2gAW-VPqrG3iHr-YUTn59F7-55Def8lKkY2zbdRKSmHSHQrVS18og8PCFAak9GwuuZZVBPEzV6qW89v05ztsxqro3usg0rEqmxJhWEvYOwpHKdhGn6Xd99StekJkm43Pau75loNF-vSn1-C1e8e9K3ZetzbRnYUBWJbCTC0TfkbglVrIK9jA4dWfXjAogFEnOYpV2Jf_o8fydcgxkF3f"
+        />
+      </ion-avatar>
+      <ion-label>
+        <h2>2024-07-15 | Anak: #B456 | Kambing | Hidup</h2>
+        <p>Induk: Kambing Betina #456</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <img
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCQg0SppadAe9fLXWoPVpXzt-LGjnwStIRJyHgmFAo7zABYuXSq-kXwF4-ektZk1GcnW8_TQzk0U7y6u5PdFC2cYrGug2ujwH6IGwGq9DacG2kDiAFNrspfYlgosxzkkx59rrXWK15R-fWEd6E1zVMKNYTFNrSJ5xY686iExROqLyBQf23PvhTI68byOZVkExoPoZaoZR622G1WN1__921zWCu1t4O2sR4BHwRQyKrr5-NQVmRHi4cfqM10Vu58dBOneJUVYCDI40N"
+        />
+      </ion-avatar>
+      <ion-label>
+        <h2>2024-07-10 | Anak: #C789 | Ayam | Mati</h2>
+        <p>Induk: Ayam Betina #789</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- ➕ Tombol Tambah -->
+  <!-- <div class="button-container" (click)="pilihKelompkHewan()">
+    <ion-button expand="block" class="btn-tambah">
+      <ion-icon name="add-outline" slot="start"></ion-icon>
+      Catat Kelahiran Baru
+    </ion-button>
+  </div> -->
+
+  <div class="button-container">
+    <ion-button expand="block" class="btn-tambah" (click)="pilihKelompokHewan()">
+      <ion-icon name="add-outline" slot="start"></ion-icon>
+      Catat Kelahiran Baru
+    </ion-button>
+  </div>
+
+
+  
+</ion-content>

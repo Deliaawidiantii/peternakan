@@ -1,0 +1,119 @@
+/* === HEADER === */
+ion-toolbar {
+  --background: #ffffff;
+  --color: #2d3436;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+ion-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.1rem;
+}
+
+/* === CONTENT === */
+.riwayat-page {
+  --background: #f5f6fa;
+  padding: 16px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* === SEARCH === */
+.search-container {
+  margin-top: 10px;
+}
+
+ion-searchbar {
+  --background: #fff;
+  --color: #333;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* === FILTER === */
+.filter-container {
+  display: flex;
+  gap: 10px;
+  margin: 18px 0;
+  justify-content: flex;
+}
+
+ion-chip {
+  --background: #fff;
+  --color: #00796b;
+  border-radius: 12px;
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(0, 121, 107, 0.15);
+}
+
+/* === LIST RIWAYAT === */
+.riwayat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.riwayat-card {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.riwayat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card-icon {
+  background: #e0f2f1;
+  color: #00796b;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 14px;
+  font-size: 1.3rem;
+}
+
+.card-icon.cancel {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+.card-info h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.card-info p {
+  margin: 3px 0 0;
+  font-size: 0.85rem;
+  color: #777;
+}
+
+/* === STATUS === */
+.status {
+  margin-left: auto;
+  font-size: 0.8rem;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.status.selesai {
+  background: #e0f7fa;
+  color: #00796b;
+}
+
+.status.batal {
+  background: #ffebee;
+  color: #c62828;
+}

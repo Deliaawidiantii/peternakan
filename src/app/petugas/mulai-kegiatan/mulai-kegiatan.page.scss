@@ -1,0 +1,113 @@
+ion-header {
+  --background: #ffffff;
+  --border-color: transparent;
+  box-shadow: none; /* Hilangin shadow bawaan Ionic */
+  border-bottom: 1px solid #e5e5e5; /* Garis halus di bawah header */
+}
+
+ion-toolbar ion-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #222;
+  letter-spacing: 0.3px;
+}
+
+ion-content {
+  --background: #f8f9fb;
+  padding: 16px;
+}
+
+/* Card utama */
+.kegiatan-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  margin-bottom: 24px;
+  background: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kegiatan-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+ion-card-title {
+  font-size: 1.1rem;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+/* Info item */
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.label {
+  font-weight: 500;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.value {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 0.95rem;
+}
+
+/* Progress bar */
+.progress-section {
+  margin-top: 24px;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.progress-label {
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.progress-value {
+  font-weight: 600;
+  color: #2563eb;
+  font-size: 0.9rem;
+}
+
+.progress-bar {
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 75%;
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  border-radius: 8px;
+}
+
+/* Tombol */
+.button-section {
+  padding: 0 16px 24px;
+}
+
+.selesai-btn {
+  --background: linear-gradient(90deg, #16a34a, #15803d);
+  --border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 3px 10px rgba(22, 163, 74, 0.25);
+}
+
+.selesai-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(22, 163, 74, 0.25);
+}

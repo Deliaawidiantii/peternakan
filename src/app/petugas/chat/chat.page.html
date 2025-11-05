@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Chat</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="chat-content">
+
+  <!-- Info header -->
+  <ion-item lines="none" class="chat-header">
+    <ion-avatar slot="start">
+      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3vdMUkQkJGSSgcFjvhYVeJrL4lV1bZXhTCtorgT9ZQjBQfFA3nOOCkxhK5q2yA9T4AhxRRhDAzr702FIklkzoFmH4Wwl63zBXJLhNHGyqwOoOBWI_wK_otIptgqEJevYKBbBKCS5mCxWzIhC3HWMmEDCa8fOsiHH-5uGEIF2VTWQSNRWPR96JDM1zpMIATStdvZMZSHtG3LjZewRlHbz64CLbKTC0BJoCBwjmglYcW_kIC4g4eF-FM_lGDX3VPT7T_Df6UjF9MYQO" />
+    </ion-avatar>
+    <ion-label>
+      <h2>Dinas Peternakan Karawang</h2>
+      <p>Terakhir aktif 2 jam lalu</p>
+    </ion-label>
+  </ion-item>
+
+  <!-- Pesan masuk -->
+  <div class="message-row">
+    <ion-avatar class="msg-avatar">
+      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjawi48N-zROKCTDfRp6BXW5ubMkQVvw0VAG_56YPm5yfbXv55BuTLTghm5Lh2wnBjOBrHOD7aBPJKwjMcEgrmkw976Jf07zOB8WeU_KUZExWBlkAWyXXc2J8Z8xidIrkK4kPVSMHKkGvI8C8oZVP7pTXmXk_CNl-9T8uaflHzYAplk74SLgUCbPvAoq0ncTeg0tKWVoQQ6C2h4lAuhIVTk3I3dKo_WNVFVAMvy3EliJift8yJHuhkS9CaX5OYS5PX4i3jt4Et9T0D" />
+    </ion-avatar>
+    <div class="msg-bubble received">
+      <p class="msg-sender">Dinas Peternakan Karawang</p>
+        <p>Selamat siang, Bapak/Ibu. Ada yang bisa kami bantu?</p>
+      </div>
+    
+  </div>
+
+  <!-- Pesan keluar -->
+  <div class="message-row user">
+    <div class="msg-bubble sent">
+      <p class="msg-sender">Budi Santoso</p>
+     
+      <p>Selamat siang. Saya ingin bertanya mengenai program vaksinasi untuk ternak sapi.</p>
+    </div>
+    
+    <ion-avatar class="msg-avatar">
+      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxQCG7iF8NNfuzBPCE7z1TXfUOt2abGNuC-adwbwrHeLVwhCVhCh-pf9v-ArLzgEQrXE6K6ILrTELHdYCmM7EfETUpPgnheQb_IVu0mwcINPX5zlBabZHrdkXiSMCSSDc3U70Dq_O3xApXuEd-fNZVH_YHs8vyryQjSPvwI7l2vHwPc5xUME4nWNEKZ_32Btbmh0x-vda8zRcgsZ77tAB4LSoIdnMg9rsMqtO87k4J2fxz9BkXJtcQZ8_jDotiGWKx2AVc2qap3LKH" />
+    </ion-avatar>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="chat-footer">
+    <ion-item lines="none" class="chat-input-box">
+      <ion-input placeholder="Ketik pesan..."></ion-input>
+      <ion-buttons slot="end">
+        <ion-button fill="clear">
+          <ion-icon slot="icon-only" name="image-outline"></ion-icon>
+        </ion-button>
+        <ion-button color="primary">
+          Send
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

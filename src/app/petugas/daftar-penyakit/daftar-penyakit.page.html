@@ -1,0 +1,51 @@
+<ion-header class="custom-header">
+  <ion-toolbar color="light">
+    
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Kasus Penyakit</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding custom-bg">
+  <!-- Kasus 1 -->
+  <ion-item lines="none" class="case-item" (click)="showAlert()">
+    <ion-icon name="time-outline" slot="start" class="icon waiting-icon"></ion-icon>
+    <ion-label>
+      <h2>Penyakit Mulut dan Kuku</h2>
+      <p>Status: <span class="status waiting">Menunggu Verifikasi</span></p>
+    </ion-label>
+  </ion-item>
+
+  <!-- Kasus 2 -->
+  <ion-item lines="none" class="case-item">
+    <ion-icon name="alert-circle-outline" slot="start" class="icon rejected-icon"></ion-icon>
+    <ion-label>
+      <h2>Mastitis pada Sapi Perah</h2>
+      <p>Catatan Admin: Data tidak lengkap</p>
+      <p>Status: <span class="status rejected">Ditolak</span></p>
+    </ion-label>
+  </ion-item>
+
+  <!-- Kasus 3 -->
+  <ion-item lines="none" class="case-item" routerLink="/petugas/detail-penyakit">
+    <ion-icon name="checkmark-circle-outline" slot="start" class="icon verified-icon"></ion-icon>
+    <ion-label>
+      <h2>Demam Tiga Hari</h2>
+      <p>Catatan Admin: Data sudah sesuai</p>
+      <p>Status: <span class="status verified">Terverifikasi</span></p>
+    </ion-label>
+  </ion-item>
+
+  <!-- Kasus 4 -->
+  <ion-item lines="none" class="case-item">
+    <ion-icon name="time-outline" slot="start" class="icon waiting-icon"></ion-icon>
+    <ion-label>
+      <h2>Anthrax pada Domba</h2>
+      <p>Status: <span class="status waiting">Menunggu Verifikasi</span></p>
+    </ion-label>
+  </ion-item>
+</ion-content>
+

@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Penyakit</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding custom-page">
+  <!-- Laporan Kasus Penyakit -->
+  <ion-item lines="none" class="menu-item" routerLink="/petugas/laporan-kasus-penyakit">
+    <ion-avatar slot="start" class="icon-box">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-avatar>
+    <ion-label>
+      <h2>Laporan Kasus Penyakit</h2>
+      <p>Buat laporan kasus penyakit baru</p>
+    </ion-label>
+    <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+  </ion-item>
+
+  <!-- Perbaharui Kasus Penyakit -->
+  <ion-item lines="none" class="menu-item" routerLink="/petugas/daftar-penyakit">
+    <ion-avatar slot="start" class="icon-box">
+      <ion-icon name="create-outline"></ion-icon>
+    </ion-avatar>
+    <ion-label>
+      <h2>Perbaharui Kasus Penyakit</h2>
+      <p>Perbaharui informasi kasus penyakit yang ada</p>
+    </ion-label>
+    <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+  </ion-item>
+
+  <!-- Riwayat Penyakit -->
+  <ion-item lines="none" class="menu-item" routerLink="/petugas/riwayat-perkembangan-penyakit">
+    <ion-avatar slot="start" class="icon-box">
+      <ion-icon name="time-outline"></ion-icon>
+    </ion-avatar>
+    <ion-label>
+      <h2>Riwayat Penyakit</h2>
+      <p>Lihat riwayat kasus penyakit</p>
+    </ion-label>
+    <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+  </ion-item>
+</ion-content>
+
+

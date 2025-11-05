@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/mutasi"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mutasi Hewan (Mati)</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <h2 class="judul-section">Input Data Kematian Hewan</h2>
+
+  <!-- 🐮 ID Hewan -->
+  <ion-item lines="none" class="input-item">
+    <ion-label position="stacked">ID Hewan</ion-label>
+    <ion-input placeholder="Masukkan ID Hewan" [(ngModel)]="idHewan"></ion-input>
+  </ion-item>
+
+
+  <ion-item>
+      <ion-label position="stacked">Tanggal Kematian</ion-label>
+      <ion-input placeholder="Pilih Tanggal" type="date"></ion-input>
+    </ion-item>
+
+  <!-- ☠️ Penyebab Kematian -->
+  <ion-item lines="none" class="input-item">
+    <ion-label position="stacked">Penyebab Kematian</ion-label>
+    <ion-select placeholder="Pilih Penyebab" [(ngModel)]="penyebabKematian">
+      <ion-select-option value="Penyakit">Penyakit</ion-select-option>
+      <ion-select-option value="Kecelakaan">Kecelakaan</ion-select-option>
+      <ion-select-option value="Usia Tua">Usia Tua</ion-select-option>
+      <ion-select-option value="Kondisi Lingkungan">Kondisi Lingkungan</ion-select-option>
+      <ion-select-option value="Kekurangan Nutrisi">Kekurangan Nutrisi</ion-select-option>
+      <ion-select-option value="Lainnya">Lainnya</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- 📝 Deskripsi Tambahan -->
+  <ion-item lines="none" class="input-item">
+    <ion-label position="stacked">Deskripsi Tambahan (opsional)</ion-label>
+    <ion-textarea
+      placeholder="Tambahkan deskripsi tambahan"
+      autoGrow="true"
+      [(ngModel)]="deskripsi">
+    </ion-textarea>
+  </ion-item>
+
+  <!-- 💾 Tombol Simpan -->
+  <div class="btn-container">
+    <ion-button expand="block" color="primary" (click)="simpanData()">
+      Simpan
+    </ion-button>
+  </div>
+
+</ion-content>

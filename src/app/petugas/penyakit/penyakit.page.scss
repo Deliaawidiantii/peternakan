@@ -1,0 +1,47 @@
+.custom-page {
+  --background: #f8fafc;
+  font-family: "Public Sans", "Noto Sans", sans-serif;
+}
+
+/* Setiap item menu */
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 4px;
+  border-radius: 10px;
+  background: #f8fafc;
+  transition: 0.2s;
+}
+
+.menu-item:hover {
+  background: #e2edf3;
+}
+
+/* Icon di sebelah kiri */
+.icon-box {
+  --background: #e7eff3;
+  border-radius: 10px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-box ion-icon {
+  color: #0d171b;
+  font-size: 24px;
+}
+
+/* Label */
+ion-label h2 {
+  font-size: 16px;
+  color: #0d171b;
+  font-weight: 600;
+}
+
+ion-label p {
+  font-size: 14px;
+  color: #4c809a;
+}

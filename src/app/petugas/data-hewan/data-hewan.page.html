@@ -1,0 +1,90 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Tambah Hewan Baru</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="data-hewan-content">
+
+  <ion-toolbar color="">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Tambah Hewan Baru</ion-title> 
+  </ion-toolbar>
+
+  <!-- Form Input -->
+  <ion-list lines="none" class="list-data-hewan">
+    
+    <!-- <ion-label position="stacked" class="form-label">ID Hewan</ion-label>
+    <ion-item>
+      <ion-input type="text" placeholder="Masukan ID Hewan"></ion-input>
+    </ion-item> -->
+
+     <ion-label position="stacked">Kelompok Hewan</ion-label>
+    <ion-item>
+      <ion-select placeholder="Pilih Kategori Hewan">
+        <ion-select-option value="one">Kesayangan</ion-select-option>
+        <ion-select-option value="two">Ruminansia</ion-select-option>
+        <ion-select-option value="two">Unggas</ion-select-option>
+         <ion-select-option value="two">Primata</ion-select-option>
+          <ion-select-option value="two">Lainnya</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+        <ion-label position="stacked">Jenis Hewan</ion-label>
+    <ion-item>
+      <ion-select placeholder="Pilih Jenis Hewan">
+        <ion-select-option value="one">Kambing</ion-select-option>
+        <ion-select-option value="two">Sapi</ion-select-option>
+        <ion-select-option value="two">Ayam</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-label position="stacked">Desa</ion-label>
+    <ion-item>
+      <ion-select placeholder="Pilih Jenis Hewan">
+        <ion-select-option value="one">Karangjaya</ion-select-option>
+        <ion-select-option value="two">Cikampek</ion-select-option>
+        <ion-select-option value="two">Jatisari</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+
+    <ion-label position="stacked" >Umur</ion-label>
+    <ion-item> 
+      <ion-input type="text" placeholder="Masukan Umur"></ion-input>
+    </ion-item>
+ 
+     <ion-label position="stacked">Jenis Kelamin</ion-label>
+    <ion-item>
+      <ion-select placeholder="Pilih Jenis Kelamin">
+      <ion-select-option value="one">Jantan</ion-select-option>
+      <ion-select-option value="two">Betina</ion-select-option>
+    </ion-select>
+    </ion-item>
+
+
+    <ion-label position="stacked">ID Kandang (opsional)</ion-label>
+    <ion-item>
+      <ion-input type="tel" placeholder="Masukan ID Kandang"></ion-input>
+    </ion-item>
+
+    <ion-label position="stacked">ID Pemilik (Opsional)</ion-label>
+    <ion-item>
+      <ion-input type="tel" placeholder="Masukan ID Pemilik"></ion-input>
+    </ion-item>
+
+
+  </ion-list>
+
+  <!-- Tombol Simpan -->
+  <div class="button-container">
+    <ion-button expand="block" color="primary">Simpan</ion-button>
+  </div>
+  
+</ion-content>
+

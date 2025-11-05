@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="light" class="informasi-header">
+    <ion-title>Informasi</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="informasi-content">
+  <!-- <h2 class="section-title">Pilih Opsi</h2> -->
+  <ion-card class="custom-card">
+    <ion-item lines="none" class="custom-item">
+      <ion-avatar slot="start" class="icon-box">
+        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+      </ion-avatar>
+      <ion-label routerLink="/petugas/chat">
+        <h3>Chat</h3>
+        <p>Komunikasi dengan tim dan pihak terkait</p>
+      </ion-label>
+    </ion-item>
+  </ion-card>
+
+  <ion-card class="custom-card">
+    <ion-item lines="none" class="custom-item">
+      <ion-avatar slot="start" class="icon-box">
+        <ion-icon name="notifications-outline"></ion-icon>
+      </ion-avatar>
+      <ion-label routerLink="/petugas/notifikasi">
+        <h3>Notifikasi</h3>
+        <p>Pesan dan pemberitahuan penting</p>
+      </ion-label>
+    </ion-item>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,46 @@
+<ion-header class="custom-header">
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    
+    <ion-title>Input Data</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding custom-bg">
+  <h1 class="page-title">Pembaruan Status Penyakit</h1>
+
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Tanggal Update</ion-label>
+    <ion-input type="date" placeholder="Pilih Tanggal"></ion-input>
+  </ion-item>
+
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Status Terbaru</ion-label>
+    <ion-select placeholder="Pilih Status">
+      <ion-select-option value="one">Menunggu</ion-select-option>
+      <ion-select-option value="two">Dalam Perawatan</ion-select-option>
+      <ion-select-option value="three">Sembuh</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Deskripsi Perkembangan</ion-label>
+    <ion-textarea
+      placeholder="Jelaskan perkembangan penyakit"
+      rows="4"
+    ></ion-textarea>
+  </ion-item>
+
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Catatan Tambahan</ion-label>
+    <ion-textarea
+      placeholder="Tambahkan catatan jika ada"
+      rows="4"
+    ></ion-textarea>
+  </ion-item>
+
+  <ion-button expand="block" class="save-btn" (click)="showAlert()">Simpan</ion-button>
+</ion-content>
+

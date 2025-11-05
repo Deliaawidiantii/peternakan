@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Kegiatan</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="add-autline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]>
+  <!-- Akses cepat -->
+   <ion-list-header>
+    <ion-label class="section-title">Akses Cepat</ion-label>
+   </ion-list-header>
+
+   <ion-item routerLink="/petugas/jadwal-kegiatan">
+    <ion-avatar slot="start" class="icon-bg">
+      <ion-icon name="calendar-outline"></ion-icon>
+    </ion-avatar>
+    <ion-label>Jadwal Kegiatan</ion-label>
+   </ion-item>
+
+   <ion-item routerLink="/petugas/riwayat-kegiatan">
+    <ion-avatar slot="start" class="icon-bg">
+      <ion-icon name="time-outline"></ion-icon>
+    </ion-avatar>
+    <ion-label >Riwayat Kegiatan</ion-label>
+   </ion-item>
+
+   <!-- Kegiatan Mendatang -->
+    <ion-list lines="none">
+     <ion-list-header>
+      <ion-label class="section-title">Kegiatan Mendatang</ion-label>
+     </ion-list-header>
+
+     <ion-item class="activity-item">
+      <ion-avatar slot="start" class="icon-bg">
+        <ion-icon name="medkit-outline"></ion-icon>
+      </ion-avatar>
+
+      <ion-label>
+        <h2>Vaksinasi Ternak</h2>
+        <p>12 Agustus 2024</p>
+        <p>09:00 - 10:00 </p>
+      </ion-label>
+      <ion-button slot="end" size="small" color="light">Mulai</ion-button>
+     </ion-item>
+
+     <ion-item class="activity-item" routerLink="/petugas/detail-kegiatan">
+      <ion-avatar slot="start" class="icon-bg">
+        <ion-icon name="heart-outline"></ion-icon>
+      </ion-avatar>
+
+      <ion-label>
+        <h2>Pemeriksaan Kesehatan</h2>
+        <p>12 Agustus 2024</p>
+        <p>10:00 - 11:00 </p>
+      </ion-label>
+      <ion-button slot="end" size="small" color="light">Mulai</ion-button>
+     </ion-item>
+    </ion-list>
+
+    <!-- Kegiatan sedang berjalan  -->
+     <ion-list lines="none">
+      <ion-list-header>
+        <ion-label class="section-title">Kegiatan Berjalan</ion-label>
+      </ion-list-header>
+
+      <ion-item class="activity-item">
+        <ion-avatar slot="start" class="icon-bg">
+          <ion-icon name="broom-outline"></ion-icon>
+        </ion-avatar>
+
+        <ion-label>
+          <h2>Pembersihan Kandang</h2>
+          <p>12 Agustus 2024</p>
+          <p>13:00 - 14:00</p>
+        </ion-label>
+        <ion-button slot="end" size="small" color="light">Lihat</ion-button>
+      </ion-item>
+     </ion-list>
+</ion-content>
