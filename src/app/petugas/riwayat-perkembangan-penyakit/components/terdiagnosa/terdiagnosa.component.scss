@@ -1,20 +1,83 @@
 /* Background dan padding konten */
 .custom-bg {
-  background-color: #f9f9f9;
+  --background: #f8fafb;
+  font-family: "Public Sans", "Noto Sans", sans-serif;
   min-height: 100%;
+}
+
+/* Header */
+ion-header {
+  ion-toolbar {
+    --background: #ffffff;
+    --border-width: 0 0 1px 0;
+    --border-color: #e8f1f6;
+
+    ion-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0e161b;
+    }
+
+    ion-button {
+      --color: #507e95;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: none;
+
+      ion-icon {
+        margin-right: 4px;
+      }
+
+      &:hover {
+        --color: #3c5d78;
+      }
+    }
+  }
 }
 
 /* Styling list dan card */
 .case-list {
   margin-top: 10px;
+  padding: 0;
+  background: transparent;
 }
 
 .case-card {
+  --background: #ffffff;
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-end: 0;
+  --min-height: auto;
+  
   background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   margin-bottom: 16px;
-  padding: 12px;
+  padding: 14px;
+  border: 1px solid #e8f1f6;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(99, 188, 233, 0.15);
+    border-color: #d4e6f1;
+  }
+
+  ion-grid {
+    padding: 0;
+    margin: 0;
+  }
+
+  ion-row {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  ion-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 }
 
 /* Teks informasi kasus */
@@ -22,82 +85,108 @@
 .case-id,
 .case-type {
   font-size: 14px;
-  margin: 4px 0;
-  color: #333;
+  margin: 0 0 6px 0;
+  line-height: 1.4;
+  color: #507e95;
 }
 
 .case-date {
   font-weight: 600;
-  color: #2c3e50;
+  color: #0e161b;
+  font-size: 15px;
 }
 
 .case-id {
   font-weight: 500;
+  color: #507e95;
 }
 
 .case-type {
-  font-style: italic;
-  color: #555;
+  font-weight: 600;
+  color: #0e161b;
+  font-style: normal;
 }
 
 /* Tombol update */
 .update-btn {
-  margin-top: 8px;
-  --background: #28a745;
-  --color: #fff;
+  --background: #63bce9;
+  --color: #ffffff;
   --border-radius: 8px;
+  
+  margin-top: 12px;
+  margin-bottom: 0;
+  height: 34px;
   font-size: 13px;
+  font-weight: 600;
   text-transform: none;
+  --box-shadow: 0 2px 8px rgba(99, 188, 233, 0.3);
+
+  &:hover {
+    --box-shadow: 0 4px 12px rgba(99, 188, 233, 0.4);
+  }
+
+  &:active {
+    --box-shadow: 0 2px 6px rgba(99, 188, 233, 0.25);
+  }
 }
 
 /* Kolom gambar */
 .image-col {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 /* Bungkus gambar */
 .case-image-wrapper {
   position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 }
 
 /* Label status di atas gambar */
 .case-judul {
-  position: absolute;
-  top: -35px;
-  right: 6px;
-  // background-color: #e74c3c;
-  color: #e74c3c;
+  position: relative;
+  top: auto;
+  right: auto;
+  background-color: #fef3c7;
+  color: #92400e;
   font-size: 11px;
-  padding: 4px 8px;
+  padding: 4px 10px;
   border-radius: 6px;
   z-index: 2;
   text-transform: uppercase;
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-bottom: 0;
+  letter-spacing: 0.3px;
 }
 
 /* Gambar kasus */
 .case-image {
-  width: 100%;
-  height: 100px;
+  width: 110px;
+  height: 110px;
   background-size: cover;
   background-position: center;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  margin-top: 20px;
+  border-radius: 10px;
+  border: 1px solid #d4e6f1;
+  background-color: #e8f1f6;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  margin-top: 0;
 }
-
-/* Hover efek */
-.case-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
 
 /* Responsif untuk layar kecil */
 @media screen and (max-width: 600px) {
+  .case-card {
+    padding: 12px;
+  }
+
   .case-image {
-    height: 80px;
+    width: 90px;
+    height: 90px;
   }
 
   .case-date,
@@ -106,12 +195,17 @@
     font-size: 13px;
   }
 
+  .case-date {
+    font-size: 14px;
+  }
+
   .update-btn {
     font-size: 12px;
+    height: 32px;
   }
 
   .case-judul {
     font-size: 10px;
-    padding: 3px 6px;
+    padding: 3px 8px;
   }
 }

@@ -1,49 +1,106 @@
 /* === HEADER === */
 ion-toolbar {
   --background: #ffffff;
-  --color: #2d3436;
+  --color: #1e3a5f;
   font-weight: 600;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 12px rgba(30, 58, 95, 0.08);
 }
 
 ion-title {
   font-family: "Poppins", sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1e3a5f;
 }
 
 /* === CONTENT === */
 .riwayat-page {
-  --background: #f5f6fa;
+  --background: #f8fafb;
   padding: 16px;
   font-family: "Poppins", sans-serif;
 }
 
 /* === SEARCH === */
 .search-container {
-  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 ion-searchbar {
   --background: #fff;
   --color: #333;
+  --placeholder-color: #999;
   border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(30, 136, 229, 0.1);
+  padding: 8px 0;
 }
 
-/* === FILTER === */
+ion-searchbar::part(container) {
+  background-color: #fff;
+}
+
+/* === FILTER CONTAINER === */
 .filter-container {
   display: flex;
-  gap: 10px;
-  margin: 18px 0;
-  justify-content: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
-ion-chip {
-  --background: #fff;
-  --color: #00796b;
+ion-item.filter-chip,
+ion-item.filter-item {
+  --background: #ffffff;
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
   border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(30, 136, 229, 0.1);
+  flex: 1;
+  min-width: 150px;
+  border: 1px solid #e3f2fd;
+  overflow: hidden;
+}
+
+ion-item.filter-chip {
+  min-width: 160px;
+}
+
+ion-item.filter-item {
+  min-width: 140px;
+}
+
+ion-item ion-label {
+  color: #1e3a5f;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding-left: 12px;
+}
+
+ion-item ion-select {
+  max-width: 100%;
+  --padding-start: 12px;
+  --padding-end: 12px;
+}
+
+ion-select {
+  color: #1e88e5;
   font-weight: 500;
-  box-shadow: 0 2px 5px rgba(0, 121, 107, 0.15);
+}
+
+ion-select::part(placeholder) {
+  color: #1e88e5;
+  opacity: 0.7;
+}
+
+ion-popover {
+  --background: #ffffff;
+  --box-shadow: 0 4px 16px rgba(30, 136, 229, 0.15);
+  border-radius: 12px;
+}
+
+ion-select-option {
+  color: #1e3a5f;
+  font-family: "Poppins", sans-serif;
 }
 
 /* === LIST RIWAYAT === */
@@ -57,63 +114,211 @@ ion-chip {
   display: flex;
   align-items: center;
   background: #ffffff;
-  border-radius: 16px;
+  border-radius: 14px;
   padding: 14px 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 8px rgba(30, 136, 229, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-left: 4px solid #1e88e5;
 }
 
 .riwayat-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(30, 136, 229, 0.15);
 }
 
+.riwayat-card.selesai {
+  border-left-color: #00796b;
+}
+
+.riwayat-card.batal {
+  border-left-color: #d32f2f;
+}
+
+/* === CARD ICON === */
 .card-icon {
-  background: #e0f2f1;
-  color: #00796b;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  color: #1e88e5;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 14px;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
+  flex-shrink: 0;
 }
 
 .card-icon.cancel {
-  background: #ffebee;
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
   color: #d32f2f;
+}
+
+/* === CARD INFO === */
+.card-info {
+  flex: 1;
+  min-width: 0;
 }
 
 .card-info h3 {
   margin: 0;
   font-size: 1rem;
-  color: #333;
+  color: #1e3a5f;
   font-weight: 600;
+  word-break: break-word;
 }
 
 .card-info p {
-  margin: 3px 0 0;
+  margin: 4px 0 0;
   font-size: 0.85rem;
-  color: #777;
+  color: #999;
 }
 
-/* === STATUS === */
+/* === STATUS BADGE === */
 .status {
-  margin-left: auto;
-  font-size: 0.8rem;
-  padding: 6px 10px;
-  border-radius: 10px;
-  font-weight: 600;
+  margin-left: 12px;
+  font-size: 0.75rem;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-transform: capitalize;
 }
 
 .status.selesai {
-  background: #e0f7fa;
+  background: #e0f2f1;
   color: #00796b;
 }
 
 .status.batal {
   background: #ffebee;
-  color: #c62828;
+  color: #d32f2f;
+}
+
+/* === RESPONSIVE TABLET === */
+@media (max-width: 768px) {
+  .riwayat-page {
+    padding: 12px;
+  }
+
+  .filter-container {
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  ion-item.filter-chip,
+  ion-item.filter-item {
+    min-width: 140px;
+    flex: 0 1 calc(50% - 5px);
+  }
+
+  .riwayat-card {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .card-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+    margin-right: 10px;
+  }
+
+  .card-info h3 {
+    font-size: 0.95rem;
+  }
+
+  .card-info p {
+    font-size: 0.8rem;
+  }
+
+  .status {
+    font-size: 0.7rem;
+    padding: 5px 10px;
+    margin-left: 8px;
+  }
+}
+
+/* === RESPONSIVE MOBILE === */
+@media (max-width: 480px) {
+  .riwayat-page {
+    padding: 10px;
+  }
+
+  ion-title {
+    font-size: 1.1rem;
+  }
+
+  .search-container {
+    margin-bottom: 14px;
+  }
+
+  .filter-container {
+    gap: 8px;
+    margin-bottom: 14px;
+    flex-direction: column;
+  }
+
+  ion-item.filter-chip,
+  ion-item.filter-item {
+    min-width: unset;
+    flex: 1;
+  }
+
+  .riwayat-list {
+    gap: 10px;
+  }
+
+  .riwayat-card {
+    padding: 10px 12px;
+    border-radius: 12px;
+  }
+
+  .card-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+    margin-right: 8px;
+  }
+
+  .card-info h3 {
+    font-size: 0.9rem;
+  }
+
+  .card-info p {
+    font-size: 0.78rem;
+  }
+
+  .status {
+    font-size: 0.65rem;
+    padding: 4px 8px;
+    margin-left: 6px;
+  }
+}
+
+/* === RESPONSIVE SMALL MOBILE === */
+@media (max-width: 320px) {
+  .riwayat-page {
+    padding: 8px;
+  }
+
+  .riwayat-card {
+    padding: 8px 10px;
+  }
+
+  .card-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+    margin-right: 6px;
+  }
+
+  .card-info h3 {
+    font-size: 0.85rem;
+  }
+
+  .card-info p {
+    font-size: 0.75rem;
+  }
 }

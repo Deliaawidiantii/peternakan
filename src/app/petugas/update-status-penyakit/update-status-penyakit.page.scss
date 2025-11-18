@@ -1,93 +1,182 @@
+/* Header */
+.custom-header {
+  ion-toolbar {
+    --background: #ffffff;
+    --border-width: 0 0 1px 0;
+    --border-color: #e8f1f6;
+
+    ion-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0e161b;
+    }
+
+    ion-back-button {
+      --color: #507e95;
+    }
+  }
+}
+
+/* Content Background */
 .custom-bg {
-  --background: #f9fafb;
+  --background: #f8fafb;
   font-family: "Public Sans", "Noto Sans", sans-serif;
 }
 
-.custom-header ion-toolbar {
-  --background: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-ion-title {
-  color: #1e293b;
-  font-weight: 700;
-  font-size: 20px;
-}
-
+/* Page Title */
 .page-title {
-  margin: 24px 0 20px;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
-  color: #111827;
+  color: #0e161b;
+  margin: 0 0 24px 0;
+  padding: 0;
+  line-height: 1.4;
 }
 
+/* Input Field Styling */
 .input-field {
   --background: #ffffff;
-  border-radius: 12px;
-  margin-bottom: 18px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-}
-
-.input-field.ion-focused {
-  box-shadow: 0 0 0 2px #60a5fa;
-}
-
-.save-btn {
-  --background: #3b82f6;
-  --border-radius: 12px;
-  font-weight: 600;
-  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
-  transition: 0.3s;
-}
-
-.save-btn:hover {
-  transform: translateY(-2px);
-}
-
-
-//alert
-.custom-alert .alert-wrapper {
-  border-radius: 18px;
-  background: linear-gradient(145deg, #ffffff, #f3f4f6);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-  padding: 12px;
-  animation: fadeIn 0.3s ease;
-}
-
-.custom-alert .alert-head {
-  text-align: center;
-  border-bottom: 1px solid #e2e8f0;
-  padding-bottom: 8px;
-}
-
-.custom-alert .alert-title {
-  color: #0284c7;
-  font-weight: 700;
-  font-size: 18px;
-}
-
-.custom-alert .alert-message {
-  color: #334155;
-  font-size: 15px;
-  margin-top: 6px;
-  line-height: 1.5;
-  text-align: center;
-}
-
-.custom-alert button {
-  color: #0284c7 !important;
-  font-weight: 600;
-  font-size: 15px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --inner-padding-end: 0;
+  --min-height: auto;
+  
+  background: #ffffff;
   border-radius: 10px;
-  transition: 0.3s;
+  border: 1px solid #e8f1f6;
+  margin-bottom: 16px;
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: #d4e6f1;
+    box-shadow: 0 2px 8px rgba(99, 188, 233, 0.1);
+  }
+
+  &:focus-within {
+    border-color: #63bce9;
+    box-shadow: 0 4px 12px rgba(99, 188, 233, 0.15);
+  }
 }
 
-.custom-alert button:hover {
-  background: #e0f2fe;
+/* Label Styling */
+ion-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0e161b;
+  margin-bottom: 8px;
+  display: block;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Input, Select, Textarea Styling */
+ion-input,
+ion-select,
+ion-textarea {
+  font-size: 14px;
+  color: #0e161b;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --placeholder-color: #a0b8c8;
+  --placeholder-opacity: 0.7;
+}
+
+/* Input specific */
+ion-input {
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+/* Select specific */
+ion-select {
+  --padding-start: 0;
+  --padding-end: 0;
+  width: 100%;
+}
+
+ion-select::part(icon) {
+  color: #507e95;
+  opacity: 1;
+  margin-right: 4px;
+}
+
+/* Textarea specific */
+ion-textarea {
+  --padding-start: 0;
+  --padding-end: 0;
+  font-family: "Public Sans", "Noto Sans", sans-serif;
+  min-height: 100px;
+}
+
+ion-textarea::part(native) {
+  resize: vertical;
+}
+
+/* Save Button */
+.save-btn {
+  --background: #63bce9;
+  --color: #ffffff;
+  --border-radius: 10px;
+  
+  height: 48px;
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: none;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  --box-shadow: 0 4px 12px rgba(99, 188, 233, 0.3);
+  letter-spacing: 0.3px;
+
+  &:hover {
+    --box-shadow: 0 6px 16px rgba(99, 188, 233, 0.4);
+  }
+
+  &:active {
+    --box-shadow: 0 2px 8px rgba(99, 188, 233, 0.25);
+  }
+}
+
+/* Select Options Styling */
+ion-select-option {
+  --color: #0e161b;
+  font-size: 14px;
+}
+
+/* Select Interface (Popover/Alert) */
+.select-interface-option {
+  color: #0e161b;
+  
+  &:hover {
+    background: #f0f7fb;
+  }
+}
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+  .page-title {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .input-field {
+    margin-bottom: 14px;
+    padding: 10px;
+  }
+
+  ion-label {
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+
+  ion-input,
+  ion-select,
+  ion-textarea {
+    font-size: 13px;
+  }
+
+  .save-btn {
+    height: 44px;
+    font-size: 14px;
+    margin-top: 20px;
+  }
 }

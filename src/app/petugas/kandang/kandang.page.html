@@ -4,11 +4,6 @@
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title>Daftar Kandang</ion-title>
-    <ion-buttons slot="end">
-      <ion-button fill="clear" routerLink="/petugas/data-kandang">
-        <ion-icon name="add-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -37,7 +32,7 @@
   <!-- Daftar Kandang -->
   <ion-list class="kandang-list">
 
-    <ion-item lines="none" class="kandang-item" button>
+    <ion-item lines="none" class="kandang-item" button routerLink="/petugas/detail-kandang">
       <ion-avatar slot="start" class="foto-kandang">
         <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=600" alt="Kandang 1" />
       </ion-avatar>
@@ -47,7 +42,7 @@
       </ion-label>
     </ion-item>
 
-    <ion-item lines="none" class="kandang-item" button>
+    <!-- <ion-item lines="none" class="kandang-item" button >
       <ion-avatar slot="start" class="foto-kandang">
         <img src="https://images.unsplash.com/photo-1602526432608-029a9f2c5a6b?w=600" alt="Kandang 2" />
       </ion-avatar>
@@ -55,9 +50,9 @@
         <h2>#67890</h2>
         <p>Bapak Ikin • Desa Sukamaju </p>
       </ion-label>
-    </ion-item>
+    </ion-item> -->
 
-    <ion-item lines="none" class="kandang-item" button>
+    <ion-item lines="none" class="kandang-item" button routerLink="/petugas/detail-kandang">
       <ion-avatar slot="start" class="foto-kandang">
         <img src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?w=600" alt="Kandang 3" />
       </ion-avatar>
@@ -67,7 +62,7 @@
       </ion-label>
     </ion-item>
 
-    <ion-item lines="none" class="kandang-item" button>
+    <!-- <ion-item lines="none" class="kandang-item" button>
       <ion-avatar slot="start" class="foto-kandang">
         <img src="https://images.unsplash.com/photo-1617169083887-c0abaf0e95ef?w=600" alt="Kandang 4" />
       </ion-avatar>
@@ -75,7 +70,14 @@
         <h2>#33445</h2>
         <p>Bapak Ikin • Desa Sukamaju </p>
       </ion-label>
-    </ion-item>
+    </ion-item> -->
 
   </ion-list>
+
+  <!-- Floating Add Button -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/petugas/data-kandang" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

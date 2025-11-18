@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button defaultHref="/petugas"></ion-back-button>
     </ion-buttons>
     <ion-title>Mutasi Hewan</ion-title>
   </ion-toolbar>
@@ -10,7 +10,7 @@
 <ion-content class="mutasi-content">
   <h2 class="judul-section">Semua Mutasi</h2>
 
-  <!-- 🔍 Filter Section -->
+  <!--  Filter Section -->
   <div class="filter-container">
     <ion-item lines="none">
       <ion-label>Filter Bulan</ion-label>
@@ -42,7 +42,7 @@
     </ion-item>
   </div>
 
-  <!-- 📋 Daftar Mutasi -->
+  <!--  Daftar Mutasi -->
   <ion-list lines="none">
     <ion-item
       button
@@ -56,7 +56,7 @@
     </ion-item>
   </ion-list>
 
-  <!-- ➕ Tombol Tambah -->
+  <!-- Tombol Tambah -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
   <ion-fab-button color="primary" (click)="tambahMutasi()">
     <ion-icon name="add-outline"></ion-icon>

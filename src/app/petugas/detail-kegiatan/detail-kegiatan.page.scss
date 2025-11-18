@@ -1,76 +1,159 @@
-/* ======= Layout Umum ======= */
+/* ===== HEADER ===== */
+ion-header {
+  --background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+ion-toolbar {
+  --min-height: 56px;
+  --background: #ffffff;
+}
+
+ion-toolbar ion-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #1e293b;
+}
+
+/* ===== CONTENT ===== */
 ion-content {
-  --background: #fdfdfd;
+  --background: #f8fafc;
+}
+
+/* ===== LIST SECTION ===== */
+.list-section {
+  background: transparent;
   padding: 16px;
 }
 
-.list-section {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* ======= Judul Section ======= */
+/* ===== SECTION TITLE ===== */
 .section-title {
-  font-size: 16px;
+  font-size: 0.9rem;
   font-weight: 600;
-  color: #3a3a3a;
-  margin: 16px 0 8px;
-  border-left: 4px solid #4caf50;
-  padding-left: 8px;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 20px 0 12px 4px;
+  padding: 0;
 }
 
-/* ======= Item Kegiatan ======= */
+.section-title:first-child {
+  margin-top: 8px;
+}
+
+/* ===== ION ITEM ===== */
 ion-item {
-  border-radius: 10px;
-  background: #ffffff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  padding: 8px;
+  --background: #ffffff;
+  --padding-start: 16px;
+  --padding-end: 16px;
   --inner-padding-end: 0;
+  --border-radius: 12px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
 }
 
-/* ======= Icon Background ======= */
+ion-item:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+ion-item::part(native) {
+  padding: 14px 16px;
+  border-radius: 12px;
+}
+
+/* ===== ICON BACKGROUND ===== */
 .icon-bg {
-  background-color: #e8f5e9;
-  color: #4caf50;
-  padding: 8px;
-  border-radius: 50%;
-  font-size: 20px;
-}
-
-/* ======= Deskripsi ======= */
-.desc-text {
-  font-size: 14px;
-  color: #555;
-  background: #f1f8e9;
-  padding: 12px;
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  color: #ffffff;
   border-radius: 8px;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+  padding: 6px;
+  font-size: 1.1rem;
+  margin-right: 12px;
 }
 
-/* ======= Avatar Petugas ======= */
+/* ===== ION LABEL ===== */
+ion-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #334155;
+  line-height: 1.4;
+}
+
+/* ===== AVATAR ===== */
+ion-avatar {
+  width: 36px;
+  height: 36px;
+  margin-right: 12px;
+  border: 2px solid #e0f2fe;
+}
+
 ion-avatar img {
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
   object-fit: cover;
-  border: 2px solid #4caf50;
 }
 
-/* ======= Button ======= */
+/* ===== DESCRIPTION TEXT ===== */
+.desc-text {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 12px;
+  margin: 0 0 8px 0;
+  font-size: 0.9rem;
+  color: #475569;
+  line-height: 1.6;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+/* ===== BUTTON CONTAINER ===== */
 .button-container {
-  margin-top: 24px;
+  padding: 16px;
+  background: #ffffff;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  bottom: 0;
 }
 
 .button-container ion-button {
-  --background: #4caf50;
-  --color: #fff;
+  --background: linear-gradient(135deg, #3b82f6, #2563eb);
+  --background-hover: linear-gradient(135deg, #2563eb, #1d4ed8);
+  --background-activated: linear-gradient(135deg, #1d4ed8, #1e40af);
+  --color: #ffffff;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
   font-weight: 600;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
-  transition: transform 0.2s ease;
+  font-size: 1rem;
+  text-transform: none;
+  height: 48px;
+  margin: 0;
 }
 
 .button-container ion-button:hover {
-  transform: scale(1.02);
+  transform: translateY(-2px);
+  --box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 360px) {
+  .section-title {
+    font-size: 0.85rem;
+  }
+
+  ion-label {
+    font-size: 0.9rem;
+  }
+
+  .icon-bg {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+  }
+
+  ion-avatar {
+    width: 32px;
+    height: 32px;
+  }
 }

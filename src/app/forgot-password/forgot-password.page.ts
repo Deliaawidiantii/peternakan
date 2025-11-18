@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
@@ -10,8 +11,9 @@ export class ForgotPasswordPage {
   email: string = '';
   successMessage: string = '';
   errorMessage: string[] = [];
+  isLoading: boolean = false;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   sendResetLink() {
     this.successMessage = '';
@@ -29,10 +31,21 @@ export class ForgotPasswordPage {
     }
 
     // Simulate sending reset link
+    this.isLoading = true;
     setTimeout(() => {
       this.successMessage = 'Link Reset Password Telah Dikirim ke Email Anda.' + this.email;
       this.email = '';
-    }, 1000);
+      this.isLoading = false;
+
+      // auto redirect ke login setelah 3 detik 
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+      }, 3000);
+    }, 1500);
 
 }
+
+backToLogin() {
+    this.router.navigate(['/login']);
+  }
 }

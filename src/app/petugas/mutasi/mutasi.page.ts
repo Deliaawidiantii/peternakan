@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { IonicModule, NavController, AlertController } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-mutasi',
@@ -10,6 +8,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./mutasi.page.scss'],
 })
 export class MutasiPage implements OnInit {
+
   months: string[] = [
     'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
     'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
@@ -42,19 +41,22 @@ export class MutasiPage implements OnInit {
       const cocokBulan = this.selectedMonth
         ? item.tanggal.includes(this.selectedMonth)
         : true;
+
       const cocokJenis = this.selectedType
         ? item.jenis === this.selectedType
         : true;
+
       return cocokBulan && cocokJenis;
     });
   }
 
   goToDetail(id: string, jenis: string, tanggal: string) {
-    console.log('Detail Mutasi:', id, jenis, tanggal);
     this.navCtrl.navigateForward(`/detail-mutasi/${id}`);
   }
 
-  // 🔹 Fungsi tombol tambah
+
+  //              MODAL UNTUK PILIH MUTASI
+
   async tambahMutasi() {
     const alert = await this.alertCtrl.create({
       header: 'Pilih Jenis Mutasi',
@@ -70,7 +72,7 @@ export class MutasiPage implements OnInit {
         {
           text: 'Pilih',
           handler: (value) => {
-            console.log('Jenis mutasi dipilih:', value);
+            console.log('Mutasi dipilih:', value);
             this.goToFormMutasi(value);
           },
         },
@@ -80,9 +82,33 @@ export class MutasiPage implements OnInit {
     await alert.present();
   }
 
-  // 🔹 Arahkan ke halaman form mutasi (bisa kamu ubah rute sesuai kebutuhan)
+
+  //          ROUTE BERBEDA UNTUK SETIAP MUTASI
+
   goToFormMutasi(jenis: string) {
-    // Contoh: navigasi ke halaman tambah-mutasi dengan parameter jenis
-    this.navCtrl.navigateForward(`/tambah-mutasi?jenis=${jenis}`);
+    switch (jenis) {
+      case 'Mati':
+        this.navCtrl.navigateForward('/petugas/mutasi-mati');
+        break;
+
+      case 'Hilang':
+        this.navCtrl.navigateForward('/petugas/mutasi-hilang');
+        break;
+
+      case 'Dipotong':
+        this.navCtrl.navigateForward('/petugas/mutasi-dipotong');
+        break;
+
+      case 'Dijual':
+        this.navCtrl.navigateForward('/petugas/mutasidijual');
+        break;
+
+      case 'Dipindahkan':
+        this.navCtrl.navigateForward('/petugas/mutasi-pindah');
+        break;
+
+      default:
+        console.warn('Jenis mutasi tidak dikenali:', jenis);
+    }
   }
 }

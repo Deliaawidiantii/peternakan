@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/mutasi"></ion-back-button>
+      <ion-back-button defaultHref="/petugas/mutasi"></ion-back-button>
     </ion-buttons>
     <ion-title>Mutasi Hewan (Hilang)</ion-title>
   </ion-toolbar>
@@ -11,51 +11,45 @@
 
   <h2 class="judul-section">Input Mutasi Hewan Hilang</h2>
 
-  <!-- 🐮 ID Hewan -->
+  <!-- ID Hewan -->
   <ion-item lines="none" class="input-item">
     <ion-label position="stacked">ID Hewan</ion-label>
     <ion-input placeholder="Masukkan ID Hewan" [(ngModel)]="idHewan"></ion-input>
   </ion-item>
 
-  <!-- 📅 Tanggal Kematian -->
-  <!-- <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Tanggal Kematian</ion-label>
-    <ion-datetime
-      presentation="date"
-      placeholder="Pilih Tanggal"
-      [(ngModel)]="tanggalKematian">
-    </ion-datetime>
-  </ion-item> -->
-
-  <ion-item>
-      <ion-label position="stacked">Tanggal Hilang</ion-label>
-      <ion-input placeholder="Pilih Tanggal" type="date"></ion-input>
-    </ion-item>
-
-  <!-- Lokasi Hilang -->
-  <ion-item lines="none" class="input-group">
-    <ion-label position="stacked">Lokasi Terakhir Terlihat</ion-label>
-    <ion-input [value]="latitude + ', ' + longitude" readonly></ion-input>
-
-    <ion-input placeholder="Masukkan Lokasi"></ion-input>
+  <!-- Tanggal Hilang -->
+  <ion-item lines="none" class="input-item">
+    <ion-label position="stacked">Tanggal Hilang</ion-label>
+    <ion-input placeholder="Pilih Tanggal" type="date" [(ngModel)]="tanggalHilang"></ion-input>
   </ion-item>
 
-  <ion-button expand="block" color="secondary" (click)="getLokasi()">
+  <!-- Lokasi Hilang -->
+  <ion-item lines="none" class="input-item">
+    <ion-label position="stacked">Lokasi Terakhir Terlihat</ion-label>
+    <ion-input 
+      placeholder="Koordinat akan muncul di sini" 
+      [value]="latitude && longitude ? latitude + ', ' + longitude : 'Belum ada lokasi'" 
+      readonly>
+    </ion-input>
+  </ion-item>
+
+  <!-- Tombol Dapatkan Lokasi -->
+  <ion-button expand="block" color="secondary" (click)="getLokasi()" class="btn-lokasi">
+    <ion-icon name="location" slot="start"></ion-icon>
     Dapatkan Lokasi Saat Ini
   </ion-button>
 
-
-  <!-- 📝 Deskripsi Tambahan -->
+  <!-- Deskripsi Tambahan -->
   <ion-item lines="none" class="input-item">
     <ion-label position="stacked">Deskripsi Kejadian (opsional)</ion-label>
     <ion-textarea
-      placeholder="Tambahkan deskripsi Kejadian "
+      placeholder="Tambahkan deskripsi kejadian"
       autoGrow="true"
       [(ngModel)]="deskripsi">
     </ion-textarea>
   </ion-item>
 
-  <!-- 💾 Tombol Simpan -->
+  <!-- Tombol Simpan -->
   <div class="btn-container">
     <ion-button expand="block" color="primary" (click)="simpanData()">
       Simpan

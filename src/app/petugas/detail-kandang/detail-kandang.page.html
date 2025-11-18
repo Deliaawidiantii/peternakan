@@ -1,138 +1,63 @@
-<ion-header class="detail-header">
+<ion-header>
   <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/" text=""></ion-back-button>
+      <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>Detail Hewan</ion-title>
+    <ion-title>Detail Kandang</ion-title>
   </ion-toolbar>
-  
-  <!-- Header Card -->
-  <div class="header-card">
-    <div class="animal-icon">🐄</div>
-    <div class="header-info">
-      <h2 class="animal-name">Sapi Limosin</h2>
-      <p class="animal-id">ID: 2024sapi</p>
-    </div>
-    <div class="status-badge">
-      <ion-icon name="checkmark-circle"></ion-icon>
-      <span>Aktif</span>
-    </div>
-  </div>
 </ion-header>
 
-<ion-content class="detail-hewan">
-  <h3 class="section-title">
-    <ion-icon name="information-circle-outline"></ion-icon>
-    Informasi Hewan
-  </h3>
+<ion-content class="kandang-detail-content">
+<div class="image-section"></div>
 
-  <ion-list lines="none">
-    <ion-item>
-      <div class="item-content">
-        <div class="item-icon">
-          <ion-icon name="code-outline"></ion-icon>
-        </div>
-        <div class="item-info">
-          <p class="label-title">ID Hewan</p>
-          <p class="label-value">2024sapi</p>
-        </div>
-      </div>
-    </ion-item>
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Informasi kandang</ion-card-title>
+  </ion-card-header>
 
-    <ion-item>
-      <div class="item-content">
-        <div class="item-icon">
-          <ion-icon name="paw-outline"></ion-icon>
-        </div>
-        <div class="item-info">
-          <p class="label-title">Kelompok Hewan</p>
-          <p class="label-value">Ruminansia</p>
-        </div>
-      </div>
-    </ion-item>
+  <ion-card-content>
+    <div class="info-row">
+      <p class="label">ID Kandang</p>
+      <p class="value">KDG001</p>
+    </div>
 
-    <ion-item>
-      <div class="item-content">
-        <div class="item-icon">
-          <ion-icon name="albums-outline"></ion-icon>
-        </div>
-        <div class="item-info">
-          <p class="label-title">Jenis Hewan</p>
-          <p class="label-value">Sapi</p>
-        </div>
-      </div>
-    </ion-item>
+     <div class="info-row">
+      <p class="label">Nama Kandang</p>
+      <p class="value">Kandang Geboy</p>
+    </div>
 
-    <ion-item>
-      <div class="item-content">
-        <div class="item-icon">
-          <ion-icon name="location-outline"></ion-icon>
-        </div>
-        <div class="item-info">
-          <p class="label-title">Desa Binaan</p>
-          <p class="label-value">Desa Sukamaju</p>
-        </div>
-      </div>
-    </ion-item>
+     <div class="info-row">
+      <p class="label">Nama Pemilik</p>
+      <p class="value">Pak Nana</p>
+    </div>
 
-    <ion-item>
-      <div class="item-content">
-        <div class="item-icon">
-          <ion-icon name="calendar-outline"></ion-icon>
-        </div>
-        <div class="item-info">
-          <p class="label-title">Umur</p>
-          <p class="label-value">3 Tahun</p>
-        </div>
-      </div>
-    </ion-item>
+     <div class="info-row">
+      <p class="label">Desa</p>
+      <p class="value">Desa Pucung</p>
+    </div>
 
-    <ion-item>
-      <div class="item-content">
-        <div class="item-icon">
-          <ion-icon name="male-outline"></ion-icon>
-        </div>
-        <div class="item-info">
-          <p class="label-title">Jenis Kelamin</p>
-          <p class="label-value">Jantan</p>
-        </div>
-      </div>
-    </ion-item>
+     <div class="info-row">
+      <p class="label">Lokasi</p>
+      <p class="value">Dusun Bakan Tmabun rt 001/008 des.pucung kec.kotabaru kab karawang</p>
+    </div>
 
-    <ion-item>
-      <div class="item-content">
-        <div class="item-icon">
-          <ion-icon name="home-outline"></ion-icon>
-        </div>
-        <div class="item-info">
-          <p class="label-title">ID Kandang</p>
-          <p class="label-value">KDG001</p>
-        </div>
-      </div>
-    </ion-item>
 
-    <ion-item>
-      <div class="item-content">
-        <div class="item-icon">
-          <ion-icon name="person-outline"></ion-icon>
-        </div>
-        <div class="item-info">
-          <p class="label-title">ID Pemilik</p>
-          <p class="label-value">PMK123</p>
-        </div>
-      </div>
-    </ion-item>
-  </ion-list>
+     <div class="info-row">
+      <p class="label">Status Kandang</p>
+      <p class="value">Individu</p>
+    </div>
 
-  <!-- Action Buttons -->
-  <div class="action-buttons">
-    <ion-button expand="block" color="primary" class="action-btn">
-      <ion-icon name="create-outline" slot="start"></ion-icon>
-      Edit Data
-    </ion-button>
-    <ion-button expand="block" fill="outline" color="danger" class="action-btn">
-      <ion-icon name="trash-outline" slot="start"></ion-icon>
-      Hapus Hewan
-    </ion-button>
-  </div>
+     <div class="info-row">
+      <p class="label">Kapasitas</p>
+      <p class="value">10 ekor</p>
+    </div>
+
+     <div class="info-row">
+      <p class="label">Komoditas</p>
+      <p class="value">Sapi</p>
+    </div>
+
+  </ion-card-content>
+</ion-card>
+
 </ion-content>

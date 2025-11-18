@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar color="light">
 
-    <!-- <ion-button slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-button> -->
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/petugas/kegiatan" text=""></ion-back-button>
+    </ion-buttons>
 
     <ion-title>Detail Kegiatan</ion-title>
   </ion-toolbar>
@@ -15,9 +15,15 @@
     <!-- kegiatan -->
      <h2 class="section-title">Kegiatan</h2>
      <ion-item>
-      <ion-icon name="calender-outline" slot="start" class="icon-bg"></ion-icon>
+      <ion-icon name="calendar-outline" slot="start" class="icon-bg"></ion-icon>
       <ion-label>Pemeriksaan Kesehatan Hewan</ion-label>
      </ion-item>
+
+     <!-- Date -->
+      <ion-item>
+        <ion-icon name="calendar-outline" slot="start" class="icon-bg"></ion-icon>
+        <ion-label>15 Mei 2025</ion-label>
+      </ion-item>
 
 
      <!-- timing -->
@@ -42,9 +48,9 @@
         <!-- petugas -->
          <h2 class="section-title">Petugas</h2>
          <ion-item>
-          <ion-avatar slot="start">
+          <!-- <ion-avatar slot="start">
             <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9KtxegrlyxptesDIUikoXQ9x0uQXc9krsNn2RaJDiqlQsYuFzNYzw7jszyo1WQfsC7ApyC0_8cyaFx6PsWBetxrGdQ6evKZ7HNHMGFwANzYAd_tMNUNF5qgkY5zm-0UFjXFIuacquqqv3rcxXWNd62IkShAGHi8bYnx_rPzgmjBzVIyxuF3obn1_reNUxG7nH59U-tDr1XG-bmSfv7eRiAc5aIdm96RYkOJTfneiXRyPLCCvo0mhhHGRs9glQMS6cVAAy3bKgv1v8">
-          </ion-avatar>
+          </ion-avatar> -->
           <ion-label>Drh. Budi Santoso</ion-label>
          </ion-item>
 
@@ -58,7 +64,7 @@
   </ion-list>
 
   <!-- button -->
-   <div class="button-container">
-    <ion-button expand="block" color="light">Mulai Kegiatan</ion-button>
+   <div class="button-container" routerLink="/petugas/mulai-kegiatan">c
+    <ion-button expand="block" color="secondary">Mulai Kegiatan</ion-button>
    </div>
 </ion-content>

@@ -1,0 +1,142 @@
+/* HEADER */
+ion-header {
+  background: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+ion-toolbar {
+  background: #f8f9fa;
+  --ion-toolbar-border-color: transparent;
+}
+
+ion-title {
+  color: #212529;
+  font-weight: 600;
+}
+
+ion-back-button {
+  color: #495057;
+}
+
+
+/* CONTENT */
+ion-content {
+  --background: #ffffff;
+}
+
+
+/* DETAIL CONTAINER */
+.detail-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 20px;
+}
+
+.detail-item {
+  display: grid;
+  grid-template-columns: 35% 1fr;
+  gap: 16px;
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+  align-items: center;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-item .label {
+  color: #6c757d;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.detail-item .value {
+  color: #212529;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-normal {
+  background: #c1e1c1;
+  color: #2e7d32;
+}
+
+.status-warning {
+  background: #fdfd96;
+  color: #8d6e63;
+}
+
+.status-danger {
+  background: #ffb3b3;
+  color: #b71c1c;
+}
+
+
+/* BUTTON CONTAINER */
+.button-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  position: sticky;
+  bottom: 0;
+}
+
+.delete-btn {
+  --background: transparent;
+  --color: #779ecb;
+  --border-color: #779ecb;
+  border: 1px solid #779ecb;
+}
+
+.delete-btn:hover {
+  background: rgba(119, 158, 203, 0.1);
+}
+
+.edit-btn {
+  --background: #aec6cf;
+  --color: #212529;
+}
+
+.edit-btn:hover {
+  --background: #95afc0;
+}
+
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .detail-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .button-container {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-item .label {
+    font-size: 0.85rem;
+  }
+
+  .detail-item .value {
+    font-size: 0.9rem;
+  }
+}

@@ -1,51 +1,57 @@
 .data-pemilik-content {
-  --padding-start: 20px;
-  --padding-end: 20px;
-  background-color: #ffffff;
+  --background: #f8fafb;
+  font-family: "Public Sans", "Noto Sans", sans-serif;
 }
 
+/* Form List */
 .list-data-pemilik {
-  padding-top: 24px;
-  padding-bottom: 24px;
+  padding: 0 30px;
+  margin-top: 0px;
 }
 
 ion-item {
-  margin-bottom: 16px;
-  border-radius: 6px;
-  --background: #f4f4f4;
-  --padding-start: 12px;
-  --inner-padding-end: 12px;
-  border: 1px solid #ddd;
+  --background: #e8eff3;
+  --min-height: 42px;        /* lebih kecil dari default 56px */
+  --padding-start: 10px;
+  --inner-padding-end: 10px;
+  --padding-top: 4px;
+  --padding-bottom: 4px;
+
+  border-radius: 8px;
+  margin-bottom: 10px;
 }
 
 ion-label {
-  font-size: 15px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #0e161b;
+  margin-bottom: 2px;
 }
 
 ion-input,
 ion-textarea,
 ion-select {
+  color: #0e161b;
   font-size: 14px;
-  --padding-start: 8px;
-  --color: #222;
+  min-height: 24px;  /* biar input nggak bikin tinggi item */
 }
 
-ion-input::part(placeholder),
-ion-textarea::part(placeholder),
-ion-select::part(placeholder) {
-  color: #999;
+ion-textarea {
+  --padding-top: 4px;
+  --padding-bottom: 4px;
+  font-size: 14px;
 }
 
+
+/* Button */
 .button-container {
-  padding: 24px 0;
+  padding: 16px;
 }
 
 ion-button {
-  border-radius: 6px;
+  --background: #63bce9;
+  --color: #0e161b;
   font-weight: 600;
+  --border-radius: 8px;
   font-size: 15px;
-  letter-spacing: 0.5px;
 }

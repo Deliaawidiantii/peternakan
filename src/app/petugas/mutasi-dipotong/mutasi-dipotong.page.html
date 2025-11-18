@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/mutasi"></ion-back-button>
+      <ion-back-button defaultHref="/petugas/mutasi"></ion-back-button>
     </ion-buttons>
     <ion-title>Mutasi Hewan (dipotong)</ion-title>
   </ion-toolbar>
@@ -11,7 +11,7 @@
 
   <h2 class="judul-section">Input Data Pemotongan Hewan</h2>
 
-  <!-- 🐮 ID Hewan -->
+  <!--  ID Hewan -->
   <ion-item lines="none" class="input-item">
     <ion-label position="stacked">ID Hewan</ion-label>
     <ion-input placeholder="Masukkan ID Hewan" [(ngModel)]="idHewan"></ion-input>
@@ -39,7 +39,7 @@
         <ion-input type="number" placeholder="Masukkan Berat"></ion-input>
   </ion-item>
 
-  <!-- 💾 Tombol Simpan -->
+  <!--  Tombol Simpan -->
   <div class="btn-container">
     <ion-button expand="block" color="primary" (click)="simpanData()">
       Simpan

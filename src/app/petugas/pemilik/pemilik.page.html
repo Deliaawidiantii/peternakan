@@ -13,13 +13,13 @@
   </div>
 
 
-  <ion-list lines="none">
+  <ion-list lines="none" routerLink = "/petugas/detail-pemilik" class="pemilik-list">
     <ion-item *ngFor="let p of filteredPemilik" button detail (click)="openPemilik(p)">
       <ion-avatar slot="start" [ngStyle]="{'background-color':p.color}" class="avatar">
         <div class="initials">{{ p.initials }}</div>
       </ion-avatar>
 
-      <ion-label>
+      <ion-label >
         <h2 class="name"> {{p.name}} </h2>
         <p class="village"> {{p.village}} </p>
       </ion-label>
@@ -31,5 +31,11 @@
     </ion-item>
   </ion-list>
 
+  <!-- Floating Add Button -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/petugas/data-pemilik" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>

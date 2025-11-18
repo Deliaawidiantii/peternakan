@@ -3,6 +3,16 @@
   font-family: "Public Sans", "Noto Sans", sans-serif;
 }
 
+.image-section {
+  background-image: url('/assets/icon/penyakit2.jpg');
+  // background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCZjEXN0fy1Xcxhv9tkDax33F4xG6hOzYNWibYxnlkvZFvl6k0UEC9S-5gtxCp8xsX6d84cM5r3PLg7mtIuHv1hQonJkwypm8SymoZojyOuvN-AU8M0OIv7YIx13xC52gfGX26XimDjTxBX06aXjXuW_3owmrpPBRJhu6pjqKYbHr7_R0KacxqupVv7x1ogIlHvIUp2tP_VH13xOUNosFiMzD0glyrLyXgt3ByCSjFsKo3GjWxht7rzwrDovS0MInpOKcwMZUNggNx9");
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  height: 220px;
+  margin: 16px;
+}
+
 /* Header */
 .custom-header ion-title {
   font-weight: 700;

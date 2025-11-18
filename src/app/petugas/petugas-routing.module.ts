@@ -147,6 +147,14 @@ const routes: Routes = [
     path: 'mutasi-pindah',
     loadChildren: () => import('./mutasi-pindah/mutasi-pindah.module').then( m => m.MutasiPindahPageModule)
   },
+  {
+    path: 'scan',
+    loadChildren: () => import('./scan/scan.module').then( m => m.ScanPageModule)
+  },
+  {
+    path: 'detail-kelahiran',
+    loadChildren: () => import('./detail-kelahiran/detail-kelahiran.module').then( m => m.DetailKelahiranPageModule)
+  },
   
 
 ];

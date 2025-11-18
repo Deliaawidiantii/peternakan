@@ -1,17 +1,17 @@
 ion-content {
-  --background: #f8fafb;
+  --background: #f0f4f8;
 }
 
 .judul-section {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #0e161b;
+  color: #0d47a1;
   margin-bottom: 1rem;
   text-align: center;
 }
 
 .input-item {
-  background: #e8eff3;
+  background: #d6eaf8;
   border-radius: 10px;
   margin-bottom: 1rem;
   --padding-start: 16px;
@@ -19,14 +19,14 @@ ion-content {
 }
 
 ion-label {
-  color: #0e161b;
+  color: #0d47a1;
   font-weight: 500;
 }
 
 ion-input,
 ion-textarea,
 ion-select {
-  color: #0e161b;
+  color: #0d47a1;
 }
 
 .btn-container {
@@ -34,7 +34,13 @@ ion-select {
 }
 
 ion-button {
-  --background: #4cb3e6;
+  --background: #1976d2;
   font-weight: 700;
-  color: #0e161b;
+  color: #ffffff;
+}
+
+.btn-lokasi {
+  --background: #0d47a1;
+  margin-bottom: 1rem;
+  color: #ffffff;
 }

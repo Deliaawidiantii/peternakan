@@ -1,11 +1,11 @@
 .chat-content {
-  --background: #f8fafb;
+  --background: #f0f4f8;
   font-family: "Public Sans", "Noto Sans", sans-serif;
   padding: 0 8px;
 }
 
 .chat-header {
-  --background: #f8fafb;
+  --background: #f0f4f8;
   padding: 12px;
 }
 
@@ -30,40 +30,41 @@
 
   .msg-sender {
     font-size: 13px;
-    color: #507e95;
+    color: #0d47a1;
     margin-bottom: 4px;
+    font-weight: 600;
   }
 
   &.user {
     justify-content: flex-end;
 
     .sent {
-      background: #63bce9;
-      color: #0e161b;
+      background: #1976d2;
+      color: #ffffff;
       text-align: right;
     }
   }
 
   .received {
-    background: #e8eff3;
-    color: #0e161b;
+    background: #d6eaf8;
+    color: #0d47a1;
   }
 }
 
 .chat-footer {
-  --background: #f8fafb;
+  --background: #ffffff;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .chat-input-box {
-  --background: #e8eff3;
+  --background: #f0f4f8;
   border-radius: 12px;
   margin: 6px 12px;
   padding-left: 10px;
 
   ion-input {
     font-size: 15px;
-    color: #0e161b;
+    color: #0d47a1;
+    --placeholder-color: #a0aec0;
   }
 }
-
-

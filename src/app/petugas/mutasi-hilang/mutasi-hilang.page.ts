@@ -18,20 +18,26 @@ export class MutasiHilangPage {
   constructor(private navCtrl: NavController) {}
 
   simpanData() {
+
+    // validasi data wajib diisi
+
     if (!this.idHewan || !this.tanggalHilang || !this.lokasiTerakhir) {
       alert("Mohon lengkapi semua data yang diperlukan.");
       return;
     }
 
+    // siapkan data untuk disimpan
     console.log("Data disimpan:", {
       idHewan: this.idHewan,
       tanggalHilang: this.tanggalHilang,
-      lokasiTerakhir: this.lokasiTerakhir,
+      latitude: this.latitude,
+      longitude: this.longitude,
       deskripsi: this.deskripsi,
       koordinat: this.latitude && this.longitude ? `${this.latitude}, ${this.longitude}` : 'Tidak ada data lokasi'
     });
 
     // Kembali ke halaman mutasi
+    alert("Data mutasi hilang hewan berhasil disimpan.");
     this.navCtrl.navigateBack('/mutasi');
   }
 

@@ -1,27 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-daftar-penyakit',
   templateUrl: './daftar-penyakit.page.html',
   styleUrls: ['./daftar-penyakit.page.scss'],
-  standalone:  false,
+  standalone: false,
 })
 export class DaftarPenyakitPage implements OnInit {
+  status: string | null = null;
 
-  constructor(private alertcontroller: AlertController) { }
-
-  async showAlert(){
-    const alert = await this.alertcontroller.create({
-      header : 'gagal ',
-      message : 'Menunggu Verifikasi ',
-      buttons : ['Ok'],
-      cssClass:'custom-alert'
-    })
-    await alert.present();
-  }
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
+    // Ambil query param "status" kalau ada
+    this.route.queryParamMap.subscribe((params) => {
+      this.status = params.get('status');
+    });
   }
 
+  // Opsional: fungsi navigasi ke halaman detail
+  goToDetail(status: string) {
+    this.router.navigate(['/petugas/detail-penyakit'], { queryParams: { status } });
+  }
 }

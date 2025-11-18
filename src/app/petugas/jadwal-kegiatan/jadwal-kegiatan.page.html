@@ -1,84 +1,40 @@
 <ion-header>
   <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-button fill="clear">
-        <ion-icon name="arrow-back-outline"></ion-icon>
-      </ion-button>
+      <ion-back-button defaultHref="/petugas/kegiatan" text=""></ion-back-button>
     </ion-buttons>
     <ion-title>Jadwal Kegiatan</ion-title>
   </ion-toolbar>
 
-  <ion-segment value="daftar">
-    <ion-segment-button value="daftar">
-      <ion-label>Daftar</ion-label>
+  <!-- SEGMENT DENGAN 4 TAB -->
+  <ion-segment value="semua" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="semua">
+      <ion-label>Semua</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="kalender">
-      <ion-label>Kalender</ion-label>
+    <ion-segment-button value="akan-datang">
+      <ion-label>Akan Datang</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="berjalan">
+      <ion-label>Berjalan</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="selesai">
+      <ion-label>Selesai</ion-label>
     </ion-segment-button>
   </ion-segment>
 </ion-header>
 
 <ion-content class="jadwal-page">
-  <ion-list lines="none">
-    <ion-item class="jadwal-item">
-      <ion-avatar slot="start" class="icon-box">
-        <ion-icon name="calendar-outline"></ion-icon>
-      </ion-avatar>
-      <ion-label>
-        <h2>Vaksinasi Ternak</h2>
-        <p>Status: Terjadwal</p>
-        <p>10 Agustus 2024, 09:00 - 10:00</p>
-      </ion-label>
-      <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
-    </ion-item>
-
-    <ion-item class="jadwal-item">
-      <ion-avatar slot="start" class="icon-box">
-        <ion-icon name="calendar-outline"></ion-icon>
-      </ion-avatar>
-      <ion-label>
-        <h2>Pemeriksaan Kesehatan Rutin</h2>
-        <p>Status: Dilaksanakan</p>
-        <p>12 Agustus 2024, 14:00 - 15:00</p>
-      </ion-label>
-      <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
-    </ion-item>
-
-    <ion-item class="jadwal-item">
-      <ion-avatar slot="start" class="icon-box">
-        <ion-icon name="calendar-outline"></ion-icon>
-      </ion-avatar>
-      <ion-label>
-        <h2>Pengambilan Sampel Darah</h2>
-        <p>Status: Dibatalkan</p>
-        <p>15 Agustus 2024, 11:00 - 12:00</p>
-      </ion-label>
-      <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
-    </ion-item>
-
-    <ion-item class="jadwal-item">
-      <ion-avatar slot="start" class="icon-box">
-        <ion-icon name="calendar-outline"></ion-icon>
-      </ion-avatar>
-      <ion-label>
-        <h2>Pemberian Vitamin</h2>
-        <p>Status: Terjadwal</p>
-        <p>18 Agustus 2024, 10:00 - 11:00</p>
-      </ion-label>
-      <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
-    </ion-item>
-
-    <ion-item class="jadwal-item">
-      <ion-avatar slot="start" class="icon-box">
-        <ion-icon name="calendar-outline"></ion-icon>
-      </ion-avatar>
-      <ion-label>
-        <h2>Konsultasi dengan Peternak</h2>
-        <p>Status: Dilaksanakan</p>
-        <p>20 Agustus 2024, 13:00 - 14:00</p>
-      </ion-label>
-      <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
-    </ion-item>
+  <ion-list lines="none" id="kegiatanList">
+    <!-- Data akan di-render dari TypeScript -->
   </ion-list>
-</ion-content>
 
+  <!-- Empty State -->
+  <div id="emptyState" style="display: none; text-align:center; padding:48px 16px; color: #64748b;">
+    <div style="font-size: 3rem; margin-bottom: 16px;">
+      <ion-avatar slot="start" class="icon-box">
+        <ion-icon name="calendar-outline"></ion-icon>
+      </ion-avatar>
+    </div>
+    <p id="emptyMessage">Tidak Ada Kegiatan</p>
+  </div>
+</ion-content>

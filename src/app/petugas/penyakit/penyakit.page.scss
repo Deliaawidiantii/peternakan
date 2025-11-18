@@ -5,28 +5,44 @@
 
 /* Setiap item menu */
 .menu-item {
-  display: flex;
-  align-items: center;
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
+  
   padding: 12px;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
   border-radius: 10px;
-  background: #f8fafc;
-  transition: 0.2s;
+  background: #ffffff;
+  border: 1px solid #e8f1f6;
+  transition: all 0.2s ease;
 }
 
 .menu-item:hover {
+  background: #f0f7fb;
+  border-color: #d4e6f1;
+  box-shadow: 0 2px 8px rgba(13, 23, 27, 0.08);
+}
+
+.menu-item:active {
   background: #e2edf3;
 }
 
 /* Icon di sebelah kiri */
 .icon-box {
   --background: #e7eff3;
-  border-radius: 10px;
+  --border-radius: 10px;
+  
   width: 48px;
   height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: 12px;
+  flex-shrink: 0;
 }
 
 .icon-box ion-icon {
@@ -35,13 +51,31 @@
 }
 
 /* Label */
+ion-label {
+  padding: 4px 0;
+}
+
 ion-label h2 {
   font-size: 16px;
   color: #0d171b;
   font-weight: 600;
+  margin: 0 0 4px 0;
+  line-height: 1.4;
 }
 
 ion-label p {
-  font-size: 14px;
+  font-size: 13px;
+  color: #4c809a;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Icon di sebelah kanan */
+ion-icon[slot="end"] {
+  color: #a0b8c8;
+  font-size: 20px;
+}
+
+.menu-item:hover ion-icon[slot="end"] {
   color: #4c809a;
 }

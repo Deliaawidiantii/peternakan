@@ -1,0 +1,105 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Pindai Barcode</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="flashlight-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+
+  <!-- Background Kamera -->
+  <div class="camera-bg"></div>
+  <div class="camera-overlay"></div>
+
+  <!-- Teks instruksi -->
+  <div class="instruction" *ngIf="isScanning">
+    Posisikan barcode di dalam bingkai
+  </div>
+
+  <!-- Scanner Frame -->
+  <div class="scanner-frame" *ngIf="isScanning">
+    <div class="frame-outline"></div>
+    <div class="frame-corners">
+      <div class="corner tl"></div>
+      <div class="corner tr"></div>
+      <div class="corner bl"></div>
+      <div class="corner br"></div>
+    </div>
+  </div>
+
+  <!-- ========================= -->
+  <!--         MODAL            -->
+  <!-- ========================= -->
+
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="isModalOpen = false">
+    <ng-template>
+      <ion-content class="ion-padding">
+
+        <div *ngIf="barcodeData; else noData">
+          <h2 class="text-center font-bold text-xl">Informasi Barcode</h2>
+
+          <div class="info-grid">
+            <div>
+              <span class="label">ID Hewan</span>
+              <span class="value">{{ barcodeData.idHewan }}</span>
+            </div>
+            <div>
+              <span class="label">Kelompok Hewan</span>
+              <span class="value">{{ barcodeData.kelompokHewan }}</span>
+            </div>
+            <div>
+              <span class="label">Jenis Hewan</span>
+              <span class="value">{{ barcodeData.jenisHewan }}</span>
+            </div>
+            <div>
+              <span class="label">Tanggal Lahir</span>
+              <span class="value">{{ barcodeData.tanggalLahir }}</span>
+            </div>
+            <div>
+              <span class="label">Jenis Kelamin</span>
+              <span class="value">{{ barcodeData.jenisKelamin }}</span>
+            </div>
+            <div>
+              <span class="label">Pemilik</span>
+              <span class="value">{{ barcodeData.pemilik }}</span>
+            </div>
+          </div>
+
+          <ion-button expand="block" class="mt-4 confirm-btn" (click)="confirmScan()">
+            <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+            Konfirmasi
+          </ion-button>
+
+          <ion-button expand="block" class="mt-2 scan-again-btn" (click)="scanBarcode()">
+            <ion-icon name="qr-code-outline" slot="start"></ion-icon>
+            Scan Ulang
+          </ion-button>
+
+          <ion-button expand="block" fill="clear" color="medium" (click)="isModalOpen = false">
+            Batal
+          </ion-button>
+        </div>
+
+        <ng-template #noData>
+          <div class="text-center ion-padding">
+            <ion-spinner></ion-spinner>
+            <p class="mt-4">Memindai barcode...</p>
+          </div>
+        </ng-template>
+
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

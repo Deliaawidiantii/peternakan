@@ -19,8 +19,12 @@
   <ion-item lines="none" class="input-item">
     <ion-select placeholder="Kelompok Hewan">
       <ion-select-option value="one">Kelompok Hewan</ion-select-option>
-      <ion-select-option value="two">Two</ion-select-option>
-      <ion-select-option value="three">Three</ion-select-option>
+      <ion-select-option value="two">Ruminansia</ion-select-option>
+      <ion-select-option value="three">Primata</ion-select-option>
+      <ion-select-option value="two">Unggas</ion-select-option>
+      <ion-select-option value="three">Kesayangan</ion-select-option>
+      <ion-select-option value="two">Lainnya</ion-select-option>
+      
     </ion-select>
   </ion-item>
 
@@ -28,14 +32,28 @@
   <ion-item lines="none" class="input-item">
     <ion-select placeholder="Jenis Hewan">
       <ion-select-option value="one">Jenis Hewan</ion-select-option>
-      <ion-select-option value="two">Two</ion-select-option>
-      <ion-select-option value="three">Three</ion-select-option>
+      <ion-select-option value="two">Sapi</ion-select-option>
+      <ion-select-option value="three">Ayam</ion-select-option>
     </ion-select>
+  </ion-item>
+
+    <!-- Usia -->
+  <ion-item lines="none" class="input-item">
+    <ion-input placeholder="Usia"></ion-input>
   </ion-item>
 
   <!-- ID Hewan -->
   <ion-item lines="none" class="input-item">
     <ion-input placeholder="ID Hewan"></ion-input>
+  </ion-item>
+
+   <!-- Jenis Kelamin -->
+  <ion-item lines="none" class="input-item">
+    <ion-select placeholder="Jenis Kelamin">
+      <ion-select-option value="one">Jantan</ion-select-option>
+      <ion-select-option value="two">Betina</ion-select-option>
+      
+    </ion-select>
   </ion-item>
 
   <!-- Tanggal -->
@@ -97,5 +115,10 @@
     <ion-button expand="block" color="primary" class="submit-btn">
       Kirim Laporan
     </ion-button>
+
+    <ion-button expand="block" color="danger" class="submit-btn">
+      Batal
+    </ion-button>
+
   </div>
 </ion-content>

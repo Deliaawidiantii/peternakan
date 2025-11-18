@@ -1,10 +1,5 @@
 <ion-header translucent="true">
   <ion-toolbar>
-    <!-- <ion-buttons slot="start">
-      <ion-button fill="clear">
-        <ion-icon name="arrow-back-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons> -->
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
@@ -19,21 +14,77 @@
   </div>
 
   <!-- Filter -->
-  <div class="filter-container">
-    <ion-chip outline color="primary">
+   <div class="filter-container">
+    <!-- Filter Periode Waktu -->
+   <ion-item lines="none" class="filter-chip">
+      <ion-label>Periode Waktu</ion-label>
+      <ion-select interface="popover" placeholder="Pilih Bulan">
+        <ion-select-option value="januari">januari</ion-select-option>
+        <ion-select-option value="februari">februari</ion-select-option>
+        <ion-select-option value="maret">maret</ion-select-option>
+        <ion-select-option value="april">april</ion-select-option>
+        <ion-select-option value="mei">mei</ion-select-option>
+        <ion-select-option value="juni">juni</ion-select-option>
+        <ion-select-option value="juli">juli</ion-select-option>
+        <ion-select-option value="agustus">agustus</ion-select-option>
+        <ion-select-option value="september">september</ion-select-option>
+        <ion-select-option value="oktober">oktober</ion-select-option>
+        <ion-select-option value="november">november</ion-select-option>
+        <ion-select-option value="desember">desember</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none" class="filter-item">
+      <ion-label>Filter status</ion-label>
+      <ion-select interface="popover" placeholder="Pilih status">
+        <ion-select-option value="Semua">Semua</ion-select-option>
+        <ion-select-option value="Selesai">Selesai</ion-select-option>
+        <ion-select-option value="Dibatalkan">Dibatalkan</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+  </div>
+
+
+ 
+    <!-- Filter Periode Waktu -->
+    <!-- <ion-chip outline color="primary" id="periodFilter" class="filter-chip">
       <ion-label>Periode Waktu</ion-label>
       <ion-icon name="chevron-down-outline"></ion-icon>
     </ion-chip>
 
-    <ion-chip outline color="primary">
+    <div class="filter-dropdown" id="periodDropdown" style="display: none;">
+      <div class="filter-dropdown-item" data-month="all">Semua Bulan</div>
+      <div class="filter-dropdown-item" data-month="01">Januari</div>
+      <div class="filter-dropdown-item" data-month="02">Februari</div>
+      <div class="filter-dropdown-item" data-month="03">Maret</div>
+      <div class="filter-dropdown-item" data-month="04">April</div>
+      <div class="filter-dropdown-item" data-month="05">Mei</div>
+      <div class="filter-dropdown-item" data-month="06">Juni</div>
+      <div class="filter-dropdown-item" data-month="07">Juli</div>
+      <div class="filter-dropdown-item" data-month="08">Agustus</div>
+      <div class="filter-dropdown-item" data-month="09">September</div>
+      <div class="filter-dropdown-item" data-month="10">Oktober</div>
+      <div class="filter-dropdown-item" data-month="11">November</div>
+      <div class="filter-dropdown-item" data-month="12">Desember</div>
+    </div> -->
+
+    <!-- Filter Status -->
+    <!-- <ion-chip outline color="primary" id="statusFilter" class="filter-chip">
       <ion-label>Status</ion-label>
       <ion-icon name="chevron-down-outline"></ion-icon>
     </ion-chip>
-  </div>
+
+    <div class="filter-dropdown" id="statusDropdown" style="display: none;">
+      <div class="filter-dropdown-item" data-status="all">Semua Status</div>
+      <div class="filter-dropdown-item" data-status="selesai">Selesai</div>
+      <div class="filter-dropdown-item" data-status="batal">Dibatalkan</div>
+    </div> -->
+  
 
   <!-- Riwayat Kegiatan -->
   <div class="riwayat-list">
-    <div class="riwayat-card">
+    <div class="riwayat-card" data-month="05" data-status="selesai">
       <div class="card-icon">
         <ion-icon name="medkit-outline"></ion-icon>
       </div>
@@ -44,7 +95,7 @@
       <span class="status selesai">Selesai</span>
     </div>
 
-    <div class="riwayat-card">
+    <div class="riwayat-card" data-month="05" data-status="selesai">
       <div class="card-icon">
         <ion-icon name="heart-outline"></ion-icon>
       </div>
@@ -55,7 +106,7 @@
       <span class="status selesai">Selesai</span>
     </div>
 
-    <div class="riwayat-card">
+    <div class="riwayat-card" data-month="05" data-status="batal">
       <div class="card-icon cancel">
         <ion-icon name="flask-outline"></ion-icon>
       </div>
@@ -66,7 +117,7 @@
       <span class="status batal">Dibatalkan</span>
     </div>
 
-    <div class="riwayat-card">
+    <div class="riwayat-card" data-month="05" data-status="selesai">
       <div class="card-icon">
         <ion-icon name="nutrition-outline"></ion-icon>
       </div>
