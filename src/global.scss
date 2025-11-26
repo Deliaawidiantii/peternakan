@@ -36,13 +36,17 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
 
-/* Dark Mode Global */
-// html.light {
-//   --ion-background-color: #1e1e1e;
-//   --ion-text-color: #ffffff;
+// light Mode (default)
+:root {
+  --ion-background-color: #ffffff;
+  --ion-text-color: #000000;
+}
 
-  /* Optional: ubah warna primary, secondary */
-//   --ion-color-primary: #3880ff;
-//   --ion-color-secondary: #0cd1e8;
-// }
+// dark Mode
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-background-color: #000000;
+    --ion-text-color: #ffffff;
+  }
+}
 

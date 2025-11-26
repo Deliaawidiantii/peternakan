@@ -1,0 +1,88 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+    <ion-back-button defaultHref="/petugas/mutasi-hewan"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="title-center">Detail Mutasi hewan</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Informasi hewan section -->
+   <h2 class="section-title">Informasi Hewan</h2>
+   <div class="info-section">
+
+    <div class="info-row">
+      <p class="info-label">Kelompok Hewan</p>
+      <p class="info-value">{{hewan.kelompokHewan}}</p>
+   </div>
+
+    <div class="info-row">
+      <p class="info-label">Jenis Hewan</p>
+      <p class="info-value">{{hewan.jenisHewan}}</p>
+    </div>
+
+    <div class="info-row">
+      <p class="info-label">Ras</p>
+      <p class="info-value">{{hewan.ras}}</p>
+    </div>
+
+    <div class="info-row">
+        <p class="info-label">ID Hewan</p>
+        <p class="info-value">{{hewan.idHewan}}</p>
+    </div>
+
+    <div class="info-row">
+        <p class="info-label">Umur</p>
+        <p class="info-value">{{hewan.umur}}</p>
+    </div>
+
+    <div class="info-row">
+        <p class="info-label">Berat Badan</p>
+        <p class="info-value">{{hewan.beratBadan}}</p>
+    </div>
+  
+    </div>
+
+    <!-- Detail Mutasi -->
+
+    <h2 class="section-title">Detail Mutasi</h2>
+    <div class="info-section">
+
+      <div class="info-row">
+        <p class="info-label">Tanggal Mutasi</p>
+        <p class="info-value">{{mutasi.tanggalMutasi}}</p>
+      </div>
+
+      <div class="info-row">
+        <p class="info-label">Jenis Mutasi</p>
+        <p class="info-value">{{mutasi.jenisMutasi}}</p>
+      </div>
+
+      <div class="info-row">
+        <p class="info-label">Alasan Mutasi</p>
+        <p class="info-value">{{mutasi.alasanMutasi}}</p>
+      </div>
+
+      <div class="info-row">
+        <p class="info-label">Keterangan</p>
+        <p class="info-value">{{mutasi.keterangan}}</p>
+      </div>
+   
+      <!-- Waktu Kejadian -->
+       <!-- <h2 class="section-title">Waktu Kejadian</h2>
+       <div class="info-section">
+
+        <div class="info-row">
+          <p class="info-label">Tanggal Kejadian</p>
+          <p class="info-value">{{mutasi.tanggalKejadian}}</p>  
+        </div>
+
+        <div class="info-row">
+          <p class="info-label">Waktu Kejadian</p>
+          <p class="info-value">{{mutasi.waktuKejadian}}</p>
+        </div> -->
+    </div>
+  
+
+</ion-content>

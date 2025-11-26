@@ -50,9 +50,9 @@ export class MutasiPage implements OnInit {
     });
   }
 
-  goToDetail(id: string, jenis: string, tanggal: string) {
-    this.navCtrl.navigateForward(`/detail-mutasi/${id}`);
-  }
+ goToDetail(id: string, jenis: string, tanggal: string) {
+  this.navCtrl.navigateForward('/petugas/detail-mutasi');
+}
 
 
   //              MODAL UNTUK PILIH MUTASI
