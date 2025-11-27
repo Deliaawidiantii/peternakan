@@ -1,0 +1,41 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="wrapper">
+    <!-- Logo -->
+    <div class="logo">
+      <img src="assets/icon/logo2.png" alt="Logo" />
+    </div>
+
+    <div class="card">
+      <h1 class="title">VERIFIKASI OTP</h1>
+      <p class="subtitle">Masukkan kode OTP yang telah dikirim ke email {{ email }}</p>
+
+      <!-- Error Alert -->
+      <div class="alert" *ngIf="showError">
+        <ul>
+          <li>{{ errorMessage }}</li>
+        </ul>
+      </div>
+
+      <form (ngSubmit)="verifyOtp()">
+        <div class="input-group">
+          <ion-input
+            type="text"
+            placeholder="Kode OTP (6 digit)"
+            [(ngModel)]="otp"
+            name="otp"
+            maxlength="6"
+            required>
+          </ion-input>
+        </div>
+
+        <ion-button expand="block" class="btn-submit" type="submit">
+          VERIFIKASI OTP
+        </ion-button>
+      </form>
+
+      <div class="links">
+        <a (click)="goBack()">Kirim Ulang OTP</a>
+      </div>
+    </div>
+  </div>
+</ion-content>

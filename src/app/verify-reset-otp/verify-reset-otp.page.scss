@@ -1,0 +1,84 @@
+/* Copy semua dari login.page.scss */
+.wrapper {
+  position: relative;
+  width: 90%;
+  max-width: 380px;
+  margin: 0 auto;
+  margin-top: 190px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.logo img {
+  height: 80px;
+  max-height: 96px;
+}
+
+.card {
+  background: #f9fafb;
+  padding: 50px 30px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1e3a8a;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #4b5563;
+  margin: 10px 0 20px;
+}
+
+.alert {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+ion-input {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 5px;
+  --padding-start: 10px;
+}
+
+.btn-submit {
+  --background: #2563eb;
+  --background-hover: #1d4ed8;
+  margin-top: 10px;
+}
+
+.links {
+  margin-top: 15px;
+  font-size: 13px;
+}
+
+.links a {
+  color: #2563eb;
+  text-decoration: none;
+  cursor: pointer;
+}

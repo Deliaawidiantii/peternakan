@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { LoadingController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-forgot-password',
@@ -7,45 +9,82 @@ import { Router } from '@angular/router';
   styleUrls: ['./forgot-password.page.scss'],
   standalone: false,
 })
-export class ForgotPasswordPage {
+export class ForgotPasswordPage implements OnInit {
   email: string = '';
   successMessage: string = '';
   errorMessage: string[] = [];
   isLoading: boolean = false;
 
-  constructor(private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private loadingController: LoadingController,
+    private alertController: AlertController
+  ) { }
 
-  sendResetLink() {
-    this.successMessage = '';
-    this.errorMessage = [];
-
-    if (!this.email) {
-      this.errorMessage.push('Email Tidak Boleh Kosong.');
-      return;
+  ngOnInit() {
   }
 
-  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailPattern.test(this.email)) {
-      this.errorMessage.push('Format Email Tidak Valid.');
+  async sendResetLink() {
+    // Reset messages
+    this.successMessage = '';
+    this.errorMessage = [];
+    
+    // Validasi
+    if (!this.email) {
+      this.errorMessage.push('Email harus diisi');
       return;
     }
 
-    // Simulate sending reset link
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.email)) {
+      this.errorMessage.push('Format email tidak valid');
+      return;
+    }
+
     this.isLoading = true;
-    setTimeout(() => {
-      this.successMessage = 'Link Reset Password Telah Dikirim ke Email Anda.' + this.email;
-      this.email = '';
-      this.isLoading = false;
 
-      // auto redirect ke login setelah 3 detik 
-      setTimeout(() => {
-        this.router.navigate(['/login']);
-      }, 3000);
-    }, 1500);
+    // Call API
+    this.authService.forgotPassword(this.email).subscribe({
+      next: async (response) => {
+        this.isLoading = false;
+        
+        if (response.success) {
+          // Simpan email ke localStorage untuk step selanjutnya
+          localStorage.setItem('reset_email', this.email);
+          
+          // Show alert dan redirect ke reset password page
+          const alert = await this.alertController.create({
+            header: 'OTP Terkirim',
+            message: 'Kode OTP telah dikirim ke email Anda. Silakan periksa inbox atau folder spam.',
+            buttons: [
+              {
+                text: 'OK',
+                handler: () => {
+                  // Redirect ke halaman verify OTP
+                  this.router.navigate(['/verify-reset-otp']);
+                }
+              }
+            ]
+          });
+          await alert.present();
+        }
+      },
+      error: async (error) => {
+        this.isLoading = false;
+        
+        if (error.status === 404) {
+          this.errorMessage.push('Email tidak terdaftar');
+        } else if (error.status === 0) {
+          this.errorMessage.push('Tidak dapat terhubung ke server');
+        } else {
+          this.errorMessage.push(error.error?.message || 'Terjadi kesalahan');
+        }
+      }
+    });
+  }
 
-}
-
-backToLogin() {
+  backToLogin() {
     this.router.navigate(['/login']);
   }
 }
