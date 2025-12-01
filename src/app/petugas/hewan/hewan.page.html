@@ -20,7 +20,7 @@
       <select class="filter-select">
         <option value="">Semua Jenis</option>
         <option value="sapi">Sapi</option>
-        <option value="kambing"> Kambing</option>
+        <option value="kambing">Kambing</option>
         <option value="ayam">Ayam</option>
       </select>
     </div>
@@ -29,78 +29,37 @@
   <!-- Hewan List -->
   <div class="list-header">
     <h2>Daftar Hewan</h2>
-    <span class="count-badge">3 hewan</span>
+    <span class="count-badge">{{ hewanList.length }} hewan</span>
   </div>
 
   <div class="hewan-grid">
-    <div class="hewan-card" routerLink="/petugas/detail-hewan">
+    <div class="hewan-card" *ngFor="let hewan of hewanList" routerLink="/petugas/detail-hewan">
       <div class="card-body">
-        <h3 class="animal-id">ID: 2023001</h3>
-        <p class="animal-type">Sapi Limosin</p>
+        <h3 class="animal-id">ID: {{ hewan.id }}</h3>
+        <p class="animal-type">{{ hewan.type }}</p>
         <div class="animal-meta">
           <span class="meta-item">
             <ion-icon name="calendar-outline"></ion-icon>
-            3 Tahun
+            {{ hewan.umur }}
           </span>
           <span class="meta-item">
-            <ion-icon name="male-outline"></ion-icon>
-            Jantan
+            <ion-icon [name]="hewan.jk === 'jantan' ? 'male-outline' : 'female-outline'"></ion-icon>
+            {{ hewan.jk | titlecase }}
           </span>
         </div>
       </div>
       <div class="card-footer">
         <ion-icon name="location-outline"></ion-icon>
-        <span>Kandang A-12</span>
-      </div>
-    </div>
-
-    <div class="hewan-card" routerLink="/petugas/detail-hewan">
-      <div class="card-body">
-        <h3 class="animal-id">ID: 2023002</h3>
-        <p class="animal-type">Kambing Etawa</p>
-        <div class="animal-meta">
-          <span class="meta-item">
-            <ion-icon name="calendar-outline"></ion-icon>
-            2 Tahun
-          </span>
-          <span class="meta-item">
-            <ion-icon name="female-outline"></ion-icon>
-            Betina
-          </span>
-        </div>
-      </div>
-      <div class="card-footer">
-        <ion-icon name="location-outline"></ion-icon>
-        <span>Kandang B-05</span>
-      </div>
-    </div>
-
-    <div class="hewan-card" routerLink="/petugas/detail-hewan">
-      <div class="card-body">
-        <h3 class="animal-id">ID: 2023003</h3>
-        <p class="animal-type">Ayam Kampung</p>
-        <div class="animal-meta">
-          <span class="meta-item">
-            <ion-icon name="calendar-outline"></ion-icon>
-            1 Tahun
-          </span>
-          <span class="meta-item">
-            <ion-icon name="male-outline"></ion-icon>
-            Jantan
-          </span>
-        </div>
-      </div>
-      <div class="card-footer">
-        <ion-icon name="location-outline"></ion-icon>
-        <span>Kandang C-20</span>
+        <span>{{ hewan.kandang }}</span>
       </div>
     </div>
   </div>
 
   <!-- Floating Add Button -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button routerLink="/petugas/data-hewan" color="primary">
+    <ion-fab-button (click)="pilihKelompokHewan()" color="primary">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+  
 </ion-content>

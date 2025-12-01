@@ -13,11 +13,11 @@ const routes: Routes = [
   },
   {
     path: 'edit-profile',
-    loadChildren: () => import('./edit-profile/edit-profile.module').then( m => m.EditProfilePageModule)
+    loadChildren: () => import('./profile/edit-profile/edit-profile.module').then( m => m.EditProfilePageModule)
   },
   {
     path: 'chat',
-    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
+    loadChildren: () => import('./informasi/chat/chat.module').then( m => m.ChatPageModule)
   },
   {
     path: 'notifikasi',
@@ -25,15 +25,15 @@ const routes: Routes = [
   },
   {
     path: 'data-pemilik',
-    loadChildren: () => import('./data-pemilik/data-pemilik.module').then( m => m.DataPemilikPageModule)
+    loadChildren: () => import('./pemilik/data-pemilik/data-pemilik.module').then( m => m.DataPemilikPageModule)
   },
   {
     path: 'data-kandang',
-    loadChildren: () => import('./data-kandang/data-kandang.module').then( m => m.DataKandangPageModule)
+    loadChildren: () => import('./kandang/data-kandang/data-kandang.module').then( m => m.DataKandangPageModule)
   },
   {
     path: 'data-hewan',
-    loadChildren: () => import('./data-hewan/data-hewan.module').then( m => m.DataHewanPageModule)
+    loadChildren: () => import('./hewan/data-hewan/data-hewan.module').then( m => m.DataHewanPageModule)
   },
   {
     path: 'kandang',
@@ -41,7 +41,7 @@ const routes: Routes = [
   },
   {
     path: 'detail-kandang',
-    loadChildren: () => import('./detail-kandang/detail-kandang.module').then( m => m.DetailKandangPageModule)
+    loadChildren: () => import('./kandang/detail-kandang/detail-kandang.module').then( m => m.DetailKandangPageModule)
   },
   {
     path: 'hewan',
@@ -49,7 +49,7 @@ const routes: Routes = [
   },
   {
     path: 'detail-hewan',
-    loadChildren: () => import('./detail-hewan/detail-hewan.module').then( m => m.DetailHewanPageModule)
+    loadChildren: () => import('./hewan/detail-hewan/detail-hewan.module').then( m => m.DetailHewanPageModule)
   },
   {
     path: 'pemilik',
@@ -57,7 +57,7 @@ const routes: Routes = [
   },
   {
     path: 'detail-pemilik',
-    loadChildren: () => import('./detail-pemilik/detail-pemilik.module').then( m => m.DetailPemilikPageModule)
+    loadChildren: () => import('./pemilik/detail-pemilik/detail-pemilik.module').then( m => m.DetailPemilikPageModule)
   },
   {
     path: 'kegiatan',
@@ -65,19 +65,19 @@ const routes: Routes = [
   },
   {
     path: 'detail-kegiatan',
-    loadChildren: () => import('./detail-kegiatan/detail-kegiatan.module').then( m => m.DetailPetugasPageModule)
+    loadChildren: () => import('./kegiatan/detail-kegiatan/detail-kegiatan.module').then( m => m.DetailPetugasPageModule)
   },
   {
     path: 'mulai-kegiatan',
-    loadChildren: () => import('./mulai-kegiatan/mulai-kegiatan.module').then( m => m.MulaiKegiatanPageModule)
+    loadChildren: () => import('./kegiatan/mulai-kegiatan/mulai-kegiatan.module').then( m => m.MulaiKegiatanPageModule)
   },
   {
     path: 'jadwal-kegiatan',
-    loadChildren: () => import('./jadwal-kegiatan/jadwal-kegiatan.module').then( m => m.JadwalKegiatanPageModule)
+    loadChildren: () => import('./kegiatan/jadwal-kegiatan/jadwal-kegiatan.module').then( m => m.JadwalKegiatanPageModule)
   },
   {
     path: 'riwayat-kegiatan',
-    loadChildren: () => import('./riwayat-kegiatan/riwayat-kegiatan.module').then( m => m.RiwayatKegiatanPageModule)
+    loadChildren: () => import('./kegiatan/riwayat-kegiatan/riwayat-kegiatan.module').then( m => m.RiwayatKegiatanPageModule)
   },
   {
     path: 'penyakit',
@@ -93,19 +93,19 @@ const routes: Routes = [
   },
   {
     path: 'laporan-kasus-penyakit',
-    loadChildren: () => import('./laporan-kasus-penyakit/laporan-kasus-penyakit.module').then( m => m.LaporanKasusPenyakitPageModule)
+    loadChildren: () => import('./penyakit/laporan-kasus-penyakit/laporan-kasus-penyakit.module').then( m => m.LaporanKasusPenyakitPageModule)
   },
   {
     path: 'daftar-penyakit',
-    loadChildren: () => import('./daftar-penyakit/daftar-penyakit.module').then( m => m.DaftarPenyakitPageModule)
+    loadChildren: () => import('./penyakit/daftar-penyakit/daftar-penyakit.module').then( m => m.DaftarPenyakitPageModule)
   },
   {
     path: 'detail-penyakit',
-    loadChildren: () => import('./detail-penyakit/detail-penyakit.module').then( m => m.DetailPenyakitPageModule)
+    loadChildren: () => import('./penyakit/detail-penyakit/detail-penyakit.module').then( m => m.DetailPenyakitPageModule)
   },
   {
     path: 'update-status-penyakit',
-    loadChildren: () => import('./update-status-penyakit/update-status-penyakit.module').then( m => m.UpdateStatusPenyakitPageModule)
+    loadChildren: () => import('./penyakit/update-status-penyakit/update-status-penyakit.module').then( m => m.UpdateStatusPenyakitPageModule)
   },
   {
     path: 'riwayat-perkembangan-penyakit',
@@ -113,39 +113,39 @@ const routes: Routes = [
   },
   {
     path: 'ruminansia',
-    loadChildren: () => import('./ruminansia/ruminansia.module').then( m => m.RuminansiaPageModule)
+    loadChildren: () => import('./buku-lahir/ruminansia/ruminansia.module').then( m => m.RuminansiaPageModule)
   },
   {
     path: 'kesayangan',
-    loadChildren: () => import('./kesayangan/kesayangan.module').then( m => m.KesayanganPageModule)
+    loadChildren: () => import('./buku-lahir/kesayangan/kesayangan.module').then( m => m.KesayanganPageModule)
   },
   {
     path: 'primata',
-    loadChildren: () => import('./primata/primata.module').then( m => m.PrimataPageModule)
+    loadChildren: () => import('./buku-lahir/primata/primata.module').then( m => m.PrimataPageModule)
   },
   {
     path: 'unggas',
-    loadChildren: () => import('./unggas/unggas.module').then( m => m.UnggasPageModule)
+    loadChildren: () => import('./buku-lahir/unggas/unggas.module').then( m => m.UnggasPageModule)
   },
   {
     path: 'mutasi-mati',
-    loadChildren: () => import('./mutasi-mati/mutasi-mati.module').then( m => m.MutasiMatiPageModule)
+    loadChildren: () => import('./mutasi/mutasi-mati/mutasi-mati.module').then( m => m.MutasiMatiPageModule)
   },
   {
     path: 'mutasi-hilang',
-    loadChildren: () => import('./mutasi-hilang/mutasi-hilang.module').then( m => m.MutasiHilangPageModule)
+    loadChildren: () => import('./mutasi/mutasi-hilang/mutasi-hilang.module').then( m => m.MutasiHilangPageModule)
   },
   {
     path: 'mutasi-dipotong',
-    loadChildren: () => import('./mutasi-dipotong/mutasi-dipotong.module').then( m => m.MutasiDipotongPageModule)
+    loadChildren: () => import('./mutasi/mutasi-dipotong/mutasi-dipotong.module').then( m => m.MutasiDipotongPageModule)
   },
   {
     path: 'mutasidijual',
-    loadChildren: () => import('./mutasidijual/mutasidijual.module').then( m => m.MutasidijualPageModule)
+    loadChildren: () => import('./mutasi/mutasidijual/mutasidijual.module').then( m => m.MutasidijualPageModule)
   },
   {
     path: 'mutasi-pindah',
-    loadChildren: () => import('./mutasi-pindah/mutasi-pindah.module').then( m => m.MutasiPindahPageModule)
+    loadChildren: () => import('./mutasi/mutasi-pindah/mutasi-pindah.module').then( m => m.MutasiPindahPageModule)
   },
   {
     path: 'scan',
@@ -153,15 +153,15 @@ const routes: Routes = [
   },
   {
     path: 'detail-kelahiran',
-    loadChildren: () => import('./detail-kelahiran/detail-kelahiran.module').then( m => m.DetailKelahiranPageModule)
+    loadChildren: () => import('./buku-lahir/detail-kelahiran/detail-kelahiran.module').then( m => m.DetailKelahiranPageModule)
   },
   {
     path: 'request-kegiatan',
-    loadChildren: () => import('./request-kegiatan/request-kegiatan.module').then( m => m.RequestKegiatanPageModule)
+    loadChildren: () => import('./kegiatan/request-kegiatan/request-kegiatan.module').then( m => m.RequestKegiatanPageModule)
   },
   {
     path: 'detail-mutasi',
-    loadChildren: () => import('./detail-mutasi/detail-mutasi.module').then( m => m.DetailMutasiPageModule)
+    loadChildren: () => import('./mutasi/detail-mutasi/detail-mutasi.module').then( m => m.DetailMutasiPageModule)
   },
   
 
