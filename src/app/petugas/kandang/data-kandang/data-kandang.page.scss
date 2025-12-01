@@ -56,5 +56,37 @@ ion-button {
   font-size: 15px;
 }
 
+.button-container {
+  margin: 0px 0;        /* jarak antar tombol */
+  width: 100%;           /* biar full width */
+  display: flex;
+  justify-content: center;
+}
+
+.button-container ion-button {
+  --border-radius: 8px;  /* sudut tombol biar lebih halus */
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  font-size: 16px;
+  width: 90%;            /* biar ga terlalu full banget */
+  max-width: 400px;      /* batas maksimal */
+}
+
+.btn-next {
+  --background: #3b82f6;      /* biru */
+  --border-radius: 8px;
+}
+
+.btn-save {
+  --background: #10b981 !important;      /* hijau */
+  --border-radius: 8px;
+}
+
+.btn-cancel {
+  --background: #ef4444;      /* merah */
+  --border-radius: 8px;
+}
+
+
 
 

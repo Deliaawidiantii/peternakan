@@ -1,0 +1,145 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/petugas/hewan"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Tambah Hewan Baru</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="pilihKategoriUlang()" *ngIf="selectedKategori">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="data-hewan-content">
+
+  <!-- Alert jika belum pilih kategori -->
+  <div *ngIf="!selectedKategori" class="no-kategori-alert">
+    <ion-card>
+      <ion-card-content>
+        <p>Silakan pilih kelompok hewan terlebih dahulu untuk melanjutkan.</p>
+        <ion-button expand="block" color="primary" (click)="pilihKategoriUlang()">
+          Pilih Kategori
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Form Input (tampil jika kategori sudah dipilih) -->
+  <ion-list lines="none" class="list-data-hewan" *ngIf="selectedKategori">
+    
+    <!-- ID Kandang (opsional) -->
+    <ion-label position="stacked">ID Kandang (opsional)</ion-label>
+    <ion-item>
+      <ion-input 
+        type="tel" 
+        placeholder="Masukan ID Kandang"
+        [(ngModel)]="formData.idKandang">
+      </ion-input>
+    </ion-item>
+
+    <!-- ID Pemilik (Opsional) -->
+    <ion-label position="stacked">ID Pemilik (Opsional)</ion-label>
+    <ion-item>
+      <ion-input 
+        type="tel" 
+        placeholder="Masukan ID Pemilik"
+        [(ngModel)]="formData.idPemilik">
+      </ion-input>
+    </ion-item>
+
+    <!-- Desa -->
+    <ion-label position="stacked">Desa <span style="color: red;">*</span></ion-label>
+    <ion-item>
+      <ion-select placeholder="Pilih Desa" [(ngModel)]="formData.desa">
+        <ion-select-option value="karangjaya">Karangjaya</ion-select-option>
+        <ion-select-option value="cikampek">Cikampek</ion-select-option>
+        <ion-select-option value="jatisari">Jatisari</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Jenis Hewan -->
+    <ion-label position="stacked">Jenis Hewan <span style="color: red;">*</span></ion-label>
+    <ion-item>
+      <ion-select 
+        placeholder="Pilih Jenis Hewan"
+        [(ngModel)]="formData.jenisHewan">
+        <ion-select-option 
+          *ngFor="let item of jenisHewanOptions" 
+          [value]="item.value">
+          {{ item.label }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Input Jenis Hewan Lainnya (Muncul jika pilih "lainnya_spesifik") -->
+    <div *ngIf="formData.jenisHewan === 'lainnya_spesifik'">
+      <ion-label position="stacked">Sebutkan Jenis Hewan <span style="color: red;">*</span></ion-label>
+      <ion-item>
+        <ion-input 
+          type="text"
+          placeholder="Contoh: Babi, Rusa, Trenggiling, dll"
+          [(ngModel)]="formData.jenisHewanLainnya">
+        </ion-input>
+      </ion-item>
+    </div>
+
+    <!-- Input Dinamis Berdasarkan Kategori (Field khusus) -->
+    <ng-container *ngFor="let field of currentFormFields">
+      
+      <!-- Input Text / Number / Tel -->
+      <div *ngIf="field.type !== 'date' && field.type !== 'select'">
+        <ion-label position="stacked">{{ field.label }}</ion-label>
+        <ion-item>
+          <ion-input 
+            [type]="field.type" 
+            [placeholder]="field.placeholder"
+            [(ngModel)]="formData[field.name]">
+          </ion-input>
+        </ion-item>
+      </div>
+
+      <!-- Input Select/Dropdown -->
+      <div *ngIf="field.type === 'select'">
+        <ion-label position="stacked">{{ field.label }}</ion-label>
+        <ion-item>
+          <ion-select 
+            [placeholder]="field.placeholder"
+            [(ngModel)]="formData[field.name]">
+            <ion-select-option 
+              *ngFor="let option of field.options" 
+              [value]="option.value">
+              {{ option.label }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+    </ng-container>
+
+    <!-- Jenis Kelamin -->
+    <ion-label position="stacked">Jenis Kelamin <span style="color: red;">*</span></ion-label>
+    <ion-item>
+      <ion-select placeholder="Pilih Jenis Kelamin" [(ngModel)]="formData.jenisKelamin">
+        <ion-select-option value="jantan">Jantan</ion-select-option>
+        <ion-select-option value="betina">Betina</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+
+  <!-- Tombol Aksi (tampil jika kategori sudah dipilih) -->
+  <div *ngIf="selectedKategori" class="button-container">
+    <ion-button class="btn-save" expand="block" color="success" (click)="simpanData()">
+      Simpan
+    </ion-button>
+  </div>
+
+  <div *ngIf="selectedKategori" class="button-container">
+    <ion-button class="btn-cancel" expand="block" color="danger" (click)="batal()">
+      Batal
+    </ion-button>
+  </div>
+  
+</ion-content>
