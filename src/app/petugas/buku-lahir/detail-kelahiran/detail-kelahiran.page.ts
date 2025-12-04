@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 
 interface BirthDetail {
   birthDate: string;
@@ -30,15 +30,18 @@ export class DetailKelahiranPage implements OnInit {
 
   constructor(
     private router: Router,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController
   ) {}
 
   ngOnInit() {
-    // Load data dari service atau route params
-    // this.loadBirthDetail();
+    // nanti kalau sudah pakai backend → load data di sini
   }
 
-  // Hapus catatan kelahiran
+  // ============================
+  // KONFIRMASI HAPUS
+  // ============================
   async deleteRecord() {
     const alert = await this.alertController.create({
       header: 'Hapus Catatan',
@@ -46,15 +49,13 @@ export class DetailKelahiranPage implements OnInit {
       buttons: [
         {
           text: 'Batal',
-          role: 'cancel',
+          role: 'cancel'
         },
         {
           text: 'Hapus',
           role: 'destructive',
           handler: () => {
-            console.log('Catatan dihapus');
-            // this.deleteService.deleteRecord(this.birthDetail.childId);
-            this.router.navigate(['/buku-lahir']);
+            this.confirmDelete();
           }
         }
       ]
@@ -63,10 +64,53 @@ export class DetailKelahiranPage implements OnInit {
     await alert.present();
   }
 
-  // Edit data kelahiran
+  // ============================
+  // LOGIC HAPUS CATATAN
+  // ============================
+  async confirmDelete() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Menghapus catatan...'
+    });
+    await loading.present();
+
+    try {
+      // ========== LOGIC HAPUS =============
+      // kalau nanti pakai backend → panggil DELETE API
+      // this.birthService.deleteRecord(this.birthDetail.childId).subscribe(...)
+
+      // sementara ini simulate delete
+      console.log('Catatan dihapus:', this.birthDetail.childId);
+
+      // ====================================
+      await loading.dismiss();
+      await this.showToast('Catatan berhasil dihapus.');
+
+      // kembali ke list
+      this.router.navigate(['/petugas/buku-lahir']);
+
+    } catch (err) {
+      console.error(err);
+      await loading.dismiss();
+      this.showToast('Gagal menghapus catatan.');
+    }
+  }
+
+  async showToast(msg: string) {
+    const t = await this.toastCtrl.create({
+      message: msg,
+      duration: 2000,
+      position: 'bottom'
+    });
+    t.present();
+  }
+
+  // ============================
+  // EDIT
+  // ============================
   editRecord() {
     console.log('Edit data:', this.birthDetail);
-    // this.router.navigate(['/edit-kelahiran', this.birthDetail.childId]);
+    // arahkan ke halaman edit
+    // this.router.navigate(['/petugas/edit-kelahiran', this.birthDetail.childId]);
   }
 
 }

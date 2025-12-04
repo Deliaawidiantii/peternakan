@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-    <ion-back-button defaultHref="/petugas/mutasi-hewan"></ion-back-button>
+    <ion-back-button defaultHref="/petugas/mutasi"></ion-back-button>
     </ion-buttons>
     <ion-title class="title-center">Detail Mutasi hewan</ion-title>
   </ion-toolbar>
@@ -83,6 +83,20 @@
           <p class="info-value">{{mutasi.waktuKejadian}}</p>
         </div> -->
     </div>
+
+    <!-- Tombol Aksi -->
+<div class="button-container" style="margin-top: 20px;">
+  <ion-button expand="block" fill="outline" color="danger" (click)="deleteMutasi()">
+    <ion-icon name="trash-outline" slot="start"></ion-icon>
+    Hapus Mutasi
+  </ion-button>
+
+  <ion-button expand="block" color="primary" (click)="editMutasi()">
+    <ion-icon name="pencil-outline" slot="start"></ion-icon>
+    Edit Mutasi
+  </ion-button>
+</div>
+
   
 
 </ion-content>

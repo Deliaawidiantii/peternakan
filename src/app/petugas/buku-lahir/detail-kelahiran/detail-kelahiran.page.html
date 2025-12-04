@@ -64,11 +64,13 @@
 
   <!-- Action Buttons -->
   <div class="button-container">
-    <ion-button expand="block" fill="outline" class="delete-btn">
+    <ion-button expand="block" fill="outline" class="delete-btn" (click)="confirmDelete()">
       <ion-icon name="trash-outline" slot="start"></ion-icon>
-      Hapus Catatan
+      Hapus Data
     </ion-button>
-    <ion-button expand="block" class="edit-btn">
+
+
+    <ion-button expand="block" class="edit-btn" routerLink="/petugas/buku-lahir/edit-buku-lahir">
       <ion-icon name="pencil-outline" slot="start"></ion-icon>
       Ubah Data
     </ion-button>
