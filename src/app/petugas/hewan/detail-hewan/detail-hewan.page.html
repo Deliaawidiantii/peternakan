@@ -16,8 +16,8 @@
       <div class="header-top">
         <ion-icon name="paw-outline" class="header-icon"></ion-icon>
         <div class="header-info">
-          <ion-card-title>Sapi</ion-card-title>
-          <p class="header-subtitle">ID: 2024sapi</p>
+          <ion-card-title>{{ hewan?.jenis }}</ion-card-title>
+          <p class="header-subtitle">ID: {{ hewan?.code }}</p>
         </div>
       </div>
     </ion-card-header>
@@ -32,14 +32,14 @@
               <ion-icon name="albums-outline"></ion-icon>
               Jenis Hewan
             </span>
-            <span class="field-value">Sapi</span>
+            <span class="field-value">{{ hewan?.jenis_hewan }}</span>
           </div>
           <div class="info-field">
             <span class="field-label">
               <ion-icon name="albums-outline"></ion-icon>
               Ras
             </span>
-            <span class="field-value">Sapi Limousin</span>
+            <span class="field-value">{{ hewan?.ras }}</span>
           </div>
         </div>
 
@@ -49,14 +49,14 @@
               <ion-icon name="paw-outline"></ion-icon>
               Kelompok Hewan
             </span>
-            <span class="field-value">Ruminansia</span>
+            <span class="field-value">{{ hewan?.kategori }}</span>
           </div>
           <div class="info-field">
             <span class="field-label">
               <ion-icon name="male-outline"></ion-icon>
               Jenis Kelamin
             </span>
-            <span class="field-value">Jantan</span>
+            <span class="field-value">{{ hewan?.jenis_kelamin }}</span>
           </div>
         </div>
       </div>
@@ -70,14 +70,14 @@
               <ion-icon name="calendar-outline"></ion-icon>
               Umur
             </span>
-            <span class="field-value">3 Tahun</span>
+            <span class="field-value">{{ hewan?.umur }} Bulan</span>
           </div>
           <div class="info-field">
             <span class="field-label">
               <ion-icon name="information-circle-outline"></ion-icon>
               Status
             </span>
-            <span class="field-value">Sehat</span>
+           <span class="field-value">{{ hewan?.status }}</span>
           </div>
         </div>
       </div>
@@ -91,14 +91,14 @@
               <ion-icon name="location-outline"></ion-icon>
               Desa Binaan
             </span>
-            <span class="field-value">Desa Sukamaju</span>
+            <span class="field-value">{{hewan.wilayah?.nama_desa}}</span>
           </div>
           <div class="info-field">
             <span class="field-label">
               <ion-icon name="home-outline"></ion-icon>
               ID Kandang
             </span>
-            <span class="field-value">KDG001</span>
+            <span class="field-value">{{ hewan.kandang?.kandang_id }}</span>
           </div>
         </div>
 
@@ -106,27 +106,26 @@
           <div class="info-field full-width">
             <span class="field-label">
               <ion-icon name="person-outline"></ion-icon>
-              ID Pemilik
+              Nama Pemilik
             </span>
-            <span class="field-value">PMK123</span>
+            <span class="field-value">{{ hewan.peternakan?.nama_peternak }}</span>
           </div>
         </div>
       </div>
 
       <!-- Barcode Section -->
       <div class="card-section" *ngIf="barcodeId">
-        <h4 class="section-title">Barcode Hewan</h4>
-        <div class="barcode-box">
-          <div class="barcode-display">
-            <svg [attr.data-value]="barcodeId"></svg>
-          </div>
-          <p class="barcode-code">{{ barcodeId }}</p>
-          <ion-button expand="block" color="primary" (click)="viewBarcode()">
-            <ion-icon name="eye-outline" slot="start"></ion-icon>
-            Lihat Barcode
-          </ion-button>
-        </div>
-      </div>
+  <h4 class="section-title">Barcode Hewan</h4>
+  <div class="barcode-box">
+    <img [src]="barcodeId" alt="barcode" class="barcode-img" />
+    <p class="barcode-code">{{ hewan?.qr_code }}</p>
+    <ion-button expand="block" color="primary" (click)="viewBarcode()">
+      <ion-icon name="eye-outline" slot="start"></ion-icon>
+      Lihat Barcode
+    </ion-button>
+  </div>
+</div>
+
 
     </ion-card-content>
   </ion-card>

@@ -1,17 +1,3 @@
-<ion-header>
-  <ion-toolbar color="light">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/petugas/hewan"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Tambah Hewan Baru</ion-title>
-    <ion-buttons slot="end">
-      <ion-button fill="clear" (click)="pilihKategoriUlang()" *ngIf="selectedKategori">
-        <ion-icon name="refresh-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="data-hewan-content">
 
   <!-- Alert jika belum pilih kategori -->
@@ -29,36 +15,7 @@
   <!-- Form Input (tampil jika kategori sudah dipilih) -->
   <ion-list lines="none" class="list-data-hewan" *ngIf="selectedKategori">
     
-    <!-- ID Kandang (opsional) -->
-    <ion-label position="stacked">ID Kandang (opsional)</ion-label>
-    <ion-item>
-      <ion-input 
-        type="tel" 
-        placeholder="Masukan ID Kandang"
-        [(ngModel)]="formData.idKandang">
-      </ion-input>
-    </ion-item>
-
-    <!-- ID Pemilik (Opsional) -->
-    <ion-label position="stacked">ID Pemilik (Opsional)</ion-label>
-    <ion-item>
-      <ion-input 
-        type="tel" 
-        placeholder="Masukan ID Pemilik"
-        [(ngModel)]="formData.idPemilik">
-      </ion-input>
-    </ion-item>
-
-    <!-- Desa -->
-    <ion-label position="stacked">Desa <span style="color: red;">*</span></ion-label>
-    <ion-item>
-      <ion-select placeholder="Pilih Desa" [(ngModel)]="formData.desa">
-        <ion-select-option value="karangjaya">Karangjaya</ion-select-option>
-        <ion-select-option value="cikampek">Cikampek</ion-select-option>
-        <ion-select-option value="jatisari">Jatisari</ion-select-option>
-      </ion-select>
-    </ion-item>
-
+    
     <!-- Jenis Hewan -->
     <ion-label position="stacked">Jenis Hewan <span style="color: red;">*</span></ion-label>
     <ion-item>
@@ -126,6 +83,73 @@
         <ion-select-option value="betina">Betina</ion-select-option>
       </ion-select>
     </ion-item>
+
+    <ion-label position="stacked">Umur (bulan) <span style="color:red">*</span></ion-label>
+    <ion-item>
+      <ion-input type="number" [(ngModel)]="formData.umur"></ion-input>
+    </ion-item>
+
+
+    <!-- ID Kandang (Dropdown) -->
+    <ion-label position="stacked">ID Kandang (opsional)</ion-label>
+    <ion-item>
+      <ion-select 
+        placeholder="Pilih Kandang"
+        [(ngModel)]="formData.idKandang"
+        [disabled]="isLoadingKandang">
+        <ion-select-option 
+          *ngFor="let kandang of kandangList" 
+          [value]="kandang.id">
+          Kandang {{ kandang.id }} {{ kandang.nama_kandang ? '- ' + kandang.nama_kandang : '' }}
+        </ion-select-option>
+      </ion-select>
+      <ion-spinner 
+        *ngIf="isLoadingKandang" 
+        name="crescent" 
+        slot="end">
+      </ion-spinner>
+    </ion-item>
+
+    <!-- ID Pemilik (Dropdown - Tampil Nama) -->
+    <ion-label position="stacked">Pemilik (Opsional)</ion-label>
+    <ion-item>
+      <ion-select 
+        placeholder="Pilih Pemilik"
+        [(ngModel)]="formData.idPemilik"
+        [disabled]="isLoadingPemilik">
+        <ion-select-option 
+          *ngFor="let pemilik of pemilikList" 
+          [value]="pemilik.id">
+          {{ pemilik.nama_peternak || pemilik.nama }}
+        </ion-select-option>
+      </ion-select>
+      <ion-spinner 
+        *ngIf="isLoadingPemilik" 
+        name="crescent" 
+        slot="end">
+      </ion-spinner>
+    </ion-item>
+
+    <!-- Desa (Dropdown) -->
+    <ion-label position="stacked">Desa <span style="color: red;">*</span></ion-label>
+    <ion-item>
+      <ion-select 
+        placeholder="Pilih Desa" 
+        [(ngModel)]="formData.desa"
+        [disabled]="isLoadingDesa">
+        <ion-select-option 
+          *ngFor="let desa of desaList" 
+          [value]="desa.id">
+          {{ desa.nama_desa || desa.nama || desa.desa }}
+        </ion-select-option>
+      </ion-select>
+      <ion-spinner 
+        *ngIf="isLoadingDesa" 
+        name="crescent" 
+        slot="end">
+      </ion-spinner>
+    </ion-item>
+
 
   </ion-list>
 

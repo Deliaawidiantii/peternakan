@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
 
 import { DataHewanPageRoutingModule } from './data-hewan-routing.module';
-
 import { DataHewanPage } from './data-hewan.page';
 
 @NgModule({
@@ -13,8 +11,8 @@ import { DataHewanPage } from './data-hewan.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    DataHewanPageRoutingModule
-  ],
-  declarations: [DataHewanPage]
+    DataHewanPageRoutingModule,
+    DataHewanPage   // ✅ PINDAHKAN KE IMPORTS
+  ]
 })
 export class DataHewanPageModule {}

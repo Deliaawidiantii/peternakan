@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { PopulasiService } from 'src/app/services/populasi.service';
 
 @Component({
   selector: 'app-hewan',
@@ -9,38 +10,70 @@ import { Router } from '@angular/router';
   standalone: false,
 })
 export class HewanPage implements OnInit {
-
-  hewanList: any[] = [
-    {
-      id: '2023001',
-      type: 'Sapi Limosin',
-      umur: '3 Tahun',
-      jk: 'jantan',
-      kandang: 'Kandang A-12',
-    },
-    {
-      id: '2023002',
-      type: 'Kambing Etawa',
-      umur: '2 Tahun',
-      jk: 'betina',
-      kandang: 'Kandang B-05',
-    },
-    {
-      id: '2023003',
-      type: 'Ayam Kampung',
-      umur: '1 Tahun',
-      jk: 'jantan',
-      kandang: 'Kandang C-20',
-    },
-  ];
+  hewanList: any[] = [];
+  searchText: string = '';
+  selectedJenis: string = '';
+  isLoading: boolean = false; // ← TAMBAHKAN INI
 
   constructor(
     private actionSheetController: ActionSheetController,
-    private router: Router
-  ) { }
+    private router: Router,
+    private loadingCtrl: LoadingController,
+    private populasiService: PopulasiService
+  ) {}
 
   ngOnInit() {
+    this.loadHewan();
   }
+
+  ionViewWillEnter() {
+    // Reload data setiap kali halaman dibuka
+    this.loadHewan();
+  }
+
+  async loadHewan() {
+    this.isLoading = true; // ← TAMBAHKAN INI
+    
+    const loading = await this.loadingCtrl.create({
+      message: 'Memuat data...',
+    });
+    await loading.present();
+
+    const params: any = {};
+    if (this.selectedJenis) params.jenis_hewan = this.selectedJenis;
+
+    this.populasiService.getPopulasi(params).subscribe({
+      next: async (res) => {
+        this.isLoading = false; // ← TAMBAHKAN INI
+        await loading.dismiss();
+        if (res.success) {
+          this.hewanList = res.data;
+          console.log('Data hewan:', this.hewanList); // Debug
+        }
+      },
+      error: async (err) => {
+        this.isLoading = false; // ← TAMBAHKAN INI
+        await loading.dismiss();
+        console.error('Error loading hewan:', err);
+        this.hewanList = []; // Set empty array on error
+      }
+    });
+  }
+
+  filterJenis(event: any) {
+    this.selectedJenis = event.target.value;
+    this.loadHewan();
+  }
+
+  searchHewan(event: any) {
+    this.searchText = event.target.value;
+    // TODO: Implement search logic
+    console.log('Search:', this.searchText);
+  }
+  goToDetail(id: any) {
+  this.router.navigate(['/petugas/detail-hewan', id]);
+}
+
 
   async pilihKelompokHewan() {
     const actionSheet = await this.actionSheetController.create({
@@ -50,7 +83,6 @@ export class HewanPage implements OnInit {
           text: 'Kesayangan',
           icon: 'heart-outline',
           handler: () => {
-            console.log('Kesayangan dipilih');
             this.router.navigate(['/petugas/data-hewan'], {
               queryParams: { kategori: 'kesayangan' }
             });
@@ -60,7 +92,6 @@ export class HewanPage implements OnInit {
           text: 'Ruminansia',
           icon: 'paw-outline',
           handler: () => {
-            console.log('Ruminansia dipilih');
             this.router.navigate(['/petugas/data-hewan'], {
               queryParams: { kategori: 'ruminansia' }
             });
@@ -70,7 +101,6 @@ export class HewanPage implements OnInit {
           text: 'Unggas',
           icon: 'egg-outline',
           handler: () => {
-            console.log('Unggas dipilih');
             this.router.navigate(['/petugas/data-hewan'], {
               queryParams: { kategori: 'unggas' }
             });
@@ -80,7 +110,6 @@ export class HewanPage implements OnInit {
           text: 'Primata',
           icon: 'people-outline',
           handler: () => {
-            console.log('Primata dipilih');
             this.router.navigate(['/petugas/data-hewan'], {
               queryParams: { kategori: 'primata' }
             });
@@ -90,7 +119,6 @@ export class HewanPage implements OnInit {
           text: 'Lainnya',
           icon: 'help-circle-outline',
           handler: () => {
-            console.log('Lainnya dipilih');
             this.router.navigate(['/petugas/data-hewan'], {
               queryParams: { kategori: 'lainnya' }
             });
@@ -105,5 +133,4 @@ export class HewanPage implements OnInit {
 
     await actionSheet.present();
   }
-
 }

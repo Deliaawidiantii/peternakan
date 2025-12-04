@@ -1,75 +1,224 @@
 .data-hewan-content {
   --background: #f8fafb;
   font-family: "Public Sans", "Noto Sans", sans-serif;
+  padding-bottom: 20px;
 }
 
-/* Form List */
+/* Alert No Kategori */
+.no-kategori-alert {
+  padding: 20px;
+  margin-top: 20px;
+
+  ion-card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    margin: 0;
+    
+    ion-card-content {
+      text-align: center;
+      padding: 24px 20px;
+      
+      p {
+        color: #4b5563;
+        font-size: 14px;
+        margin: 0 0 16px 0;
+        line-height: 1.6;
+      }
+
+      ion-button {
+        margin-top: 8px;
+      }
+    }
+  }
+}
+
+/* Form List Container */
 .list-data-hewan {
-  padding: 0 30px;
-  margin-top: 0px;
+  padding: 20px 20px 0 20px;
+  margin-top: 0;
+  background: transparent;
+
+  // Spacing untuk setiap group label + item
+  > ion-label {
+    margin-top: 8px;
+    
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  > div {
+    margin-bottom: 8px;
+
+    ion-label:first-child {
+      margin-top: 8px;
+    }
+  }
 }
 
-ion-item {
-  --background: #e8eff3;
-  --min-height: 42px;        /* lebih kecil dari default 56px */
-  --padding-start: 10px;
-  --inner-padding-end: 10px;
-  --padding-top: 4px;
-  --padding-bottom: 4px;
-
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-
-ion-label {
+/* Label Styling */
+ion-label[position="stacked"] {
   font-size: 13px;
-  font-weight: 500;
-  color: #0e161b;
-  margin-bottom: 2px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+  margin-left: 4px;
+  padding-left: 0;
+  
+  span {
+    color: #ef4444;
+    font-weight: 700;
+  }
 }
 
+/* Item Styling */
+.list-data-hewan ion-item {
+  --background: #ffffff;
+  --border-color: #e5e7eb;
+  --min-height: 44px;
+  --padding-start: 12px;
+  --inner-padding-end: 12px;
+  --padding-top: 6px;
+  --padding-bottom: 6px;
+  
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  margin-bottom: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &.item-has-focus,
+  &.item-interactive.ion-focused {
+    --border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+}
+
+/* Input Fields */
 ion-input,
 ion-textarea,
 ion-select {
-  color: #0e161b;
+  color: #1f2937;
   font-size: 14px;
-  min-height: 24px;  /* biar input nggak bikin tinggi item */
+  font-weight: 400;
+  --placeholder-color: #9ca3af;
+  --placeholder-opacity: 1;
 }
 
 ion-textarea {
-  --padding-top: 4px;
-  --padding-bottom: 4px;
-  font-size: 14px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  min-height: 80px;
 }
 
+// Fix untuk select arrow
+ion-select::part(icon) {
+  color: #6b7280;
+  opacity: 1;
+}
 
+/* Animation untuk field dinamis */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Button Container */
 .button-container {
-  margin: 0px 0;        /* jarak antar tombol */
-  width: 100%;           /* biar full width */
+  padding: 0 20px;
+  margin: 20px 0 0 0;
   display: flex;
   justify-content: center;
+
+  &:last-of-type {
+    margin-bottom: 20px;
+  }
+
+  ion-button {
+    --border-radius: 10px;
+    --padding-top: 14px;
+    --padding-bottom: 14px;
+    --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    
+    font-size: 15px;
+    font-weight: 600;
+    width: 100%;
+    max-width: 400px;
+    text-transform: none;
+    letter-spacing: 0.3px;
+    margin: 0;
+    height: 48px;
+  }
 }
 
-.button-container ion-button {
-  --border-radius: 8px;  /* sudut tombol biar lebih halus */
-  --padding-top: 12px;
-  --padding-bottom: 12px;
-  font-size: 16px;
-  width: 90%;            /* biar ga terlalu full banget */
-  max-width: 400px;      /* batas maksimal */
-}
-
-.btn-next {
-  --background: #3b82f6;      /* biru */
-  --border-radius: 8px;
-}
-
+/* Button Variants */
 .btn-save {
-  --background: #10b981 !important;      /* hijau */
-  --border-radius: 8px;
+  --background: #10b981;
+  --background-activated: #059669;
+  --background-focused: #059669;
+  --background-hover: #059669;
 }
 
 .btn-cancel {
-  --background: #ef4444;      /* merah */
-  --border-radius: 8px;
+  --background: #ef4444;
+  --background-activated: #dc2626;
+  --background-focused: #dc2626;
+  --background-hover: #dc2626;
+}
+
+.btn-next {
+  --background: #3b82f6;
+  --background-activated: #2563eb;
+  --background-focused: #2563eb;
+  --background-hover: #2563eb;
+}
+
+/* Header Toolbar Enhancement */
+ion-header ion-toolbar {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  
+  ion-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  ion-button {
+    --color: #374151;
+    
+    ion-icon {
+      font-size: 22px;
+    }
+  }
+
+  ion-back-button {
+    --color: #374151;
+  }
+}
+
+/* Responsive - Tablet & Desktop */
+@media (min-width: 768px) {
+  .list-data-hewan {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 24px 24px 0 24px;
+  }
+  
+  .button-container {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .no-kategori-alert {
+    max-width: 600px;
+    margin: 20px auto;
+  }
 }

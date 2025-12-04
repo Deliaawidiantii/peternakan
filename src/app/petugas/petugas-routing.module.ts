@@ -52,8 +52,8 @@ const routes: Routes = [
     loadChildren: () => import('./hewan/hewan.module').then( m => m.HewanPageModule)
   },
   {
-    path: 'detail-hewan',
-    loadChildren: () => import('./hewan/detail-hewan/detail-hewan.module').then( m => m.DetailHewanPageModule)
+    path: 'detail-hewan/:id',
+    loadChildren: () => import('./hewan/detail-hewan/detail-hewan.module').then(m => m.DetailHewanPageModule)
   },
   {
     path: 'pemilik',
