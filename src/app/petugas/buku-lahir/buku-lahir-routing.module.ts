@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: BukuLahirPage
+  },  {
+    path: 'edit-buku-lahir',
+    loadChildren: () => import('./edit-buku-lahir/edit-buku-lahir.module').then( m => m.EditBukuLahirPageModule)
   }
+
 ];
 
 @NgModule({

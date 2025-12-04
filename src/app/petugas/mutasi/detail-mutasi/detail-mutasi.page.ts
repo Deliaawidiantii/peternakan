@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
+import { IonicModule, AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detail-mutasi',
@@ -18,7 +20,6 @@ export class DetailMutasiPage implements OnInit {
     idHewan: 'KH-001',
     umur: '2 tahun',
     beratBadan: '4 kg',
-
   };
 
   mutasi = {
@@ -28,18 +29,44 @@ export class DetailMutasiPage implements OnInit {
     alasanMutasi: 'Sakit',
   };
 
-  // waktu = {
-  //   waktuKejadian  : '2024-06-14 10:30 AM',
-  // };
-    
+  constructor(
+    private alertController: AlertController,
+    private router: Router
+  ) {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
+  onTabChange(tab: string) {
+    this.currentTab = tab;
   }
 
-  onTabChage (tab:string) {
-    this.currentTab = tab;
+  async deleteMutasi() {
+    const alert = await this.alertController.create({
+      header: 'Hapus Mutasi',
+      message: 'Apakah Anda yakin ingin menghapus data mutasi ini?',
+      buttons: [
+        {
+          text: 'Batal',
+          role: 'cancel'
+        },
+        {
+          text: 'Hapus',
+          role: 'destructive',
+          handler: () => {
+            console.log('Mutasi dihapus:', this.mutasi);
+            this.router.navigate(['/petugas/mutasi']);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  editMutasi() {
+    console.log('Edit Mutasi:', this.mutasi);
+    // Contoh kalau nanti punya halaman edit:
+    this.router.navigate(['/petugas/mutasi/edit-mutasi']);
   }
 
 }

@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: MutasiPage
+  },  {
+    path: 'edit-mutasi',
+    loadChildren: () => import('./edit-mutasi/edit-mutasi.module').then( m => m.EditMutasiPageModule)
   }
+
 ];
 
 @NgModule({

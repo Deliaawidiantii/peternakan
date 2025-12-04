@@ -1,0 +1,164 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/petugas/buku-lahir"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit Kelahiran</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Header -->
+  <div class="edit-header">
+    <h1>Ubah Detail Kelahiran</h1>
+    <p>ID Anak Hewan: {{ anakHewanId }}</p>
+  </div>
+
+  <!-- Info Box -->
+  <div class="info-box">
+    <ion-icon name="information-circle"></ion-icon>
+    <p>Perbarui informasi kelahiran hewan dengan data yang akurat dan lengkap</p>
+  </div>
+
+  <!-- Form -->
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+
+    <!-- Row 1: Tanggal Lahir & ID Anak Hewan -->
+    <div class="form-row">
+      <ion-item class="custom-item">
+        <ion-label position="floating">Tanggal Lahir</ion-label>
+        <ion-input 
+          type="date" 
+          formControlName="tanggalLahir"
+          placeholder="Pilih tanggal">
+        </ion-input>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label position="floating">ID Anak Hewan</ion-label>
+        <ion-input 
+          formControlName="idAnakHewan"
+          readonly
+          placeholder="ID Anak Hewan">
+        </ion-input>
+      </ion-item>
+    </div>
+
+    <!-- Row 2: Kelompok Hewan & Jenis Hewan -->
+    <div class="form-row">
+      <ion-item class="custom-item">
+        <ion-label position="floating">Kelompok Hewan</ion-label>
+        <ion-select 
+          formControlName="kelompokHewan"
+          placeholder="Pilih kelompok hewan">
+          <ion-select-option value="Ruminansia">Ruminansia</ion-select-option>
+          <ion-select-option value="Non-Ruminansia">Non-Ruminansia</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label position="floating">Jenis Hewan</ion-label>
+        <ion-select 
+          formControlName="jenisHewan"
+          placeholder="Pilih jenis hewan">
+          <ion-select-option value="Sapi">Sapi</ion-select-option>
+          <ion-select-option value="Kambing">Kambing</ion-select-option>
+          <ion-select-option value="Domba">Domba</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+
+    <!-- Row 3: Ras & Jumlah Anak -->
+    <div class="form-row">
+      <ion-item class="custom-item">
+        <ion-label position="floating">Ras</ion-label>
+        <ion-input 
+          formControlName="ras"
+          placeholder="Masukkan ras hewan">
+        </ion-input>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label position="floating">Jumlah Anak</ion-label>
+        <ion-input 
+          type="number" 
+          formControlName="jumlahAnak"
+          min="1"
+          placeholder="Jumlah anak">
+        </ion-input>
+      </ion-item>
+    </div>
+
+    <!-- ID Induk -->
+    <ion-item class="custom-item">
+      <ion-label position="floating">ID Induk</ion-label>
+      <ion-input 
+        formControlName="idInduk"
+        placeholder="Masukkan ID induk">
+      </ion-input>
+    </ion-item>
+
+    <!-- Row 4: Jenis Kelamin & Berat Lahir -->
+    <div class="form-row">
+      <ion-item class="custom-item">
+        <ion-label position="floating">Jenis Kelamin</ion-label>
+        <ion-select 
+          formControlName="jenisKelamin"
+          placeholder="Pilih jenis kelamin">
+          <ion-select-option value="Jantan">Jantan</ion-select-option>
+          <ion-select-option value="Betina">Betina</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="custom-item">
+        <ion-label position="floating">Berat Lahir (kg)</ion-label>
+        <ion-input 
+          type="number" 
+          formControlName="beratLahir"
+          step="0.1"
+          min="0"
+          placeholder="Berat lahir">
+        </ion-input>
+      </ion-item>
+    </div>
+
+    <!-- Status Kelahiran -->
+    <div class="status-section">
+      <label class="status-label">Status Kelahiran</label>
+      <div class="status-options">
+        <ion-item class="status-item" *ngFor="let status of statusOptions">
+          <ion-label>{{ status }}</ion-label>
+          <ion-radio 
+            slot="start" 
+            [value]="status"
+            formControlName="statusKelahiran">
+          </ion-radio>
+        </ion-item>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="button-group">
+      <ion-button 
+        expand="block" 
+        fill="outline" 
+        color="primary"
+        type="button"
+        (click)="onBatal()">
+        <ion-icon slot="start" name="close"></ion-icon>
+        Batal
+      </ion-button>
+      <ion-button 
+        expand="block" 
+        color="primary"
+        type="submit"
+        [disabled]="!editForm.valid || isSubmitting">
+        <ion-icon slot="start" name="checkmark"></ion-icon>
+        {{ isSubmitting ? 'Menyimpan...' : 'Simpan Perubahan' }}
+      </ion-button>
+    </div>
+
+  </form>
+
+</ion-content>

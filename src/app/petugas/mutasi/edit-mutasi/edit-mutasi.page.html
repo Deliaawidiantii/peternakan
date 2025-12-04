@@ -1,0 +1,157 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/petugas/mutasi"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit Mutasi</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Header -->
+  <div class="edit-header">
+    <h1>Ubah Data Mutasi</h1>
+    <p>ID Hewan: {{ hewanId }}</p>
+  </div>
+
+  <!-- Info Box -->
+  <div class="info-box">
+    <ion-icon name="information-circle"></ion-icon>
+    <p>Perbarui data mutasi hewan dengan informasi yang akurat</p>
+  </div>
+
+  <!-- Form Mutasi -->
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+
+    <!-- Kelompok Hewan -->
+    <ion-item class="custom-item">
+      <ion-label>Kelompok Hewan</ion-label>
+      <ion-select 
+        formControlName="kelompokHewan"
+        placeholder="Pilih kelompok hewan">
+        <ion-select-option value="Ruminansia">Ruminansia</ion-select-option>
+        <ion-select-option value="Non-Ruminansia">Non-Ruminansia</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Jenis Hewan -->
+    <ion-item class="custom-item">
+      <ion-label>Jenis Hewan</ion-label>
+      <ion-select 
+        formControlName="jenisHewan"
+        placeholder="Pilih jenis hewan">
+        <ion-select-option value="Sapi">Sapi</ion-select-option>
+        <ion-select-option value="Kambing">Kambing</ion-select-option>
+        <ion-select-option value="Domba">Domba</ion-select-option>
+        <ion-select-option value="Ayam">Ayam</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Ras -->
+    <ion-item class="custom-item">
+      <ion-label>Ras</ion-label>
+      <ion-input 
+        formControlName="ras"
+        placeholder="Masukkan ras hewan">
+      </ion-input>
+    </ion-item>
+
+    <!-- ID Hewan -->
+    <ion-item class="custom-item">
+      <ion-label>ID Hewan</ion-label>
+      <ion-input 
+        formControlName="idHewan"
+        placeholder="Masukkan ID hewan">
+      </ion-input>
+    </ion-item>
+
+    <!-- Umur -->
+    <ion-item class="custom-item">
+      <ion-label>Umur</ion-label>
+      <ion-input 
+        formControlName="umur"
+        placeholder="Contoh: 2 tahun 3 bulan">
+      </ion-input>
+    </ion-item>
+
+    <!-- Berat Badan -->
+    <ion-item class="custom-item">
+      <ion-label>Berat Badan (kg)</ion-label>
+      <ion-input 
+        type="number"
+        formControlName="beratBadan"
+        placeholder="Masukkan berat badan">
+      </ion-input>
+    </ion-item>
+
+    <!-- Divider -->
+    <div class="section-divider"></div>
+
+    <!-- Tanggal Mutasi -->
+    <ion-item class="custom-item">
+      <ion-label>Tanggal Mutasi</ion-label>
+      <ion-input 
+        type="date" 
+        formControlName="tanggalMutasi">
+      </ion-input>
+    </ion-item>
+
+    <!-- Jenis Mutasi -->
+    <ion-item class="custom-item">
+      <ion-label>Jenis Mutasi</ion-label>
+      <ion-select 
+        formControlName="jenisMutasi"
+        placeholder="Pilih jenis mutasi">
+        <ion-select-option value="Penjualan">Penjualan</ion-select-option>
+        <ion-select-option value="Kematian">Kematian</ion-select-option>
+        <ion-select-option value="Hilang">Hilang</ion-select-option>
+        <ion-select-option value="Pindah Lokasi">Pindah Lokasi</ion-select-option>
+        <ion-select-option value="Kawin">Kawin</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Alasan Mutasi -->
+    <ion-item class="custom-item">
+      <ion-label>Alasan Mutasi</ion-label>
+      <ion-textarea 
+        formControlName="alasanMutasi"
+        placeholder="Masukkan alasan mutasi"
+        rows="3">
+      </ion-textarea>
+    </ion-item>
+
+    <!-- Keterangan -->
+    <ion-item class="custom-item">
+      <ion-label>Keterangan</ion-label>
+      <ion-textarea 
+        formControlName="keterangan"
+        placeholder="Masukkan keterangan tambahan"
+        rows="3">
+      </ion-textarea>
+    </ion-item>
+
+    <!-- Buttons -->
+    <div class="button-group">
+      <ion-button 
+        expand="block" 
+        fill="outline" 
+        color="primary"
+        type="button"
+        (click)="onBatal()">
+        <ion-icon slot="start" name="close"></ion-icon>
+        Batal
+      </ion-button>
+      <ion-button 
+        expand="block" 
+        color="primary"
+        type="submit"
+        [disabled]="!editForm.valid || isSubmitting">
+        <ion-icon slot="start" name="checkmark"></ion-icon>
+        {{ isSubmitting ? 'Menyimpan...' : 'Simpan Perubahan' }}
+      </ion-button>
+    </div>
+
+  </form>
+
+</ion-content>
