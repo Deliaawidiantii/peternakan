@@ -1,0 +1,353 @@
+ion-content {
+  --background: #f4f5f8;
+}
+
+.riwayat-container {
+  padding: 16px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-bottom: 80px;
+}
+
+// Empty State
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+
+  ion-icon {
+    font-size: 80px;
+    color: #ccc;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 8px;
+  }
+
+  p {
+    color: #999;
+    font-size: 0.95rem;
+  }
+}
+
+// Riwayat Card
+.riwayat-card {
+  margin-bottom: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 16px rgba(33, 150, 243, 0.2);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Card Header
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-bottom: 1px solid #e0e0e0;
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .animal-icon {
+      font-size: 32px;
+      color: #2196f3;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    p {
+      margin: 4px 0 0 0;
+      font-size: 0.85rem;
+      color: #666;
+    }
+  }
+
+  .status-badge {
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+  }
+}
+
+// Progress Container
+.progress-container {
+  padding: 20px 16px;
+  background: #fff;
+}
+
+.progress-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+
+  .step-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+
+    ion-icon {
+      font-size: 24px;
+      color: #999;
+    }
+  }
+
+  .step-label {
+    font-size: 0.85rem;
+    color: #999;
+    font-weight: 600;
+  }
+
+  &.active .step-circle {
+    background: #2196f3;
+
+    ion-icon {
+      color: #fff;
+    }
+  }
+
+  &.active .step-label {
+    color: #2196f3;
+  }
+
+  &.completed .step-circle {
+    background: #4caf50;
+
+    ion-icon {
+      color: #fff;
+    }
+  }
+
+  &.completed .step-label {
+    color: #4caf50;
+  }
+}
+
+.progress-line {
+  flex: 1;
+  height: 4px;
+  background: #e0e0e0;
+  margin: 0 8px;
+  position: relative;
+  top: -17px;
+
+  &.active {
+    background: #2196f3;
+  }
+}
+
+// Card Content
+ion-card-content {
+  padding: 16px;
+  background: #fff;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: #555;
+
+  ion-icon {
+    font-size: 18px;
+    color: #2196f3;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.petugas-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+  font-size: 0.85rem;
+  color: #666;
+
+  ion-icon {
+    font-size: 16px;
+    color: #4caf50;
+  }
+}
+
+// Card Footer
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border-top: 1px solid #e0e0e0;
+
+  ion-button {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    text-transform: none;
+    font-weight: 500;
+    font-size: 0.85rem;
+  }
+}
+
+// Search & Filter
+ion-searchbar {
+  --background: #fff;
+  --border-radius: 8px;
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+ion-segment {
+  ion-segment-button {
+    --indicator-color: #2196f3;
+    text-transform: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+}
+
+// FAB Button
+ion-fab-button {
+  --box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+
+  &:hover {
+    --box-shadow: 0 6px 16px rgba(33, 150, 243, 0.6);
+  }
+}
+
+// Detail Alert Custom
+.detail-alert {
+  .alert-wrapper {
+    max-width: 500px;
+    border-radius: 12px;
+  }
+
+  .alert-message {
+    text-align: left;
+    line-height: 1.6;
+    font-size: 0.9rem;
+  }
+}
+
+// Responsive
+@media (max-width: 576px) {
+  .riwayat-container {
+    padding: 12px;
+  }
+
+  .card-header {
+    padding: 12px;
+
+    .header-left {
+      gap: 10px;
+
+      .animal-icon {
+        font-size: 28px;
+      }
+
+      h3 {
+        font-size: 1rem;
+      }
+
+      p {
+        font-size: 0.8rem;
+      }
+    }
+
+    .status-badge {
+      padding: 4px 10px;
+      font-size: 0.75rem;
+    }
+  }
+
+  .progress-container {
+    padding: 16px 12px;
+  }
+
+  .progress-step {
+    .step-circle {
+      width: 42px;
+      height: 42px;
+
+      ion-icon {
+        font-size: 20px;
+      }
+    }
+
+    .step-label {
+      font-size: 0.75rem;
+    }
+  }
+
+  .progress-line {
+    top: -15px;
+    margin: 0 4px;
+  }
+
+  .card-footer {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px 12px;
+
+    ion-button {
+      font-size: 0.8rem;
+    }
+  }
+
+  ion-card-content {
+    padding: 12px;
+  }
+
+  .info-row {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+
+    ion-icon {
+      font-size: 16px;
+    }
+  }
+}

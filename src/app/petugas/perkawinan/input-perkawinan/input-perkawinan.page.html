@@ -1,0 +1,322 @@
+<ion-header class="custom-header" translucent="true">
+  <ion-toolbar>
+    <div class="header-content">
+      <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+      <h2 class="header-title">Input IB (Inseminasi Buatan)</h2>
+      <div style="width: 40px;"></div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true" class="ion-padding">
+
+  <!-- Form Container -->
+  <div class="form-container">
+
+    <!-- SECTION: Data Pemilik -->
+    <div class="form-section">
+      <h3 class="section-title">Data Pemilik</h3>
+      
+      <div class="form-group">
+        <label class="form-label">Nama Pemilik</label>
+        <ion-input
+          [(ngModel)]="formData.namaPemilik"
+          placeholder="Masukkan Nama Pemilik"
+          class="form-input"
+          type="text"
+        ></ion-input>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">NIK Pemilik</label>
+        <ion-input
+          [(ngModel)]="formData.nikPemilik"
+          placeholder="Masukkan NIK Pemilik"
+          class="form-input"
+          type="text"
+        ></ion-input>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Alamat</label>
+        <ion-textarea
+          [(ngModel)]="formData.alamat"
+          placeholder="Masukkan Alamat Pemilik"
+          class="form-textarea"
+          rows="3"
+        ></ion-textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Provinsi</label>
+        <ion-select
+          [(ngModel)]="formData.provinsi"
+          placeholder="Pilih Provinsi"
+          class="form-select"
+          (ionChange)="onProvinsiChange($event)"
+        >
+          <ion-select-option value="">Pilih Provinsi</ion-select-option>
+          <ion-select-option value="jawa_barat">Jawa Barat</ion-select-option>
+          <ion-select-option value="jawa_timur">Jawa Timur</ion-select-option>
+          <ion-select-option value="jawa_tengah">Jawa Tengah</ion-select-option>
+          <ion-select-option value="kalimantan_selatan">Kalimantan Selatan</ion-select-option>
+          <ion-select-option value="lainnya">Lainnya</ion-select-option>
+        </ion-select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Kabupaten</label>
+        <ion-select
+          [(ngModel)]="formData.kabupaten"
+          placeholder="Pilih Kabupaten"
+          class="form-select"
+          (ionChange)="onKabupatenChange($event)"
+        >
+          <ion-select-option value="">Pilih Kabupaten</ion-select-option>
+          <ion-select-option *ngFor="let kab of kabupatenList" [value]="kab">
+            {{ kab }}
+          </ion-select-option>
+        </ion-select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Kecamatan</label>
+        <ion-select
+          [(ngModel)]="formData.kecamatan"
+          placeholder="Pilih Kecamatan"
+          class="form-select"
+          (ionChange)="onKecamatanChange($event)"
+        >
+          <ion-select-option value="">Pilih Kecamatan</ion-select-option>
+          <ion-select-option *ngFor="let kec of kecamatanList" [value]="kec">
+            {{ kec }}
+          </ion-select-option>
+        </ion-select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Desa</label>
+        <ion-select
+          [(ngModel)]="formData.desa"
+          placeholder="Pilih Desa"
+          class="form-select"
+        >
+          <ion-select-option value="">Pilih Desa</ion-select-option>
+          <ion-select-option *ngFor="let des of desaList" [value]="des">
+            {{ des }}
+          </ion-select-option>
+        </ion-select>
+      </div>
+    </div>
+
+
+    <!-- SECTION: Data Petugas -->
+    <!-- <div class="form-section">
+      <h3 class="section-title">Data Petugas</h3>
+      
+      <div class="form-group">
+        <label class="form-label">Nama Petugas</label>
+        <ion-input
+          [(ngModel)]="formData.namaPetugas"
+          placeholder="Masukkan Nama Petugas"
+          class="form-input"
+          type="text"
+        ></ion-input>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">NIK Petugas</label>
+        <ion-input
+          [(ngModel)]="formData.nikPetugas"
+          placeholder="Masukkan NIK Petugas"
+          class="form-input"
+          type="text"
+        ></ion-input>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">No Telp Petugas</label>
+        <ion-input
+          [(ngModel)]="formData.noTelp"
+          placeholder="Masukkan No Telp"
+          class="form-input"
+          type="tel"
+        ></ion-input>
+      </div>
+    </div> -->
+
+    <!-- SECTION: Data Hewan Betina -->
+    <div class="form-section">
+      <h3 class="section-title">Data Hewan Betina</h3>
+      
+      <div class="form-group">
+        <label class="form-label">Eartag Betina</label>
+        <ion-input
+          [(ngModel)]="formData.eartagBetina"
+          placeholder="Masukkan Eartag Betina"
+          class="form-input"
+          type="text"
+        ></ion-input>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Jenis Ternak</label>
+        <ion-select
+          [(ngModel)]="formData.jenisTernak"
+          placeholder="Pilih Jenis Ternak"
+          class="form-select"
+        >
+          <ion-select-option value="">Pilih Jenis Ternak</ion-select-option>
+          <ion-select-option value="sapi">Sapi</ion-select-option>
+          <ion-select-option value="kerbau">Kerbau</ion-select-option>
+        </ion-select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Rumpun Ternak</label>
+        <ion-select
+          [(ngModel)]="formData.rumpunTernak"
+          placeholder="Pilih Rumpun Ternak"
+          class="form-select"
+        >
+          <ion-select-option value="">Pilih Rumpun Ternak</ion-select-option>
+          <ion-select-option value="po">PO (Peranakan Ongole)</ion-select-option>
+          <ion-select-option value="brahman">Brahman</ion-select-option>
+          <ion-select-option value="simental">Simental</ion-select-option>
+          <ion-select-option value="limosin">Limosin</ion-select-option>
+          <ion-select-option value="pasundan">Pasundan</ion-select-option>
+          <ion-select-option value="kerbau_sungai">Kerbau Sungai</ion-select-option>
+          <ion-select-option value="kerbau_lumpur">Kerbau Lumpur</ion-select-option>
+        </ion-select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Usia Ternak (Bulan)</label>
+        <ion-input
+          [(ngModel)]="formData.usiaTernak"
+          placeholder="Masukkan Usia Ternak"
+          class="form-input"
+          type="number"
+        ></ion-input>
+      </div>
+    </div>
+
+    <!-- SECTION: Data Perkawinan/IB -->
+    <div class="form-section">
+      <h3 class="section-title">Data Perkawinan/IB</h3>
+      
+      <div class="form-group">
+        <label class="form-label">Tanggal Perkawinan/IB</label>
+        <div class="date-input-wrapper">
+          <ion-input
+            [(ngModel)]="formData.tanggalPerkawinan"
+            placeholder="Pilih Tanggal"
+            class="form-input"
+            type="date"
+          ></ion-input>
+          <ion-icon name="calendar-outline" class="calendar-icon"></ion-icon>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Metode Perkawinan</label>
+        <ion-select
+          [(ngModel)]="formData.metodePerkawinan"
+          placeholder="Pilih Metode Perkawinan"
+          class="form-select"
+        >
+          <ion-select-option value="">Pilih Metode</ion-select-option>
+          <ion-select-option value="inseminasi_buatan">Inseminasi Buatan</ion-select-option>
+          <ion-select-option value="kawin_alami">Kawin Alami</ion-select-option>
+          <ion-select-option value="lainnya">Lainnya</ion-select-option>
+        </ion-select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Inseminasi ke</label>
+        <ion-select
+          [(ngModel)]="formData.inseminasiKe"
+          placeholder="Pilih Inseminasi ke"
+          class="form-select"
+        >
+          <ion-select-option value="">Pilih Inseminasi ke</ion-select-option>
+          <ion-select-option value="1">1</ion-select-option>
+          <ion-select-option value="2">2</ion-select-option>
+          <ion-select-option value="3">3</ion-select-option>
+        </ion-select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">ID Pejantan</label>
+        <ion-input
+          [(ngModel)]="formData.idPejantan"
+          placeholder="Masukkan ID Pejantan"
+          class="form-input"
+          type="text"
+        ></ion-input>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Kode Produksi</label>
+        <ion-input
+          [(ngModel)]="formData.kodeProduksi"
+          placeholder="Masukkan Kode Produksi"
+          class="form-input"
+          type="text"
+        ></ion-input>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Kode Batch</label>
+        <ion-input
+          [(ngModel)]="formData.kodeBatch"
+          placeholder="Masukkan Kode Batch"
+          class="form-input"
+          type="text"
+        ></ion-input>
+      </div>
+    </div>
+
+    
+    <!-- SECTION: Upload Foto -->
+    <div class="form-section">
+      <h3 class="section-title">Upload Foto</h3>
+      
+      <div class="form-group">
+        <label class="form-label">Foto Hewan</label>
+        <div class="upload-area" (click)="fileInput.click()">
+          <ion-icon name="cloud-upload-outline" class="upload-icon"></ion-icon>
+          <p class="upload-text">Tap untuk memilih foto atau drag & drop</p>
+          <p class="upload-subtext">PNG, JPG, GIF (Max 5MB)</p>
+        </div>
+        <input
+          #fileInput
+          type="file"
+          accept="image/*"
+          hidden
+          (change)="onFileSelected($event)"
+        />
+        <div *ngIf="formData.fotoHewan" class="file-preview">
+          <ion-icon name="checkmark-circle-outline" class="success-icon"></ion-icon>
+          <p class="file-name">{{ formData.fotoHewan }}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>
+
+<ion-footer class="ion-no-border custom-footer">
+  <div class="footer-content">
+    <ion-button
+      (click)="simpanData()"
+      expand="block"
+      class="submit-btn"
+    >
+      <span>Simpan</span>
+    </ion-button>
+  </div>
+</ion-footer>

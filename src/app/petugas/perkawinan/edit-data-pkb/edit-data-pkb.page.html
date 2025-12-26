@@ -1,0 +1,167 @@
+<ion-header class="custom-header" translucent="true">
+  <ion-toolbar>
+    <div class="header-content">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/petugas/perkawinan/detail-pkb"></ion-back-button>
+      </ion-buttons>
+      <h2 class="header-title">Edit Data PKB</h2>
+      <div style="width: 40px;"></div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true" class="ion-padding">
+
+  <!-- Form Section -->
+  <form [formGroup]="editForm" (ngSubmit)="simpanData()">
+
+    <!-- Info Card -->
+    <div class="info-card">
+      <div class="card-header">
+        <div class="id-section">
+          <span class="id-badge">ID: {{ hewan.id }}</span>
+          <span class="type-badge" [class]="'type-' + hewan.jenis.toLowerCase()">
+            {{ hewan.jenis }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Group: Data Hewan -->
+    <div class="form-section">
+      <h3 class="section-title">Data Hewan</h3>
+
+      <div class="form-group">
+        <label class="form-label">Eartagg</label>
+        <ion-input
+          formControlName="eartag"
+          placeholder="Masukkan Eartagg"
+          class="form-input"
+          type="text"
+        ></ion-input>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Rumpun</label>
+        <ion-select
+          formControlName="rumpun"
+          placeholder="Pilih Rumpun"
+          class="form-select"
+        >
+          <ion-select-option value="PO">PO</ion-select-option>
+          <ion-select-option value="Brahman">Brahman</ion-select-option>
+          <ion-select-option value="Simental">Simental</ion-select-option>
+          <ion-select-option value="Limousin">Limousin</ion-select-option>
+          <ion-select-option value="Pasundan">Pasundan</ion-select-option>
+          <ion-select-option value="Boer">Boer</ion-select-option>
+          <ion-select-option value="Kacang">Kacang</ion-select-option>
+          <ion-select-option value="Murrah">Murrah</ion-select-option>
+        </ion-select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Usia (bulan)</label>
+        <ion-input
+          formControlName="usia"
+          placeholder="Masukkan usia"
+          class="form-input"
+          type="number"
+        ></ion-input>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Status</label>
+        <ion-select
+          formControlName="status"
+          placeholder="Pilih Status"
+          class="form-select"
+        >
+          <ion-select-option value="siap">Siap</ion-select-option>
+          <ion-select-option value="belum siap">Belum Siap</ion-select-option>
+          <ion-select-option value="dalam proses">Dalam Proses</ion-select-option>
+        </ion-select>
+      </div>
+    </div>
+
+    <!-- Form Group: Data Pemilik -->
+    <div class="form-section">
+      <h3 class="section-title">Data Pemilik</h3>
+
+      <div class="form-group">
+        <label class="form-label">Nama Pemilik</label>
+        <ion-input
+          formControlName="pemilik"
+          placeholder="Masukkan nama pemilik"
+          class="form-input"
+          type="text"
+        ></ion-input>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Alamat</label>
+        <ion-textarea
+          formControlName="alamat"
+          placeholder="Masukkan alamat"
+          class="form-textarea"
+          rows="3"
+        ></ion-textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">No. Telepon</label>
+        <ion-input
+          formControlName="noTelepon"
+          placeholder="Masukkan no. telepon"
+          class="form-input"
+          type="tel"
+        ></ion-input>
+      </div>
+    </div>
+
+    <!-- Form Group: Catatan PKB -->
+    <div class="form-section">
+      <h3 class="section-title">Catatan PKB</h3>
+
+      <div class="form-group">
+        <label class="form-label">Catatan Tambahan</label>
+        <ion-textarea
+          formControlName="catatan"
+          placeholder="Tambahkan catatan jika ada"
+          class="form-textarea"
+          rows="4"
+        ></ion-textarea>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-section">
+      <button 
+        type="button"
+        class="btn btn-secondary"
+        (click)="batal()"
+      >
+        <ion-icon name="close-outline"></ion-icon>
+        <span>Batal</span>
+      </button>
+
+      <button 
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!editForm.valid"
+      >
+        <ion-icon name="save-outline"></ion-icon>
+        <span>Simpan Perubahan</span>
+      </button>
+    </div>
+
+  </form>
+
+  <!-- Info Section -->
+  <div class="info-section">
+    <ion-icon name="information-circle-outline" class="info-icon"></ion-icon>
+    <p class="info-text">
+      Pastikan semua data sudah benar sebelum menyimpan perubahan.
+    </p>
+  </div>
+
+</ion-content>

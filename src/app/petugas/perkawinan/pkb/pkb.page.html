@@ -1,0 +1,107 @@
+<ion-header class="custom-header" translucent="true">
+  <ion-toolbar>
+    <div class="header-content">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/"></ion-back-button>
+      </ion-buttons>
+      <h2 class="header-title">Daftar Hewan Siap PKB (Baru)</h2>
+      <div style="width: 40px;"></div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true" class="ion-padding">
+
+  <!-- Filter Section -->
+  <div class="filter-section">
+    <ion-searchbar
+      placeholder="Cari ID atau Eartagg..."
+      [(ngModel)]="searchTerm"
+      (ionInput)="filterHewan()"
+      class="search-bar"
+    ></ion-searchbar>
+    
+    <div class="filter-buttons">
+      <button 
+        class="filter-btn" 
+        [class.active]="selectedFilter === 'all'"
+        (click)="setFilter('all')"
+      >
+        Semua
+      </button>
+      <button 
+        class="filter-btn" 
+        [class.active]="selectedFilter === 'sapi'"
+        (click)="setFilter('sapi')"
+      >
+        Sapi
+      </button>
+      <button 
+        class="filter-btn" 
+        [class.active]="selectedFilter === 'kambing'"
+        (click)="setFilter('kambing')"
+      >
+        Kambing
+      </button>
+      <button 
+        class="filter-btn" 
+        [class.active]="selectedFilter === 'kerbau'"
+        (click)="setFilter('kerbau')"
+      >
+        Kerbau
+      </button>
+    </div>
+  </div>
+
+  <!-- Hewan List -->
+  <div class="hewan-list">
+    <div *ngIf="filteredHewan.length === 0" class="empty-state">
+      <ion-icon name="search-outline"></ion-icon>
+      <p>Tidak ada hewan yang sesuai</p>
+    </div>
+
+    <div *ngFor="let hewan of filteredHewan" class="hewan-card" (click)="lihatDetail(hewan)">
+      <!-- Left Section: ID & Info Singkat -->
+      <div class="card-left">
+        <div class="hewan-id-badge">
+          <span class="id-label">ID:</span>
+          <span class="id-value">{{ hewan.id }}</span>
+        </div>
+        
+        <div class="quick-info">
+          <div class="info-row">
+            <span class="info-label">Eartagg:</span>
+            <span class="info-value">{{ hewan.eartag }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Pemilik:</span>
+            <span class="info-value">{{ hewan.pemilik }}</span>
+          </div>
+        </div>
+
+        <span class="hewan-type-badge" [class]="'type-' + hewan.jenis.toLowerCase()">
+          {{ hewan.jenis }}
+        </span>
+      </div>
+
+      <!-- Right Section: Action Button -->
+      <div class="card-right">
+        <button 
+          class="action-btn primary"
+          (click)="lakukanPKB(hewan); $event.stopPropagation()"
+          [disabled]="hewan.status !== 'siap'"
+        >
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+          <span>PKB</span>
+        </button>
+        <button 
+          class="action-btn secondary"
+          (click)="lihatDetail(hewan); $event.stopPropagation()"
+        >
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

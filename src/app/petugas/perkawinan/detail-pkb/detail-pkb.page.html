@@ -1,0 +1,103 @@
+<ion-header class="custom-header" translucent="true">
+  <ion-toolbar>
+    <div class="header-content">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/petugas/perkawinan/pkb"></ion-back-button>
+      </ion-buttons>
+      <h2 class="header-title">Detail Hewan PKB</h2>
+      <div style="width: 40px;"></div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true" class="ion-padding">
+
+  <!-- Hewan Info Card -->
+  <div class="info-card hewan-card">
+    <div class="card-header">
+      <div class="id-section">
+        <span class="id-badge">ID: {{ hewan.id }}</span>
+        <span class="type-badge" [class]="'type-' + hewan.jenis.toLowerCase()">
+          {{ hewan.jenis }}
+        </span>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="detail-group">
+        <h3 class="group-title">Informasi Hewan</h3>
+        
+        <div class="detail-row">
+          <span class="detail-label">Eartagg</span>
+          <span class="detail-value">{{ hewan.eartag }}</span>
+        </div>
+        
+        <div class="detail-row">
+          <span class="detail-label">Rumpun</span>
+          <span class="detail-value">{{ hewan.rumpun }}</span>
+        </div>
+        
+        <div class="detail-row">
+          <span class="detail-label">Usia</span>
+          <span class="detail-value">{{ hewan.usia }} bulan</span>
+        </div>
+        
+        <div class="detail-row">
+          <span class="detail-label">Status</span>
+          <span class="detail-value" [class]="'status-badge status-' + hewan.status.toLowerCase()">
+            {{ hewan.status | uppercase }}
+          </span>
+        </div>
+      </div>
+
+      <div class="detail-group">
+        <h3 class="group-title">Informasi Pemilik</h3>
+        
+        <div class="detail-row">
+          <span class="detail-label">Nama Pemilik</span>
+          <span class="detail-value">{{ hewan.pemilik }}</span>
+        </div>
+        
+        <div class="detail-row">
+          <span class="detail-label">Alamat</span>
+          <span class="detail-value">Jl. Merdeka No. 123, Jakarta</span>
+        </div>
+        
+        <div class="detail-row">
+          <span class="detail-label">No. Telepon</span>
+          <span class="detail-value">+62 812-3456-7890</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="action-section">
+    <button 
+      class="btn btn-primary"
+      (click)="lakukanPKB(hewan)"
+      [disabled]="hewan.status !== 'siap'"
+    >
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
+      <span>Lakukan PKB</span>
+    </button>
+    
+    <button 
+      class="btn btn-secondary"
+      (click)="editData(hewan)"
+
+    >
+      <ion-icon name="pencil-outline"></ion-icon>
+      <span>Edit Data</span>
+    </button>
+  </div>
+
+  <!-- Info Section -->
+  <div class="info-section">
+    <ion-icon name="information-circle-outline" class="info-icon"></ion-icon>
+    <p class="info-text">
+      Pastikan semua data hewan sudah terisi dengan benar sebelum melakukan PKB.
+    </p>
+  </div>
+
+</ion-content>

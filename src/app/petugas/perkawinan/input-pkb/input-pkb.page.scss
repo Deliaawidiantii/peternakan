@@ -1,0 +1,204 @@
+ion-content {
+  --background: #f4f5f8;
+}
+
+.form-container {
+  padding: 16px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-bottom: 24px;
+}
+
+// Section Card
+.section-card {
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+
+  ion-card-header {
+    padding-bottom: 8px;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2196f3; // Biru muda
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    ion-icon {
+      font-size: 1.3rem;
+    }
+  }
+
+  ion-card-content {
+    padding-top: 12px;
+  }
+}
+
+// Items
+ion-item {
+  --border-color: transparent;
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --background: transparent;
+  margin-bottom: 16px;
+
+  ion-label {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+  }
+
+  ion-input,
+  ion-select {
+    --background: #f8f9fa;
+    --border-radius: 8px;
+    --padding-start: 12px;
+    --padding-end: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-top: 4px;
+    font-size: 0.95rem;
+  }
+
+  ion-select {
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+  }
+}
+
+// Required asterisk
+.required {
+  color: #f44336;
+  margin-left: 2px;
+  font-weight: 600;
+}
+
+// Photo Upload
+.photo-upload {
+  border: 2px dashed #42a5f5; // Biru muda
+  border-radius: 12px;
+  padding: 32px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #e3f2fd; // Background biru muda terang
+
+  &:hover {
+    background: #bbdefb; // Hover biru muda lebih gelap
+    border-color: #2196f3; // Border biru
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  .upload-icon {
+    font-size: 56px;
+    color: #2196f3; // Icon biru
+    margin-bottom: 12px;
+  }
+
+  .photo-upload-text {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.5;
+
+    strong {
+      color: #1976d2; // Text biru
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    small {
+      color: #999;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+.photo-preview {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-top: 16px;
+  border: 2px solid #e0e0e0;
+}
+
+// Buttons
+.button-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 0 16px;
+
+  ion-button {
+    --border-radius: 10px;
+    font-weight: 600;
+    text-transform: none;
+    height: 48px;
+    margin: 0;
+  }
+}
+
+// Responsive
+@media (max-width: 576px) {
+  .form-container {
+    padding: 12px;
+  }
+
+  .section-card {
+    margin-bottom: 12px;
+
+    ion-card-header {
+      padding: 12px;
+    }
+
+    ion-card-content {
+      padding: 0 12px 12px;
+    }
+  }
+
+  .button-container {
+    grid-template-columns: 1fr;
+    padding: 0 12px;
+  }
+
+  .photo-upload {
+    padding: 24px 16px;
+
+    .upload-icon {
+      font-size: 48px;
+    }
+  }
+}
+
+// ===================================
+// CUSTOM IONIC COLORS - BLUE THEME
+// Tambahkan ini di src/theme/variables.scss
+// ===================================
+/*
+:root {
+  // Primary Color - Biru Muda
+  --ion-color-primary: #2196f3;
+  --ion-color-primary-rgb: 33, 150, 243;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #1e88e5;
+  --ion-color-primary-tint: #42a5f5;
+
+  // Secondary Color - Biru Lebih Terang (opsional)
+  --ion-color-secondary: #03a9f4;
+  --ion-color-secondary-rgb: 3, 169, 244;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #0398d7;
+  --ion-color-secondary-tint: #1cb2f5;
+}
+*/

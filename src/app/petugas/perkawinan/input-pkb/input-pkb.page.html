@@ -1,0 +1,328 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Input Data PKB</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="form-container">
+    <form #pkbForm="ngForm">
+      
+      <!-- Data Petugas -->
+      <!-- <ion-card class="section-card">
+        <ion-card-header>
+          <ion-card-title class="section-title">
+            <ion-icon name="person-outline"></ion-icon>
+            Data Petugas
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          
+          <ion-item lines="none">
+            <ion-label position="stacked">Nama Petugas <span class="required">*</span></ion-label>
+            <ion-input 
+              type="text" 
+              placeholder="Masukkan nama petugas" 
+              [(ngModel)]="formData.namaPetugas"
+              name="namaPetugas"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-label position="stacked">NIK Petugas <span class="required">*</span></ion-label>
+            <ion-input 
+              type="text" 
+              placeholder="Masukkan NIK petugas (16 digit)" 
+              [(ngModel)]="formData.nikPetugas"
+              name="nikPetugas"
+              maxlength="16"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-label position="stacked">Telp Petugas <span class="required">*</span></ion-label>
+            <ion-input 
+              type="tel" 
+              placeholder="Contoh: 081234567890" 
+              [(ngModel)]="formData.telpPetugas"
+              name="telpPetugas"
+              required>
+            </ion-input>
+          </ion-item>
+
+        </ion-card-content>
+      </ion-card> -->
+
+      <!-- Data Ternak -->
+      <ion-card class="section-card">
+        <ion-card-header>
+          <ion-card-title class="section-title">
+            <ion-icon name="paw-outline"></ion-icon>
+            Data Ternak
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          
+          <ion-item lines="none">
+            <ion-label position="stacked">Eartag Betina <span class="required">*</span></ion-label>
+            <ion-input 
+              type="text" 
+              placeholder="Masukkan nomor eartag" 
+              [(ngModel)]="formData.eartagBetina"
+              name="eartagBetina"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-label position="stacked">Jenis Ternak <span class="required">*</span></ion-label>
+            <ion-select 
+              placeholder="Pilih jenis ternak" 
+              [(ngModel)]="formData.jenisTernak"
+              name="jenisTernak"
+              required>
+              <ion-select-option value="Sapi">Sapi</ion-select-option>
+              <ion-select-option value="Kerbau">Kerbau</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-label position="stacked">Rumpun Ternak <span class="required">*</span></ion-label>
+            <ion-select 
+              placeholder="Pilih rumpun ternak" 
+              [(ngModel)]="formData.rumpunTernak"
+              name="rumpunTernak"
+              required>
+              <ion-select-option value="PO">PO (Peranakan Ongole)</ion-select-option>
+              <ion-select-option value="Brahmana">Brahmana</ion-select-option>
+              <ion-select-option value="Simental">Simental</ion-select-option>
+              <ion-select-option value="Limosin">Limosin</ion-select-option>
+              <ion-select-option value="Pasundan">Pasundan</ion-select-option>
+              <ion-select-option value="Kerbau Sungai">Kerbau Sungai</ion-select-option>
+              <ion-select-option value="Kerbau Lumpur">Kerbau Lumpur</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-label position="stacked">Umur Induk (Tahun) <span class="required">*</span></ion-label>
+            <ion-input 
+              type="number" 
+              placeholder="Masukkan umur induk" 
+              [(ngModel)]="formData.umurInduk"
+              name="umurInduk"
+              min="0"
+              required>
+            </ion-input>
+          </ion-item>
+
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Data PKB -->
+      <ion-card class="section-card">
+        <ion-card-header>
+          <ion-card-title class="section-title">
+            <ion-icon name="clipboard-outline"></ion-icon>
+            Data Pemeriksaan Kebuntingan
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          
+          <ion-item lines="none">
+            <ion-label position="stacked">Tanggal PKB <span class="required">*</span></ion-label>
+            <ion-input 
+              type="date" 
+              [(ngModel)]="formData.tanggalPKB"
+              name="tanggalPKB"
+              (ionChange)="hitungPrediksiLahir()"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-label position="stacked">Jenis Perkawinan <span class="required">*</span></ion-label>
+            <ion-select 
+              placeholder="Pilih jenis perkawinan" 
+              [(ngModel)]="formData.jenisPerkawinan"
+              name="jenisPerkawinan"
+              required>
+              <ion-select-option value="IB">IB (Inseminasi Buatan)</ion-select-option>
+              <ion-select-option value="Alam">Alam (Kawin Alam)</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-label position="stacked">Umur Kebuntingan (Bulan) <span class="required">*</span></ion-label>
+            <ion-input 
+              type="number" 
+              placeholder="Masukkan umur kebuntingan" 
+              [(ngModel)]="formData.umurKebuntingan"
+              name="umurKebuntingan"
+              min="0"
+              max="12"
+              (ionChange)="hitungPrediksiLahir()"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-label position="stacked">Prediksi Tanggal Lahir Anak <span class="required">*</span></ion-label>
+            <ion-input 
+              type="date" 
+              [(ngModel)]="formData.prediksiLahir"
+              name="prediksiLahir"
+              required>
+            </ion-input>
+          </ion-item>
+
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Data Pemilik -->
+       <ion-card class="section-card">
+        <ion-card-header>
+          <ion-card-title class="section-title">
+            <ion-icon name="people-outline"></ion-icon>
+            Data Pemilik
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          
+          <ion-item lines="none">
+            <ion-label position="stacked">Nama Pemilik <span class="required">*</span></ion-label>
+            <ion-input 
+              type="text" 
+              placeholder="Masukkan nama pemilik" 
+              [(ngModel)]="formData.namaPemilik"
+              name="namaPemilik"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-label position="stacked">NIK Pemilik <span class="required">*</span></ion-label>
+            <ion-input 
+              type="text" 
+              placeholder="Masukkan NIK pemilik (16 digit)" 
+              [(ngModel)]="formData.nikPemilik"
+              name="nikPemilik"
+              maxlength="16"
+              required>
+            </ion-input>
+          </ion-item>
+
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Lokasi -->
+       <ion-card class="section-card">
+        <ion-card-header>
+          <ion-card-title class="section-title">
+            <ion-icon name="location-outline"></ion-icon>
+            Lokasi
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          
+          <ion-item lines="none">
+            <ion-label position="stacked">Provinsi <span class="required">*</span></ion-label>
+            <ion-input 
+              type="text" 
+              placeholder="Masukkan nama provinsi" 
+              [(ngModel)]="formData.provinsi"
+              name="provinsi"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-label position="stacked">Kabupaten/Kota <span class="required">*</span></ion-label>
+            <ion-input 
+              type="text" 
+              placeholder="Masukkan nama kabupaten/kota" 
+              [(ngModel)]="formData.kabupaten"
+              name="kabupaten"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-label position="stacked">Kecamatan <span class="required">*</span></ion-label>
+            <ion-input 
+              type="text" 
+              placeholder="Masukkan nama kecamatan" 
+              [(ngModel)]="formData.kecamatan"
+              name="kecamatan"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-label position="stacked">Desa/Kelurahan <span class="required">*</span></ion-label>
+            <ion-input 
+              type="text" 
+              placeholder="Masukkan nama desa/kelurahan" 
+              [(ngModel)]="formData.desa"
+              name="desa"
+              required>
+            </ion-input>
+          </ion-item>
+
+        </ion-card-content>
+      </ion-card> 
+
+      <!-- Upload Foto -->
+      <ion-card class="section-card">
+        <ion-card-header>
+          <ion-card-title class="section-title">
+            <ion-icon name="camera-outline"></ion-icon>
+            Upload Foto
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          
+          <div class="photo-upload" (click)="fileInput.click()">
+            <ion-icon name="camera" class="upload-icon"></ion-icon>
+            <div class="photo-upload-text">
+              <strong>Klik untuk upload foto</strong><br>
+              <small>Format: JPG, PNG, JPEG (Max 5MB)</small>
+            </div>
+          </div>
+
+          <input 
+            #fileInput 
+            type="file" 
+            accept="image/*" 
+            style="display: none;" 
+            (change)="onFileSelected($event)">
+
+          <img 
+            *ngIf="previewImage" 
+            [src]="previewImage" 
+            class="photo-preview" 
+            alt="Preview">
+
+        </ion-card-content>
+      </ion-card>
+
+    </form>
+
+    <!-- Buttons -->
+    <div class="button-container">
+      <ion-button expand="block" color="danger" (click)="resetForm()">
+        <ion-icon slot="start" name="refresh-outline"></ion-icon>
+        Reset
+      </ion-button>
+      <ion-button expand="block" color="primary" (click)="submitForm()">
+        <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+        Submit Data PKB
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>

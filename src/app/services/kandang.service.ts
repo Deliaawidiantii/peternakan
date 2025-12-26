@@ -6,7 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class KandangService {
+
   private apiUrl = 'http://192.168.2.114:8000/api';
+
 
   constructor(private http: HttpClient) {}
 

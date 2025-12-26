@@ -1,0 +1,296 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/petugas/perkawinan/riwayat-perkawinan"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detail Riwayat</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="editRiwayat()">
+        <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <!-- Loading State -->
+  <div class="ion-text-center ion-padding" *ngIf="isLoading">
+    <ion-spinner></ion-spinner>
+  </div>
+
+  <!-- Empty State -->
+  <div class="ion-text-center ion-padding" *ngIf="!isLoading && !riwayat">
+    <ion-icon name="document-text-outline" size="large" color="medium"></ion-icon>
+    <h2>Data Tidak Ditemukan</h2>
+    <p>Riwayat perkawinan tidak ditemukan</p>
+  </div>
+
+  <div *ngIf="!isLoading && riwayat">
+
+    <!-- Header Section -->
+    <ion-card>
+      <div *ngIf="riwayat.foto">
+        <img src="assets/icon/penyakit2.jpg"  alt="Foto Ternak">
+      </div>
+      <div *ngIf="!riwayat.foto" style="height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center;">
+        <ion-icon name="image-outline" size="large" color="light"></ion-icon>
+      </div>
+
+      <ion-card-content class="ion-text-center">
+        <h2>{{ riwayat.eartagBetina }}</h2>
+        <p>{{ riwayat.jenisTernak }} - {{ riwayat.rumpunTernak }}</p>
+        
+        <ion-badge [color]="getStatusColor(riwayat.status)">
+          {{ riwayat.status }}
+        </ion-badge>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Info Pemilik -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Informasi Pemilik</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item lines="inset">
+          <ion-label>
+            <p>Nama Pemilik</p>
+            <h2>{{ riwayat.namaPemilik }}</h2>
+          </ion-label>
+        </ion-item>
+        <ion-item lines="inset">
+          <ion-label>
+            <p>NIK</p>
+            <h2>{{ riwayat.nikPemilik }}</h2>
+          </ion-label>
+        </ion-item>
+        <ion-item lines="inset">
+          <ion-label>
+            <p>Telp</p>
+            <h2>{{ riwayat.telpPemilik }}</h2>
+          </ion-label>
+        </ion-item>
+        <ion-item lines="inset">
+          <ion-label>
+            <p>Alamat</p>
+            <h2>{{ riwayat.alamatPemilik }}</h2>
+          </ion-label>
+        </ion-item>
+        <ion-item lines="inset">
+          <ion-label>
+            <p>Lokasi</p>
+            <h2>{{ riwayat.desa }}, {{ riwayat.kecamatan }}, {{ riwayat.kabupaten }}, {{ riwayat.provinsi }}</h2>
+          </ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>
+            <p>Petugas</p>
+            <h2>{{ riwayat.namaPetugas }}</h2>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Info Ternak -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Informasi Ternak</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item lines="inset">
+          <ion-label>
+            <p>Eartag Betina</p>
+            <h2>{{ riwayat.eartagBetina }}</h2>
+          </ion-label>
+        </ion-item>
+        <ion-item lines="inset">
+          <ion-label>
+            <p>Jenis Ternak</p>
+            <h2>{{ riwayat.jenisTernak }}</h2>
+          </ion-label>
+        </ion-item>
+        <ion-item lines="inset">
+          <ion-label>
+            <p>Rumpun Ternak</p>
+            <h2>{{ riwayat.rumpunTernak }}</h2>
+          </ion-label>
+        </ion-item>
+        <ion-item lines="inset" *ngIf="riwayat.umurInduk">
+          <ion-label>
+            <p>Umur Induk</p>
+            <h2>{{ riwayat.umurInduk }} tahun</h2>
+          </ion-label>
+        </ion-item>
+        <ion-item lines="none" *ngIf="riwayat.usiaInduk">
+          <ion-label>
+            <p>Usia Induk</p>
+            <h2>{{ riwayat.usiaInduk }} bulan</h2>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Timeline Section -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Riwayat Reproduksi</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+
+        <!-- IB Section -->
+        <div class="ion-margin-bottom">
+          <ion-list-header>
+            <ion-icon name="medical-outline" color="primary"></ion-icon>
+            <ion-label class="ion-margin-start">Inseminasi Buatan (IB)</ion-label>
+            <ion-badge *ngIf="riwayat.hasIB" color="success" slot="end">Selesai</ion-badge>
+          </ion-list-header>
+          
+          <div *ngIf="riwayat.hasIB">
+            <ion-item lines="inset">
+              <ion-label>
+                <p>Tanggal IB</p>
+                <h2>{{ riwayat.tanggalIB | date: 'dd MMMM yyyy' }}</h2>
+              </ion-label>
+            </ion-item>
+            <ion-item lines="inset" *ngIf="riwayat.metodePerkawinan">
+              <ion-label>
+                <p>Metode</p>
+                <h2>{{ riwayat.metodePerkawinan }}</h2>
+              </ion-label>
+            </ion-item>
+            <ion-item lines="inset" *ngIf="riwayat.inseminasiKe">
+              <ion-label>
+                <p>Inseminasi Ke</p>
+                <h2>{{ riwayat.inseminasiKe }}</h2>
+              </ion-label>
+            </ion-item>
+            <ion-item lines="inset" *ngIf="riwayat.kodeProduksi">
+              <ion-label>
+                <p>Kode Produksi</p>
+                <h2>{{ riwayat.kodeProduksi }}</h2>
+              </ion-label>
+            </ion-item>
+            <ion-item lines="inset" *ngIf="riwayat.kodeBatch">
+              <ion-label>
+                <p>Kode Batch</p>
+                <h2>{{ riwayat.kodeBatch }}</h2>
+              </ion-label>
+            </ion-item>
+            <ion-item lines="none" *ngIf="riwayat.idPejantan">
+              <ion-label>
+                <p>ID Pejantan</p>
+                <h2>{{ riwayat.idPejantan }}</h2>
+              </ion-label>
+            </ion-item>
+          </div>
+
+          <ion-text color="medium" *ngIf="!riwayat.hasIB" class="ion-padding">
+            <p>Belum ada data IB</p>
+          </ion-text>
+        </div>
+
+        <!-- PKB Section -->
+        <div class="ion-margin-bottom" *ngIf="riwayat.hasPKB || riwayat.hasLahir">
+          <ion-list-header>
+            <ion-icon name="clipboard-outline" color="warning"></ion-icon>
+            <ion-label class="ion-margin-start">Pemeriksaan Kebuntingan (PKB)</ion-label>
+            <ion-badge *ngIf="riwayat.hasPKB" color="success" slot="end">Selesai</ion-badge>
+          </ion-list-header>
+          
+          <div *ngIf="riwayat.hasPKB">
+            <ion-item lines="inset">
+              <ion-label>
+                <p>Tanggal PKB</p>
+                <h2>{{ riwayat.tanggalPKB | date: 'dd MMMM yyyy' }}</h2>
+              </ion-label>
+            </ion-item>
+            <ion-item lines="inset" *ngIf="riwayat.jenisPerkawinan">
+              <ion-label>
+                <p>Jenis Perkawinan</p>
+                <h2>{{ riwayat.jenisPerkawinan }}</h2>
+              </ion-label>
+            </ion-item>
+            <ion-item lines="inset" *ngIf="riwayat.umurKebuntingan">
+              <ion-label>
+                <p>Umur Kebuntingan</p>
+                <h2>{{ riwayat.umurKebuntingan }} bulan</h2>
+              </ion-label>
+            </ion-item>
+            <ion-item lines="none" *ngIf="riwayat.prediksiLahir">
+              <ion-label>
+                <p>Prediksi Tanggal Lahir</p>
+                <h2>{{ riwayat.prediksiLahir | date: 'dd MMMM yyyy' }}</h2>
+              </ion-label>
+            </ion-item>
+          </div>
+
+          <ion-text color="medium" *ngIf="!riwayat.hasPKB" class="ion-padding">
+            <p>Belum ada data PKB</p>
+          </ion-text>
+        </div>
+
+        <!-- Lahir Section -->
+        <div *ngIf="riwayat.hasLahir">
+          <ion-list-header>
+            <ion-icon name="heart-outline" color="danger"></ion-icon>
+            <ion-label class="ion-margin-start">Kelahiran Anak</ion-label>
+            <ion-badge *ngIf="riwayat.hasLahir" color="success" slot="end">Selesai</ion-badge>
+          </ion-list-header>
+          
+          <div *ngIf="riwayat.hasLahir">
+            <ion-item lines="inset">
+              <ion-label>
+                <p>Tanggal Lahir</p>
+                <h2>{{ riwayat.tanggalLahir | date: 'dd MMMM yyyy' }}</h2>
+              </ion-label>
+            </ion-item>
+            <ion-item lines="inset" *ngIf="riwayat.jenisKelaminAnak">
+              <ion-label>
+                <p>Jenis Kelamin Anak</p>
+                <h2>{{ riwayat.jenisKelaminAnak }}</h2>
+              </ion-label>
+            </ion-item>
+            <ion-item lines="inset" *ngIf="riwayat.beratLahirAnak">
+              <ion-label>
+                <p>Berat Lahir Anak</p>
+                <h2>{{ riwayat.beratLahirAnak }} kg</h2>
+              </ion-label>
+            </ion-item>
+            <ion-item lines="none" *ngIf="riwayat.kondisiAnak">
+              <ion-label>
+                <p>Kondisi Anak</p>
+                <h2>{{ riwayat.kondisiAnak }}</h2>
+              </ion-label>
+            </ion-item>
+          </div>
+
+          <ion-text color="medium" *ngIf="!riwayat.hasLahir" class="ion-padding">
+            <p>Belum ada data Lahiran</p>
+          </ion-text>
+        </div>
+
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Action Buttons -->
+    <ion-button 
+      expand="block" 
+      color="success"
+      (click)="updateProgress()"
+      class="ion-margin"
+      *ngIf="!riwayat.hasLahir">
+      <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+      {{ riwayat.hasPKB ? 'Input Lahiran' : 'Input PKB' }}
+    </ion-button>
+
+    <ion-button 
+      expand="block" 
+      color="medium"
+      (click)="goBack()"
+      class="ion-margin">
+      <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      Kembali
+    </ion-button>
+
+  </div>
+</ion-content>
