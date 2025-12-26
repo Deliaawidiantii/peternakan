@@ -87,6 +87,16 @@ ion-button {
   --border-radius: 8px;
 }
 
+.preview-container {
+  padding: 12px;
+  
+  img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+}
 
 
 

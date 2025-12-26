@@ -2,151 +2,333 @@
   --background: #f8fafb;
   font-family: "Public Sans", "Noto Sans", sans-serif;
 
-  /* Filter Section */
-  .filter-section {
-    padding: 20px 16px;
+  /* Top Section - Compact */
+  .top-section {
+    padding: 12px 12px 8px;
     background: linear-gradient(135deg, #ffffff 0%, #f8fafb 100%);
+  }
 
-    .search-item {
-      --background: #ffffff;
-      border-radius: 14px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-      margin-bottom: 12px;
-      padding: 4px 16px;
-      border: 2px solid transparent;
-      transition: all 0.3s ease;
+  /* Search - Compact */
+  .search-wrapper {
+    position: relative;
+    margin-bottom: 8px;
 
-      &:focus-within {
-        border-color: #507e95;
-        box-shadow: 0 4px 16px rgba(80, 126, 149, 0.2);
-      }
-
-      ion-icon {
-        color: #507e95;
-        font-size: 22px;
-        margin-right: 4px;
-      }
-
-      ion-input {
-        font-size: 15px;
-        --placeholder-color: #507e95;
-        --placeholder-opacity: 0.6;
-      }
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: #507e95;
+      z-index: 1;
     }
 
-    .filter-item {
-      --background: #ffffff;
-      border-radius: 14px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-      padding: 4px 16px;
+    .search-input {
+      width: 100%;
+      padding: 10px 12px 10px 40px;
+      border: none;
+      border-radius: 10px;
+      background: #ffffff;
+      box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+      font-size: 14px;
+      color: #0e161b;
       transition: all 0.3s ease;
 
-      &:hover {
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+      &:focus {
+        outline: none;
+        box-shadow: 0 2px 12px rgba(80, 126, 149, 0.15);
       }
 
-      ion-label {
-        font-size: 14px;
-        font-weight: 600;
-        color: #0e161b;
-        margin-right: 12px;
-      }
-
-      ion-select {
-        font-size: 15px;
-        color: #0e161b;
-        --placeholder-color: #507e95;
-        --placeholder-opacity: 0.6;
-      }
-
-      ion-select::part(icon) {
+      &::placeholder {
         color: #507e95;
+        opacity: 0.6;
       }
     }
   }
 
-  /* Kandang List */
-  .kandang-list {
-    background: transparent;
-    padding: 0 16px 24px;
+  /* Filter Dropdown - Compact */
+  .filter-dropdown {
+    position: relative;
 
-    .kandang-item {
-      --background: #ffffff;
-      --padding-start: 16px;
-      --padding-end: 16px;
-      --inner-padding-end: 16px;
-      border-radius: 16px;
-      margin-bottom: 16px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-      overflow: hidden;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    .filter-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: #507e95;
+      z-index: 1;
+      pointer-events: none;
+    }
 
-      &:hover {
-        transform: translateX(4px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    .filter-select {
+      width: 100%;
+      padding: 10px 12px 10px 40px;
+      border: none;
+      border-radius: 10px;
+      background: #ffffff;
+      box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+      font-size: 14px;
+      color: #0e161b;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%23507e95' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 10px;
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 2px 12px rgba(80, 126, 149, 0.15);
       }
+    }
+  }
+
+  /* List Header - Compact */
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 12px 8px;
+
+    h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0e161b;
+      margin: 0;
+    }
+
+    .count-badge {
+      background: #e8eff3;
+      color: #507e95;
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+  }
+
+  /* Kandang Grid - COMPACT VERSION */
+  .kandang-grid {
+    padding: 0 12px 80px;
+    display: grid;
+    gap: 10px;
+
+    .kandang-card {
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      border-left: 3px solid transparent;
 
       &:active {
-        transform: translateX(4px) scale(0.98);
+        transform: scale(0.98);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
       }
 
-      .foto-kandang {
-        width: 70px;
-        height: 70px;
-        border-radius: 12px;
-        overflow: hidden;
-        border: 3px solid #f8fafb;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
+      // Status Mini (Left Border)
+      .status-mini {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        
+        &.status-individu {
+          background: linear-gradient(180deg, #42a5f5 0%, #1976d2 100%);
+        }
+        
+        &.status-kelompok {
+          background: linear-gradient(180deg, #66bb6a 0%, #43a047 100%);
         }
       }
 
-      ion-label {
-        margin-left: 12px;
+      .card-content {
+        padding: 12px 14px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
 
-        h2 {
-          font-size: 17px;
-          font-weight: 700;
-          color: #0e161b;
+       // Foto Kandang (Kotak dengan Rounded Corner)
+        .kandang-photo-avatar {
+          width: 56px;
+          height: 80px;
+          border-radius: 8px; // ✅ Ganti jadi 8px (kotak rounded)
+          overflow: hidden;
+          flex-shrink: 0;
+          background: #f0f2f5;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+
+          &.placeholder {
+            background: linear-gradient(135deg, #e8eff3 0%, #f0f2f5 100%);
+
+            ion-icon {
+              font-size: 32px; // ✅ Sedikit lebih besar
+              color: #d0dfe6;
+              opacity: 0.6; // ✅ Lebih terang dikit
+            }
+          }
+        }
+
+        // Info Content
+        .kandang-info {
+          flex: 1;
+          min-width: 0; // Allow text truncation
+        }
+
+        // Header Row - Compact
+        .card-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
           margin-bottom: 6px;
-          letter-spacing: -0.2px;
+
+          .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          }
+
+          .kandang-id {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0e161b;
+            margin: 0;
+            line-height: 1.2;
+          }
+
+          // Status Badge Mini
+          .status-mini-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            
+            &.badge-individu {
+              background: #e3f2fd;
+              color: #1976d2;
+            }
+            
+            &.badge-kelompok {
+              background: #e8f5e9;
+              color: #43a047;
+            }
+          }
         }
 
-        p {
-          font-size: 14px;
+        // Kandang Name
+        .kandang-name {
+          font-size: 13px;
           color: #507e95;
+          margin: 0 0 6px 0;
           font-weight: 500;
-          line-height: 1.4;
-          margin: 0;
+        }
+
+        // Meta Compact - Horizontal
+        .kandang-meta-compact {
+          display: flex;
+          gap: 10px;
+          align-items: center;
+          margin-bottom: 8px;
+
+          .meta-mini {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 11px;
+            color: #507e95;
+            font-weight: 500;
+
+            ion-icon {
+              font-size: 13px;
+            }
+          }
+        }
+
+        // Footer Compact
+        .card-footer-compact {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          padding-top: 4px;
+          font-size: 11px;
+          color: #507e95;
+
+          ion-icon {
+            font-size: 13px;
+            color: #507e95;
+          }
+
+          span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
         }
       }
     }
   }
 
-  /* Floating Action Button */
+  // Empty State - Compact
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+    
+    ion-icon {
+      font-size: 64px;
+      color: #d0dfe6;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+    
+    p {
+      font-size: 14px;
+      color: #507e95;
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    ion-button {
+      --border-radius: 10px;
+      --padding-start: 20px;
+      --padding-end: 20px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+  }
+
+  /* Floating Action Button - Small */
   ion-fab {
-    margin: 0 16px 16px 0;
+    margin: 0 12px 12px 0;
 
     ion-fab-button {
-      --box-shadow: 0 4px 16px rgba(80, 126, 149, 0.4);
-      width: 56px;
-      height: 56px;
-
+      --box-shadow: 0 3px 12px rgba(80, 126, 149, 0.4);
+      
       &::part(native) {
         transition: all 0.3s ease;
       }
 
-      &:hover {
-        --box-shadow: 0 6px 20px rgba(80, 126, 149, 0.5);
-        transform: scale(1.1);
-      }
-
-      ion-icon {
-        font-size: 28px;
+      &:active {
+        --box-shadow: 0 4px 16px rgba(80, 126, 149, 0.5);
+        transform: scale(0.95);
       }
     }
   }

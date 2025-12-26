@@ -1,40 +1,62 @@
 <ion-header>
   <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/petugas/kegiatan" text=""></ion-back-button>
+      <ion-back-button defaultHref="/petugas/kegiatan"></ion-back-button>
     </ion-buttons>
     <ion-title>Jadwal Kegiatan</ion-title>
   </ion-toolbar>
 
-  <!-- SEGMENT DENGAN 4 TAB -->
   <ion-segment value="semua" (ionChange)="segmentChanged($event)">
     <ion-segment-button value="semua">
       <ion-label>Semua</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="akan-datang">
+
+    <ion-segment-button value="akan_datang">
       <ion-label>Akan Datang</ion-label>
     </ion-segment-button>
+
     <ion-segment-button value="berjalan">
       <ion-label>Berjalan</ion-label>
     </ion-segment-button>
+
     <ion-segment-button value="selesai">
       <ion-label>Selesai</ion-label>
     </ion-segment-button>
   </ion-segment>
+
 </ion-header>
 
-<ion-content class="jadwal-page">
-  <ion-list lines="none" id="kegiatanList">
-    <!-- Data akan di-render dari TypeScript -->
-  </ion-list>
+<ion-content>
 
-  <!-- Empty State -->
-  <div id="emptyState" style="display: none; text-align:center; padding:48px 16px; color: #64748b;">
-    <div style="font-size: 3rem; margin-bottom: 16px;">
+  <!-- Loading -->
+  <ion-spinner *ngIf="loading" class="ion-padding"></ion-spinner>
+
+  <!-- List -->
+  <ion-list *ngIf="!loading && kegiatanList.length > 0" lines="none">
+    <ion-item
+      *ngFor="let kegiatan of kegiatanList"
+      button
+      (click)="goToDetail(kegiatan.id)"
+    >
       <ion-avatar slot="start" class="icon-box">
         <ion-icon name="calendar-outline"></ion-icon>
       </ion-avatar>
-    </div>
-    <p id="emptyMessage">Tidak Ada Kegiatan</p>
+
+      <ion-label>
+        <h2>{{ kegiatan.jenis }}</h2>
+        <p>{{ getStatusLabel(kegiatan) }}</p>
+        <p>{{ kegiatan.tanggal }} | {{ kegiatan.jam_mulai }} - {{ kegiatan.jam_selesai }}</p>
+        <p>📍 {{ kegiatan.lokasi }}</p>
+      </ion-label>
+
+      <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && kegiatanList.length === 0" class="ion-text-center ion-padding">
+    <ion-icon name="calendar-outline" size="large"></ion-icon>
+    <p>Tidak ada kegiatan</p>
   </div>
+
 </ion-content>

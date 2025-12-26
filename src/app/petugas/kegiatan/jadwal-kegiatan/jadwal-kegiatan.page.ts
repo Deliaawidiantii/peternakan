@@ -1,173 +1,122 @@
-import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { KegiatanService } from '../../../services/kegiatan.service';
+
 @Component({
   selector: 'app-jadwal-kegiatan',
   templateUrl: './jadwal-kegiatan.page.html',
   styleUrls: ['./jadwal-kegiatan.page.scss'],
-  standalone: false
+  standalone: false,
 })
 export class JadwalKegiatanPage implements OnInit {
 
   selectedTab: string = 'semua';
 
-  // DATA KEGIATAN (ganti sesuai data API / DB)
-  kegiatanList = [
-    {
-      id: 1,
-      nama: 'Vaksinasi Ternak',
-      status: 'akan-datang',
-      statusLabel: 'Akan Datang',
-      tanggal: '2024-07-20',
-      waktu: '10:00 AM - 12:00 PM',
-      lokasi: 'Balai Desa',
-    },
-    {
-      id: 2,
-      nama: 'Pemeriksaan Kesehatan Hewan',
-      status: 'selesai',
-      statusLabel: 'Selesai',
-      tanggal: '2024-06-15',
-      waktu: '09:00 AM - 11:00 AM',
-      lokasi: 'Klinik Hewan',
-    },
-    {
-      id: 3,
-      nama: 'Pengambilan Sampel Darah',
-      status: 'berjalan',
-      statusLabel: 'Sedang Berjalan',
-      tanggal: '2024-08-05',
-      waktu: '01:00 PM - 03:00 PM',
-      lokasi: 'Klinik Hewan',
-    },
-    {
-      id: 4,
-      nama: 'Edukasi Pemilik Hewan',
-      status: 'akan-datang',
-      statusLabel: 'Akan Datang',
-      tanggal: '2024-09-10',
-      waktu: '02:00 PM - 04:00 PM',
-      lokasi: 'Balai Desa',
-    },
-    {
-      id: 5,
-      nama: 'Sterilisasi Hewan',
-      status: 'selesai',
-      statusLabel: 'Selesai',
-      tanggal: '2024-05-25',
-      waktu: '08:00 AM - 10:00 AM',
-      lokasi: 'Klinik Hewan',
-    }
-  ];
+  allKegiatan: any[] = [];     // 🔥 semua data dari API
+  kegiatanList: any[] = [];    // 🔥 data yang sudah difilter
+
+  loading = false;
 
   constructor(
-    private router: Router,
-    private el : ElementRef,
-    private renderer : Renderer2
-  ) { }
+    private kegiatanService: KegiatanService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.renderKegiatan();
-  }
-
-    goToDetail() {
-    this.router.navigate(['/petugas/detail-kegiatan']);
+    this.loadKegiatan();
   }
 
   ionViewWillEnter() {
-    this.renderKegiatan();
+    this.loadKegiatan();
   }
 
-  // FUNGSI KETIKA TAB BERUBAH
   segmentChanged(event: any) {
     this.selectedTab = event.detail.value;
-    this.renderKegiatan();
+    this.applyFilter(); // 🔥 TIDAK HIT API LAGI
   }
 
-  // FUNGSI RENDER LIST KEGIATAN
-  renderKegiatan() {
-    const listElement = document.getElementById('kegiatanList');
-    const emptyState = document.getElementById('emptyState');
-    const emptyMessage = document.getElementById('emptyMessage');
+  /**
+   * Ambil data SEKALI dari API
+   */
+  loadKegiatan() {
+    this.loading = true;
 
-    if (!listElement || !emptyState || !emptyMessage) return;
+    this.kegiatanService.getKegiatan().subscribe({
+      next: (res) => {
+        this.allKegiatan = Array.isArray(res.data)
+          ? res.data
+          : Array.isArray(res)
+          ? res
+          : [];
 
-    // Filter data berdasarkan tab yang dipilih
-    const filteredData = this.selectedTab === 'semua'
-      ? this.kegiatanList
-      : this.kegiatanList.filter(kegiatan => kegiatan.status === this.selectedTab);
-
-    // Jika data kosong, tampilkan empty state
-    if (filteredData.length === 0) {
-      listElement.style.display = 'none';
-      emptyState.style.display = 'block';
-
-      // Ubah pesan sesuai tab
-      if (this.selectedTab === 'akan-datang') {
-        emptyMessage.textContent = 'Tidak ada kegiatan yang akan datang';
-      } else if (this.selectedTab === 'berjalan') {
-        emptyMessage.textContent = 'Tidak ada kegiatan yang sedang berjalan';
-      } else if (this.selectedTab === 'selesai') {
-        emptyMessage.textContent = 'Tidak ada kegiatan yang selesai';
-      } else {
-        emptyMessage.textContent = 'Tidak ada kegiatan';
+        this.applyFilter();
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Gagal ambil kegiatan', err);
+        this.allKegiatan = [];
+        this.kegiatanList = [];
+        this.loading = false;
       }
-      return;
-    }
-
-    // Tampilkan list dan sembunyikan empty state
-    listElement.style.display = 'block';
-    emptyState.style.display = 'none';
-
-    // Clear isi list
-    listElement.innerHTML = '';
-
-    // Render setiap kegiatan
-    filteredData.forEach(kegiatan => {
-      const item = this.createKegiatanItem(kegiatan);
-      listElement.appendChild(item);
     });
   }
 
-  // FUNGSI MEMBUAT ELEMENT KEGIATAN
-  createKegiatanItem(kegiatan: any): HTMLElement {
-    const ionItem = document.createElement('ion-item');
-    ionItem.className = `jadwal-item status-${kegiatan.status}`;
-    ionItem.setAttribute('button', 'true');
-    ionItem.setAttribute('detail', 'false');
+  /**
+   * 🔥 FILTER ALA SHOPEE
+   */
+  applyFilter() {
+    if (this.selectedTab === 'semua') {
+      this.kegiatanList = this.allKegiatan;
+      return;
+    }
 
-    // Icon Box
-    const iconBox = document.createElement('div');
-    iconBox.className = 'icon-box';
-    iconBox.setAttribute('slot', 'start');
-    iconBox.innerHTML = '<ion-icon name="calendar-outline"></ion-icon>';
+    if (this.selectedTab === 'akan_datang') {
+      this.kegiatanList = this.allKegiatan.filter(k =>
+        k.status_aktual === 'terjadwal' ||
+        k.status_aktual === 'terlambat'
+      );
+      return;
+    }
 
-    // Label
-    const label = document.createElement('ion-label');
-    label.innerHTML = `
-      <h2>${kegiatan.nama}</h2>
-      <p>${kegiatan.statusLabel}</p>
-      <p>${kegiatan.tanggal} | ${kegiatan.waktu}</p>
-      <p>📍 ${kegiatan.lokasi}</p>
-    `;
+    if (this.selectedTab === 'berjalan') {
+      this.kegiatanList = this.allKegiatan.filter(k =>
+        k.status_aktual === 'sedang_berjalan' ||
+        k.status_aktual === 'butuh_diselesaikan'
+      );
+      return;
+    }
 
-    // Chevron Icon
-    const chevron = document.createElement('ion-icon');
-    chevron.setAttribute('slot', 'end');
-    chevron.setAttribute('name', 'chevron-forward-outline');
+    if (this.selectedTab === 'selesai') {
+      this.kegiatanList = this.allKegiatan.filter(k =>
+        k.status_aktual === 'selesai'
+      );
+      return;
+    }
 
-    // Gabungkan semua element
-    ionItem.appendChild(iconBox);
-    ionItem.appendChild(label);
-    ionItem.appendChild(chevron);
-
-    // Tambah event click
-    this.renderer.listen(ionItem, 'click', () => {
-  console.log('Kegiatan diklik:', kegiatan.nama, '- ID:', kegiatan.id);
-  this.goToDetail();
-});
-
-
-    return ionItem;
+    this.kegiatanList = this.allKegiatan;
   }
 
+  /**
+   * Label status buat UI
+   */
+  getStatusLabel(kegiatan: any): string {
+    switch (kegiatan.status_aktual) {
+      case 'terjadwal':
+        return 'Akan Datang';
+      case 'terlambat':
+        return 'Terlambat';
+      case 'sedang_berjalan':
+        return 'Sedang Berjalan';
+      case 'butuh_diselesaikan':
+        return 'Perlu Diselesaikan';
+      case 'selesai':
+        return 'Selesai';
+      default:
+        return kegiatan.status;
+    }
+  }
+
+  goToDetail(id: number) {
+    this.router.navigate(['/petugas/detail-kegiatan', id]);
+  }
 }

@@ -6,7 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PeternakService {
-  private apiUrl = 'http://192.168.2.108:8000/api'; // Ganti sesuai IP kamu
+
+  private apiUrl = 'http://192.168.2.114:8000/api'; // Ganti sesuai IP kamu
+
 
   constructor(private http: HttpClient) { }
 

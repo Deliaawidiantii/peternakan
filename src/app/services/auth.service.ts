@@ -7,7 +7,8 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://192.168.2.108:8000/api'; // ← GANTI dengan IP laptop kamu
+  private apiUrl = 'http://192.168.2.114:8000/api'; // ← GANTI dengan IP laptop kamu
+
   
   constructor(private http: HttpClient) { }
 

@@ -1,65 +1,122 @@
 <ion-header>
   <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button defaultHref="petugas/tabs/home"></ion-back-button>
     </ion-buttons>
     <ion-title>Daftar Kandang</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="kandang-page">
-
-  <!-- Pencarian dan Filter -->
-  <div class="filter-section">
-    <!-- Kolom pencarian -->
-    <ion-item lines="none" class="search-item">
-      <ion-icon name="search-outline" slot="start"></ion-icon>
-      <ion-input placeholder="Cari kandang"></ion-input>
-    </ion-item>
-
-    <!-- Filter Desa -->
-    <ion-item lines="none" class="filter-item">
-      <ion-label>Filter Desa</ion-label>
-      <ion-select interface="popover" placeholder="Pilih Desa">
-        <ion-select-option value="Sukamaju">Desa Sukamaju</ion-select-option>
-        <ion-select-option value="Mekarjaya">Desa Mekarjaya</ion-select-option>
-        <ion-select-option value="Sukasari">Desa Sukasari</ion-select-option>
-        <ion-select-option value="Karanganyar">Desa Karanganyar</ion-select-option>
-      </ion-select>
-    </ion-item>
+  <!-- Search & Filter Container -->
+  <div class="top-section">
+    <div class="search-wrapper">
+      <ion-icon name="search-outline" class="search-icon"></ion-icon>
+      <input 
+        type="text" 
+        placeholder="Cari kandang..." 
+        class="search-input"
+        [(ngModel)]="searchText"
+        (input)="searchKandang($event)">
+    </div>
+    
+    <div class="filter-dropdown">
+      <ion-icon name="filter-outline" class="filter-icon"></ion-icon>
+      <select class="filter-select" [(ngModel)]="selectedDesa" (change)="filterDesa($event)">
+        <option value="">Semua Desa</option>
+        <option value="Sukamaju">Desa Sukamaju</option>
+        <option value="Mekarjaya">Desa Mekarjaya</option>
+        <option value="Sukasari">Desa Sukasari</option>
+        <option value="Karanganyar">Desa Karanganyar</option>
+      </select>
+    </div>
   </div>
 
-  <!-- Daftar Kandang -->
-  <ion-list class="kandang-list">
+  <!-- List Header -->
+  <div class="list-header">
+    <h2>Daftar Kandang</h2>
+    <span class="count-badge">{{ kandangList.length }}</span>
+  </div>
 
-    <ion-item lines="none" class="kandang-item" button routerLink="/petugas/detail-kandang">
-      <ion-avatar slot="start" class="foto-kandang">
-        <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=600" alt="Kandang 1" />
-      </ion-avatar>
-      <ion-label>
-        <h2>#12345</h2>
-        <p>Bapak Ikin • Desa Sukamaju </p>
-      </ion-label>
-    </ion-item>
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="kandangList.length === 0 && !isLoading">
+    <ion-icon name="home-outline"></ion-icon>
+    <p>Belum ada data kandang</p>
+  </div>
 
+  <!-- Kandang Grid - COMPACT -->
+  <div class="kandang-grid" *ngIf="kandangList.length > 0">
+    <div 
+      class="kandang-card"
+      *ngFor="let kandang of kandangList"
+      (click)="goToDetail(kandang.id)"
+      tappable>
 
-    <ion-item lines="none" class="kandang-item" button routerLink="/petugas/detail-kandang">
-      <ion-avatar slot="start" class="foto-kandang">
-        <img src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?w=600" alt="Kandang 3" />
-      </ion-avatar>
-      <ion-label>
-        <h2>#11223</h2>
-        <p>Bapak Ikin • Desa Sukamaju </p>
-      </ion-label>
-    </ion-item>
+      <!-- Status Badge Mini (Left Border) -->
+      <div class="status-mini" 
+           [class.status-individu]="kandang.status_kandang === 'Individu'"
+           [class.status-kelompok]="kandang.status_kandang === 'Kelompok'">
+      </div>
 
+      <div class="card-content">
+        <!-- Foto Kandang (Avatar Kiri) -->
+        <div class="kandang-photo-avatar" *ngIf="kandang.foto_kandang_url">
+          <img [src]="kandang.foto_kandang_url" [alt]="kandang.nama_kandang">
+        </div>
+        <div class="kandang-photo-avatar placeholder" *ngIf="!kandang.foto_kandang_url">
+          <ion-icon name="home-outline"></ion-icon>
+        </div>
 
-  </ion-list>
+        <!-- Info Content -->
+        <div class="kandang-info">
+          <!-- Header Row -->
+          <div class="card-header">
+            <div class="header-left">
+              <h3 class="kandang-id">{{ kandang.id_kandang || 'KNDG' + kandang.id }}</h3>
+              <span class="status-mini-badge" 
+                    [class.badge-individu]="kandang.status_kandang === 'Individu'"
+                    [class.badge-kelompok]="kandang.status_kandang === 'Kelompok'">
+                {{ kandang.status_kandang?.substring(0, 3).toUpperCase() }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Kandang Info -->
+          <p class="kandang-name">{{ kandang.nama_kandang || 'N/A' }}</p>
+          
+          <!-- Meta Compact -->
+          <div class="kandang-meta-compact">
+            <span class="meta-mini" *ngIf="kandang.jenis_komoditas">
+              <ion-icon name="cube-outline"></ion-icon>
+              {{ kandang.jenis_komoditas }}
+            </span>
+            <span class="meta-mini" *ngIf="kandang.kapasitas">
+              <ion-icon name="layers-outline"></ion-icon>
+              {{ kandang.kapasitas }}
+            </span>
+          </div>
+
+          <!-- Owner -->
+          <div class="card-footer-compact" *ngIf="kandang.pemilik">
+            <ion-icon name="person"></ion-icon>
+            <span>{{ kandang.pemilik }}</span>
+          </div>
+
+          <!-- Location Footer -->
+          <div class="card-footer-compact">
+            <ion-icon name="location"></ion-icon>
+            <span>{{ kandang.lokasi || 'N/A' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Floating Add Button -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button routerLink="/petugas/data-kandang" color="primary">
+    <ion-fab-button (click)="goToAdd()" color="primary" size="small">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+  
 </ion-content>

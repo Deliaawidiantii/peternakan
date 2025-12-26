@@ -15,6 +15,7 @@ export class HewanPage implements OnInit {
   selectedJenis: string = '';
   isLoading: boolean = false; // ← TAMBAHKAN INI
 
+
   constructor(
     private actionSheetController: ActionSheetController,
     private router: Router,

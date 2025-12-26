@@ -2,7 +2,7 @@
 
    <ion-toolbar color="">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button defaultHref="petugas/kandang"></ion-back-button>
     </ion-buttons>
     <ion-title>Tambah Kandang Baru</ion-title> 
   </ion-toolbar>
@@ -10,65 +10,94 @@
   <!-- Form Input -->
   <ion-list lines="none" class="list-data-kandang">
 
-    
-    
-    <ion-label position="stacked" class="form-label">ID Kandang</ion-label>
-    <ion-item>
-      <ion-input type="text" placeholder="Masukan ID Kandang"></ion-input>
-    </ion-item> 
-
     <ion-label position="stacked" >Nama Kandang</ion-label>
     <ion-item> 
-      <ion-input type="text" placeholder="Masukan Nama Kandang"></ion-input>
+      <ion-input 
+      type="text" placeholder="Masukan Nama Kandang"
+      [(ngModel)]="formData.nama_kandang"></ion-input>
     </ion-item>
 
     <ion-label position="stacked" >Nama Pemilik</ion-label>
     <ion-item> 
-      <ion-input type="text" placeholder="Masukan Nama Kandang"></ion-input>
+      <ion-select placeholder="Pilih Nama Pemilik"
+      [(ngModel)]="formData.peternak_id">
+        <ion-select-option *ngFor="let peternak of peternakList" [value]="peternak.id">
+          {{ peternak.nama_peternak }}
+        </ion-select-option>
+      </ion-select>
     </ion-item>
 
 
     <ion-label position="stacked">Kapasitas</ion-label>
     <ion-item>
-      <ion-textarea autoGrow="true" placeholder="Masukan Kapasitas"></ion-textarea>
+      <ion-input 
+        type="number" 
+        placeholder="Masukan Kapasitas"
+        [(ngModel)]="formData.kapasitas"></ion-input>
     </ion-item>
 
-       <ion-label position="stacked">Desa</ion-label>
+    <ion-label position="stacked">Desa</ion-label>
     <ion-item>
-      <ion-select placeholder="Pilih Desa">
-      <ion-select-option value="one">Pucung</ion-select-option>
-      <ion-select-option value="two">Kotabaru</ion-select-option>
-    </ion-select>
+      <ion-select 
+        placeholder="Pilih Desa"
+        [(ngModel)]="formData.wilayah_id">
+        <ion-select-option 
+          *ngFor="let wilayah of wilayahList" 
+          [value]="wilayah.id">
+          {{ wilayah.nama_desa }}
+        </ion-select-option>
+      </ion-select>
     </ion-item>
 
     <ion-label position="stacked">Lokasi</ion-label>
     <ion-item>
-      <ion-input type="tel" placeholder="Masukan Lokasi"></ion-input>
+      <ion-input 
+        type="text" 
+        placeholder="Contoh: -6.123456, 107.654321"
+        [(ngModel)]="formData.titik_kordinat"></ion-input>
+      <!-- ✅ TAMBAH TOMBOL GET LOCATION -->
+      <ion-button slot="end" fill="clear" (click)="getCurrentLocation()">
+        <ion-icon name="location" slot="icon-only"></ion-icon>
+      </ion-button>
     </ion-item>
 
     <ion-label position="stacked">Komoditas</ion-label>
     <ion-item>
-      <ion-select placeholder="Pilih Komoditas">
-      <ion-select-option value="one">Sapi</ion-select-option>
-      <ion-select-option value="two">Kambing</ion-select-option>
-    </ion-select>
+      <ion-input 
+        type="text" 
+        placeholder="Contoh: Sapi Perah"
+        [(ngModel)]="formData.jenis_komoditas"></ion-input>
     </ion-item>
 
     <ion-label position="stacked">Status Kandang</ion-label>
     <ion-item>
-      <ion-select placeholder="Pilih Status Kandang">
-        <ion-select-option value="one">Individu</ion-select-option>
-        <ion-select-option value="two">Kelompok</ion-select-option>
+      <ion-select 
+        placeholder="Pilih Status Kandang"
+        [(ngModel)]="formData.status_kandang">
+        <ion-select-option value="Individu">Individu</ion-select-option>
+        <ion-select-option value="Kelompok">Kelompok</ion-select-option>
       </ion-select>
     </ion-item>
 
+
     <ion-label position="stacked">Pilih Foto</ion-label>
     <ion-item>
-      <input type="file" accept="image/*" (change)="onFileSelected($event)" />
+      <ion-button expand="block" fill="outline" (click)="takePicture()">
+        <ion-icon name="camera" slot="start"></ion-icon>
+        Ambil/Pilih Foto
+      </ion-button>
     </ion-item>
-
-    <img *ngIf="previewUrl" [src]="previewUrl" alt="Preview Foto CODO" style="max-width: 100%; height: auto; margin-top: 10px;"/>
-
+    <!-- input file untuk laptop / browser -->
+    <input 
+      id="fileInput"
+      type="file"
+      accept="image/*"
+      hidden
+      (change)="onFileSelected($event)">
+    <!-- ✅ PREVIEW FOTO -->
+    <div *ngIf="previewUrl" class="preview-container">
+      <img [src]="previewUrl" alt="Preview Foto Kandang" />
+    </div>
   </ion-list>
 
   <!-- Tombol Simpan -->
@@ -77,12 +106,26 @@
 </div>
 
 <div class="button-container">
-  <ion-button class="btn-save" expand="block" color="success">Simpan</ion-button>
-</div>
+    <ion-button 
+      class="btn-save" 
+      expand="block" 
+      color="success"
+      (click)="submitForm()">
+      <ion-icon name="checkmark-circle" slot="start"></ion-icon>
+      Simpan
+    </ion-button>
+  </div>
 
-<div class="button-container">
-  <ion-button class="btn-cancel" expand="block" color="danger">Batal</ion-button>
-</div>
+  <div class="button-container">
+    <ion-button 
+      class="btn-cancel" 
+      expand="block" 
+      color="danger"
+      (click)="cancel()">
+      <ion-icon name="close-circle" slot="start"></ion-icon>
+      Batal
+    </ion-button>
+  </div>
  
   
 </ion-content>

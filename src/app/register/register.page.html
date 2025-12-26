@@ -35,9 +35,26 @@
                      [(ngModel)]="form.email" required></ion-input>
         </ion-item>
 
+        <!-- Ganti input Desa Binaan dengan ion-select -->
         <ion-item>
-          <ion-input type="text" name="desa_binaan" placeholder="Desa Binaan"
-                     [(ngModel)]="form.desa_binaan" required></ion-input>
+          <ion-label position="stacked">Desa Binaan <span style="color: red;">*</span></ion-label>
+          <ion-select 
+            placeholder="Pilih Desa Binaan"
+            name="desa_binaan"
+            [(ngModel)]="form.desa_binaan"
+            [disabled]="isLoadingDesa"
+            required>
+            <ion-select-option 
+              *ngFor="let desa of desaList" 
+              [value]="desa.id">
+              {{ desa.nama_desa || desa.nama || desa.desa }}
+            </ion-select-option>
+          </ion-select>
+          <ion-spinner 
+            *ngIf="isLoadingDesa" 
+            name="crescent" 
+            slot="end">
+          </ion-spinner>
         </ion-item>
 
         <ion-item>

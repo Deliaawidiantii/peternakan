@@ -1,42 +1,55 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class KandangService {
-  
-  private apiUrl = "http://192.168.2.108:8000/api";
+
+  private apiUrl = 'http://192.168.2.114:8000/api';
+
 
   constructor(private http: HttpClient) {}
 
+  // ✅ Get Headers dengan Token
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
     return new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
     });
   }
 
-  getKandang(): Observable<any> {
-    return this.http.get(this.apiUrl, { headers: this.getHeaders() });
+  // ✅ Get List Kandang
+  getKandangList(params?: any): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.get(`${this.apiUrl}/kandang`, { headers, params });
   }
 
-  getById(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+  // ✅ Create Kandang - WORKING VERSION
+  createKandang(data: FormData): Observable<any> {
+    const token = localStorage.getItem('token');
+    
+    console.log('🔵 Token dari localStorage:', token);
+    
+    // Untuk FormData, JANGAN set Content-Type
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    
+    return this.http.post(`${this.apiUrl}/kandang`, data, { headers });
   }
 
-  create(data: any): Observable<any> {
-    return this.http.post(this.apiUrl, data, { headers: this.getHeaders() });
+  // ✅ Get Detail
+  getKandangById(id: number): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.get(`${this.apiUrl}/kandang/${id}`, { headers });
   }
 
-  update(id: number, data: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, data, { headers: this.getHeaders() });
-  }
-
-  delete(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+  // ✅ Delete
+  deleteKandang(id: number): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.delete(`${this.apiUrl}/kandang/${id}`, { headers });
   }
 }

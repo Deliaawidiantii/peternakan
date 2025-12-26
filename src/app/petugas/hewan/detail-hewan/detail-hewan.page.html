@@ -1,7 +1,7 @@
 <ion-header class="detail-header">
   <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/" text=""></ion-back-button>
+      <ion-back-button defaultHref="/petugas/hewan" text=""></ion-back-button>
     </ion-buttons>
     <ion-title>Detail Hewan</ion-title>
   </ion-toolbar>
@@ -82,36 +82,46 @@
         </div>
       </div>
 
-      <!-- Informasi Lokasi & Pemilik -->
-      <div class="card-section">
-        <h4 class="section-title">Lokasi & Kepemilikan</h4>
-        <div class="info-row">
-          <div class="info-field">
-            <span class="field-label">
-              <ion-icon name="location-outline"></ion-icon>
-              Desa Binaan
-            </span>
-            <span class="field-value">{{hewan.wilayah?.nama_desa}}</span>
-          </div>
-          <div class="info-field">
-            <span class="field-label">
-              <ion-icon name="home-outline"></ion-icon>
-              ID Kandang
-            </span>
-            <span class="field-value">{{ hewan.kandang?.kandang_id }}</span>
-          </div>
-        </div>
+      <ion-content>
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner></ion-spinner>
+  </div>
 
-        <div class="info-row">
-          <div class="info-field full-width">
-            <span class="field-label">
-              <ion-icon name="person-outline"></ion-icon>
-              Nama Pemilik
-            </span>
-            <span class="field-value">{{ hewan.peternakan?.nama_peternak }}</span>
-          </div>
+  <!-- Hanya render kalau data udah ada -->
+  <div *ngIf="!isLoading && hewan && hewan.id">
+    <!-- Informasi Lokasi & Pemilik -->
+    <div class="card-section">
+      <h4 class="section-title">Lokasi & Kepemilikan</h4>
+      <div class="info-row">
+        <div class="info-field" *ngIf="hewan.wilayah">
+          <span class="field-label">
+            <ion-icon name="location-outline"></ion-icon>
+            Desa Binaan
+          </span>
+          <span class="field-value">{{hewan.wilayah.nama_desa}}</span>
+        </div>
+        <div class="info-field" *ngIf="hewan.kandang">
+          <span class="field-label">
+            <ion-icon name="home-outline"></ion-icon>
+            ID Kandang
+          </span>
+          <span class="field-value">{{ hewan.kandang.kandang_id }}</span>
         </div>
       </div>
+
+      <div class="info-row">
+        <div class="info-field full-width" *ngIf="hewan.peternakan">
+          <span class="field-label">
+            <ion-icon name="person-outline"></ion-icon>
+            Nama Pemilik
+          </span>
+          <span class="field-value">{{ hewan.peternakan.nama_peternak }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
 
       <!-- Barcode Section -->
       <div class="card-section" *ngIf="barcodeId">

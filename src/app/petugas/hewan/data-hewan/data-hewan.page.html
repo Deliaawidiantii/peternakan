@@ -12,6 +12,19 @@
     </ion-card>
   </div>
 
+
+  <!-- judul kategori yang dipilih  -->
+
+  <div *ngIf="selectedKategori" class="kategori-header">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+       {{ kategoriMapping[selectedKategori]?.label }}
+      </ion-card-title>
+    </ion-card-header>
+  </ion-card>
+</div>
+
   <!-- Form Input (tampil jika kategori sudah dipilih) -->
   <ion-list lines="none" class="list-data-hewan" *ngIf="selectedKategori">
     

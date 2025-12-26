@@ -7,7 +7,7 @@
       <img src="assets/icon/logo2.png" alt="Logo" />
     </div>
 
-    <!-- CARD: pastikan ada pembuka div.card -->
+    <!-- CARD -->
     <div class="card">
       <h1 class="title">KARAWANG TERNAK</h1>
       <p class="subtitle text-center">Smart Farming for Karawang's Future</p>
@@ -21,7 +21,9 @@
 
       <!-- Form -->
       <form (ngSubmit)="onSubmit()">
+        <!-- Email Input -->
         <div class="input-group">
+          <label class="input-label">Email</label>
           <ion-input
             type="email"
             placeholder="Email"
@@ -31,25 +33,32 @@
             clear-input="false">
           </ion-input>
         </div>
+
+        <!-- Password Input -->
         <div class="input-group password-group">
-          <ion-input
-            [type]="showPassword ? 'text' : 'password'"
-            placeholder="Password"
-            [(ngModel)]="password"
-            name="password"
-            required
-            clear-input="false">
-          </ion-input>
-          <ion-icon 
-            [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
-            class="toggle-icon"
-            (click)="togglePassword()">
-          </ion-icon>
+          <label class="input-label">Password</label>
+          <div class="password-wrapper">
+            <ion-input
+              [type]="showPassword ? 'text' : 'password'"
+              placeholder="Password"
+              [(ngModel)]="password"
+              name="password"
+              required
+              clear-input="false">
+            </ion-input>
+            <ion-icon 
+              [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+              class="toggle-icon"
+              (click)="togglePassword()">
+            </ion-icon>
+          </div>
         </div>
+
         <ion-button expand="block" class="btn-submit" type="submit">
           SIGN IN
         </ion-button>
       </form>
+
       <div class="links">
         <a routerLink="/forgot-password">Lupa Password?</a>
       </div>

@@ -1,16 +1,37 @@
 <ion-header>
   <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button defaultHref="petugas/kandang"></ion-back-button>
     </ion-buttons>
     <ion-title>Detail Kandang</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="kandang-detail-content">
-<div class="image-section"></div>
+<div class="image-section" *ngIf="kandang">
+  <!-- Kalau ada foto, tampilkan img -->
+  <img *ngIf="kandang.foto_kandang_url" 
+       [src]="kandang.foto_kandang_url" 
+       [alt]="kandang.nama_kandang"
+       class="kandang-image">
+  
+  <!-- Kalau gak ada foto, tampilkan placeholder -->
+  <div *ngIf="!kandang.foto_kandang_url" class="image-placeholder">
+    <ion-icon name="home-outline"></ion-icon>
+  </div>
+</div>
 
-<ion-card>
+<div *ngIf="isLoading" style="text-align: center; padding: 40px;">
+  <ion-spinner></ion-spinner>
+  <p>Memuat data...</p>
+</div>
+
+<div *ngIf="!isLoading && !kandang" style="text-align: center; padding: 40px;">
+  <ion-icon name="alert-circle-outline" style="font-size: 64px; color: #d0dfe6;"></ion-icon>
+  <p>Data tidak ditemukan</p>
+</div>
+
+<ion-card *ngIf="!isLoading && kandang">
   <ion-card-header>
     <ion-card-title>Informasi kandang</ion-card-title>
   </ion-card-header>
@@ -18,43 +39,43 @@
   <ion-card-content>
     <div class="info-row">
       <p class="label">ID Kandang</p>
-      <p class="value">KDG001</p>
+      <p class="value">{{ kandang.id_kandang }}</p>
     </div>
 
      <div class="info-row">
       <p class="label">Nama Kandang</p>
-      <p class="value">Kandang Geboy</p>
+      <p class="value">{{ kandang.nama_kandang }}</p>
     </div>
 
      <div class="info-row">
       <p class="label">Nama Pemilik</p>
-      <p class="value">Pak Nana</p>
+      <p class="value">{{ kandang.pemilik || '-' }}</p>
     </div>
 
      <div class="info-row">
       <p class="label">Desa</p>
-      <p class="value">Desa Pucung</p>
+      <p class="value">{{ kandang.lokasi || '-' }}</p>
     </div>
 
      <div class="info-row">
       <p class="label">Lokasi</p>
-      <p class="value">Dusun Bakan Tmabun rt 001/008 des.pucung kec.kotabaru kab karawang</p>
+      <p class="value">{{ kandang.titik_kordinat || '-' }}</p>
     </div>
 
 
      <div class="info-row">
       <p class="label">Status Kandang</p>
-      <p class="value">Individu</p>
+      <p class="value">{{ kandang.status_kandang }}</p>
     </div>
 
      <div class="info-row">
       <p class="label">Kapasitas</p>
-      <p class="value">10 ekor</p>
+      <p class="value">{{ kandang.kapasitas }} ekor</p>
     </div>
 
      <div class="info-row">
       <p class="label">Komoditas</p>
-      <p class="value">Sapi</p>
+      <p class="value">{{ kandang.jenis_komoditas }}</p>
     </div>
 
   </ion-card-content>

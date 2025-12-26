@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service'; // Sesuaikan path
+import { WilayahService } from '../services/wilayah.service'; // ← TAMBAHAN
 import { LoadingController, AlertController } from '@ionic/angular';
 
 @Component({
@@ -9,13 +10,13 @@ import { LoadingController, AlertController } from '@ionic/angular';
   styleUrls: ['./register.page.scss'],
   standalone: false,
 })
-export class RegisterPage {
+export class RegisterPage implements OnInit { // ← TAMBAHAN: implements OnInit
 
   form = {
     nama: '',
     nik: '',
     email: '',
-    desa_binaan: '',
+    desa_binaan: '', // ← Ini akan berisi ID wilayah
     no_telp: '',
     password: '',
     password_confirmation: ''
@@ -26,12 +27,61 @@ export class RegisterPage {
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
 
+  // ← TAMBAHAN: Data untuk dropdown desa
+  desaList: any[] = [];
+  isLoadingDesa: boolean = false;
+
   constructor(
     private authService: AuthService,
+    private wilayahService: WilayahService, // ← TAMBAHAN
     private router: Router,
     private loadingController: LoadingController,
     private alertController: AlertController
   ) { }
+
+  // ← TAMBAHAN: Load desa saat page init
+  ngOnInit() {
+    this.loadDesaList();
+  }
+
+  // ← TAMBAHAN: Method untuk load data desa
+  loadDesaList() {
+  this.isLoadingDesa = true;
+
+  this.wilayahService.getPublicWilayah().subscribe({
+    next: (res: any) => {
+      console.log("🟦 RAW DATA WILAYAH:", res);
+
+      // BACA DATA APAPUN STRUKTURNYA
+      if (Array.isArray(res)) {
+        this.desaList = res;
+      } 
+      else if (res.data && Array.isArray(res.data)) {
+        this.desaList = res.data;
+      } 
+      else if (res.wilayah && Array.isArray(res.wilayah)) {
+        this.desaList = res.wilayah;
+      }
+      else if (res.items && Array.isArray(res.items)) {
+        this.desaList = res.items;
+      }
+      else {
+        // fallback
+        this.desaList = Object.values(res);
+      }
+
+      console.log("🟩 DESA FINAL:", this.desaList);
+      this.isLoadingDesa = false;
+    },
+
+    error: (err) => {
+      console.error("❌ ERROR GET WILAYAH:", err);
+      this.isLoadingDesa = false;
+      this.desaList = [];
+    }
+  });
+}
+
 
   togglePassword() {
     this.showPassword = !this.showPassword;

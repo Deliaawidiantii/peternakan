@@ -5,7 +5,7 @@ const routes: Routes = [
 
    {
     path: '',
-    redirectTo: 'petugas/tabs/home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
 

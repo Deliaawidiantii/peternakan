@@ -68,11 +68,11 @@ const routes: Routes = [
     loadChildren: () => import('./kegiatan/kegiatan.module').then( m => m.KegiatanPageModule)
   },
   {
-    path: 'detail-kegiatan',
+    path: 'detail-kegiatan/:id',
     loadChildren: () => import('./kegiatan/detail-kegiatan/detail-kegiatan.module').then( m => m.DetailPetugasPageModule)
   },
   {
-    path: 'mulai-kegiatan',
+    path: 'mulai-kegiatan/:id',
     loadChildren: () => import('./kegiatan/mulai-kegiatan/mulai-kegiatan.module').then( m => m.MulaiKegiatanPageModule)
   },
   {
@@ -166,11 +166,11 @@ const routes: Routes = [
   {
     path: 'detail-mutasi',
     loadChildren: () => import('./mutasi/detail-mutasi/detail-mutasi.module').then( m => m.DetailMutasiPageModule)
-  },  {
+  },
+  {
     path: 'perkawinan',
     loadChildren: () => import('./perkawinan/perkawinan.module').then( m => m.PerkawinanPageModule)
   },
-
 ];
 
 @NgModule({

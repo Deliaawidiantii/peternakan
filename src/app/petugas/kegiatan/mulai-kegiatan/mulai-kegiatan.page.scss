@@ -1,113 +1,338 @@
+/* ===== HEADER ===== */
 ion-header {
   --background: #ffffff;
-  --border-color: transparent;
-  box-shadow: none; /* Hilangin shadow bawaan Ionic */
-  border-bottom: 1px solid #e5e5e5; /* Garis halus di bawah header */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+ion-toolbar {
+  --min-height: 56px;
+  --background: #ffffff;
 }
 
 ion-toolbar ion-title {
   font-weight: 600;
   font-size: 1.1rem;
-  color: #222;
-  letter-spacing: 0.3px;
+  color: #1e293b;
 }
 
+/* ===== CONTENT ===== */
 ion-content {
-  --background: #f8f9fb;
+  --background: #f8fafc;
+}
+
+/* ===== LIST SECTION ===== */
+.list-section {
+  background: transparent;
   padding: 16px;
 }
 
-/* Card utama */
-.kegiatan-card {
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  margin-bottom: 24px;
-  background: #fff;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.kegiatan-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-}
-
-ion-card-title {
-  font-size: 1.1rem;
-  color: #1e293b;
-  font-weight: 600;
-}
-
-/* Info item */
-.info-item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 14px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #f1f1f1;
-}
-
-.label {
-  font-weight: 500;
-  color: #64748b;
-  font-size: 0.95rem;
-}
-
-.value {
-  font-weight: 600;
-  color: #1e293b;
-  font-size: 0.95rem;
-}
-
-/* Progress bar */
-.progress-section {
-  margin-top: 24px;
-}
-
-.progress-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-
-.progress-label {
-  color: #64748b;
+/* ===== SECTION TITLE ===== */
+.section-title {
   font-size: 0.9rem;
-}
-
-.progress-value {
   font-weight: 600;
-  color: #2563eb;
-  font-size: 0.9rem;
-}
-
-.progress-bar {
-  height: 10px;
-  background: #e2e8f0;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  width: 75%;
-  height: 100%;
-  background: linear-gradient(90deg, #3b82f6, #2563eb);
-  border-radius: 8px;
-}
-
-/* Tombol */
-.button-section {
-  padding: 0 16px 24px;
-}
-
-.selesai-btn {
-  --background: linear-gradient(90deg, #16a34a, #15803d);
-  --border-radius: 12px;
-  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
   letter-spacing: 0.5px;
-  box-shadow: 0 3px 10px rgba(22, 163, 74, 0.25);
+  margin: 20px 0 12px 4px;
+  padding: 0;
 }
 
-.selesai-btn:active {
-  transform: scale(0.98);
-  box-shadow: 0 2px 6px rgba(22, 163, 74, 0.25);
+.section-title:first-child {
+  margin-top: 8px;
+}
+
+/* ===== ION ITEM ===== */
+ion-item {
+  --background: #ffffff;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --inner-padding-end: 0;
+  --border-radius: 12px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+ion-item:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+ion-item::part(native) {
+  padding: 14px 16px;
+  border-radius: 12px;
+}
+
+/* ===== ICON BACKGROUND ===== */
+.icon-bg {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 6px;
+  font-size: 1.1rem;
+  margin-right: 12px;
+}
+
+/* ===== ION LABEL ===== */
+ion-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #334155;
+  line-height: 1.4;
+}
+
+/* ===== AVATAR ===== */
+ion-avatar {
+  width: 36px;
+  height: 36px;
+  margin-right: 12px;
+  border: 2px solid #e0f2fe;
+}
+
+ion-avatar img {
+  object-fit: cover;
+}
+
+/* ===== DESCRIPTION TEXT ===== */
+.desc-text {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 12px;
+  margin: 0 0 8px 0;
+  font-size: 0.9rem;
+  color: #475569;
+  line-height: 1.6;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+/* ===== BADGE ===== */
+.badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.badge-danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.badge-success {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.badge-warning {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+/* ===== UPLOAD SECTION ===== */
+.upload-section {
+  margin-top: 8px;
+}
+
+.upload-section ion-button {
+  --background: #ffffff;
+  --background-hover: #f1f5f9;
+  --background-activated: #e2e8f0;
+  --color: #475569;
+  --border-color: #cbd5e1;
+  --border-width: 2px;
+  --border-style: dashed;
+  --border-radius: 12px;
+  --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-transform: none;
+  height: 52px;
+  margin: 0 0 16px 0;
+}
+
+.upload-section ion-button ion-icon {
+  font-size: 1.3rem;
+  margin-right: 8px;
+}
+
+/* ===== PHOTO PREVIEW ===== */
+.photo-preview {
+  margin-top: 16px;
+}
+
+.photo-preview ion-grid {
+  padding: 0;
+}
+
+.photo-preview ion-row {
+  margin: 0 -4px;
+}
+
+.photo-preview ion-col {
+  padding: 4px;
+}
+
+.photo-item {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+.photo-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.photo-item img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 32px;
+  height: 32px;
+  --padding-start: 0;
+  --padding-end: 0;
+  --background: rgba(239, 68, 68, 0.95);
+  --background-hover: rgba(220, 38, 38, 1);
+  --background-activated: rgba(185, 28, 28, 1);
+  --color: #ffffff;
+  --border-radius: 50%;
+  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  backdrop-filter: blur(4px);
+}
+
+.delete-btn ion-icon {
+  font-size: 1.3rem;
+}
+
+/* ===== BUTTON CONTAINER ===== */
+.button-container {
+  padding: 16px;
+  background: #ffffff;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  bottom: 0;
+}
+
+.button-container ion-button {
+  --background: linear-gradient(135deg, #3b82f6, #2563eb);
+  --background-hover: linear-gradient(135deg, #2563eb, #1d4ed8);
+  --background-activated: linear-gradient(135deg, #1d4ed8, #1e40af);
+  --color: #ffffff;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: none;
+  height: 48px;
+  margin: 0;
+  transition: all 0.2s ease;
+}
+
+.button-container ion-button:hover {
+  transform: translateY(-2px);
+  --box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+}
+
+.button-container ion-button:active {
+  transform: translateY(0);
+}
+
+/* ===== EMPTY STATE ===== */
+.empty-photos {
+  text-align: center;
+  padding: 32px 16px;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.empty-photos ion-icon {
+  font-size: 3rem;
+  color: #cbd5e1;
+  margin-bottom: 12px;
+}
+
+/* ===== PHOTO COUNT ===== */
+.photo-count {
+  display: inline-block;
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-left: 8px;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 360px) {
+  .section-title {
+    font-size: 0.85rem;
+  }
+
+  ion-label {
+    font-size: 0.9rem;
+  }
+
+  .icon-bg {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+  }
+
+  ion-avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .upload-section ion-button {
+    font-size: 0.9rem;
+    height: 48px;
+  }
+
+  .delete-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .delete-btn ion-icon {
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .list-section {
+    max-width: 768px;
+    margin: 0 auto;
+  }
+
+  .button-container {
+    max-width: 768px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+  }
 }

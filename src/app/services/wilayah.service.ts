@@ -1,12 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs'; // ← TAMBAHKAN INI
 
 @Injectable({
   providedIn: 'root'
 })
 export class WilayahService {
 
-  apiUrl = 'http://192.168.2.108:8000/api';
+  apiUrl = 'http://192.168.2.114:8000/api';
+
 
   constructor(private http: HttpClient) { }
 
@@ -20,4 +22,10 @@ export class WilayahService {
 
     return this.http.get(`${this.apiUrl}/wilayah`, { headers });
   }
+  
+  // Method public untuk register (tanpa auth)
+  getPublicWilayah(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/wilayah/public`);
+  }
+  
 }

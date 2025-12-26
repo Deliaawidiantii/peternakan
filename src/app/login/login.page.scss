@@ -55,10 +55,17 @@
 /* Input Groups */
 .input-group {
   margin-bottom: 15px;
+  text-align: left;
 }
 
-.password-group {
-  position: relative;
+/* Label untuk Email dan Password */
+.input-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 6px;
+  text-align: left;
 }
 
 /* Ion Input Styling */
@@ -69,6 +76,7 @@ ion-input {
   padding: 10px;
   font-size: 14px;
   --padding-start: 10px;
+  --placeholder-color: #9ca3af;
 }
 
 ion-input:focus {
@@ -76,32 +84,40 @@ ion-input:focus {
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
 }
 
-/* Password Field Styling */
-.password-group ion-item {
-  --padding-start: 0;
-  --inner-padding-end: 0;
-  --highlight-color-focused: transparent;
-  --background: transparent;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  padding: 0 10px;
+/* Password Group */
+.password-group {
+  position: relative;
 }
 
-.password-group ion-input {
-  padding-right: 40px; /* ruang untuk icon toggle */
+.password-wrapper {
+  position: relative;
 }
 
-/* Sembunyikan icon bawaan browser (jika muncul) */
-.password-group ion-input::part(native)::-ms-reveal,
-.password-group ion-input::part(native)::-ms-clear {
-  display: none !important;
+.password-wrapper ion-input {
+  padding-right: 40px;
 }
 
 /* Toggle Icon */
 .toggle-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 20px;
   color: #6b7280;
   cursor: pointer;
+  z-index: 10;
+}
+
+/* Sembunyikan icon bawaan */
+ion-input::part(clear-button),
+ion-input::part(icon) {
+  display: none !important;
+}
+
+.password-group ion-input::part(native)::-ms-reveal,
+.password-group ion-input::part(native)::-ms-clear {
+  display: none !important;
 }
 
 /* Tombol Submit */
@@ -109,6 +125,7 @@ ion-input:focus {
   --background: #2563eb;
   --background-hover: #1d4ed8;
   margin-top: 10px;
+  font-weight: 600;
 }
 
 /* Link dan Register */
@@ -122,69 +139,10 @@ ion-input:focus {
 .register a {
   color: #2563eb;
   text-decoration: none;
+  font-weight: 500;
 }
 
 .links a:hover,
 .register a:hover {
   text-decoration: underline;
-}
-/* Sembunyikan icon bawaan browser modern */
-.password-group input::-webkit-credentials-auto-fill-button,
-.password-group input::-ms-clear,
-.password-group input::-ms-reveal {
-  display: none !important;
-}
-
-/* Sembunyikan icon bawaan dari Shadow DOM Ionic (kalau muncul) */
-.password-group ion-input::part(native)::-ms-reveal,
-.password-group ion-input::part(native)::-ms-clear {
-  display: none !important;
-}
-/* Sembunyikan icon clear/eye bawaan Ionic */
-.password-group ion-input::part(clear-button) {
-  display: none !important;
-}
-
-/* Input Groups */
-.input-group {
-  margin-bottom: 15px;
-}
-
-.password-group {
-  position: relative;
-}
-
-.password-group ion-item {
-  --background: transparent;
-  --padding-start: 0;
-  --padding-end: 0;
-  --inner-padding-end: 0;
-  --border-width: 0;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-}
-
-.password-group ion-input {
-  --clear-button-display: none !important;
-  --padding-start: 10px;
-  --padding-end: 45px;
-  padding: 0;
-}
-
-/* Toggle Password Icon */
-.password-group .toggle-icon {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 20px;
-  color: #6b7280;
-  cursor: pointer;
-  z-index: 10;
-}
-
-/* Sembunyikan semua icon bawaan */
-ion-input::part(clear-button),
-ion-input::part(icon) {
-  display: none !important;
 }

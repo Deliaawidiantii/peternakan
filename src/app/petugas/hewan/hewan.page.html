@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
     <ion-title>Hewan Ternak</ion-title>
   </ion-toolbar>
@@ -42,12 +42,8 @@
 
   <!-- Empty State -->
   <div class="empty-state" *ngIf="hewanList.length === 0 && !isLoading">
-    <ion-icon name="document-outline"></ion-icon>
+    <ion-icon name="paw-outline"></ion-icon>
     <p>Belum ada data hewan</p>
-    <ion-button size="small" (click)="pilihKelompokHewan()" color="primary">
-      <ion-icon name="add-outline" slot="start"></ion-icon>
-      Tambah Hewan
-    </ion-button>
   </div>
 
   <!-- Hewan Grid - COMPACT -->

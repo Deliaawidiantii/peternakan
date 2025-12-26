@@ -1,44 +1,114 @@
 <ion-header>
   <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button defaultHref="/petugas/kegiatan" text=""></ion-back-button>
     </ion-buttons>
     <ion-title>Detail Kegiatan</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card class="kegiatan-card">
-    <ion-card-header>
-      <ion-card-title>Kegiatan: Pemeriksaan Kesehatan</ion-card-title>
-    </ion-card-header>
+  <ion-list lines="none" class="list-section">
 
-    <ion-card-content>
-      <div class="info-item">
-        <p class="label">Tanggal & Waktu</p>
-        <p class="value">15 Mei 2024, 10:00 - 12:00</p>
+    <!-- kegiatan -->
+    <h2 class="section-title">Kegiatan</h2>
+    <ion-item>
+      <ion-icon name="calendar-outline" slot="start" class="icon-bg"></ion-icon>
+      <ion-label>{{kegiatan?.jenis}}</ion-label>
+    </ion-item>
+
+    <!-- Date -->
+    <ion-item>
+      <ion-icon name="calendar-outline" slot="start" class="icon-bg"></ion-icon>
+      <ion-label>{{kegiatan?.tanggal}}</ion-label>
+    </ion-item>
+
+    <!-- timing -->
+    <ion-item>
+      <ion-icon name="time-outline" slot="start" class="icon-bg"></ion-icon>
+      <ion-label>{{ kegiatan?.jam_mulai }} - {{ kegiatan?.jam_selesai }}</ion-label>
+    </ion-item>
+
+    <!-- lokasi -->
+    <ion-item>
+      <ion-icon name="location-outline" slot="start" class="icon-bg"></ion-icon>
+      <ion-label>{{ kegiatan?.lokasi }}</ion-label>
+    </ion-item>
+
+    <!-- deskripsi -->
+    <h2 class="section-title">Deskripsi</h2>
+    <p class="desc-text">{{ kegiatan?.deskripsi }}</p>
+
+    <!-- petugas -->
+    <h2 class="section-title">Petugas</h2>
+    <ion-item>
+      <ion-label>{{ kegiatan?.petugas?.nama }}</ion-label>
+    </ion-item>
+
+    <!-- status -->
+    <h2 class="section-title">Status</h2>
+    <ion-item>
+      <ion-icon name="ellipse-outline" slot="start" class="icon-bg"></ion-icon>
+      <ion-label>
+        <span *ngIf="kegiatan?.status_aktual === 'terlambat'" class="badge badge-danger">
+          Terlambat
+        </span>
+        <span *ngIf="kegiatan?.status_aktual !== 'terlambat'">
+          {{ kegiatan?.status }}
+        </span>
+      </ion-label>
+    </ion-item>
+
+    <!-- Upload Foto Section -->
+    <h2 class="section-title">Dokumentasi</h2>
+    <div class="upload-section">
+      <ion-button expand="block" fill="outline" color="medium" (click)="selectPhoto()">
+        <ion-icon name="camera-outline" slot="start"></ion-icon>
+        Upload Foto Kegiatan
+      </ion-button>
+      
+      <!-- Preview foto yang sudah diupload -->
+      <div class="photo-preview" *ngIf="uploadedPhotos && uploadedPhotos.length > 0">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6" *ngFor="let photo of uploadedPhotos; let i = index">
+              <div class="photo-item">
+                <img [src]="photo.url" alt="Foto kegiatan">
+                <ion-button fill="clear" size="small" color="danger" 
+                            class="delete-btn" (click)="deletePhoto(i)">
+                  <ion-icon name="close-circle"></ion-icon>
+                </ion-button>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
+    </div>
 
-      <div class="info-item">
-        <p class="label">Lokasi</p>
-        <p class="value">Desa Cikampek, Karawang</p>
-      </div>
+  </ion-list>
 
-      <div class="info-item">
-        <p class="label">Deskripsi</p>
-        <p class="value">Pemeriksaan kesehatan rutin pada hewan ternak.</p>
-      </div>
+  <!-- button -->
+  <div class="button-container"
+      *ngIf="kegiatan?.status === 'sedang_berjalan'">
 
-      <div class="info-item">
-        <p class="label">Petugas</p>
-        <p class="value">Budi Santoso</p>
-      </div>
+    <ion-button
+      expand="block"
+      color="success"
+      (click)="selesai()"
+      [disabled]="uploadedPhotos.length === 0">
 
-      <!-- c -->
-    </ion-card-content>
-  </ion-card>
-
-  <div class="button-section">
-    <ion-button expand="block" class="selesai-btn">Selesai</ion-button>
+      Selesaikan Kegiatan
+    </ion-button>
   </div>
+
+  <!-- Hidden file input -->
+  <input
+    type="file"
+    #fileInput
+    accept="image/*"
+    style="display: none;"
+    (change)="onFileSelected($event)"
+    multiple>
+
 </ion-content>
+
