@@ -171,6 +171,7 @@ const routes: Routes = [
     path: 'perkawinan',
     loadChildren: () => import('./perkawinan/perkawinan.module').then( m => m.PerkawinanPageModule)
   },
+  
 ];
 
 @NgModule({

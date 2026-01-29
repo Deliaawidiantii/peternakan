@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class KandangService {
 
-  private apiUrl = 'http://192.168.2.114:8000/api';
+  private apiUrl = 'http://localhost:8000/api';
 
 
   constructor(private http: HttpClient) {}

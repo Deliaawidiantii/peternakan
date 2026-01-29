@@ -7,7 +7,7 @@ import { Observable } from 'rxjs'; // ← TAMBAHKAN INI
 })
 export class WilayahService {
 
-  apiUrl = 'http://192.168.2.114:8000/api';
+  apiUrl = 'http://localhost:8000/api';
 
 
   constructor(private http: HttpClient) { }

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class KegiatanService {
-  private apiUrl = 'http://192.168.2.114:8000/api'; // Ganti dengan URL backend Anda
+  private apiUrl = 'http://localhost:8000/api'; // Ganti dengan URL backend Anda
 
   constructor(private http: HttpClient) { }
 
