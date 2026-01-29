@@ -7,7 +7,8 @@ const routes: Routes = [
   {
     path: '',
     component: PerkawinanPage
-  },  {
+  },
+  {
     path: 'input-perkawinan',
     loadChildren: () => import('./input-perkawinan/input-perkawinan.module').then( m => m.InputPerkawinanPageModule)
   },
