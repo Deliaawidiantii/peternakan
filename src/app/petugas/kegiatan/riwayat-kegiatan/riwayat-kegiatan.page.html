@@ -1,131 +1,63 @@
 <ion-header translucent="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button defaultHref="/petugas/kegiatan"></ion-back-button>
     </ion-buttons>
     <ion-title>Riwayat Kegiatan</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="riwayat-page">
+<ion-content class="riwayat-page ion-padding">
   <!-- Pencarian -->
   <div class="search-container">
-    <ion-searchbar placeholder="Cari kegiatan..."></ion-searchbar>
+    <ion-searchbar placeholder="Cari kegiatan..." [value]="searchQuery" (ionInput)="onSearchChange($event)">
+    </ion-searchbar>
   </div>
 
   <!-- Filter -->
-   <div class="filter-container">
-    <!-- Filter Periode Waktu -->
-   <ion-item lines="none" class="filter-chip">
-      <ion-label>Periode Waktu</ion-label>
-      <ion-select interface="popover" placeholder="Pilih Bulan">
-        <ion-select-option value="januari">januari</ion-select-option>
-        <ion-select-option value="februari">februari</ion-select-option>
-        <ion-select-option value="maret">maret</ion-select-option>
-        <ion-select-option value="april">april</ion-select-option>
-        <ion-select-option value="mei">mei</ion-select-option>
-        <ion-select-option value="juni">juni</ion-select-option>
-        <ion-select-option value="juli">juli</ion-select-option>
-        <ion-select-option value="agustus">agustus</ion-select-option>
-        <ion-select-option value="september">september</ion-select-option>
-        <ion-select-option value="oktober">oktober</ion-select-option>
-        <ion-select-option value="november">november</ion-select-option>
-        <ion-select-option value="desember">desember</ion-select-option>
-      </ion-select>
-    </ion-item>
-
+  <div class="filter-container">
     <ion-item lines="none" class="filter-item">
-      <ion-label>Filter status</ion-label>
-      <ion-select interface="popover" placeholder="Pilih status">
+      <ion-label>Filter Status</ion-label>
+      <ion-select interface="popover" [(ngModel)]="selectedStatus" (ionChange)="onFilterChange()">
         <ion-select-option value="Semua">Semua</ion-select-option>
         <ion-select-option value="Selesai">Selesai</ion-select-option>
         <ion-select-option value="Dibatalkan">Dibatalkan</ion-select-option>
       </ion-select>
     </ion-item>
-
   </div>
 
+  <!-- Loading -->
+  <div class="ion-text-center ion-padding" *ngIf="isLoading">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Memuat riwayat kegiatan...</p>
+  </div>
 
- 
-    <!-- Filter Periode Waktu -->
-    <!-- <ion-chip outline color="primary" id="periodFilter" class="filter-chip">
-      <ion-label>Periode Waktu</ion-label>
-      <ion-icon name="chevron-down-outline"></ion-icon>
-    </ion-chip>
-
-    <div class="filter-dropdown" id="periodDropdown" style="display: none;">
-      <div class="filter-dropdown-item" data-month="all">Semua Bulan</div>
-      <div class="filter-dropdown-item" data-month="01">Januari</div>
-      <div class="filter-dropdown-item" data-month="02">Februari</div>
-      <div class="filter-dropdown-item" data-month="03">Maret</div>
-      <div class="filter-dropdown-item" data-month="04">April</div>
-      <div class="filter-dropdown-item" data-month="05">Mei</div>
-      <div class="filter-dropdown-item" data-month="06">Juni</div>
-      <div class="filter-dropdown-item" data-month="07">Juli</div>
-      <div class="filter-dropdown-item" data-month="08">Agustus</div>
-      <div class="filter-dropdown-item" data-month="09">September</div>
-      <div class="filter-dropdown-item" data-month="10">Oktober</div>
-      <div class="filter-dropdown-item" data-month="11">November</div>
-      <div class="filter-dropdown-item" data-month="12">Desember</div>
-    </div> -->
-
-    <!-- Filter Status -->
-    <!-- <ion-chip outline color="primary" id="statusFilter" class="filter-chip">
-      <ion-label>Status</ion-label>
-      <ion-icon name="chevron-down-outline"></ion-icon>
-    </ion-chip>
-
-    <div class="filter-dropdown" id="statusDropdown" style="display: none;">
-      <div class="filter-dropdown-item" data-status="all">Semua Status</div>
-      <div class="filter-dropdown-item" data-status="selesai">Selesai</div>
-      <div class="filter-dropdown-item" data-status="batal">Dibatalkan</div>
-    </div> -->
-  
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && riwayatList.length === 0">
+    <ion-icon name="document-text-outline"></ion-icon>
+    <p>Tidak ada riwayat kegiatan ditemukan</p>
+  </div>
 
   <!-- Riwayat Kegiatan -->
-  <div class="riwayat-list">
-    <div class="riwayat-card" data-month="05" data-status="selesai">
-      <div class="card-icon">
-        <ion-icon name="medkit-outline"></ion-icon>
-      </div>
-      <div class="card-info">
-        <h3>Vaksinasi Ternak</h3>
-        <p>15 Mei 2024</p>
-      </div>
-      <span class="status selesai">Selesai</span>
-    </div>
+  <div class="riwayat-list" *ngIf="!isLoading && riwayatList.length > 0">
+    <div class="riwayat-card" *ngFor="let item of riwayatList">
 
-    <div class="riwayat-card" data-month="05" data-status="selesai">
-      <div class="card-icon">
-        <ion-icon name="heart-outline"></ion-icon>
+      <!-- Icon dinamis berdasarkan status -->
+      <div [ngClass]="{'card-icon': true, 'cancel': (item.status === 'dibatalkan')}">
+        <ion-icon [name]="getIconName(item.jenis)"></ion-icon>
       </div>
-      <div class="card-info">
-        <h3>Pemeriksaan Kesehatan Rutin</h3>
-        <p>10 Mei 2024</p>
-      </div>
-      <span class="status selesai">Selesai</span>
-    </div>
 
-    <div class="riwayat-card" data-month="05" data-status="batal">
-      <div class="card-icon cancel">
-        <ion-icon name="flask-outline"></ion-icon>
-      </div>
       <div class="card-info">
-        <h3>Pengambilan Sampel Darah</h3>
-        <p>5 Mei 2024</p>
+        <h3>{{ item.jenis }}</h3>
+        <p>{{ item.tanggal | date:'dd MMMM yyyy' }}</p>
+        <p class="description-text" *ngIf="item.deskripsi">{{ item.deskripsi }}</p>
       </div>
-      <span class="status batal">Dibatalkan</span>
-    </div>
 
-    <div class="riwayat-card" data-month="05" data-status="selesai">
-      <div class="card-icon">
-        <ion-icon name="nutrition-outline"></ion-icon>
-      </div>
-      <div class="card-info">
-        <h3>Pemberian Vitamin</h3>
-        <p>1 Mei 2024</p>
-      </div>
-      <span class="status selesai">Selesai</span>
+      <span class="status"
+        [ngClass]="{'selesai': (item.status === 'selesai'), 'batal': (item.status === 'dibatalkan')}">
+        {{ item.status === 'selesai' ? 'Selesai' : 'Dibatalkan' }}
+      </span>
+
     </div>
   </div>
 </ion-content>

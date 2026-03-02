@@ -45,17 +45,27 @@
       <ion-label class="section-title">Kegiatan Berjalan</ion-label>
     </ion-list-header>
 
-    <ion-item class="activity-item">
+    <div class="ion-text-center ion-padding" *ngIf="isLoading">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+
+    <div class="ion-text-center" *ngIf="!isLoading && kegiatanBerjalan.length === 0">
+      <p style="color: #888;">Belum ada kegiatan yang sedang berjalan.</p>
+    </div>
+
+    <ion-item class="activity-item" *ngFor="let item of kegiatanBerjalan">
       <ion-avatar slot="start" class="icon-bg">
-        <ion-icon name="broom-outline"></ion-icon>
+        <ion-icon [name]="getIconName(item.jenis)"></ion-icon>
       </ion-avatar>
 
       <ion-label>
-        <h2>Pembersihan Kandang</h2>
-        <p>12 Agustus 2024</p>
-        <p>13:00 - 14:00</p>
-      </ion-label>
-      <ion-button slot="end" size="small" color="light">Lihat</ion-button>
+        <h2>{{ item.jenis }}</h2>
+        <p>{{ item.tanggal | date:'dd MMMM yyyy' }}</p>
+        <p>{{ item.jam_mulai }} - {{ item.jam_selesai }}</p>
+        </label>
+        <ion-button slot="end" size="small" color="primary" [routerLink]="['/petugas/detail-kegiatan', item.id]">
+          Lihat
+        </ion-button>
     </ion-item>
   </ion-list>
 </ion-content>
