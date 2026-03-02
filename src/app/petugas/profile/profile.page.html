@@ -1,7 +1,10 @@
 <ion-header>
-  <ion-toolbar> 
+  <ion-toolbar>
     <ion-title class="header-profile">Profil</ion-title>
     <ion-buttons slot="end">
+      <ion-button routerLink="/petugas/setting">
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+      </ion-button>
       <ion-button (click)="goToEditProfile()">
         <ion-icon slot="icon-only" name="create-outline"></ion-icon>
       </ion-button>
@@ -10,7 +13,7 @@
 </ion-header>
 
 <ion-content class="profile-content">
-  
+
   <!-- Loading State -->
   <div *ngIf="isLoading" class="loading-container">
     <ion-spinner name="crescent"></ion-spinner>
@@ -19,7 +22,7 @@
 
   <!-- Profile Content -->
   <div *ngIf="!isLoading && user">
-    
+
     <!-- Profile Header -->
     <div class="profile-header">
       <div class="profile-avatar"
@@ -70,7 +73,7 @@
         </ion-item>
 
         <ion-item lines="none">
-          <ion-icon name="checkmark-circle-outline" slot="start" 
+          <ion-icon name="checkmark-circle-outline" slot="start"
             [color]="user.is_verified ? 'success' : 'warning'"></ion-icon>
           <ion-label>
             <h4>Status Akun</h4>

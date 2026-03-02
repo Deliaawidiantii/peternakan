@@ -15,6 +15,11 @@
   cursor: pointer;
   background-color: #fff;
   transition: all 0.25s ease;
+
+  &.unread {
+    background-color: #f4f8ff;
+    border-left: 4px solid var(--ion-color-primary);
+  }
 }
 
 /* Efek hover — smooth dan sedikit naik */
@@ -39,6 +44,7 @@
   margin: 0;
   line-height: 1.4;
   transition: color 0.2s ease;
+  white-space: normal;
 }
 
 /* Efek teks ikut berubah pas hover */

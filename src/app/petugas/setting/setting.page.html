@@ -1,0 +1,70 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/petugas/profile"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Setting Aplikasi</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+    <!-- Ubah Email -->
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>Profil Akun</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <form [formGroup]="emailForm" (ngSubmit)="simpanEmail()">
+                <ion-item>
+                    <ion-icon name="mail-outline" slot="start" color="medium"></ion-icon>
+                    <ion-label position="stacked">Email</ion-label>
+                    <ion-input type="email" formControlName="email"></ion-input>
+                </ion-item>
+                <div class="ion-padding-top">
+                    <ion-button expand="block" type="submit" [disabled]="emailForm.invalid">Update Email</ion-button>
+                </div>
+            </form>
+        </ion-card-content>
+    </ion-card>
+
+    <!-- Ubah Password -->
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>Keamanan</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <form [formGroup]="passwordForm" (ngSubmit)="simpanPassword()">
+                <ion-item>
+                    <ion-label position="stacked">Password Lama</ion-label>
+                    <ion-input type="password" formControlName="oldPassword"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Password Baru</ion-label>
+                    <ion-input type="password" formControlName="newPassword"></ion-input>
+                </ion-item>
+                <div class="ion-padding-top">
+                    <ion-button expand="block" color="secondary" type="submit" [disabled]="passwordForm.invalid">Update
+                        Password</ion-button>
+                </div>
+            </form>
+        </ion-card-content>
+    </ion-card>
+
+    <!-- Notifikasi Permission -->
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>Preferensi</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-list lines="none">
+                <ion-item>
+                    <ion-icon name="notifications-outline" slot="start" color="primary"></ion-icon>
+                    <ion-label>Izinkan Notifikasi</ion-label>
+                    <ion-toggle slot="end" [(ngModel)]="notifikasiAktif" (ionChange)="toggleNotifikasi()"></ion-toggle>
+                </ion-item>
+            </ion-list>
+        </ion-card-content>
+    </ion-card>
+
+</ion-content>
