@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="light">
-    
+
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
@@ -10,55 +10,55 @@
 </ion-header>
 
 <ion-content class="custom-page ion-padding">
+  <!-- Pilih Pemilik -->
+  <ion-item lines="none" class="input-item">
+    <ion-select placeholder="Pilih Pemilik Hewan" (ionChange)="onPemilikChange($event)">
+      <ion-select-option value="">-- Ketuk Untuk Memilih --</ion-select-option>
+      <ion-select-option *ngFor="let p of peternakList" [value]="p.id">
+        {{ p.nama_peternak }} (NIK: {{ p.nik }})
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
   <!-- Nama Pemilik -->
-  <ion-item lines="none" class="input-item">
-    <ion-input placeholder="Nama Pemilik"></ion-input>
-  </ion-item>
-
-  <!-- Kelompok Hewan -->
-  <ion-item lines="none" class="input-item">
-    <ion-select placeholder="Kelompok Hewan">
-      <ion-select-option value="one">Kelompok Hewan</ion-select-option>
-      <ion-select-option value="two">Ruminansia</ion-select-option>
-      <ion-select-option value="three">Primata</ion-select-option>
-      <ion-select-option value="two">Unggas</ion-select-option>
-      <ion-select-option value="three">Kesayangan</ion-select-option>
-      <ion-select-option value="two">Lainnya</ion-select-option>
-      
-    </ion-select>
-  </ion-item>
-
-  <!-- Jenis Hewan -->
-  <ion-item lines="none" class="input-item">
-    <ion-select placeholder="Jenis Hewan">
-      <ion-select-option value="one">Jenis Hewan</ion-select-option>
-      <ion-select-option value="two">Sapi</ion-select-option>
-      <ion-select-option value="three">Ayam</ion-select-option>
-    </ion-select>
-  </ion-item>
-
-    <!-- Usia -->
-  <ion-item lines="none" class="input-item">
-    <ion-input placeholder="Usia"></ion-input>
+  <ion-item lines="none" class="input-item" style="display: none;">
+    <ion-input [(ngModel)]="formData.namaPemilik" placeholder="Nama Pemilik" readonly></ion-input>
   </ion-item>
 
   <!-- ID Hewan -->
   <ion-item lines="none" class="input-item">
-    <ion-input placeholder="ID Hewan"></ion-input>
+    <ion-select placeholder="Pilih Hewan" (ionChange)="onHewanChange($event)"
+      [disabled]="!formData.peternakan_id || populasiList.length === 0">
+      <ion-select-option value="">-- Pilih ID Hewan / Eartag --</ion-select-option>
+      <ion-select-option *ngFor="let h of populasiList" [value]="h.id">
+        {{ h.code || h.eartag }} - {{ h.jenis_hewan }}
+      </ion-select-option>
+    </ion-select>
   </ion-item>
 
-   <!-- Jenis Kelamin -->
+  <!-- Kelompok Hewan -->
   <ion-item lines="none" class="input-item">
-    <ion-select placeholder="Jenis Kelamin">
-      <ion-select-option value="one">Jantan</ion-select-option>
-      <ion-select-option value="two">Betina</ion-select-option>
-      
-    </ion-select>
+    <ion-input [(ngModel)]="formData.kategoriHewan" placeholder="Kelompok Hewan" readonly></ion-input>
+  </ion-item>
+
+  <!-- Jenis Hewan -->
+  <ion-item lines="none" class="input-item">
+    <ion-input [(ngModel)]="formData.jenisTernak" placeholder="Jenis Hewan" readonly></ion-input>
+  </ion-item>
+
+  <!-- Usia -->
+  <ion-item lines="none" class="input-item">
+    <ion-input [(ngModel)]="formData.usia" placeholder="Usia (Bulan)" readonly></ion-input>
+  </ion-item>
+
+  <!-- Jenis Kelamin -->
+  <ion-item lines="none" class="input-item">
+    <ion-input [(ngModel)]="formData.jenisKelamin" placeholder="Jenis Kelamin" readonly></ion-input>
   </ion-item>
 
   <!-- Tanggal -->
   <ion-item lines="none" class="input-item">
-    <ion-input placeholder="Tanggal" type="date"></ion-input>
+    <ion-input [(ngModel)]="formData.tanggal" placeholder="Tanggal Pengamatan" type="date"></ion-input>
   </ion-item>
 
   <!-- Deskripsi Gejala -->

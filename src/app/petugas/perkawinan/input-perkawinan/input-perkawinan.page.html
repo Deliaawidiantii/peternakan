@@ -18,7 +18,22 @@
     <!-- SECTION: Data Pemilik -->
     <div class="form-section">
       <h3 class="section-title">Data Pemilik</h3>
-      
+
+      <div class="form-group">
+        <label class="form-label">Pilih Pemilik (Peternak)</label>
+        <ion-select
+          placeholder="-- Ketuk Untuk Memilih --"
+          class="form-select"
+          (ionChange)="onPemilikChange($event)"
+        >
+          <ion-select-option value="">-- Pilih Pemilik --</ion-select-option>
+          <ion-select-option *ngFor="let p of peternakList" [value]="p.id">
+            {{ p.nama_peternak }} (NIK: {{ p.nik }})
+          </ion-select-option>
+        </ion-select>
+        <div class="text-xs text-gray-500 mt-1">*Memilih dari dropdown akan mengisi form di bawah secara otomatis</div>
+      </div>
+
       <div class="form-group">
         <label class="form-label">Nama Pemilik</label>
         <ion-input
@@ -26,6 +41,7 @@
           placeholder="Masukkan Nama Pemilik"
           class="form-input"
           type="text"
+          readonly="true"
         ></ion-input>
       </div>
 
@@ -36,6 +52,7 @@
           placeholder="Masukkan NIK Pemilik"
           class="form-input"
           type="text"
+          readonly="true"
         ></ion-input>
       </div>
 
@@ -115,7 +132,7 @@
     <!-- SECTION: Data Petugas -->
     <!-- <div class="form-section">
       <h3 class="section-title">Data Petugas</h3>
-      
+
       <div class="form-group">
         <label class="form-label">Nama Petugas</label>
         <ion-input
@@ -150,7 +167,7 @@
     <!-- SECTION: Data Hewan Betina -->
     <div class="form-section">
       <h3 class="section-title">Data Hewan Betina</h3>
-      
+
       <div class="form-group">
         <label class="form-label">Eartag Betina</label>
         <ion-input
@@ -167,10 +184,10 @@
           [(ngModel)]="formData.jenisTernak"
           placeholder="Pilih Jenis Ternak"
           class="form-select"
+          (ionChange)="onJenisTernakChange($event)"
         >
           <ion-select-option value="">Pilih Jenis Ternak</ion-select-option>
-          <ion-select-option value="sapi">Sapi</ion-select-option>
-          <ion-select-option value="kerbau">Kerbau</ion-select-option>
+          <ion-select-option *ngFor="let j of jenisTernakOptions" [value]="j.value">{{ j.label }}</ion-select-option>
         </ion-select>
       </div>
 
@@ -180,15 +197,10 @@
           [(ngModel)]="formData.rumpunTernak"
           placeholder="Pilih Rumpun Ternak"
           class="form-select"
+          [disabled]="!formData.jenisTernak"
         >
           <ion-select-option value="">Pilih Rumpun Ternak</ion-select-option>
-          <ion-select-option value="po">PO (Peranakan Ongole)</ion-select-option>
-          <ion-select-option value="brahman">Brahman</ion-select-option>
-          <ion-select-option value="simental">Simental</ion-select-option>
-          <ion-select-option value="limosin">Limosin</ion-select-option>
-          <ion-select-option value="pasundan">Pasundan</ion-select-option>
-          <ion-select-option value="kerbau_sungai">Kerbau Sungai</ion-select-option>
-          <ion-select-option value="kerbau_lumpur">Kerbau Lumpur</ion-select-option>
+          <ion-select-option *ngFor="let r of rumpunTernakOptions" [value]="r.value">{{ r.label }}</ion-select-option>
         </ion-select>
       </div>
 
@@ -206,7 +218,7 @@
     <!-- SECTION: Data Perkawinan/IB -->
     <div class="form-section">
       <h3 class="section-title">Data Perkawinan/IB</h3>
-      
+
       <div class="form-group">
         <label class="form-label">Tanggal Perkawinan/IB</label>
         <div class="date-input-wrapper">
@@ -279,11 +291,11 @@
       </div>
     </div>
 
-    
+
     <!-- SECTION: Upload Foto -->
     <div class="form-section">
       <h3 class="section-title">Upload Foto</h3>
-      
+
       <div class="form-group">
         <label class="form-label">Foto Hewan</label>
         <div class="upload-area" (click)="fileInput.click()">

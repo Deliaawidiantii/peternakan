@@ -11,58 +11,81 @@
 
   <h2 class="judul-section">Input Data Penjualan Hewan</h2>
 
+  <!-- Pilih Pemilik -->
+  <ion-item lines="none" class="input-item">
+    <ion-label position="stacked">Pilih Pemilik</ion-label>
+    <ion-select placeholder="-- Ketuk Untuk Memilih --" (ionChange)="onPemilikChange($event)">
+      <ion-select-option value="">-- Pilih Pemilik --</ion-select-option>
+      <ion-select-option *ngFor="let p of peternakList" [value]="p.id">
+        {{ p.nama_peternak }} ({{ p.nik }})
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Pilih Hewan -->
+  <ion-item lines="none" class="input-item">
+    <ion-label position="stacked">Pilih Hewan</ion-label>
+    <ion-select placeholder="-- Pilih Hewan --" (ionChange)="onHewanChange($event)"
+      [disabled]="populasiList.length === 0">
+      <ion-select-option value="">-- Pilih Hewan --</ion-select-option>
+      <ion-select-option *ngFor="let h of populasiList" [value]="h.id">
+        {{ h.code }} - {{ h.jenis_hewan }} ({{ h.jenis_kelamin }})
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
   <!-- ID Hewan -->
   <ion-item lines="none" class="input-item">
     <ion-label position="stacked">ID Hewan</ion-label>
-    <ion-input placeholder="Masukkan ID Hewan" [(ngModel)]="idHewan"></ion-input>
+    <ion-input placeholder="ID Hewan" [(ngModel)]="idHewan" readonly></ion-input>
   </ion-item>
 
   <ion-item lines="none" class="input-item">
     <ion-label position="stacked">Kelompok Hewan</ion-label>
-    <ion-input placeholder="Masukkan Kelompok Hewan" [(ngModel)]="idHewan"></ion-input>
+    <ion-input placeholder="Kelompok Hewan" [(ngModel)]="kelompokHewan" readonly></ion-input>
   </ion-item>
 
   <ion-item lines="none" class="input-item">
     <ion-label position="stacked">Jenis Hewan</ion-label>
-    <ion-input placeholder="Masukkan Jenis Hewan" [(ngModel)]="idHewan"></ion-input>
+    <ion-input placeholder="Jenis Hewan" [(ngModel)]="jenisHewan" readonly></ion-input>
   </ion-item>
 
   <ion-item lines="none" class="input-item">
     <ion-label position="stacked">Ras</ion-label>
-    <ion-input placeholder="Masukkan Ras" [(ngModel)]="idHewan"></ion-input>
+    <ion-input placeholder="Ras" [(ngModel)]="ras" readonly></ion-input>
   </ion-item>
 
   <ion-item lines="none" class="input-item">
     <ion-label position="stacked">Umur</ion-label>
-    <ion-input placeholder="Masukkan Umur" [(ngModel)]="idHewan"></ion-input>
+    <ion-input placeholder="Umur" [(ngModel)]="umur" readonly></ion-input>
   </ion-item>
 
   <ion-item lines="none" class="input-item">
     <ion-label position="stacked">Berat Badan</ion-label>
-    <ion-input placeholder="Masukkan Berat Badan" [(ngModel)]="idHewan"></ion-input>
+    <ion-input placeholder="Masukkan Berat Badan" [(ngModel)]="beratBadan"></ion-input>
   </ion-item>
 
 
   <ion-item class="input-item">
-      <ion-label position="stacked">Tanggal Penjualan</ion-label>
-      <ion-input placeholder="Pilih Tanggal" type="date"></ion-input>
-    </ion-item>
-  
-   <ion-item class="input-item">
-        <ion-label position="stacked">Nama Pembeli</ion-label>
-        <ion-input type="number" placeholder="Masukkan Nama Pembeli"></ion-input>
+    <ion-label position="stacked">Tanggal Penjualan</ion-label>
+    <ion-input placeholder="Pilih Tanggal" type="date"></ion-input>
   </ion-item>
 
-  
-   <ion-item class="input-item">
-        <ion-label position="stacked">Harga Jual</ion-label>
-        <ion-input type="number" placeholder="Masukkan Harga Jual"></ion-input>
+  <ion-item class="input-item">
+    <ion-label position="stacked">Nama Pembeli</ion-label>
+    <ion-input type="number" placeholder="Masukkan Nama Pembeli"></ion-input>
   </ion-item>
 
 
   <ion-item class="input-item">
-        <ion-label position="stacked">Deskripsi Tambahan (Opsional)</ion-label>
-        <ion-input type="number" placeholder="Masukan deksripsi tambahan"></ion-input>
+    <ion-label position="stacked">Harga Jual</ion-label>
+    <ion-input type="number" placeholder="Masukkan Harga Jual"></ion-input>
+  </ion-item>
+
+
+  <ion-item class="input-item">
+    <ion-label position="stacked">Deskripsi Tambahan (Opsional)</ion-label>
+    <ion-input type="number" placeholder="Masukan deksripsi tambahan"></ion-input>
   </ion-item>
 
   <!--  Tombol Simpan -->

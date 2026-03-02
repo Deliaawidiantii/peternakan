@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { PerkawinanService } from '../../../../services/perkawinan.service';
+import { PopulasiService } from '../../../../services/populasi.service';
+import { PeternakService } from '../../../../services/peternak.service';
 
 @Component({
   selector: 'app-input-perkawinan',
@@ -43,23 +45,12 @@ export class InputPerkawinanPage implements OnInit {
 
   isSubmitting = false;
 
-  // Options untuk dropdown
-  jenisTernakOptions = [
-    { label: 'Pilih Jenis Ternak', value: '' },
-    { label: 'Sapi', value: 'sapi' },
-    { label: 'Kerbau', value: 'kerbau' },
-  ];
+  // Options untuk dropdown (sekarang dinamis berdasarkan API)
+  jenisTernakOptions: any[] = [];
+  rumpunTernakOptions: any[] = [];
+  masterJenisHewan: any[] = [];
 
-  rumpunTernakOptions = [
-    { label: 'Pilih Rumpun Ternak', value: '' },
-    { label: 'PO', value: 'po' },
-    { label: 'Brahman', value: 'brahman' },
-    { label: 'Simental', value: 'simental' },
-    { label: 'Limosin', value: 'limosin' },
-    { label: 'Pasundan', value: 'pasundan' },
-    { label: 'Kerbau Sungai', value: 'kerbau_sungai' },
-    { label: 'Kerbau Lumpur', value: 'kerbau_lumpur' },
-  ];
+  peternakList: any[] = [];
 
   metodePerkawinanOptions = [
     { label: 'Pilih Metode Perkawinan', value: '' },
@@ -188,11 +179,73 @@ export class InputPerkawinanPage implements OnInit {
 
   constructor(
     private perkawinanService: PerkawinanService,
+    private populasiService: PopulasiService,
+    private peternakService: PeternakService,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loadDataMaster();
+  }
+
+  loadDataMaster() {
+    // Ambil data Master Jenis Hewan
+    this.populasiService.getJenisHewan().subscribe((res: any) => {
+      if (res.success || res.status === 'success') {
+        const data = res.data || [];
+        this.masterJenisHewan = data;
+
+        // Ambil kategori unik untuk option Jenis Ternak
+        const uniqueKategori = Array.from(
+          new Set(data.map((item: any) => item.kategori)),
+        );
+        this.jenisTernakOptions = uniqueKategori.map((k) => ({
+          label: k,
+          value: k,
+        }));
+      }
+    });
+
+    // Ambil data Pemilik (Peternak)
+    this.peternakService.getAll().subscribe((res: any) => {
+      if (res.success || res.status === 'success') {
+        this.peternakList = res.data || [];
+      } else if (Array.isArray(res)) {
+        this.peternakList = res;
+      }
+    });
+  }
+
+  onPemilikChange(event: any) {
+    const selectedId = event.detail.value;
+    if (!selectedId) return;
+
+    const peternak = this.peternakList.find((p) => p.id == selectedId);
+    if (peternak) {
+      this.formData.peternakan_id = peternak.id;
+      this.formData.namaPemilik = peternak.nama_peternak;
+      this.formData.nikPemilik = peternak.nik;
+      this.formData.alamat = peternak.alamat;
+      // Auto-fill Provinsi / Kabupaten based on Wilayah (bisa diadjust kalau wilayah sudah terpadu dengan API)
+    }
+  }
+
+  onJenisTernakChange(event: any) {
+    const selectedKategori = event.detail.value;
+    this.formData.jenisTernak = selectedKategori;
+    this.formData.rumpunTernak = ''; // Reset rumpun
+    this.rumpunTernakOptions = [];
+
+    // Filter rumpunTernakOptions berdasarkan kategori jenisTernak
+    const filteredRumpun = this.masterJenisHewan.filter(
+      (item) => item.kategori === selectedKategori,
+    );
+    this.rumpunTernakOptions = filteredRumpun.map((item) => ({
+      label: item.nama,
+      value: item.nama,
+    }));
+  }
 
   goBack() {
     window.history.back();
@@ -301,14 +354,14 @@ export class InputPerkawinanPage implements OnInit {
 
     // Kirim ke backend API
     this.perkawinanService.store(apiData).subscribe({
-      next: async (response) => {
+      next: async (response: any) => {
         await loading.dismiss();
         this.isSubmitting = false;
         console.log('Data Perkawinan berhasil disimpan:', response);
         this.showToast('Data Perkawinan berhasil disimpan! ✅', 'success');
         this.resetForm();
       },
-      error: async (error) => {
+      error: async (error: any) => {
         await loading.dismiss();
         this.isSubmitting = false;
         console.error('Error menyimpan data:', error);

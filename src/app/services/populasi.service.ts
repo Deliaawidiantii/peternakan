@@ -4,13 +4,10 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PopulasiService {
-
   private apiUrl = 'http://localhost:8000/api';
-
- 
 
   constructor(private http: HttpClient) {}
 
@@ -18,8 +15,8 @@ export class PopulasiService {
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
     return new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
     });
   }
 
@@ -30,10 +27,10 @@ export class PopulasiService {
   }
 
   // Create Populasi Baru
-createPopulasi(data: any): Observable<any> {
-  const headers = this.getHeaders();
-  return this.http.post(`${this.apiUrl}/populasi`, data, { headers });
-}
+  createPopulasi(data: any): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.post(`${this.apiUrl}/populasi`, data, { headers });
+  }
 
   // Get Detail Populasi
   getPopulasiById(id: number): Observable<any> {
@@ -55,5 +52,11 @@ createPopulasi(data: any): Observable<any> {
   // Method baru untuk get wilayah/desa
   getWilayahList(): Observable<any> {
     return this.http.get(`${this.apiUrl}/wilayah`);
+  }
+
+  // Method untuk get komoditas/jenis hewan
+  getJenisHewan(): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.get(`${this.apiUrl}/populasi/jenis-hewan`, { headers });
   }
 }
