@@ -4,7 +4,7 @@
       <ion-back-button defaultHref="/petugas/pemilik" text=""></ion-back-button>
     </ion-buttons>
     <ion-title>Detail Pemilik</ion-title>
-    
+
     <!-- Tombol Edit & Hapus -->
     <ion-buttons slot="end" *ngIf="pemilik">
       <ion-button (click)="goToEdit()">
@@ -27,7 +27,7 @@
 
   <!-- Content (Show when loaded) -->
   <div *ngIf="!isLoading && pemilik">
-    
+
     <!-- Header Info -->
     <div class="pemilik-info">
       <h2>{{ pemilik.nama_peternak }}</h2>
@@ -83,46 +83,51 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- Hewan Ternak (Coming Soon) -->
+    <!-- Hewan Ternak -->
     <ion-card>
       <ion-card-header>
         <ion-card-title>Hewan Ternak</ion-card-title>
       </ion-card-header>
 
       <ion-card-content>
-        <div class="empty-state-small">
+        <div class="empty-state-small" *ngIf="ternakList.length === 0">
           <ion-icon name="paw-outline"></ion-icon>
           <p>Belum ada data ternak</p>
         </div>
-        
-        <!-- Nanti kalau udah ada API ternak -->
-        <!-- <div class="hewan-item" *ngFor="let ternak of pemilik.ternak">
-          <ion-icon name="paw-outline"></ion-icon>
-          <div>
-            <p class="nama-hewan">{{ ternak.nama }}</p>
-            <p class="jenis-hewan">{{ ternak.jenis }}</p>
-          </div>
-        </div> -->
+
+        <ion-list *ngIf="ternakList.length > 0">
+          <ion-item *ngFor="let ternak of ternakList">
+            <ion-icon name="paw-outline" slot="start" color="primary"></ion-icon>
+            <ion-label>
+              <h2>{{ ternak.code }} - {{ ternak.jenis_hewan }}</h2>
+              <p>Kelamin: {{ ternak.jenis_kelamin }} | Kelompok: {{ ternak.kategori }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
       </ion-card-content>
     </ion-card>
 
-    <!-- Kandang (Coming Soon) -->
+    <!-- Kandang -->
     <ion-card>
       <ion-card-header>
         <ion-card-title>Kandang</ion-card-title>
       </ion-card-header>
-      
+
       <ion-card-content>
-        <div class="empty-state-small">
+        <div class="empty-state-small" *ngIf="kandangList.length === 0">
           <ion-icon name="home-outline"></ion-icon>
           <p>Belum ada data kandang</p>
         </div>
-        
-        <!-- Nanti kalau udah ada API kandang -->
-        <!-- <div class="kandang-item" *ngFor="let kandang of pemilik.kandang">
-          <ion-icon name="home-outline"></ion-icon>
-          <p>{{ kandang.nama }}</p>
-        </div> -->
+
+        <ion-list *ngIf="kandangList.length > 0">
+          <ion-item *ngFor="let kandang of kandangList">
+            <ion-icon name="home-outline" slot="start" color="secondary"></ion-icon>
+            <ion-label>
+              <h2>{{ kandang.nama_kandang }}</h2>
+              <p>Komoditas: {{ kandang.jenis_komoditas }} | Kapasitas: {{ kandang.kapasitas }} ekor</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
       </ion-card-content>
     </ion-card>
 
@@ -134,5 +139,5 @@
     <h3>Data Tidak Ditemukan</h3>
     <p>Data pemilik tidak dapat dimuat</p>
   </div>
-  
+
 </ion-content>

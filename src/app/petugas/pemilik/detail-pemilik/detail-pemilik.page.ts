@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { PeternakService } from '../../../services/peternak.service';
+import { PopulasiService } from '../../../services/populasi.service';
+import { KandangService } from '../../../services/kandang.service';
 import { LoadingController, AlertController } from '@ionic/angular';
 
 @Component({
@@ -11,18 +13,22 @@ import { LoadingController, AlertController } from '@ionic/angular';
   standalone: false,
 })
 export class DetailPemilikPage implements OnInit {
-
   peternakId: number | null = null;
   pemilik: any = null;
   isLoading: boolean = true;
+
+  ternakList: any[] = [];
+  kandangList: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private navCtrl: NavController,
     private peternakService: PeternakService,
+    private populasiService: PopulasiService,
+    private kandangService: KandangService,
     private loadingController: LoadingController,
-    private alertController: AlertController
-  ) { }
+    private alertController: AlertController,
+  ) {}
 
   ngOnInit() {
     // Ambil ID dari URL parameter
@@ -41,7 +47,7 @@ export class DetailPemilikPage implements OnInit {
 
     const loading = await this.loadingController.create({
       message: 'Memuat data...',
-      spinner: 'crescent'
+      spinner: 'crescent',
     });
     await loading.present();
 
@@ -53,6 +59,9 @@ export class DetailPemilikPage implements OnInit {
         if (response.success) {
           this.pemilik = response.data;
           console.log('Detail pemilik:', this.pemilik);
+
+          // Load Kandang dan Ternak List
+          this.loadTernakAndKandang(id);
         }
       },
       error: async (error) => {
@@ -61,7 +70,7 @@ export class DetailPemilikPage implements OnInit {
         console.error('Error loading detail:', error);
 
         let errorMessage = 'Gagal memuat data pemilik';
-        
+
         if (error.status === 404) {
           errorMessage = 'Data pemilik tidak ditemukan';
         } else if (error.status === 401) {
@@ -79,24 +88,42 @@ export class DetailPemilikPage implements OnInit {
               text: 'OK',
               handler: () => {
                 this.navCtrl.back();
-              }
-            }
-          ]
+              },
+            },
+          ],
         });
         await alert.present();
-      }
+      },
     });
+  }
+
+  loadTernakAndKandang(peternakId: number) {
+    this.populasiService
+      .getPopulasi({ peternakan_id: peternakId })
+      .subscribe((res: any) => {
+        if (res.success && res.data) {
+          this.ternakList = res.data;
+        }
+      });
+
+    this.kandangService
+      .getKandangByPeternak(peternakId)
+      .subscribe((res: any) => {
+        if (res.success && res.data) {
+          this.kandangList = res.data;
+        }
+      });
   }
 
   // Format tanggal
   formatDate(dateString: string): string {
     if (!dateString) return '-';
-    
+
     const date = new Date(dateString);
-    const options: Intl.DateTimeFormatOptions = { 
-      day: 'numeric', 
-      month: 'long', 
-      year: 'numeric' 
+    const options: Intl.DateTimeFormatOptions = {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
     };
     return date.toLocaleDateString('id-ID', options);
   }
@@ -116,21 +143,21 @@ export class DetailPemilikPage implements OnInit {
       buttons: [
         {
           text: 'Batal',
-          role: 'cancel'
+          role: 'cancel',
         },
         {
           text: 'Hapus',
           role: 'destructive',
           handler: async () => {
             const loading = await this.loadingController.create({
-              message: 'Menghapus data...'
+              message: 'Menghapus data...',
             });
             await loading.present();
 
             this.peternakService.delete(this.peternakId!).subscribe({
               next: async (response) => {
                 await loading.dismiss();
-                
+
                 const successAlert = await this.alertController.create({
                   header: 'Berhasil',
                   message: 'Data pemilik berhasil dihapus',
@@ -139,26 +166,26 @@ export class DetailPemilikPage implements OnInit {
                       text: 'OK',
                       handler: () => {
                         this.navCtrl.navigateBack('/petugas/pemilik');
-                      }
-                    }
-                  ]
+                      },
+                    },
+                  ],
                 });
                 await successAlert.present();
               },
               error: async (error) => {
                 await loading.dismiss();
-                
+
                 const errorAlert = await this.alertController.create({
                   header: 'Error',
                   message: 'Gagal menghapus data',
-                  buttons: ['OK']
+                  buttons: ['OK'],
                 });
                 await errorAlert.present();
-              }
+              },
             });
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
 
     await alert.present();
