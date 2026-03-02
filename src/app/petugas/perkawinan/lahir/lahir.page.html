@@ -28,34 +28,22 @@
 
       <div class="form-group">
         <label class="form-label">Eartag Anak</label>
-        <ion-input
-          formControlName="eartagAnak"
-          placeholder="Masukkan Eartag Anak"
-          class="form-input"
-          type="text"
-        ></ion-input>
+        <ion-input formControlName="eartagAnak" placeholder="Masukkan Eartag Anak" class="form-input"
+          type="text"></ion-input>
       </div>
 
       <div class="form-group">
         <label class="form-label">Tanggal Lahir</label>
         <div class="date-input-wrapper">
-          <ion-input
-            formControlName="tanggalLahir"
-            placeholder="Pilih Tanggal"
-            class="form-input"
-            type="date"
-          ></ion-input>
+          <ion-input formControlName="tanggalLahir" placeholder="Pilih Tanggal" class="form-input"
+            type="date"></ion-input>
           <ion-icon name="calendar-outline" class="calendar-icon"></ion-icon>
         </div>
       </div>
 
       <div class="form-group">
         <label class="form-label">Jenis Kelamin</label>
-        <ion-select
-          formControlName="jenisKelamin"
-          placeholder="Pilih Jenis Kelamin"
-          class="form-select"
-        >
+        <ion-select formControlName="jenisKelamin" placeholder="Pilih Jenis Kelamin" class="form-select">
           <ion-select-option value="Jantan">Jantan</ion-select-option>
           <ion-select-option value="Betina">Betina</ion-select-option>
         </ion-select>
@@ -63,11 +51,7 @@
 
       <div class="form-group">
         <label class="form-label">Kondisi Anak</label>
-        <ion-select
-          formControlName="kondisi"
-          placeholder="Pilih Kondisi"
-          class="form-select"
-        >
+        <ion-select formControlName="kondisi" placeholder="Pilih Kondisi" class="form-select">
           <ion-select-option value="Sehat">Sehat</ion-select-option>
           <ion-select-option value="Cacat">Cacat</ion-select-option>
           <ion-select-option value="Mati">Mati</ion-select-option>
@@ -77,30 +61,19 @@
 
       <div class="form-group">
         <label class="form-label">Jenis Ternak Anak</label>
-        <ion-select
-          formControlName="jenisTernakAnak"
-          placeholder="Pilih Jenis Ternak"
-          class="form-select"
-        >
-          <ion-select-option value="Sapi">Sapi</ion-select-option>
-          <ion-select-option value="Kerbau">Kerbau</ion-select-option>
+        <ion-select formControlName="jenisTernakAnak" placeholder="Pilih Jenis Ternak" class="form-select">
+          <ion-select-option *ngFor="let option of jenisTernakOptions" [value]="option.value">
+            {{ option.label }}
+          </ion-select-option>
         </ion-select>
       </div>
 
       <div class="form-group">
         <label class="form-label">Rumpun Ternak Anak</label>
-        <ion-select
-          formControlName="rumpunTernakAnak"
-          placeholder="Pilih Rumpun"
-          class="form-select"
-        >
-          <ion-select-option value="PO">PO</ion-select-option>
-          <ion-select-option value="Brahman">Brahman</ion-select-option>
-          <ion-select-option value="Simental">Simental</ion-select-option>
-          <ion-select-option value="Limosin">Limosin</ion-select-option>
-          <ion-select-option value="Pasundan">Pasundan</ion-select-option>
-          <ion-select-option value="Kerbau Sungai">Kerbau Sungai</ion-select-option>
-          <ion-select-option value="Kerbau Lumpur">Kerbau Lumpur</ion-select-option>
+        <ion-select formControlName="rumpunTernakAnak" placeholder="Pilih Rumpun" class="form-select">
+          <ion-select-option *ngFor="let option of rumpunTernakOptions" [value]="option.value">
+            {{ option.label }}
+          </ion-select-option>
         </ion-select>
       </div>
     </div>
@@ -112,48 +85,28 @@
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">Berat Badan (kg)</label>
-          <ion-input
-            formControlName="beratBadan"
-            placeholder="0"
-            class="form-input"
-            type="number"
-            step="0.1"
-          ></ion-input>
+          <ion-input formControlName="beratBadan" placeholder="0" class="form-input" type="number"
+            step="0.1"></ion-input>
         </div>
 
         <div class="form-group">
           <label class="form-label">Panjang Badan (cm)</label>
-          <ion-input
-            formControlName="panjangBadan"
-            placeholder="0"
-            class="form-input"
-            type="number"
-            step="0.1"
-          ></ion-input>
+          <ion-input formControlName="panjangBadan" placeholder="0" class="form-input" type="number"
+            step="0.1"></ion-input>
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">Tinggi Pundak (cm)</label>
-          <ion-input
-            formControlName="tinggiPundak"
-            placeholder="0"
-            class="form-input"
-            type="number"
-            step="0.1"
-          ></ion-input>
+          <ion-input formControlName="tinggiPundak" placeholder="0" class="form-input" type="number"
+            step="0.1"></ion-input>
         </div>
 
         <div class="form-group">
           <label class="form-label">Lingkar Dada (cm)</label>
-          <ion-input
-            formControlName="lingkarDada"
-            placeholder="0"
-            class="form-input"
-            type="number"
-            step="0.1"
-          ></ion-input>
+          <ion-input formControlName="lingkarDada" placeholder="0" class="form-input" type="number"
+            step="0.1"></ion-input>
         </div>
       </div>
     </div>
@@ -165,19 +118,8 @@
       <div class="form-group">
         <label class="form-label">Foto Anak</label>
         <div class="file-upload-container">
-          <input
-            #fileInput
-            type="file"
-            accept="image/*"
-            (change)="onFileSelected($event)"
-            class="file-input"
-            hidden
-          />
-          <button
-            type="button"
-            (click)="fileInput.click()"
-            class="upload-btn"
-          >
+          <input #fileInput type="file" accept="image/*" (change)="onFileSelected($event)" class="file-input" hidden />
+          <button type="button" (click)="fileInput.click()" class="upload-btn">
             <ion-icon name="cloud-upload-outline"></ion-icon>
             <span>Pilih Foto</span>
           </button>
@@ -194,31 +136,19 @@
 
       <div class="form-group">
         <label class="form-label">Catatan</label>
-        <ion-textarea
-          formControlName="catatan"
-          placeholder="Tambahkan catatan jika ada"
-          class="form-textarea"
-          rows="3"
-        ></ion-textarea>
+        <ion-textarea formControlName="catatan" placeholder="Tambahkan catatan jika ada" class="form-textarea"
+          rows="3"></ion-textarea>
       </div>
     </div>
 
     <!-- Action Buttons -->
     <div class="action-section">
-      <button 
-        type="button"
-        class="btn btn-secondary"
-        (click)="batal()"
-      >
+      <button type="button" class="btn btn-secondary" (click)="batal()">
         <ion-icon name="close-outline"></ion-icon>
         <span>Batal</span>
       </button>
 
-      <button 
-        type="submit"
-        class="btn btn-primary"
-        [disabled]="!lahirForm.valid"
-      >
+      <button type="submit" class="btn btn-primary" [disabled]="!lahirForm.valid">
         <ion-icon name="save-outline"></ion-icon>
         <span>Simpan Data Lahir</span>
       </button>

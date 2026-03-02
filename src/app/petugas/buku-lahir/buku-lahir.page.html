@@ -38,11 +38,9 @@
     <div class="filter-wrapper">
       <label>Jenis Hewan</label>
       <ion-select [(ngModel)]="selectedAnimalType" placeholder="Pilih Jenis">
-        <ion-select-option value="sapi">Sapi</ion-select-option>
-        <ion-select-option value="kambing">Kambing</ion-select-option>
-        <ion-select-option value="ayam">Ayam</ion-select-option>
-        <ion-select-option value="bebek">Bebek</ion-select-option>
-        <ion-select-option value="domba">Domba</ion-select-option>
+        <ion-select-option value="">Semua</ion-select-option>
+        <ion-select-option *ngFor="let opt of jenisTernakOptions" [value]="opt.value">{{ opt.label
+          }}</ion-select-option>
       </ion-select>
     </div>
   </div>
