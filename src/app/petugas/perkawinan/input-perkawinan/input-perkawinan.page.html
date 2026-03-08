@@ -2,8 +2,8 @@
   <ion-toolbar>
     <div class="header-content">
       <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
+        <ion-back-button defaultHref="/"></ion-back-button>
+      </ion-buttons>
       <h2 class="header-title">Input IB (Inseminasi Buatan)</h2>
       <div style="width: 40px;"></div>
     </div>
@@ -21,11 +21,7 @@
 
       <div class="form-group">
         <label class="form-label">Pilih Pemilik (Peternak)</label>
-        <ion-select
-          placeholder="-- Ketuk Untuk Memilih --"
-          class="form-select"
-          (ionChange)="onPemilikChange($event)"
-        >
+        <ion-select placeholder="-- Ketuk Untuk Memilih --" class="form-select" (ionChange)="onPemilikChange($event)">
           <ion-select-option value="">-- Pilih Pemilik --</ion-select-option>
           <ion-select-option *ngFor="let p of peternakList" [value]="p.id">
             {{ p.nama_peternak }} (NIK: {{ p.nik }})
@@ -36,44 +32,26 @@
 
       <div class="form-group">
         <label class="form-label">Nama Pemilik</label>
-        <ion-input
-          [(ngModel)]="formData.namaPemilik"
-          placeholder="Masukkan Nama Pemilik"
-          class="form-input"
-          type="text"
-          readonly="true"
-        ></ion-input>
+        <ion-input [(ngModel)]="formData.namaPemilik" placeholder="Masukkan Nama Pemilik" class="form-input" type="text"
+          readonly="true"></ion-input>
       </div>
 
       <div class="form-group">
         <label class="form-label">NIK Pemilik</label>
-        <ion-input
-          [(ngModel)]="formData.nikPemilik"
-          placeholder="Masukkan NIK Pemilik"
-          class="form-input"
-          type="text"
-          readonly="true"
-        ></ion-input>
+        <ion-input [(ngModel)]="formData.nikPemilik" placeholder="Masukkan NIK Pemilik" class="form-input" type="text"
+          readonly="true"></ion-input>
       </div>
 
       <div class="form-group">
         <label class="form-label">Alamat</label>
-        <ion-textarea
-          [(ngModel)]="formData.alamat"
-          placeholder="Masukkan Alamat Pemilik"
-          class="form-textarea"
-          rows="3"
-        ></ion-textarea>
+        <ion-textarea [(ngModel)]="formData.alamat" placeholder="Masukkan Alamat Pemilik" class="form-textarea"
+          rows="3"></ion-textarea>
       </div>
 
       <div class="form-group">
         <label class="form-label">Provinsi</label>
-        <ion-select
-          [(ngModel)]="formData.provinsi"
-          placeholder="Pilih Provinsi"
-          class="form-select"
-          (ionChange)="onProvinsiChange($event)"
-        >
+        <ion-select [(ngModel)]="formData.provinsi" placeholder="Pilih Provinsi" class="form-select"
+          (ionChange)="onProvinsiChange($event)">
           <ion-select-option value="">Pilih Provinsi</ion-select-option>
           <ion-select-option value="jawa_barat">Jawa Barat</ion-select-option>
           <ion-select-option value="jawa_timur">Jawa Timur</ion-select-option>
@@ -85,44 +63,32 @@
 
       <div class="form-group">
         <label class="form-label">Kabupaten</label>
-        <ion-select
-          [(ngModel)]="formData.kabupaten"
-          placeholder="Pilih Kabupaten"
-          class="form-select"
-          (ionChange)="onKabupatenChange($event)"
-        >
+        <ion-select [(ngModel)]="formData.kabupaten" placeholder="Pilih Kabupaten" class="form-select"
+          (ionChange)="onKabupatenChange($event)">
           <ion-select-option value="">Pilih Kabupaten</ion-select-option>
-          <ion-select-option *ngFor="let kab of kabupatenList" [value]="kab">
-            {{ kab }}
+          <ion-select-option *ngFor="let kab of kabupatenList" [value]="kab.value">
+            {{ kab.label }}
           </ion-select-option>
         </ion-select>
       </div>
 
       <div class="form-group">
         <label class="form-label">Kecamatan</label>
-        <ion-select
-          [(ngModel)]="formData.kecamatan"
-          placeholder="Pilih Kecamatan"
-          class="form-select"
-          (ionChange)="onKecamatanChange($event)"
-        >
+        <ion-select [(ngModel)]="formData.kecamatan" placeholder="Pilih Kecamatan" class="form-select"
+          (ionChange)="onKecamatanChange($event)">
           <ion-select-option value="">Pilih Kecamatan</ion-select-option>
-          <ion-select-option *ngFor="let kec of kecamatanList" [value]="kec">
-            {{ kec }}
+          <ion-select-option *ngFor="let kec of kecamatanList" [value]="kec.value">
+            {{ kec.label }}
           </ion-select-option>
         </ion-select>
       </div>
 
       <div class="form-group">
         <label class="form-label">Desa</label>
-        <ion-select
-          [(ngModel)]="formData.desa"
-          placeholder="Pilih Desa"
-          class="form-select"
-        >
+        <ion-select [(ngModel)]="formData.desa" placeholder="Pilih Desa" class="form-select">
           <ion-select-option value="">Pilih Desa</ion-select-option>
-          <ion-select-option *ngFor="let des of desaList" [value]="des">
-            {{ des }}
+          <ion-select-option *ngFor="let des of desaList" [value]="des.value">
+            {{ des.label }}
           </ion-select-option>
         </ion-select>
       </div>
@@ -170,22 +136,14 @@
 
       <div class="form-group">
         <label class="form-label">Eartag Betina</label>
-        <ion-input
-          [(ngModel)]="formData.eartagBetina"
-          placeholder="Masukkan Eartag Betina"
-          class="form-input"
-          type="text"
-        ></ion-input>
+        <ion-input [(ngModel)]="formData.eartagBetina" placeholder="Masukkan Eartag Betina" class="form-input"
+          type="text"></ion-input>
       </div>
 
       <div class="form-group">
         <label class="form-label">Jenis Ternak</label>
-        <ion-select
-          [(ngModel)]="formData.jenisTernak"
-          placeholder="Pilih Jenis Ternak"
-          class="form-select"
-          (ionChange)="onJenisTernakChange($event)"
-        >
+        <ion-select [(ngModel)]="formData.jenisTernak" placeholder="Pilih Jenis Ternak" class="form-select"
+          (ionChange)="onJenisTernakChange($event)">
           <ion-select-option value="">Pilih Jenis Ternak</ion-select-option>
           <ion-select-option *ngFor="let j of jenisTernakOptions" [value]="j.value">{{ j.label }}</ion-select-option>
         </ion-select>
@@ -193,12 +151,8 @@
 
       <div class="form-group">
         <label class="form-label">Rumpun Ternak</label>
-        <ion-select
-          [(ngModel)]="formData.rumpunTernak"
-          placeholder="Pilih Rumpun Ternak"
-          class="form-select"
-          [disabled]="!formData.jenisTernak"
-        >
+        <ion-select [(ngModel)]="formData.rumpunTernak" placeholder="Pilih Rumpun Ternak" class="form-select"
+          [disabled]="!formData.jenisTernak">
           <ion-select-option value="">Pilih Rumpun Ternak</ion-select-option>
           <ion-select-option *ngFor="let r of rumpunTernakOptions" [value]="r.value">{{ r.label }}</ion-select-option>
         </ion-select>
@@ -206,12 +160,8 @@
 
       <div class="form-group">
         <label class="form-label">Usia Ternak (Bulan)</label>
-        <ion-input
-          [(ngModel)]="formData.usiaTernak"
-          placeholder="Masukkan Usia Ternak"
-          class="form-input"
-          type="number"
-        ></ion-input>
+        <ion-input [(ngModel)]="formData.usiaTernak" placeholder="Masukkan Usia Ternak" class="form-input"
+          type="number"></ion-input>
       </div>
     </div>
 
@@ -222,23 +172,15 @@
       <div class="form-group">
         <label class="form-label">Tanggal Perkawinan/IB</label>
         <div class="date-input-wrapper">
-          <ion-input
-            [(ngModel)]="formData.tanggalPerkawinan"
-            placeholder="Pilih Tanggal"
-            class="form-input"
-            type="date"
-          ></ion-input>
+          <ion-input [(ngModel)]="formData.tanggalPerkawinan" placeholder="Pilih Tanggal" class="form-input"
+            type="date"></ion-input>
           <ion-icon name="calendar-outline" class="calendar-icon"></ion-icon>
         </div>
       </div>
 
       <div class="form-group">
         <label class="form-label">Metode Perkawinan</label>
-        <ion-select
-          [(ngModel)]="formData.metodePerkawinan"
-          placeholder="Pilih Metode Perkawinan"
-          class="form-select"
-        >
+        <ion-select [(ngModel)]="formData.metodePerkawinan" placeholder="Pilih Metode Perkawinan" class="form-select">
           <ion-select-option value="">Pilih Metode</ion-select-option>
           <ion-select-option value="inseminasi_buatan">Inseminasi Buatan</ion-select-option>
           <ion-select-option value="kawin_alami">Kawin Alami</ion-select-option>
@@ -248,11 +190,7 @@
 
       <div class="form-group">
         <label class="form-label">Inseminasi ke</label>
-        <ion-select
-          [(ngModel)]="formData.inseminasiKe"
-          placeholder="Pilih Inseminasi ke"
-          class="form-select"
-        >
+        <ion-select [(ngModel)]="formData.inseminasiKe" placeholder="Pilih Inseminasi ke" class="form-select">
           <ion-select-option value="">Pilih Inseminasi ke</ion-select-option>
           <ion-select-option value="1">1</ion-select-option>
           <ion-select-option value="2">2</ion-select-option>
@@ -262,32 +200,20 @@
 
       <div class="form-group">
         <label class="form-label">ID Pejantan</label>
-        <ion-input
-          [(ngModel)]="formData.idPejantan"
-          placeholder="Masukkan ID Pejantan"
-          class="form-input"
-          type="text"
-        ></ion-input>
+        <ion-input [(ngModel)]="formData.idPejantan" placeholder="Masukkan ID Pejantan" class="form-input"
+          type="text"></ion-input>
       </div>
 
       <div class="form-group">
         <label class="form-label">Kode Produksi</label>
-        <ion-input
-          [(ngModel)]="formData.kodeProduksi"
-          placeholder="Masukkan Kode Produksi"
-          class="form-input"
-          type="text"
-        ></ion-input>
+        <ion-input [(ngModel)]="formData.kodeProduksi" placeholder="Masukkan Kode Produksi" class="form-input"
+          type="text"></ion-input>
       </div>
 
       <div class="form-group">
         <label class="form-label">Kode Batch</label>
-        <ion-input
-          [(ngModel)]="formData.kodeBatch"
-          placeholder="Masukkan Kode Batch"
-          class="form-input"
-          type="text"
-        ></ion-input>
+        <ion-input [(ngModel)]="formData.kodeBatch" placeholder="Masukkan Kode Batch" class="form-input"
+          type="text"></ion-input>
       </div>
     </div>
 
@@ -303,13 +229,7 @@
           <p class="upload-text">Tap untuk memilih foto atau drag & drop</p>
           <p class="upload-subtext">PNG, JPG, GIF (Max 5MB)</p>
         </div>
-        <input
-          #fileInput
-          type="file"
-          accept="image/*"
-          hidden
-          (change)="onFileSelected($event)"
-        />
+        <input #fileInput type="file" accept="image/*" hidden (change)="onFileSelected($event)" />
         <div *ngIf="formData.fotoHewan" class="file-preview">
           <ion-icon name="checkmark-circle-outline" class="success-icon"></ion-icon>
           <p class="file-name">{{ formData.fotoHewan }}</p>
@@ -323,11 +243,7 @@
 
 <ion-footer class="ion-no-border custom-footer">
   <div class="footer-content">
-    <ion-button
-      (click)="simpanData()"
-      expand="block"
-      class="submit-btn"
-    >
+    <ion-button (click)="simpanData()" expand="block" class="submit-btn">
       <span>Simpan</span>
     </ion-button>
   </div>
