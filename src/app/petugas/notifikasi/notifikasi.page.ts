@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotifikasiService } from '../../../../services/notifikasi.service';
+import { NotifikasiService } from '../../services/notifikasi.service';
 import { ToastController } from '@ionic/angular';
 
 @Component({

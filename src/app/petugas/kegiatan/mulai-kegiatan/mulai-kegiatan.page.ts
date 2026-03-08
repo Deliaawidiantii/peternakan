@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
-import { KegiatanService } from 'src/app/services/kegiatan.service';
+import { KegiatanService } from '../../../services/kegiatan.service';
 import { lastValueFrom } from 'rxjs';
 
 

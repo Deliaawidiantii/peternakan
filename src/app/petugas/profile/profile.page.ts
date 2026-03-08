@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { WilayahService } from 'src/app/services/wilayah.service';
+import { WilayahService } from '../../services/wilayah.service';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 

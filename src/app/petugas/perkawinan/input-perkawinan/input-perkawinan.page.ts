@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, ToastController } from '@ionic/angular';
-import { PerkawinanService } from '../../../../services/perkawinan.service';
-import { PopulasiService } from '../../../../services/populasi.service';
-import { PeternakService } from '../../../../services/peternak.service';
+import { PerkawinanService } from '../../../services/perkawinan.service';
+import { PopulasiService } from '../../../services/populasi.service';
+import { PeternakService } from '../../../services/peternak.service';
 
 @Component({
   selector: 'app-input-perkawinan',
@@ -371,7 +371,10 @@ export class InputPerkawinanPage implements OnInit {
           errorMsg = error.error.message;
         } else if (error.error?.errors) {
           // Tampilkan validation errors dari Laravel
-          const errors = Object.values(error.error.errors).flat();
+          const errors = Object.values(error.error.errors).reduce(
+            (acc: any, val: any) => acc.concat(val),
+            [],
+          );
           errorMsg = (errors as string[]).join(', ');
         } else if (error.status === 401) {
           errorMsg = 'Sesi Anda telah berakhir. Silakan login kembali.';

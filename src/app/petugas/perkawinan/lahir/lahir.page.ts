@@ -7,7 +7,7 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { PopulasiService } from '../../../../services/populasi.service';
+import { PopulasiService } from '../../../services/populasi.service';
 
 interface HewanInduk {
   id: string;

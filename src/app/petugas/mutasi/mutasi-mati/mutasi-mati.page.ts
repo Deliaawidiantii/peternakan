@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { PopulasiService } from '../../../../services/populasi.service';
-import { PeternakService } from '../../../../services/peternak.service';
+import { PopulasiService } from '../../../services/populasi.service';
+import { PeternakService } from '../../../services/peternak.service';
 
 @Component({
   selector: 'app-mutasi-mati',

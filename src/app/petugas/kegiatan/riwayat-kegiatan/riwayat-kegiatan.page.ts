@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { KegiatanService } from '../../../../services/kegiatan.service';
+import { KegiatanService } from '../../../services/kegiatan.service';
 
 @Component({
   selector: 'app-riwayat-kegiatan',

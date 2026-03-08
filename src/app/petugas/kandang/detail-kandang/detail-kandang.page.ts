@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'; // ✅ TAMBAH INI
 import { LoadingController, ToastController } from '@ionic/angular'; // ✅ TAMBAH INI
-import { KandangService } from 'src/app/services/kandang.service'; // ✅ TAMBAH INI
+import { KandangService } from '../../../services/kandang.service'; // ✅ TAMBAH INI
 
 @Component({
   selector: 'app-detail-kandang',

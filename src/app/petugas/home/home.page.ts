@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PopulasiService } from 'src/app/services/populasi.service';
-import { PeternakService } from 'src/app/services/peternak.service';
-import { WilayahService } from 'src/app/services/wilayah.service';
-import { KandangService } from 'src/app/services/kandang.service';
-import { KegiatanService } from 'src/app/services/kegiatan.service';
+import { PopulasiService } from '../../services/populasi.service';
+import { PeternakService } from '../../services/peternak.service';
+import { WilayahService } from '../../services/wilayah.service';
+import { KandangService } from '../../services/kandang.service';
+import { KegiatanService } from '../../services/kegiatan.service';
 
 @Component({
   selector: 'app-home',

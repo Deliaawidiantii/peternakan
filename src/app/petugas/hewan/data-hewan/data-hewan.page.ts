@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
-import { PopulasiService } from 'src/app/services/populasi.service';
-import { WilayahService } from 'src/app/services/wilayah.service';
-import { PeternakService } from 'src/app/services/peternak.service';
+import { PopulasiService } from '../../../services/populasi.service';
+import { WilayahService } from '../../../services/wilayah.service';
+import { PeternakService } from '../../../services/peternak.service';
 
 @Component({
   selector: 'app-data-hewan',

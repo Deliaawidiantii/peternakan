@@ -62,10 +62,10 @@
         <h2>{{ item.jenis }}</h2>
         <p>{{ item.tanggal | date:'dd MMMM yyyy' }}</p>
         <p>{{ item.jam_mulai }} - {{ item.jam_selesai }}</p>
-        </label>
-        <ion-button slot="end" size="small" color="primary" [routerLink]="['/petugas/detail-kegiatan', item.id]">
-          Lihat
-        </ion-button>
+      </ion-label>
+      <ion-button slot="end" size="small" color="primary" [routerLink]="['/petugas/detail-kegiatan', item.id]">
+        Lihat
+      </ion-button>
     </ion-item>
   </ion-list>
 </ion-content>

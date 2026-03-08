@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { PopulasiService } from '../../../../services/populasi.service';
+import { PopulasiService } from '../../services/populasi.service';
 
 interface BirthRecord {
   id: string;

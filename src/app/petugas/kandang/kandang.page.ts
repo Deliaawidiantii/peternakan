@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
-import { KandangService } from 'src/app/services/kandang.service';
+import { KandangService } from '../../services/kandang.service';
 
 @Component({
   selector: 'app-kandang',

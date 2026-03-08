@@ -4,9 +4,9 @@ import { Capacitor } from '@capacitor/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Geolocation } from '@capacitor/geolocation';
 import { LoadingController, ToastController, ActionSheetController } from '@ionic/angular'; // ✅ TAMBAH ActionSheetController
-import { KandangService } from 'src/app/services/kandang.service';
-import { PeternakService } from 'src/app/services/peternak.service';
-import { WilayahService } from 'src/app/services/wilayah.service';
+import { KandangService } from '../../../services/kandang.service';
+import { PeternakService } from '../../../services/peternak.service';
+import { WilayahService } from '../../../services/wilayah.service';
 
 @Component({
   selector: 'app-data-kandang',

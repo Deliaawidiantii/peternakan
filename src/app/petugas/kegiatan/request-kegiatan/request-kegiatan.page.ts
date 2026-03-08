@@ -5,8 +5,8 @@ import {
   LoadingController,
   NavController,
 } from '@ionic/angular';
-import { KegiatanService } from '../../../../services/kegiatan.service';
-import { PeternakService } from '../../../../services/peternak.service';
+import { KegiatanService } from '../../../services/kegiatan.service';
+import { PeternakService } from '../../../services/peternak.service';
 
 @Component({
   selector: 'app-request-kegiatan',

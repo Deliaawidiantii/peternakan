@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PopulasiService } from '../../../../services/populasi.service';
-import { PeternakService } from '../../../../services/peternak.service';
+import { PopulasiService } from '../../../services/populasi.service';
+import { PeternakService } from '../../../services/peternak.service';
 
 @Component({
   selector: 'app-laporan-kasus-penyakit',
