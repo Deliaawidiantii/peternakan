@@ -15,34 +15,48 @@
 <ion-content class="notif-content">
 
   <!-- Loading State -->
-  <div class="ion-text-center ion-padding" *ngIf="isLoading">
-    <ion-spinner name="crescent"></ion-spinner>
-    <p>Memuat notifikasi...</p>
+  <div class="loading-state" *ngIf="isLoading">
+    <div class="loading-card">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p>Memuat notifikasi...</p>
+    </div>
   </div>
 
   <!-- Empty State -->
   <div class="empty-state" *ngIf="!isLoading && notifikasiList.length === 0">
-    <ion-icon name="notifications-off-outline" style="font-size: 64px; color: #ccc;"></ion-icon>
-    <p>Tidak ada notifikasi saat ini</p>
+    <div class="empty-illustration">
+      <div class="bell-circle">
+        <ion-icon name="notifications-outline"></ion-icon>
+      </div>
+      <div class="pulse-ring"></div>
+    </div>
+    <h3>Belum Ada Notifikasi</h3>
+    <p>Semua notifikasi baru akan tampil di sini.<br>Tetap pantau untuk update terbaru!</p>
   </div>
 
   <!-- Notifikasi List -->
-  <ion-list lines="none" *ngIf="!isLoading && notifikasiList.length > 0">
-    <ion-item class="notif-item" *ngFor="let item of notifikasiList" [ngClass]="{'unread': !item.read_at}"
-      (click)="markAsRead(item)">
+  <div class="notif-list-container" *ngIf="!isLoading && notifikasiList.length > 0">
+    <ion-list lines="none">
+      <ion-item class="notif-item" *ngFor="let item of notifikasiList" [ngClass]="{'unread': !item.read_at}"
+        (click)="markAsRead(item)">
 
-      <ion-avatar slot="start" class="notif-icon" [ngClass]="getIconProps(item.type).bg">
-        <ion-icon [name]="getIconProps(item.type).name" [color]="getIconProps(item.type).color"></ion-icon>
-      </ion-avatar>
+        <div class="notif-icon-wrap" slot="start" [ngClass]="getIconProps(item.type).bg">
+          <ion-icon [name]="getIconProps(item.type).name"></ion-icon>
+        </div>
 
-      <ion-label>
-        <h2>{{ item.data?.title || 'Notifikasi' }}</h2>
-        <p class="notif-msg">{{ item.data?.message || 'Ada pemberitahuan baru' }}</p>
-      </ion-label>
+        <ion-label>
+          <h2>{{ item.data?.title || 'Notifikasi' }}</h2>
+          <p class="notif-msg">{{ item.data?.message || 'Ada pemberitahuan baru' }}</p>
+          <p class="notif-time-inline">
+            <ion-icon name="time-outline"></ion-icon>
+            {{ getTimeAgo(item.created_at) }}
+          </p>
+        </ion-label>
 
-      <p class="notif-time">{{ getTimeAgo(item.created_at) }}</p>
+        <div class="unread-dot" *ngIf="!item.read_at" slot="end"></div>
 
-    </ion-item>
-  </ion-list>
+      </ion-item>
+    </ion-list>
+  </div>
 
 </ion-content>
