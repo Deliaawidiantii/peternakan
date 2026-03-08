@@ -10,35 +10,60 @@
           <ion-icon name="notifications-outline"></ion-icon>
         </ion-button>
       </div>
-
-      <!-- Stats Summary inside hero -->
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <span class="hero-stat-value">{{ stats.totalTernak }}</span>
-          <span class="hero-stat-label">Ternak</span>
-        </div>
-        <div class="hero-stat-divider"></div>
-        <div class="hero-stat">
-          <span class="hero-stat-value">{{ stats.totalPemilik }}</span>
-          <span class="hero-stat-label">Pemilik</span>
-        </div>
-        <div class="hero-stat-divider"></div>
-        <div class="hero-stat">
-          <span class="hero-stat-value">{{ stats.totalKandang }}</span>
-          <span class="hero-stat-label">Kandang</span>
-        </div>
-        <div class="hero-stat-divider"></div>
-        <div class="hero-stat">
-          <span class="hero-stat-value">{{ stats.totalKegiatan }}</span>
-          <span class="hero-stat-label">Kegiatan</span>
-        </div>
-      </div>
     </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen="true">
   <div class="content-wrapper">
+
+    <!-- Statistik Cards -->
+    <div class="section-block">
+      <h3 class="section-label">
+        <ion-icon name="stats-chart-outline"></ion-icon>
+        Statistik
+        <span class="location-tag" *ngIf="lokasiInfo.desa">📍 Desa {{ lokasiInfo.desa }}</span>
+      </h3>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon-circle blue">
+            <ion-icon name="paw-outline"></ion-icon>
+          </div>
+          <div class="stat-info">
+            <h3>{{ stats.totalTernak }}</h3>
+            <p>Ternak</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon-circle green">
+            <ion-icon name="person-outline"></ion-icon>
+          </div>
+          <div class="stat-info">
+            <h3>{{ stats.totalPemilik }}</h3>
+            <p>Pemilik</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon-circle orange">
+            <ion-icon name="home-outline"></ion-icon>
+          </div>
+          <div class="stat-info">
+            <h3>{{ stats.totalKandang }}</h3>
+            <p>Kandang</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon-circle purple">
+            <ion-icon name="clipboard-outline"></ion-icon>
+          </div>
+          <div class="stat-info">
+            <h3>{{ stats.totalKegiatan }}</h3>
+            <p>Kegiatan</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Menu Grid -->
     <div class="section-block">

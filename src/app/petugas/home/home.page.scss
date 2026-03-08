@@ -10,7 +10,8 @@ ion-content {
 /* === Hero Header === */
 .home-hero {
   padding: 20px 20px 32px !important;
-  background: var(--app-gradient) !important;
+  background: linear-gradient(135deg, rgba(33, 150, 243, 0.75) 0%, rgba(74, 144, 226, 0.75) 50%, rgba(99, 188, 233, 0.75) 100%),
+    url('/assets/icon/kelompok-hewan.jpg') center/cover no-repeat !important;
 
   &::after {
     height: 28px;
@@ -87,6 +88,91 @@ ion-content {
 /* === Section Block === */
 .section-block {
   margin-bottom: 24px;
+}
+
+/* === Stats Grid (2x2) === */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.stat-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.25s ease;
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.stat-icon-circle {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ion-icon {
+    font-size: 22px;
+    color: inherit;
+  }
+
+  &.blue {
+    background: linear-gradient(135deg, #e8f4fd, #d0eafb);
+    color: #2196f3;
+  }
+
+  &.green {
+    background: linear-gradient(135deg, #e6f4ea, #ceead6);
+    color: #4caf50;
+  }
+
+  &.orange {
+    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+    color: #ff9800;
+  }
+
+  &.purple {
+    background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+    color: #9c27b0;
+  }
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+    color: #1e293b;
+    line-height: 1.1;
+  }
+
+  p {
+    font-size: 12px;
+    font-weight: 500;
+    margin: 2px 0 0 0;
+    color: #64748b;
+  }
+}
+
+.location-tag {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--app-text-secondary, #64748b);
 }
 
 /* === Menu Grid === */
@@ -195,13 +281,13 @@ ion-content {
 
   ion-icon {
     font-size: 16px;
-    color: var(--app-accent, #4f7cff);
+    color: var(--app-accent, #2196f3);
   }
 
   span {
     font-size: 13px;
     font-weight: 500;
-    color: var(--app-accent, #4f7cff);
+    color: var(--app-accent, #2196f3);
   }
 }
 

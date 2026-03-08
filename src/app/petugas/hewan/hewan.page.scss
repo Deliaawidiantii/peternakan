@@ -11,33 +11,25 @@
   padding: 4px 16px 100px;
 }
 
-/* Search & Filter Row */
-.search-filter-row {
+/* Filter Row */
+.filter-row {
   display: flex;
-  align-items: center;
   gap: 10px;
   margin-bottom: 16px;
 }
 
-.filter-chip {
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  border-radius: 12px;
+.filter-item {
+  flex: 1;
   background: #ffffff;
+  border-radius: 12px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+  overflow: hidden;
 
-  ion-icon {
-    font-size: 20px;
-    color: var(--app-accent, #4f7cff);
-  }
-
-  &:active {
-    background: #f0f4ff;
+  ion-select {
+    --padding-start: 14px;
+    --padding-end: 10px;
+    width: 100%;
+    font-size: 14px;
   }
 }
 

@@ -2,7 +2,7 @@
   <ion-toolbar>
     <div class="gradient-header">
       <div style="display:flex;align-items:center;gap:12px;">
-        <ion-back-button defaultHref="/home" style="--color:#fff;"></ion-back-button>
+        <ion-back-button defaultHref="/petugas/tabs/home" style="--color:#fff;"></ion-back-button>
         <div>
           <h2 class="gradient-title">Hewan Ternak</h2>
           <p class="gradient-subtitle">Data populasi hewan ternak</p>
@@ -15,17 +15,19 @@
 <ion-content class="page-content">
   <div class="content-wrapper">
 
-    <!-- Search & Filter -->
-    <div class="search-filter-row">
-      <div class="modern-searchbar" style="flex:1;">
-        <ion-searchbar placeholder="Cari hewan..." [(ngModel)]="searchText" (ionInput)="searchHewan($event)"
-          debounce="200">
-        </ion-searchbar>
-      </div>
-      <div class="filter-chip">
-        <ion-select [(ngModel)]="selectedJenis" (ionChange)="filterJenis($event)" placeholder="Filter"
+    <!-- Search -->
+    <div class="modern-searchbar">
+      <ion-searchbar placeholder="Cari hewan..." [(ngModel)]="searchText" (ionInput)="searchHewan($event)"
+        debounce="200">
+      </ion-searchbar>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter-row">
+      <div class="filter-item">
+        <ion-select [(ngModel)]="selectedJenis" (ionChange)="filterJenis($event)" placeholder="Semua Jenis"
           interface="popover">
-          <ion-select-option value="">Semua</ion-select-option>
+          <ion-select-option value="">Semua Jenis</ion-select-option>
           <ion-select-option value="sapi">Sapi</ion-select-option>
           <ion-select-option value="kambing">Kambing</ion-select-option>
           <ion-select-option value="domba">Domba</ion-select-option>
