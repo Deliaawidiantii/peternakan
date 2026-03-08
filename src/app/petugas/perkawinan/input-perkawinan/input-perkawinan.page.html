@@ -19,14 +19,15 @@
     <div class="form-section">
       <h3 class="section-title">Data Pemilik</h3>
 
+      <!-- Pemilik - Searchable -->
       <div class="form-group">
         <label class="form-label">Pilih Pemilik (Peternak)</label>
-        <ion-select placeholder="-- Ketuk Untuk Memilih --" class="form-select" (ionChange)="onPemilikChange($event)">
-          <ion-select-option value="">-- Pilih Pemilik --</ion-select-option>
-          <ion-select-option *ngFor="let p of peternakList" [value]="p.id">
-            {{ p.nama_peternak }} (NIK: {{ p.nik }})
-          </ion-select-option>
-        </ion-select>
+        <div class="searchable-select" (click)="openSearchModal('pemilik')">
+          <span [class.placeholder]="!formData.namaPemilik">
+            {{ formData.namaPemilik || '-- Ketuk Untuk Memilih --' }}
+          </span>
+          <ion-icon name="search-outline"></ion-icon>
+        </div>
         <div class="text-xs text-gray-500 mt-1">*Memilih dari dropdown akan mengisi form di bawah secara otomatis</div>
       </div>
 
@@ -48,87 +49,51 @@
           rows="3"></ion-textarea>
       </div>
 
+      <!-- Provinsi - Searchable -->
       <div class="form-group">
         <label class="form-label">Provinsi</label>
-        <ion-select [(ngModel)]="formData.provinsi" placeholder="Pilih Provinsi" class="form-select"
-          (ionChange)="onProvinsiChange($event)">
-          <ion-select-option value="">Pilih Provinsi</ion-select-option>
-          <ion-select-option value="jawa_barat">Jawa Barat</ion-select-option>
-          <ion-select-option value="jawa_timur">Jawa Timur</ion-select-option>
-          <ion-select-option value="jawa_tengah">Jawa Tengah</ion-select-option>
-          <ion-select-option value="kalimantan_selatan">Kalimantan Selatan</ion-select-option>
-          <ion-select-option value="lainnya">Lainnya</ion-select-option>
-        </ion-select>
+        <div class="searchable-select" (click)="openSearchModal('provinsi')">
+          <span [class.placeholder]="!formData.provinsi">
+            {{ getLabel('provinsi', formData.provinsi) || 'Pilih Provinsi' }}
+          </span>
+          <ion-icon name="search-outline"></ion-icon>
+        </div>
       </div>
 
+      <!-- Kabupaten - Searchable -->
       <div class="form-group">
         <label class="form-label">Kabupaten</label>
-        <ion-select [(ngModel)]="formData.kabupaten" placeholder="Pilih Kabupaten" class="form-select"
-          (ionChange)="onKabupatenChange($event)">
-          <ion-select-option value="">Pilih Kabupaten</ion-select-option>
-          <ion-select-option *ngFor="let kab of kabupatenList" [value]="kab.value">
-            {{ kab.label }}
-          </ion-select-option>
-        </ion-select>
+        <div class="searchable-select" (click)="openSearchModal('kabupaten')" [class.disabled]="!formData.provinsi">
+          <span [class.placeholder]="!formData.kabupaten">
+            {{ getLabel('kabupaten', formData.kabupaten) || 'Pilih Kabupaten' }}
+          </span>
+          <ion-icon name="search-outline"></ion-icon>
+        </div>
       </div>
 
+      <!-- Kecamatan - Searchable -->
       <div class="form-group">
         <label class="form-label">Kecamatan</label>
-        <ion-select [(ngModel)]="formData.kecamatan" placeholder="Pilih Kecamatan" class="form-select"
-          (ionChange)="onKecamatanChange($event)">
-          <ion-select-option value="">Pilih Kecamatan</ion-select-option>
-          <ion-select-option *ngFor="let kec of kecamatanList" [value]="kec.value">
-            {{ kec.label }}
-          </ion-select-option>
-        </ion-select>
+        <div class="searchable-select" (click)="openSearchModal('kecamatan')" [class.disabled]="!formData.kabupaten">
+          <span [class.placeholder]="!formData.kecamatan">
+            {{ getLabel('kecamatan', formData.kecamatan) || 'Pilih Kecamatan' }}
+          </span>
+          <ion-icon name="search-outline"></ion-icon>
+        </div>
       </div>
 
+      <!-- Desa - Searchable -->
       <div class="form-group">
         <label class="form-label">Desa</label>
-        <ion-select [(ngModel)]="formData.desa" placeholder="Pilih Desa" class="form-select">
-          <ion-select-option value="">Pilih Desa</ion-select-option>
-          <ion-select-option *ngFor="let des of desaList" [value]="des.value">
-            {{ des.label }}
-          </ion-select-option>
-        </ion-select>
+        <div class="searchable-select" (click)="openSearchModal('desa')" [class.disabled]="!formData.kecamatan">
+          <span [class.placeholder]="!formData.desa">
+            {{ getLabel('desa', formData.desa) || 'Pilih Desa' }}
+          </span>
+          <ion-icon name="search-outline"></ion-icon>
+        </div>
       </div>
     </div>
 
-
-    <!-- SECTION: Data Petugas -->
-    <!-- <div class="form-section">
-      <h3 class="section-title">Data Petugas</h3>
-
-      <div class="form-group">
-        <label class="form-label">Nama Petugas</label>
-        <ion-input
-          [(ngModel)]="formData.namaPetugas"
-          placeholder="Masukkan Nama Petugas"
-          class="form-input"
-          type="text"
-        ></ion-input>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">NIK Petugas</label>
-        <ion-input
-          [(ngModel)]="formData.nikPetugas"
-          placeholder="Masukkan NIK Petugas"
-          class="form-input"
-          type="text"
-        ></ion-input>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">No Telp Petugas</label>
-        <ion-input
-          [(ngModel)]="formData.noTelp"
-          placeholder="Masukkan No Telp"
-          class="form-input"
-          type="tel"
-        ></ion-input>
-      </div>
-    </div> -->
 
     <!-- SECTION: Data Hewan Betina -->
     <div class="form-section">
@@ -140,22 +105,27 @@
           type="text"></ion-input>
       </div>
 
+      <!-- Jenis Ternak - Searchable -->
       <div class="form-group">
         <label class="form-label">Jenis Ternak</label>
-        <ion-select [(ngModel)]="formData.jenisTernak" placeholder="Pilih Jenis Ternak" class="form-select"
-          (ionChange)="onJenisTernakChange($event)">
-          <ion-select-option value="">Pilih Jenis Ternak</ion-select-option>
-          <ion-select-option *ngFor="let j of jenisTernakOptions" [value]="j.value">{{ j.label }}</ion-select-option>
-        </ion-select>
+        <div class="searchable-select" (click)="openSearchModal('jenisTernak')">
+          <span [class.placeholder]="!formData.jenisTernak">
+            {{ formData.jenisTernak || 'Pilih Jenis Ternak' }}
+          </span>
+          <ion-icon name="search-outline"></ion-icon>
+        </div>
       </div>
 
+      <!-- Rumpun Ternak - Searchable -->
       <div class="form-group">
         <label class="form-label">Rumpun Ternak</label>
-        <ion-select [(ngModel)]="formData.rumpunTernak" placeholder="Pilih Rumpun Ternak" class="form-select"
-          [disabled]="!formData.jenisTernak">
-          <ion-select-option value="">Pilih Rumpun Ternak</ion-select-option>
-          <ion-select-option *ngFor="let r of rumpunTernakOptions" [value]="r.value">{{ r.label }}</ion-select-option>
-        </ion-select>
+        <div class="searchable-select" (click)="openSearchModal('rumpunTernak')"
+          [class.disabled]="!formData.jenisTernak">
+          <span [class.placeholder]="!formData.rumpunTernak">
+            {{ formData.rumpunTernak || 'Pilih Rumpun Ternak' }}
+          </span>
+          <ion-icon name="search-outline"></ion-icon>
+        </div>
       </div>
 
       <div class="form-group">
@@ -238,6 +208,36 @@
     </div>
 
   </div>
+
+  <!-- SEARCH MODAL -->
+  <ion-modal [isOpen]="isSearchModalOpen" (didDismiss)="isSearchModalOpen = false" [breakpoints]="[0, 0.6, 0.9]"
+    [initialBreakpoint]="0.6">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>{{ searchModalTitle }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="isSearchModalOpen = false">Tutup</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="filterSearchList()" placeholder="Ketik untuk mencari..."
+            debounce="150"></ion-searchbar>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-item *ngFor="let item of filteredSearchList" (click)="selectSearchItem(item)" button detail="false">
+            <ion-label>{{ item.label }}</ion-label>
+            <ion-icon *ngIf="item.selected" name="checkmark-circle" color="primary" slot="end"></ion-icon>
+          </ion-item>
+          <ion-item *ngIf="filteredSearchList.length === 0">
+            <ion-label class="ion-text-center" color="medium">Tidak ada hasil ditemukan</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 
 </ion-content>
 

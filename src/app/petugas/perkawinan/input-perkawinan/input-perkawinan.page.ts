@@ -251,6 +251,174 @@ export class InputPerkawinanPage implements OnInit {
     window.history.back();
   }
 
+  // ============ SEARCHABLE MODAL ============
+  isSearchModalOpen = false;
+  searchModalTitle = '';
+  searchQuery = '';
+  searchModalType = '';
+  fullSearchList: any[] = [];
+  filteredSearchList: any[] = [];
+
+  openSearchModal(type: string) {
+    this.searchModalType = type;
+    this.searchQuery = '';
+    let list: any[] = [];
+
+    switch (type) {
+      case 'pemilik':
+        this.searchModalTitle = 'Pilih Pemilik';
+        list = this.peternakList.map((p) => ({
+          label: `${p.nama_peternak} (NIK: ${p.nik})`,
+          value: p.id,
+          raw: p,
+          selected: this.formData.peternakan_id == p.id,
+        }));
+        break;
+      case 'provinsi':
+        this.searchModalTitle = 'Pilih Provinsi';
+        list = this.provinsiOptions
+          .filter((o) => o.value !== '')
+          .map((o) => ({
+            label: o.label,
+            value: o.value,
+            selected: this.formData.provinsi === o.value,
+          }));
+        break;
+      case 'kabupaten':
+        if (!this.formData.provinsi) return;
+        this.searchModalTitle = 'Pilih Kabupaten';
+        list = this.kabupatenList.map((o: any) => ({
+          label: o.label,
+          value: o.value,
+          selected: this.formData.kabupaten === o.value,
+        }));
+        break;
+      case 'kecamatan':
+        if (!this.formData.kabupaten) return;
+        this.searchModalTitle = 'Pilih Kecamatan';
+        list = this.kecamatanList.map((o: any) => ({
+          label: o.label,
+          value: o.value,
+          selected: this.formData.kecamatan === o.value,
+        }));
+        break;
+      case 'desa':
+        if (!this.formData.kecamatan) return;
+        this.searchModalTitle = 'Pilih Desa';
+        list = this.desaList.map((o: any) => ({
+          label: o.label,
+          value: o.value,
+          selected: this.formData.desa === o.value,
+        }));
+        break;
+      case 'jenisTernak':
+        this.searchModalTitle = 'Pilih Jenis Ternak';
+        list = this.jenisTernakOptions.map((o: any) => ({
+          label: o.label,
+          value: o.value,
+          selected: this.formData.jenisTernak === o.value,
+        }));
+        break;
+      case 'rumpunTernak':
+        if (!this.formData.jenisTernak) return;
+        this.searchModalTitle = 'Pilih Rumpun Ternak';
+        list = this.rumpunTernakOptions.map((o: any) => ({
+          label: o.label,
+          value: o.value,
+          selected: this.formData.rumpunTernak === o.value,
+        }));
+        break;
+    }
+
+    this.fullSearchList = list;
+    this.filteredSearchList = list;
+    this.isSearchModalOpen = true;
+  }
+
+  filterSearchList() {
+    const q = this.searchQuery.toLowerCase().trim();
+    if (!q) {
+      this.filteredSearchList = this.fullSearchList;
+    } else {
+      this.filteredSearchList = this.fullSearchList.filter((item) =>
+        item.label.toLowerCase().includes(q),
+      );
+    }
+  }
+
+  selectSearchItem(item: any) {
+    switch (this.searchModalType) {
+      case 'pemilik':
+        const p = item.raw;
+        this.formData.peternakan_id = p.id;
+        this.formData.namaPemilik = p.nama_peternak;
+        this.formData.nikPemilik = p.nik;
+        this.formData.alamat = p.alamat;
+        break;
+      case 'provinsi':
+        this.formData.provinsi = item.value;
+        this.formData.kabupaten = '';
+        this.formData.kecamatan = '';
+        this.formData.desa = '';
+        this.kecamatanList = [];
+        this.desaList = [];
+        this.kabupatenList = this.kabupatenMap[item.value] || [];
+        break;
+      case 'kabupaten':
+        this.formData.kabupaten = item.value;
+        this.formData.kecamatan = '';
+        this.formData.desa = '';
+        this.desaList = [];
+        this.kecamatanList = this.kecamatanMap[item.value] || [];
+        break;
+      case 'kecamatan':
+        this.formData.kecamatan = item.value;
+        this.formData.desa = '';
+        this.desaList = this.desaMap[item.value] || [];
+        break;
+      case 'desa':
+        this.formData.desa = item.value;
+        break;
+      case 'jenisTernak':
+        this.formData.jenisTernak = item.value;
+        this.formData.rumpunTernak = '';
+        this.rumpunTernakOptions = [];
+        const filteredRumpun = this.masterJenisHewan.filter(
+          (i) => i.kategori === item.value,
+        );
+        this.rumpunTernakOptions = filteredRumpun.map((i) => ({
+          label: i.nama,
+          value: i.nama,
+        }));
+        break;
+      case 'rumpunTernak':
+        this.formData.rumpunTernak = item.value;
+        break;
+    }
+    this.isSearchModalOpen = false;
+  }
+
+  getLabel(type: string, value: string): string {
+    if (!value) return '';
+    let list: any[] = [];
+    switch (type) {
+      case 'provinsi':
+        list = this.provinsiOptions;
+        break;
+      case 'kabupaten':
+        list = this.kabupatenList;
+        break;
+      case 'kecamatan':
+        list = this.kecamatanList;
+        break;
+      case 'desa':
+        list = this.desaList;
+        break;
+    }
+    const found = list.find((o: any) => o.value === value);
+    return found ? found.label : value;
+  }
+
   onProvinsiChange(event: any) {
     const selectedProvinsi = event.detail.value;
     this.formData.provinsi = selectedProvinsi;
