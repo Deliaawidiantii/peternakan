@@ -12,7 +12,6 @@ import { NavController } from '@ionic/angular';
   standalone: false,
 })
 export class ProfilePage implements OnInit {
-
   user: any = null;
   isLoading: boolean = true;
   namaDesa: string = ''; // ← TAMBAHAN: untuk menyimpan nama desa
@@ -23,8 +22,8 @@ export class ProfilePage implements OnInit {
     private wilayahService: WilayahService,
     private navCtrl: NavController,
     private loadingController: LoadingController,
-    private alertController: AlertController
-  ) { }
+    private alertController: AlertController,
+  ) {}
 
   ngOnInit() {
     this.loadProfile();
@@ -53,13 +52,14 @@ export class ProfilePage implements OnInit {
         if (response.success) {
           // Ambil data dari localStorage untuk preserve wilayah_id
           const existingUser = this.authService.getUser();
-          
+
           // Merge data: API data + wilayah_id dari localStorage
           this.user = {
             ...response.data,
-            wilayah_id: response.data.wilayah_id || existingUser?.wilayah_id || null
+            wilayah_id:
+              response.data.wilayah_id || existingUser?.wilayah_id || null,
           };
-          
+
           // Update localStorage
           localStorage.setItem('user', JSON.stringify(this.user));
           this.loadNamaDesa(); // ← TAMBAHAN: load nama desa setelah dapat data user
@@ -79,13 +79,13 @@ export class ProfilePage implements OnInit {
                 text: 'OK',
                 handler: () => {
                   this.navCtrl.navigateRoot('/login');
-                }
-              }
-            ]
+                },
+              },
+            ],
           });
           await alert.present();
         }
-      }
+      },
     });
   }
 
@@ -100,14 +100,15 @@ export class ProfilePage implements OnInit {
     console.log('🔍 Debug User Data di Profile:', this.user);
 
     // ✅ PERBAIKAN: desa_binaan itu sebenernya ID wilayah
-    const wilayahId = this.user.desa_binaan || 
-                      this.user.wilayah_id || 
-                      this.user.desa_id || 
-                      this.user.id_wilayah || 
-                      this.user.id_desa ||
-                      this.user.wilayahId ||
-                      this.user.desaId ||
-                      null;
+    const wilayahId =
+      this.user.desa_binaan ||
+      this.user.wilayah_id ||
+      this.user.desa_id ||
+      this.user.id_wilayah ||
+      this.user.id_desa ||
+      this.user.wilayahId ||
+      this.user.desaId ||
+      null;
 
     console.log('📍 Wilayah ID dari User:', wilayahId);
 
@@ -130,18 +131,19 @@ export class ProfilePage implements OnInit {
 
         console.log('🗺️ Data Wilayah dari DB:', wilayahList);
 
-        // Cari wilayah berdasarkan ID
-        const wilayah = wilayahList.find((w: any) => w.id === wilayahId);
+        // Cari wilayah berdasarkan ID (gunakan == untuk handle string vs number)
+        const wilayah = wilayahList.find((w: any) => w.id == wilayahId);
 
         console.log('🔎 Wilayah yang ditemukan:', wilayah);
 
         if (wilayah) {
           // Ambil nama desa (cek berbagai kemungkinan field name)
-          this.namaDesa = wilayah.nama_desa || 
-                         wilayah.nama || 
-                         wilayah.desa || 
-                         'Desa tidak ditemukan';
-          
+          this.namaDesa =
+            wilayah.nama_desa ||
+            wilayah.nama ||
+            wilayah.desa ||
+            'Desa tidak ditemukan';
+
           console.log('✅ Nama Desa Final:', this.namaDesa);
         } else {
           this.namaDesa = 'Desa tidak ditemukan';
@@ -151,7 +153,7 @@ export class ProfilePage implements OnInit {
       error: (err: any) => {
         console.error('❌ Error loading wilayah:', err);
         this.namaDesa = 'Error memuat data';
-      }
+      },
     });
   }
 
@@ -162,21 +164,21 @@ export class ProfilePage implements OnInit {
       buttons: [
         {
           text: 'Batal',
-          role: 'cancel'
+          role: 'cancel',
         },
         {
           text: 'Logout',
           handler: async () => {
             const loading = await this.loadingController.create({
               message: 'Logging out...',
-              spinner: 'crescent'
+              spinner: 'crescent',
             });
             await loading.present();
 
             this.authService.logout().subscribe({
               next: async (response) => {
                 await loading.dismiss();
-                
+
                 const successAlert = await this.alertController.create({
                   header: 'Berhasil',
                   message: 'Anda telah logout',
@@ -185,25 +187,25 @@ export class ProfilePage implements OnInit {
                       text: 'OK',
                       handler: () => {
                         this.navCtrl.navigateRoot('/login');
-                      }
-                    }
-                  ]
+                      },
+                    },
+                  ],
                 });
                 await successAlert.present();
               },
               error: async (error) => {
                 await loading.dismiss();
                 console.error('Logout error:', error);
-                
+
                 // Tetap redirect ke login meskipun API error
                 localStorage.removeItem('token');
                 localStorage.removeItem('user');
                 this.navCtrl.navigateRoot('/login');
-              }
+              },
             });
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
 
     await alert.present();
