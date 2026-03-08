@@ -5,7 +5,7 @@
     margin-top: 20px;
 
     .logo {
-       height: 80px;
+      height: 80px;
       max-height: 96px;
       margin-bottom: -40px;
     }
@@ -20,12 +20,14 @@
   .title {
     text-align: center;
     font-weight: bold;
-    color: #1e3a8a; /* biru tua */
+    color: #1e3a8a;
+    /* biru tua */
   }
 
   .subtitle {
     text-align: center;
-    color: #4b5563; /* abu-abu */
+    color: #4b5563;
+    /* abu-abu */
     font-size: 0.9rem;
   }
 
@@ -51,5 +53,18 @@
       color: #2563eb;
       text-decoration: underline;
     }
+  }
+
+  .placeholder-label {
+    color: #999;
+    font-size: 0.95rem;
+    margin-top: 4px;
+  }
+
+  .selected-label {
+    color: #1e3a8a;
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-top: 4px;
   }
 }

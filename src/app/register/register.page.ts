@@ -10,7 +10,8 @@ import { LoadingController, AlertController } from '@ionic/angular';
   styleUrls: ['./register.page.scss'],
   standalone: false,
 })
-export class RegisterPage implements OnInit { // ← TAMBAHAN: implements OnInit
+export class RegisterPage implements OnInit {
+  // ← TAMBAHAN: implements OnInit
 
   form = {
     nama: '',
@@ -19,25 +20,28 @@ export class RegisterPage implements OnInit { // ← TAMBAHAN: implements OnInit
     desa_binaan: '', // ← Ini akan berisi ID wilayah
     no_telp: '',
     password: '',
-    password_confirmation: ''
-  }; 
+    password_confirmation: '',
+  };
 
-  errors: string[] = []; // Pesan error 
+  errors: string[] = []; // Pesan error
 
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
 
   // ← TAMBAHAN: Data untuk dropdown desa
   desaList: any[] = [];
+  filteredDesaList: any[] = [];
   isLoadingDesa: boolean = false;
+  isDesaModalOpen: boolean = false;
+  selectedDesaNama: string = '';
 
   constructor(
     private authService: AuthService,
     private wilayahService: WilayahService, // ← TAMBAHAN
     private router: Router,
     private loadingController: LoadingController,
-    private alertController: AlertController
-  ) { }
+    private alertController: AlertController,
+  ) {}
 
   // ← TAMBAHAN: Load desa saat page init
   ngOnInit() {
@@ -46,49 +50,74 @@ export class RegisterPage implements OnInit { // ← TAMBAHAN: implements OnInit
 
   // ← TAMBAHAN: Method untuk load data desa
   loadDesaList() {
-  this.isLoadingDesa = true;
+    this.isLoadingDesa = true;
 
-  this.wilayahService.getPublicWilayah().subscribe({
-    next: (res: any) => {
-      console.log("🟦 RAW DATA WILAYAH:", res);
+    this.wilayahService.getPublicWilayah().subscribe({
+      next: (res: any) => {
+        console.log('🟦 RAW DATA WILAYAH:', res);
 
-      // BACA DATA APAPUN STRUKTURNYA
-      if (Array.isArray(res)) {
-        this.desaList = res;
-      } 
-      else if (res.data && Array.isArray(res.data)) {
-        this.desaList = res.data;
-      } 
-      else if (res.wilayah && Array.isArray(res.wilayah)) {
-        this.desaList = res.wilayah;
-      }
-      else if (res.items && Array.isArray(res.items)) {
-        this.desaList = res.items;
-      }
-      else {
-        // fallback
-        this.desaList = Object.values(res);
-      }
+        // BACA DATA APAPUN STRUKTURNYA
+        if (Array.isArray(res)) {
+          this.desaList = res;
+        } else if (res.data && Array.isArray(res.data)) {
+          this.desaList = res.data;
+        } else if (res.wilayah && Array.isArray(res.wilayah)) {
+          this.desaList = res.wilayah;
+        } else if (res.items && Array.isArray(res.items)) {
+          this.desaList = res.items;
+        } else {
+          // fallback
+          this.desaList = Object.values(res);
+        }
 
-      console.log("🟩 DESA FINAL:", this.desaList);
-      this.isLoadingDesa = false;
-    },
+        console.log('🟩 DESA FINAL:', this.desaList);
+        this.filteredDesaList = [...this.desaList];
+        this.isLoadingDesa = false;
+      },
 
-    error: (err) => {
-      console.error("❌ ERROR GET WILAYAH:", err);
-      this.isLoadingDesa = false;
-      this.desaList = [];
+      error: (err) => {
+        console.error('❌ ERROR GET WILAYAH:', err);
+        this.isLoadingDesa = false;
+        this.desaList = [];
+        this.filteredDesaList = [];
+      },
+    });
+  }
+
+  openDesaModal() {
+    this.filteredDesaList = [...this.desaList];
+    this.isDesaModalOpen = true;
+  }
+
+  filterDesa(event: any) {
+    const query = (event.target.value || '').toLowerCase().trim();
+    if (!query) {
+      this.filteredDesaList = [...this.desaList];
+    } else {
+      this.filteredDesaList = this.desaList.filter((desa) => {
+        const nama = (
+          desa.nama_desa ||
+          desa.nama ||
+          desa.desa ||
+          ''
+        ).toLowerCase();
+        return nama.includes(query);
+      });
     }
-  });
-}
+  }
 
+  selectDesa(desa: any) {
+    this.form.desa_binaan = desa.id;
+    this.selectedDesaNama = desa.nama_desa || desa.nama || desa.desa;
+    this.isDesaModalOpen = false;
+  }
 
   togglePassword() {
     this.showPassword = !this.showPassword;
   }
 
   toggleConfirmPassword() {
-    this.showConfirmPassword = !this.showConfirmPassword; 
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
 
   async onRegister() {
@@ -113,7 +142,7 @@ export class RegisterPage implements OnInit { // ← TAMBAHAN: implements OnInit
     if (!this.form.password) {
       this.errors.push('Password harus diisi');
     }
-    if (this.form.password !== this.form.password_confirmation) { 
+    if (this.form.password !== this.form.password_confirmation) {
       this.errors.push('Password dan konfirmasi password harus sama');
     }
     if (this.form.password && this.form.password.length < 6) {
@@ -128,7 +157,7 @@ export class RegisterPage implements OnInit { // ← TAMBAHAN: implements OnInit
     // Show loading
     const loading = await this.loadingController.create({
       message: 'Mendaftarkan akun...',
-      spinner: 'crescent'
+      spinner: 'crescent',
     });
     await loading.present();
 
@@ -136,24 +165,25 @@ export class RegisterPage implements OnInit { // ← TAMBAHAN: implements OnInit
     this.authService.register(this.form).subscribe({
       next: async (response) => {
         await loading.dismiss();
-        
+
         if (response.success) {
           console.log('Register berhasil:', response.data);
-          
+
           // Show success alert
-        const alert = await this.alertController.create({
-          header: 'Registrasi Berhasil',
-          message: response.message || 'Kode OTP telah dikirim ke email Anda.',
-          buttons: [
-            {
-              text: 'OK',
-              handler: () => {
-                // Redirect ke halaman OTP verify
-                this.router.navigate(['/otp-verify']);
-              }
-            }
-          ]
-        });
+          const alert = await this.alertController.create({
+            header: 'Registrasi Berhasil',
+            message:
+              response.message || 'Kode OTP telah dikirim ke email Anda.',
+            buttons: [
+              {
+                text: 'OK',
+                handler: () => {
+                  // Redirect ke halaman OTP verify
+                  this.router.navigate(['/otp-verify']);
+                },
+              },
+            ],
+          });
           await alert.present();
         } else {
           this.errors.push(response.message || 'Registrasi gagal');
@@ -162,20 +192,20 @@ export class RegisterPage implements OnInit { // ← TAMBAHAN: implements OnInit
       error: async (error) => {
         await loading.dismiss();
         console.error('Register error:', error);
-        
+
         // Reset errors
         this.errors = [];
-        
+
         // Handle error dari server
         if (error.status === 422) {
           // Validation error dari Laravel
           const serverErrors = error.error.errors;
           if (serverErrors) {
             // Konversi error object jadi array
-            Object.keys(serverErrors).forEach(key => {
+            Object.keys(serverErrors).forEach((key) => {
               const errorMessages = serverErrors[key];
               if (Array.isArray(errorMessages)) {
-                errorMessages.forEach(msg => {
+                errorMessages.forEach((msg) => {
                   // Translate pesan error ke Bahasa Indonesia
                   if (msg.includes('unique')) {
                     if (key === 'nik') {
@@ -193,11 +223,15 @@ export class RegisterPage implements OnInit { // ← TAMBAHAN: implements OnInit
             this.errors.push(error.error.message || 'Validasi gagal');
           }
         } else if (error.status === 0) {
-          this.errors.push('Tidak dapat terhubung ke server. Periksa koneksi internet Anda.');
+          this.errors.push(
+            'Tidak dapat terhubung ke server. Periksa koneksi internet Anda.',
+          );
         } else {
-          this.errors.push(error.error?.message || 'Terjadi kesalahan saat registrasi');
+          this.errors.push(
+            error.error?.message || 'Terjadi kesalahan saat registrasi',
+          );
         }
-      }
+      },
     });
   }
 }
