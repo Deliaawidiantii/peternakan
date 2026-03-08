@@ -1,9 +1,9 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://your-production-domain.com/api',
+  apiUrl: 'https://internproject.my.id/api',
   reverb: {
     key: 'peternakan-key',
-    wsHost: 'your-production-domain.com',
+    wsHost: 'internproject.my.id',
     wsPort: 443,
     forceTLS: true,
   },
