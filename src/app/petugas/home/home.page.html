@@ -5,7 +5,7 @@
         <h2>Hai, {{namaPetugas}}</h2>
         <p>Selamat datang di sistem peternakan</p>
       </div>
-      
+
       <div class="header-actions">
         <ion-button fill="clear" class="notification-btn" routerLink="/petugas/notifikasi">
           <ion-icon name="notifications-outline"></ion-icon>
@@ -20,120 +20,132 @@
   <!-- Statistik -->
   <ion-list-header>
     <ion-label>Statistik</ion-label>
-      <p>📍 Desa {{ lokasiInfo.desa }}</p>
-    </ion-list-header>
+    <p>📍 Desa {{ lokasiInfo.desa }}</p>
+  </ion-list-header>
 
-    <ion-grid class="stats-grid">
-      <ion-row>
-        <ion-col size="6">
-          <div class="stat-card">
+  <ion-grid class="stats-grid">
+    <ion-row>
+      <ion-col size="6">
+        <div class="stat-card">
+          <div class="stat-icon-circle blue">
             <ion-icon name="paw-outline"></ion-icon>
+          </div>
+          <div class="stat-info">
             <h3>{{ stats.totalTernak }}</h3>
             <p>Ternak</p>
           </div>
-        </ion-col>
-        <ion-col size="6">
-          <div class="stat-card">
+        </div>
+      </ion-col>
+      <ion-col size="6">
+        <div class="stat-card">
+          <div class="stat-icon-circle green">
             <ion-icon name="person-outline"></ion-icon>
+          </div>
+          <div class="stat-info">
             <h3>{{ stats.totalPemilik }}</h3>
             <p>Pemilik</p>
           </div>
-        </ion-col>
-      </ion-row>
+        </div>
+      </ion-col>
+    </ion-row>
 
-      <ion-row>
-        <ion-col size="6">
-          <div class="stat-card">
+    <ion-row>
+      <ion-col size="6">
+        <div class="stat-card">
+          <div class="stat-icon-circle orange">
             <ion-icon name="home-outline"></ion-icon>
+          </div>
+          <div class="stat-info">
             <h3>{{ stats.totalKandang }}</h3>
             <p>Kandang</p>
           </div>
-        </ion-col>
-        <ion-col size="6">
-          <div class="stat-card">
-            <ion-icon name="alert-circle-outline"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col size="6">
+        <div class="stat-card">
+          <div class="stat-icon-circle purple">
+            <ion-icon name="clipboard-outline"></ion-icon>
+          </div>
+          <div class="stat-info">
             <h3>{{ stats.totalKegiatan }}</h3>
             <p>Kegiatan</p>
           </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 
-    <!-- Menu Grid -->
-    <ion-list-header>
-      <ion-label>Menu Utama</ion-label>
-    </ion-list-header>
+  <!-- Menu Grid -->
+  <ion-list-header>
+    <ion-label>Menu Utama</ion-label>
+  </ion-list-header>
 
-    <ion-grid>
-      <ion-row>
-        <ion-col size="4">
-          <div class="menu-box" routerLink="/petugas/hewan">
-            <img src="assets/icon/hewan.png" alt="Hewan">
-            <p>Hewan</p>
-          </div>
-        </ion-col>
-        <ion-col size="4">
-          <div class="menu-box" routerLink="/petugas/kandang">
-            <img src="assets/icon/kandang.png" alt="Kandang">
-            <p>Kandang</p>
-          </div>
-        </ion-col>
-        <ion-col size="4">
-          <div class="menu-box" routerLink="/petugas/pemilik">
-            <img src="assets/icon/pemilik.png" alt="Pemilik">
-            <p>Pemilik</p>
-          </div>
-        </ion-col>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4">
+        <div class="menu-box" routerLink="/petugas/hewan">
+          <img src="assets/icon/hewan.png" alt="Hewan">
+          <p>Hewan</p>
+        </div>
+      </ion-col>
+      <ion-col size="4">
+        <div class="menu-box" routerLink="/petugas/kandang">
+          <img src="assets/icon/kandang.png" alt="Kandang">
+          <p>Kandang</p>
+        </div>
+      </ion-col>
+      <ion-col size="4">
+        <div class="menu-box" routerLink="/petugas/pemilik">
+          <img src="assets/icon/pemilik.png" alt="Pemilik">
+          <p>Pemilik</p>
+        </div>
+      </ion-col>
 
-        <ion-col size="4">
-          <div class="menu-box" routerLink="/petugas/kegiatan">
-            <img src="assets/icon/kegiatan.png" alt="Kegiatan">
-            <p>Kegiatan</p>
-          </div>
-        </ion-col>
-        <ion-col size="4">
-          <div class="menu-box" routerLink="/petugas/penyakit">
-            <img src="assets/icon/penyakit.png" alt="Penyakit">
-            <p>Penyakit</p>
-          </div>
-        </ion-col>
-        <ion-col size="4">
-          <div class="menu-box" routerLink="/petugas/buku-lahir">
-            <img src="assets/icon/buku-kelahiran.png" alt="Buku Lahir">
-            <p>Buku Lahir</p>
-          </div>
-        </ion-col>
+      <ion-col size="4">
+        <div class="menu-box" routerLink="/petugas/kegiatan">
+          <img src="assets/icon/kegiatan.png" alt="Kegiatan">
+          <p>Kegiatan</p>
+        </div>
+      </ion-col>
+      <ion-col size="4">
+        <div class="menu-box" routerLink="/petugas/penyakit">
+          <img src="assets/icon/penyakit.png" alt="Penyakit">
+          <p>Penyakit</p>
+        </div>
+      </ion-col>
+      <ion-col size="4">
+        <div class="menu-box" routerLink="/petugas/buku-lahir">
+          <img src="assets/icon/buku-kelahiran.png" alt="Buku Lahir">
+          <p>Buku Lahir</p>
+        </div>
+      </ion-col>
 
-        <ion-col size="4">
-          <div class="menu-box" routerLink="/petugas/mutasi">
-            <ion-icon name="swap-horizontal-outline"></ion-icon>
-            <p>Mutasi</p>
-          </div>
-        </ion-col>
+      <ion-col size="4">
+        <div class="menu-box" routerLink="/petugas/mutasi">
+          <ion-icon name="swap-horizontal-outline"></ion-icon>
+          <p>Mutasi</p>
+        </div>
+      </ion-col>
 
-        <ion-col size="4">
-          <div class="menu-box" routerLink="/petugas/perkawinan">
-            <img src="assets/icon/hearts.png" alt="Perkawinan">
-            <p>Perkawinan</p>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+      <ion-col size="4">
+        <div class="menu-box" routerLink="/petugas/perkawinan">
+          <img src="assets/icon/hearts.png" alt="Perkawinan">
+          <p>Perkawinan</p>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-    
-    <!-- Laporan Terbaru -->
-    <ion-list-header>
-      <ion-label>Laporan Terbaru</ion-label>
-    </ion-list-header>
 
-    <ion-list>
+  <!-- Laporan Terbaru -->
+  <ion-list-header>
+    <ion-label>Laporan Terbaru</ion-label>
+  </ion-list-header>
+
+  <ion-list>
     <ion-item *ngFor="let laporan of laporanTerbaru">
-      <ion-icon 
-        [name]="laporan.icon" 
-        slot="start" 
-        [style.color]="laporan.iconColor" 
-        style="font-size: 20px;">
+      <ion-icon [name]="laporan.icon" slot="start" [style.color]="laporan.iconColor" style="font-size: 20px;">
       </ion-icon>
       <ion-label>
         <h2>{{ laporan.title }}</h2>
@@ -159,7 +171,8 @@
     </ion-item>
   </ion-list>
   <!--floating Scan button-->
-  <ion-button class="fab-scan-btn " routerLink="/petugas/scan" fill="solid" color="primary" fab vertical="bottom" horizontal="center" slot="fixed" > 
+  <ion-button class="fab-scan-btn " routerLink="/petugas/scan" fill="solid" color="primary" fab vertical="bottom"
+    horizontal="center" slot="fixed">
     <ion-icon name="qr-code-outline"></ion-icon>
   </ion-button>
 
