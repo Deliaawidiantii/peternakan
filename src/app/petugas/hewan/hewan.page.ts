@@ -15,12 +15,11 @@ export class HewanPage implements OnInit {
   selectedJenis: string = '';
   isLoading: boolean = false; // ← TAMBAHKAN INI
 
-
   constructor(
     private actionSheetController: ActionSheetController,
     private router: Router,
     private loadingCtrl: LoadingController,
-    private populasiService: PopulasiService
+    private populasiService: PopulasiService,
   ) {}
 
   ngOnInit() {
@@ -34,7 +33,7 @@ export class HewanPage implements OnInit {
 
   async loadHewan() {
     this.isLoading = true; // ← TAMBAHKAN INI
-    
+
     const loading = await this.loadingCtrl.create({
       message: 'Memuat data...',
     });
@@ -57,12 +56,12 @@ export class HewanPage implements OnInit {
         await loading.dismiss();
         console.error('Error loading hewan:', err);
         this.hewanList = []; // Set empty array on error
-      }
+      },
     });
   }
 
   filterJenis(event: any) {
-    this.selectedJenis = event.target.value;
+    this.selectedJenis = event?.detail?.value || event?.target?.value || '';
     this.loadHewan();
   }
 
@@ -72,20 +71,19 @@ export class HewanPage implements OnInit {
     console.log('Search:', this.searchText);
   }
   goToDetail(id: any) {
-  this.router.navigate(['/petugas/detail-hewan', id]);
-}
-
+    this.router.navigate(['/petugas/detail-hewan', id]);
+  }
 
   async pilihKelompokHewan() {
     const actionSheet = await this.actionSheetController.create({
-      header: "Pilih Kelompok Hewan",
+      header: 'Pilih Kelompok Hewan',
       buttons: [
         {
           text: 'Kesayangan',
           icon: 'heart-outline',
           handler: () => {
             this.router.navigate(['/petugas/data-hewan'], {
-              queryParams: { kategori: 'kesayangan' }
+              queryParams: { kategori: 'kesayangan' },
             });
           },
         },
@@ -94,7 +92,7 @@ export class HewanPage implements OnInit {
           icon: 'paw-outline',
           handler: () => {
             this.router.navigate(['/petugas/data-hewan'], {
-              queryParams: { kategori: 'ruminansia' }
+              queryParams: { kategori: 'ruminansia' },
             });
           },
         },
@@ -103,7 +101,7 @@ export class HewanPage implements OnInit {
           icon: 'egg-outline',
           handler: () => {
             this.router.navigate(['/petugas/data-hewan'], {
-              queryParams: { kategori: 'unggas' }
+              queryParams: { kategori: 'unggas' },
             });
           },
         },
@@ -112,16 +110,16 @@ export class HewanPage implements OnInit {
           icon: 'people-outline',
           handler: () => {
             this.router.navigate(['/petugas/data-hewan'], {
-              queryParams: { kategori: 'primata' }
+              queryParams: { kategori: 'primata' },
             });
-          }
+          },
         },
         {
           text: 'Lainnya',
           icon: 'help-circle-outline',
           handler: () => {
             this.router.navigate(['/petugas/data-hewan'], {
-              queryParams: { kategori: 'lainnya' }
+              queryParams: { kategori: 'lainnya' },
             });
           },
         },
