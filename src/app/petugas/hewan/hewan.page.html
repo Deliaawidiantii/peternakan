@@ -1,114 +1,109 @@
-<ion-header>
-  <ion-toolbar color="light">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Hewan Ternak</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <div class="gradient-header">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <ion-back-button defaultHref="/home" style="--color:#fff;"></ion-back-button>
+        <div>
+          <h2 class="gradient-title">Hewan Ternak</h2>
+          <p class="gradient-subtitle">Data populasi hewan ternak</p>
+        </div>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="hewan-page">
-  <!-- Search & Filter Container -->
-  <div class="top-section">
-    <div class="search-wrapper">
-      <ion-icon name="search-outline" class="search-icon"></ion-icon>
-      <input 
-        type="text" 
-        placeholder="Cari hewan..." 
-        class="search-input"
-        [(ngModel)]="searchText"
-        (input)="searchHewan($event)">
-    </div>
-    
-    <div class="filter-dropdown">
-      <ion-icon name="filter-outline" class="filter-icon"></ion-icon>
-      <select class="filter-select" (change)="filterJenis($event)">
-        <option value="">Semua Jenis</option>
-        <option value="sapi">Sapi</option>
-        <option value="kambing">Kambing</option>
-        <option value="domba">Domba</option>
-        <option value="ayam">Ayam</option>
-        <option value="itik">Itik</option>
-        <option value="bebek">Bebek</option>
-      </select>
-    </div>
-  </div>
+<ion-content class="page-content">
+  <div class="content-wrapper">
 
-  <!-- List Header -->
-  <div class="list-header">
-    <h2>Daftar Hewan</h2>
-    <span class="count-badge">{{ hewanList.length }}</span>
-  </div>
-
-  <!-- Empty State -->
-  <div class="empty-state" *ngIf="hewanList.length === 0 && !isLoading">
-    <ion-icon name="paw-outline"></ion-icon>
-    <p>Belum ada data hewan</p>
-  </div>
-
-  <!-- Hewan Grid - COMPACT -->
-  <div class="hewan-grid" *ngIf="hewanList.length > 0">
-    <div 
-  class="hewan-card"
-  *ngFor="let hewan of hewanList"
-  (click)="goToDetail(hewan.id)"
-  tappable>
-
-
-      
-      <!-- Status Badge Mini -->
-      <div class="status-mini" 
-           [class.status-approved]="hewan.status_validasi === 'approved'"
-           [class.status-pending]="hewan.status_validasi === 'pending'"
-           [class.status-rejected]="hewan.status_validasi === 'rejected'">
+    <!-- Search & Filter -->
+    <div class="search-filter-row">
+      <div class="modern-searchbar" style="flex:1;">
+        <ion-searchbar placeholder="Cari hewan..." [(ngModel)]="searchText" (ionInput)="searchHewan($event)"
+          debounce="200">
+        </ion-searchbar>
       </div>
+      <div class="filter-chip" (click)="showFilterPopover($event)">
+        <ion-icon name="funnel-outline"></ion-icon>
+      </div>
+    </div>
 
-      <div class="card-content">
-        <!-- Header Row -->
-        <div class="card-header">
-          <div class="header-left">
-            <h3 class="animal-id">{{ hewan.code || 'HWN' + hewan.id }}</h3>
-            <span class="kategori-mini" [class]="'kat-' + hewan.kategori">
+    <!-- List Header -->
+    <div class="list-header-row">
+      <h3 class="section-label" style="margin:0;">
+        <ion-icon name="paw-outline"></ion-icon>
+        Daftar Hewan
+      </h3>
+      <span class="count-badge">{{ hewanList.length }}</span>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state-global" *ngIf="hewanList.length === 0 && !isLoading">
+      <div class="empty-icon">
+        <ion-icon name="paw-outline"></ion-icon>
+      </div>
+      <h3>Belum Ada Data Hewan</h3>
+      <p>Klik tombol + untuk menambahkan hewan baru</p>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading-state" *ngIf="isLoading">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Memuat data hewan...</p>
+    </div>
+
+    <!-- Hewan List -->
+    <div class="cards-list" *ngIf="hewanList.length > 0 && !isLoading">
+      <div class="data-card"
+        [ngClass]="hewan.status_validasi === 'approved' ? 'border-green' : hewan.status_validasi === 'pending' ? 'border-orange' : 'border-red'"
+        *ngFor="let hewan of hewanList" (click)="goToDetail(hewan.id)" tappable>
+
+        <div class="card-top-row">
+          <div class="card-id-badge">
+            <span class="card-title">{{ hewan.code || 'HWN' + hewan.id }}</span>
+            <span class="kategori-tag" [ngClass]="'kat-' + hewan.kategori">
               {{ hewan.kategori?.substring(0, 3).toUpperCase() }}
             </span>
           </div>
+          <span class="status-badge" [ngClass]="hewan.status_validasi">
+            {{ hewan.status_validasi }}
+          </span>
         </div>
 
-        <!-- Animal Info -->
-        <p class="animal-type">{{ hewan.jenis_hewan | titlecase }}</p>
-        
-        <!-- Meta Compact -->
-        <div class="animal-meta-compact">
-          <span class="meta-mini" *ngIf="hewan.umur">
+        <p class="card-subtitle">{{ hewan.jenis_hewan | titlecase }}</p>
+
+        <div class="card-meta">
+          <span class="meta-item" *ngIf="hewan.umur">
             <ion-icon name="calendar-outline"></ion-icon>
-            {{ hewan.umur }}bln
+            {{ hewan.umur }} bln
           </span>
-          <span class="meta-mini" *ngIf="hewan.jenis_kelamin">
-            <ion-icon 
-              [name]="hewan.jenis_kelamin === 'Jantan' ? 'male' : 'female'"
+          <span class="meta-item" *ngIf="hewan.jenis_kelamin">
+            <ion-icon [name]="hewan.jenis_kelamin === 'Jantan' ? 'male' : 'female'"
               [color]="hewan.jenis_kelamin === 'Jantan' ? 'primary' : 'danger'">
             </ion-icon>
+            {{ hewan.jenis_kelamin }}
           </span>
-          <span class="meta-mini" *ngIf="hewan.jumlah && hewan.jumlah > 1">
+          <span class="meta-item" *ngIf="hewan.jumlah && hewan.jumlah > 1">
             <ion-icon name="layers-outline"></ion-icon>
             {{ hewan.jumlah }}
           </span>
         </div>
 
-        <!-- Location Footer -->
-        <div class="card-footer-compact">
-          <ion-icon name="location"></ion-icon>
-          <span>{{ hewan.wilayah?.nama_desa || 'N/A' }}</span>
+        <div class="card-footer">
+          <span class="meta-item">
+            <ion-icon name="location-outline"></ion-icon>
+            {{ hewan.wilayah?.nama_desa || 'N/A' }}
+          </span>
         </div>
       </div>
     </div>
+
   </div>
 
-  <!-- Floating Add Button -->
+  <!-- FAB -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="pilihKelompokHewan()" color="primary" size="small">
+    <ion-fab-button (click)="pilihKelompokHewan()" color="primary">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  
+
 </ion-content>

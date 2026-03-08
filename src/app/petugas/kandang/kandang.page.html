@@ -1,122 +1,99 @@
-<ion-header>
-  <ion-toolbar color="light">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="petugas/tabs/home"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Daftar Kandang</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <div class="gradient-header">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <ion-back-button defaultHref="petugas/tabs/home" style="--color:#fff;"></ion-back-button>
+        <div>
+          <h2 class="gradient-title">Daftar Kandang</h2>
+          <p class="gradient-subtitle">Data kandang ternak</p>
+        </div>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="kandang-page">
-  <!-- Search & Filter Container -->
-  <div class="top-section">
-    <div class="search-wrapper">
-      <ion-icon name="search-outline" class="search-icon"></ion-icon>
-      <input 
-        type="text" 
-        placeholder="Cari kandang..." 
-        class="search-input"
-        [(ngModel)]="searchText"
-        (input)="searchKandang($event)">
+<ion-content class="page-content">
+  <div class="content-wrapper">
+
+    <!-- Search -->
+    <div class="modern-searchbar">
+      <ion-searchbar placeholder="Cari kandang..." [(ngModel)]="searchText" (ionInput)="searchKandang($event)"
+        debounce="200">
+      </ion-searchbar>
     </div>
-    
-    <div class="filter-dropdown">
-      <ion-icon name="filter-outline" class="filter-icon"></ion-icon>
-      <select class="filter-select" [(ngModel)]="selectedDesa" (change)="filterDesa($event)">
-        <option value="">Semua Desa</option>
-        <option value="Sukamaju">Desa Sukamaju</option>
-        <option value="Mekarjaya">Desa Mekarjaya</option>
-        <option value="Sukasari">Desa Sukasari</option>
-        <option value="Karanganyar">Desa Karanganyar</option>
-      </select>
+
+    <!-- List Header -->
+    <div class="list-header-row">
+      <h3 class="section-label" style="margin:0;">
+        <ion-icon name="home-outline"></ion-icon>
+        Daftar Kandang
+      </h3>
+      <span class="count-badge">{{ kandangList.length }}</span>
     </div>
-  </div>
 
-  <!-- List Header -->
-  <div class="list-header">
-    <h2>Daftar Kandang</h2>
-    <span class="count-badge">{{ kandangList.length }}</span>
-  </div>
-
-  <!-- Empty State -->
-  <div class="empty-state" *ngIf="kandangList.length === 0 && !isLoading">
-    <ion-icon name="home-outline"></ion-icon>
-    <p>Belum ada data kandang</p>
-  </div>
-
-  <!-- Kandang Grid - COMPACT -->
-  <div class="kandang-grid" *ngIf="kandangList.length > 0">
-    <div 
-      class="kandang-card"
-      *ngFor="let kandang of kandangList"
-      (click)="goToDetail(kandang.id)"
-      tappable>
-
-      <!-- Status Badge Mini (Left Border) -->
-      <div class="status-mini" 
-           [class.status-individu]="kandang.status_kandang === 'Individu'"
-           [class.status-kelompok]="kandang.status_kandang === 'Kelompok'">
+    <!-- Empty State -->
+    <div class="empty-state-global" *ngIf="kandangList.length === 0 && !isLoading">
+      <div class="empty-icon">
+        <ion-icon name="home-outline"></ion-icon>
       </div>
+      <h3>Belum Ada Data Kandang</h3>
+      <p>Klik tombol + untuk menambahkan kandang baru</p>
+    </div>
 
-      <div class="card-content">
-        <!-- Foto Kandang (Avatar Kiri) -->
-        <div class="kandang-photo-avatar" *ngIf="kandang.foto_kandang_url">
-          <img [src]="kandang.foto_kandang_url" [alt]="kandang.nama_kandang">
-        </div>
-        <div class="kandang-photo-avatar placeholder" *ngIf="!kandang.foto_kandang_url">
-          <ion-icon name="home-outline"></ion-icon>
-        </div>
+    <!-- Kandang List -->
+    <div class="cards-list" *ngIf="kandangList.length > 0">
+      <div class="data-card" [ngClass]="kandang.status_kandang === 'Individu' ? 'border-blue' : 'border-green'"
+        *ngFor="let kandang of kandangList" (click)="goToDetail(kandang.id)" tappable>
 
-        <!-- Info Content -->
-        <div class="kandang-info">
-          <!-- Header Row -->
-          <div class="card-header">
-            <div class="header-left">
-              <h3 class="kandang-id">{{ kandang.id_kandang || 'KNDG' + kandang.id }}</h3>
-              <span class="status-mini-badge" 
-                    [class.badge-individu]="kandang.status_kandang === 'Individu'"
-                    [class.badge-kelompok]="kandang.status_kandang === 'Kelompok'">
-                {{ kandang.status_kandang?.substring(0, 3).toUpperCase() }}
+        <div class="kandang-row">
+          <!-- Photo -->
+          <div class="kandang-thumb" *ngIf="kandang.foto_kandang_url">
+            <img [src]="kandang.foto_kandang_url" [alt]="kandang.nama_kandang">
+          </div>
+          <div class="kandang-thumb placeholder" *ngIf="!kandang.foto_kandang_url">
+            <ion-icon name="home-outline"></ion-icon>
+          </div>
+
+          <div class="kandang-info">
+            <div class="card-top-row">
+              <span class="card-title">{{ kandang.id_kandang || 'KNDG' + kandang.id }}</span>
+              <span class="status-badge" [ngClass]="kandang.status_kandang === 'Individu' ? 'approved' : 'pending'">
+                {{ kandang.status_kandang }}
+              </span>
+            </div>
+            <p class="card-subtitle">{{ kandang.nama_kandang || 'N/A' }}</p>
+            <div class="card-meta">
+              <span class="meta-item" *ngIf="kandang.jenis_komoditas">
+                <ion-icon name="cube-outline"></ion-icon>
+                {{ kandang.jenis_komoditas }}
+              </span>
+              <span class="meta-item" *ngIf="kandang.kapasitas">
+                <ion-icon name="layers-outline"></ion-icon>
+                {{ kandang.kapasitas }}
+              </span>
+            </div>
+            <div class="card-meta" style="margin-top:4px;">
+              <span class="meta-item" *ngIf="kandang.pemilik">
+                <ion-icon name="person-outline"></ion-icon>
+                {{ kandang.pemilik }}
+              </span>
+              <span class="meta-item">
+                <ion-icon name="location-outline"></ion-icon>
+                {{ kandang.lokasi || 'N/A' }}
               </span>
             </div>
           </div>
-
-          <!-- Kandang Info -->
-          <p class="kandang-name">{{ kandang.nama_kandang || 'N/A' }}</p>
-          
-          <!-- Meta Compact -->
-          <div class="kandang-meta-compact">
-            <span class="meta-mini" *ngIf="kandang.jenis_komoditas">
-              <ion-icon name="cube-outline"></ion-icon>
-              {{ kandang.jenis_komoditas }}
-            </span>
-            <span class="meta-mini" *ngIf="kandang.kapasitas">
-              <ion-icon name="layers-outline"></ion-icon>
-              {{ kandang.kapasitas }}
-            </span>
-          </div>
-
-          <!-- Owner -->
-          <div class="card-footer-compact" *ngIf="kandang.pemilik">
-            <ion-icon name="person"></ion-icon>
-            <span>{{ kandang.pemilik }}</span>
-          </div>
-
-          <!-- Location Footer -->
-          <div class="card-footer-compact">
-            <ion-icon name="location"></ion-icon>
-            <span>{{ kandang.lokasi || 'N/A' }}</span>
-          </div>
         </div>
       </div>
     </div>
+
   </div>
 
-  <!-- Floating Add Button -->
+  <!-- FAB -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="goToAdd()" color="primary" size="small">
+    <ion-fab-button (click)="goToAdd()" color="primary">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  
+
 </ion-content>

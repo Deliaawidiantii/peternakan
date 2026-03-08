@@ -1,81 +1,91 @@
-.custom-page {
-  --background: #f8fafc;
-  font-family: "Public Sans", "Noto Sans", sans-serif;
+:host {
+  --ion-font-family: var(--app-font);
 }
 
-/* Setiap item menu */
-.menu-item {
-  --padding-start: 0;
-  --padding-end: 0;
-  --inner-padding-start: 0;
-  --inner-padding-end: 0;
-  
-  padding: 12px;
-  margin-bottom: 8px;
-  border-radius: 10px;
-  background: #ffffff;
-  border: 1px solid #e8f1f6;
-  transition: all 0.2s ease;
+.page-content {
+  --background: var(--app-bg, #f5f7fa);
 }
 
-.menu-item:hover {
-  background: #f0f7fb;
-  border-color: #d4e6f1;
-  box-shadow: 0 2px 8px rgba(13, 23, 27, 0.08);
+.content-wrapper {
+  padding: 4px 16px 100px;
 }
 
-.menu-item:active {
-  background: #e2edf3;
+.penyakit-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-/* Icon di sebelah kiri */
-.icon-box {
-  --background: #e7eff3;
-  --border-radius: 10px;
-  
-  width: 48px;
-  height: 48px;
-  min-width: 48px;
-  min-height: 48px;
-  border-radius: 10px;
+.menu-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.menu-card-icon {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 12px;
-  flex-shrink: 0;
+
+  ion-icon {
+    font-size: 24px;
+    color: inherit;
+  }
+
+  &.blue {
+    background: linear-gradient(135deg, #e8f0fe, #d2e3fc);
+    color: #1a73e8;
+  }
+
+  &.green {
+    background: linear-gradient(135deg, #e6f4ea, #ceead6);
+    color: #188038;
+  }
+
+  &.orange {
+    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+    color: #e37400;
+  }
+
+  &.red {
+    background: linear-gradient(135deg, #fce8e8, #f8d7da);
+    color: #d93025;
+  }
 }
 
-.icon-box ion-icon {
-  color: #0d171b;
-  font-size: 24px;
+.menu-card-text {
+  flex: 1;
+  min-width: 0;
+
+  h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 4px 0;
+  }
+
+  p {
+    font-size: 12px;
+    color: #64748b;
+    margin: 0;
+  }
 }
 
-/* Label */
-ion-label {
-  padding: 4px 0;
-}
-
-ion-label h2 {
-  font-size: 16px;
-  color: #0d171b;
-  font-weight: 600;
-  margin: 0 0 4px 0;
-  line-height: 1.4;
-}
-
-ion-label p {
-  font-size: 13px;
-  color: #4c809a;
-  margin: 0;
-  line-height: 1.4;
-}
-
-/* Icon di sebelah kanan */
-ion-icon[slot="end"] {
-  color: #a0b8c8;
-  font-size: 20px;
-}
-
-.menu-item:hover ion-icon[slot="end"] {
-  color: #4c809a;
+.arrow {
+  font-size: 18px;
+  color: #94a3b8;
 }

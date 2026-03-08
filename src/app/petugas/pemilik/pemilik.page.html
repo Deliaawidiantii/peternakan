@@ -1,81 +1,75 @@
-<ion-header translucent>
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/petugas/tabs/home" text=""></ion-back-button>
-    </ion-buttons>
-    <ion-title>Daftar Pemilik</ion-title>
+    <div class="gradient-header">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <ion-back-button defaultHref="/petugas/tabs/home" style="--color:#fff;"></ion-back-button>
+        <div>
+          <h2 class="gradient-title">Daftar Pemilik</h2>
+          <p class="gradient-subtitle">Data pemilik ternak</p>
+        </div>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen class="page-pemilik">
+<ion-content fullscreen class="page-content">
   <!-- Pull to Refresh -->
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content
-      pullingIcon="chevron-down-circle-outline"
-      pullingText="Tarik untuk refresh"
-      refreshingSpinner="crescent"
-      refreshingText="Memuat data...">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Tarik untuk refresh"
+      refreshingSpinner="crescent" refreshingText="Memuat data...">
     </ion-refresher-content>
   </ion-refresher>
 
-  <div class="search-bar">
-    <ion-searchbar 
-      placeholder="Cari Pemilik (Nama, NIK, Desa)" 
-      [(ngModel)]="query" 
-      (ionInput)="filterPemilik()" 
-      showCancelButton="never">
-    </ion-searchbar>
+  <div class="content-wrapper">
+    <!-- Search -->
+    <div class="modern-searchbar">
+      <ion-searchbar placeholder="Cari Pemilik (Nama, NIK, Desa)" [(ngModel)]="query" (ionInput)="filterPemilik()"
+        showCancelButton="never">
+      </ion-searchbar>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading && pemilikList.length === 0" class="loading-state">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Memuat data pemilik...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && filteredPemilik.length === 0" class="empty-state-global">
+      <div class="empty-icon">
+        <ion-icon name="people-outline"></ion-icon>
+      </div>
+      <h3>Belum Ada Data Pemilik</h3>
+      <p *ngIf="query === ''">Klik tombol + untuk menambahkan pemilik baru</p>
+      <p *ngIf="query !== ''">Tidak ada hasil untuk "{{ query }}"</p>
+    </div>
+
+    <!-- List Pemilik -->
+    <div class="cards-list" *ngIf="!isLoading && filteredPemilik.length > 0">
+      <div class="data-card border-blue" *ngFor="let p of filteredPemilik" (click)="openPemilik(p)" tappable>
+
+        <div class="pemilik-row">
+          <div class="avatar-circle" [style.background]="p.color">
+            <span>{{ p.initials }}</span>
+          </div>
+          <div class="pemilik-info">
+            <p class="card-title">{{ p.name }}</p>
+            <div class="card-meta">
+              <span class="meta-item">
+                <ion-icon name="location-outline"></ion-icon>
+                {{ p.village }}
+              </span>
+              <span class="meta-item">
+                <ion-icon name="call-outline"></ion-icon>
+                {{ p.phone }}
+              </span>
+            </div>
+          </div>
+          <ion-icon name="chevron-forward-outline" class="arrow-icon"></ion-icon>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <!-- Loading State -->
-  <div *ngIf="isLoading && pemilikList.length === 0" class="loading-container">
-    <ion-spinner name="crescent"></ion-spinner>
-    <p>Memuat data pemilik...</p>
-  </div>
-
-  <!-- Empty State -->
-  <div *ngIf="!isLoading && filteredPemilik.length === 0" class="empty-state">
-    <ion-icon name="people-outline"></ion-icon>
-    <h3>Belum Ada Data Pemilik</h3>
-    <p *ngIf="query === ''">Klik tombol + untuk menambahkan pemilik baru</p>
-    <p *ngIf="query !== ''">Tidak ada hasil untuk "{{ query }}"</p>
-  </div>
-
-  <!-- List Pemilik -->
-  <ion-list lines="none" class="pemilik-list" *ngIf="!isLoading && filteredPemilik.length > 0">
-    <ion-item-sliding *ngFor="let p of filteredPemilik">
-      <!-- Item Content -->
-      <ion-item button detail (click)="openPemilik(p)">
-        <ion-avatar slot="start" [ngStyle]="{'background-color':p.color}" class="avatar">
-          <div class="initials">{{ p.initials }}</div>
-        </ion-avatar>
-
-        <ion-label>
-          <h2 class="name">{{ p.name }}</h2>
-          <p class="village">
-            <ion-icon name="location-outline"></ion-icon>
-            {{ p.village }}
-          </p>
-          <p class="info">
-            <ion-icon name="call-outline"></ion-icon>
-            {{ p.phone }}
-          </p>
-        </ion-label>
-
-        <!-- Count badge (nanti bisa diisi jumlah ternak) -->
-        <!-- <div class="count" slot="end">
-          <span>{{ p.count || 0 }}</span>
-        </div> -->
-      </ion-item>
-
-      <!-- Swipe Actions -->
-      <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="deletePemilik(p, $event)">
-          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
 
   <!-- Floating Add Button -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">

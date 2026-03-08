@@ -1,64 +1,68 @@
-<ion-header class="custom-header" translucent="true">
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <div class="header-content">
-      <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-      <h2 class="header-title">Perkawinan</h2>
-      <div style="width: 40px;"></div>
+    <div class="gradient-header">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <ion-back-button defaultHref="/" style="--color:#fff;"></ion-back-button>
+        <div>
+          <h2 class="gradient-title">Perkawinan</h2>
+          <p class="gradient-subtitle">Kelola data perkawinan ternak</p>
+        </div>
+      </div>
     </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen="true" class="ion-padding">
-  
-  <!-- Catat Perkawinan Baru -->
-  <div class="card-section" routerLink="/petugas/perkawinan/input-perkawinan">
-    <div class="card-content">
-      <div class="card-text">
-        <h3 class="card-title">Catat Perkawinan Baru</h3>
-        <p class="card-description">Tambahkan data perkawinan baru untuk ternak Anda.</p>
+<ion-content fullscreen="true" class="page-content">
+  <div class="content-wrapper">
+
+    <!-- Menu Cards -->
+    <div class="perkawinan-menu">
+
+      <div class="menu-card" routerLink="/petugas/perkawinan/input-perkawinan">
+        <div class="menu-card-icon pink">
+          <ion-icon name="heart-outline"></ion-icon>
+        </div>
+        <div class="menu-card-text">
+          <h3>Catat Perkawinan Baru</h3>
+          <p>Tambahkan data perkawinan baru untuk ternak Anda.</p>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
       </div>
-      <!-- <div class="card-image" style='background-image: url("https://images.unsplash.com/photo-1577720643272-265f434e3da6?w=300&h=200&fit=crop");'></div> -->
-      <img class="card-image" src="./assets/icon/Kawin.jpg" alt="Kawin">
-    </div>
-  </div>
 
-  <!-- Riwayat Perkawinan -->
-  <div class="card-section" routerLink="/petugas/perkawinan/riwayat-perkawinan">
-    <div class="card-content">
-      <div class="card-text">
-        <h3 class="card-title">Riwayat Perkawinan</h3>
-        <p class="card-description">Lihat catatan perkawinan sebelumnya.</p>
+      <div class="menu-card" routerLink="/petugas/perkawinan/riwayat-perkawinan">
+        <div class="menu-card-icon blue">
+          <ion-icon name="time-outline"></ion-icon>
+        </div>
+        <div class="menu-card-text">
+          <h3>Riwayat Perkawinan</h3>
+          <p>Lihat catatan perkawinan sebelumnya.</p>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
       </div>
-      <!-- <div class="card-image" style='background-image: url("https://images.unsplash.com/photo-1551624995-c3c9a4f60fef?w=300&h=200&fit=crop");'></div> -->
-       <img class="card-image" src="./assets/icon/Riwayat.jpg" alt="Riwayat">
-    </div>
-  </div>
 
-  <!-- PKB (Pemeriksaan Kesehatan Berkala) -->
-  <div class="card-section " routerLink="/petugas/perkawinan/pkb">
-    <div class="card-content">
-      <div class="card-text">
-        <h3 class="card-title">PKB (Pemeriksaan Kesehatan Berkala)</h3>
-        <p class="card-description">Kelola data pemeriksaan kesehatan berkala ternak Anda.</p>
+      <div class="menu-card" routerLink="/petugas/perkawinan/pkb">
+        <div class="menu-card-icon green">
+          <ion-icon name="medkit-outline"></ion-icon>
+        </div>
+        <div class="menu-card-text">
+          <h3>PKB (Pemeriksaan Kebuntingan)</h3>
+          <p>Kelola data pemeriksaan kebuntingan ternak.</p>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
       </div>
-       <img class="card-image" src="./assets/icon/dokter.jpg" alt="Dokter">
-    </div>
-  </div>
 
-
-    <!-- Lahir -->
-  <div class="card-section" routerLink="/petugas/perkawinan/lahir">
-    <div class="card-content">
-      <div class="card-text">
-        <h3 class="card-title">Lahir</h3>
-        <p class="card-description">Catat data kelahiran hasil perkawinan ternak.</p>
+      <div class="menu-card" routerLink="/petugas/perkawinan/lahir">
+        <div class="menu-card-icon orange">
+          <ion-icon name="happy-outline"></ion-icon>
+        </div>
+        <div class="menu-card-text">
+          <h3>Lahir</h3>
+          <p>Catat data kelahiran hasil perkawinan ternak.</p>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
       </div>
-      <img class="card-image" src="./assets/icon/anak.jpg" alt="Anak">
+
     </div>
+
   </div>
-
-
 </ion-content>
-

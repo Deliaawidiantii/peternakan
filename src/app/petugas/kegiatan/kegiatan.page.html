@@ -1,71 +1,100 @@
-<ion-header>
-  <ion-toolbar color="light">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="petugas/tabs/home"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Kegiatan</ion-title>
-    <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon name="add-circle-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <div class="gradient-header">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <ion-back-button defaultHref="petugas/tabs/home" style="--color:#fff;"></ion-back-button>
+        <div>
+          <h2 class="gradient-title">Kegiatan</h2>
+          <p class="gradient-subtitle">Kelola kegiatan peternakan</p>
+        </div>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <!-- Akses cepat -->
-  <ion-list-header>
-    <ion-label class="section-title">Akses Cepat</ion-label>
-  </ion-list-header>
+<ion-content [fullscreen]="true" class="page-content">
+  <div class="content-wrapper">
 
-  <ion-item routerLink="/petugas/jadwal-kegiatan">
-    <ion-avatar slot="start" class="icon-bg">
-      <ion-icon name="calendar-outline"></ion-icon>
-    </ion-avatar>
-    <ion-label>Jadwal Kegiatan</ion-label>
-  </ion-item>
+    <!-- Akses Cepat -->
+    <div class="section-block">
+      <h3 class="section-label">
+        <ion-icon name="flash-outline"></ion-icon>
+        Akses Cepat
+      </h3>
 
-  <ion-item routerLink="/petugas/riwayat-kegiatan">
-    <ion-avatar slot="start" class="icon-bg">
-      <ion-icon name="time-outline"></ion-icon>
-    </ion-avatar>
-    <ion-label>Riwayat Kegiatan</ion-label>
-  </ion-item>
+      <div class="quick-menu">
+        <div class="menu-card" routerLink="/petugas/jadwal-kegiatan">
+          <div class="menu-card-icon blue">
+            <ion-icon name="calendar-outline"></ion-icon>
+          </div>
+          <div class="menu-card-text">
+            <h3>Jadwal Kegiatan</h3>
+            <p>Lihat jadwal kegiatan yang akan datang</p>
+          </div>
+          <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
+        </div>
 
-  <ion-item routerLink="/petugas/request-kegiatan">
-    <ion-avatar slot="start" class="icon-bg">
-      <ion-icon name="clipboard-outline"></ion-icon>
-    </ion-avatar>
-    <ion-label>Request Kegiatan</ion-label>
-  </ion-item>
+        <div class="menu-card" routerLink="/petugas/riwayat-kegiatan">
+          <div class="menu-card-icon green">
+            <ion-icon name="time-outline"></ion-icon>
+          </div>
+          <div class="menu-card-text">
+            <h3>Riwayat Kegiatan</h3>
+            <p>Lihat catatan kegiatan sebelumnya</p>
+          </div>
+          <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
+        </div>
 
-  <!-- Kegiatan sedang berjalan  -->
-  <ion-list lines="none">
-    <ion-list-header>
-      <ion-label class="section-title">Kegiatan Berjalan</ion-label>
-    </ion-list-header>
-
-    <div class="ion-text-center ion-padding" *ngIf="isLoading">
-      <ion-spinner name="crescent"></ion-spinner>
+        <div class="menu-card" routerLink="/petugas/request-kegiatan">
+          <div class="menu-card-icon orange">
+            <ion-icon name="clipboard-outline"></ion-icon>
+          </div>
+          <div class="menu-card-text">
+            <h3>Request Kegiatan</h3>
+            <p>Ajukan permintaan kegiatan baru</p>
+          </div>
+          <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
+        </div>
+      </div>
     </div>
 
-    <div class="ion-text-center" *ngIf="!isLoading && kegiatanBerjalan.length === 0">
-      <p style="color: #888;">Belum ada kegiatan yang sedang berjalan.</p>
+    <!-- Kegiatan Berjalan -->
+    <div class="section-block">
+      <h3 class="section-label">
+        <ion-icon name="pulse-outline"></ion-icon>
+        Kegiatan Berjalan
+      </h3>
+
+      <div class="loading-state" *ngIf="isLoading" style="height:auto;padding:32px;">
+        <ion-spinner name="crescent"></ion-spinner>
+        <p>Memuat...</p>
+      </div>
+
+      <div class="empty-state-global" *ngIf="!isLoading && kegiatanBerjalan.length === 0" style="padding:32px;">
+        <div class="empty-icon">
+          <ion-icon name="clipboard-outline"></ion-icon>
+        </div>
+        <h3>Tidak Ada Kegiatan</h3>
+        <p>Belum ada kegiatan yang sedang berjalan.</p>
+      </div>
+
+      <div class="page-card" *ngIf="!isLoading && kegiatanBerjalan.length > 0">
+        <div class="info-item-global" *ngFor="let item of kegiatanBerjalan"
+          [routerLink]="['/petugas/detail-kegiatan', item.id]" style="cursor:pointer;">
+          <div class="icon-circle purple">
+            <ion-icon [name]="getIconName(item.jenis)"></ion-icon>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <p style="font-size:14px;font-weight:600;color:#1e293b;margin:0 0 2px 0;">{{ item.jenis }}</p>
+            <p style="font-size:12px;color:#64748b;margin:0;">{{ item.tanggal | date:'dd MMMM yyyy' }} · {{
+              item.jam_mulai }} - {{ item.jam_selesai }}</p>
+          </div>
+          <ion-button size="small" fill="outline" color="primary">
+            Lihat
+          </ion-button>
+        </div>
+      </div>
     </div>
 
-    <ion-item class="activity-item" *ngFor="let item of kegiatanBerjalan">
-      <ion-avatar slot="start" class="icon-bg">
-        <ion-icon [name]="getIconName(item.jenis)"></ion-icon>
-      </ion-avatar>
-
-      <ion-label>
-        <h2>{{ item.jenis }}</h2>
-        <p>{{ item.tanggal | date:'dd MMMM yyyy' }}</p>
-        <p>{{ item.jam_mulai }} - {{ item.jam_selesai }}</p>
-      </ion-label>
-      <ion-button slot="end" size="small" color="primary" [routerLink]="['/petugas/detail-kegiatan', item.id]">
-        Lihat
-      </ion-button>
-    </ion-item>
-  </ion-list>
+  </div>
 </ion-content>

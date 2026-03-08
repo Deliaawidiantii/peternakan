@@ -1,66 +1,86 @@
-<ion-header>
-  <ion-toolbar color="light">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/petugas"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Mutasi Hewan</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <div class="gradient-header">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <ion-back-button defaultHref="/petugas" style="--color:#fff;"></ion-back-button>
+        <div>
+          <h2 class="gradient-title">Mutasi Hewan</h2>
+          <p class="gradient-subtitle">Data mutasi ternak</p>
+        </div>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="mutasi-content">
-  <h2 class="judul-section">Semua Mutasi</h2>
+<ion-content class="page-content">
+  <div class="content-wrapper">
 
-  <!--  Filter Section -->
-  <div class="filter-container">
-    <ion-item lines="none">
-      <ion-label>Filter Bulan</ion-label>
-      <ion-select
-        placeholder="Pilih Bulan"
-        [(ngModel)]="selectedMonth"
-        (ionChange)="filterData()"
-      >
-        <ion-select-option *ngFor="let month of months" [value]="month">
-          {{ month }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
+    <!-- Filter -->
+    <div class="filter-row">
+      <div class="filter-item">
+        <ion-select placeholder="Pilih Bulan" [(ngModel)]="selectedMonth" (ionChange)="filterData()"
+          class="filter-select">
+          <ion-select-option *ngFor="let month of months" [value]="month">
+            {{ month }}
+          </ion-select-option>
+        </ion-select>
+      </div>
+      <div class="filter-item">
+        <ion-select placeholder="Semua Jenis" [(ngModel)]="selectedType" (ionChange)="filterData()"
+          class="filter-select">
+          <ion-select-option value="">Semua</ion-select-option>
+          <ion-select-option value="Mati">Mati</ion-select-option>
+          <ion-select-option value="Hilang">Hilang</ion-select-option>
+          <ion-select-option value="Dipotong">Dipotong</ion-select-option>
+          <ion-select-option value="Dijual">Dijual</ion-select-option>
+          <ion-select-option value="Dipindahkan">Dipindahkan</ion-select-option>
+        </ion-select>
+      </div>
+    </div>
 
-    <ion-item lines="none">
-      <ion-label>Jenis Mutasi</ion-label>
-      <ion-select
-        placeholder="Semua Jenis"
-        [(ngModel)]="selectedType"
-        (ionChange)="filterData()"
-      >
-        <ion-select-option value="">Semua</ion-select-option>
-        <ion-select-option value="Mati">Mati</ion-select-option>
-        <ion-select-option value="Hilang">Hilang</ion-select-option>
-        <ion-select-option value="Dipotong">Dipotong</ion-select-option>
-        <ion-select-option value="Dijual">Dijual</ion-select-option>
-        <ion-select-option value="Dipindahkan">Dipindahkan</ion-select-option>
-      </ion-select>
-    </ion-item>
+    <!-- List Header -->
+    <div class="list-header-row">
+      <h3 class="section-label" style="margin:0;">
+        <ion-icon name="swap-horizontal-outline"></ion-icon>
+        Daftar Mutasi
+      </h3>
+      <span class="count-badge">{{ filteredMutasi.length }}</span>
+    </div>
+
+    <!-- Empty -->
+    <div class="empty-state-global" *ngIf="filteredMutasi.length === 0">
+      <div class="empty-icon">
+        <ion-icon name="swap-horizontal-outline"></ion-icon>
+      </div>
+      <h3>Belum Ada Data Mutasi</h3>
+      <p>Klik tombol + untuk menambahkan mutasi</p>
+    </div>
+
+    <!-- List -->
+    <div class="cards-list">
+      <div class="data-card"
+        [ngClass]="item.jenis === 'Mati' ? 'border-red' : item.jenis === 'Dijual' ? 'border-green' : item.jenis === 'Dipotong' ? 'border-orange' : 'border-blue'"
+        *ngFor="let item of filteredMutasi" (click)="goToDetail(item.id, item.jenis, item.tanggal)" tappable>
+        <p class="card-title">ID Hewan: {{ item.id }}</p>
+        <div class="card-meta">
+          <span class="meta-item">
+            <ion-icon name="swap-horizontal-outline"></ion-icon>
+            {{ item.jenis }}
+          </span>
+          <span class="meta-item">
+            <ion-icon name="calendar-outline"></ion-icon>
+            {{ item.tanggal }}
+          </span>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <!--  Daftar Mutasi -->
-  <ion-list lines="none">
-    <ion-item
-      button
-      *ngFor="let item of filteredMutasi"
-      (click)="goToDetail(item.id, item.jenis, item.tanggal)"
-    >
-      <ion-label>
-        <h2>ID Hewan: {{ item.id }}</h2>
-        <p>{{ item.jenis }} · {{ item.tanggal }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-
-  <!-- Tombol Tambah -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button color="primary" (click)="tambahMutasi()">
-    <ion-icon name="add-outline"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
+    <ion-fab-button color="primary" (click)="tambahMutasi()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>
