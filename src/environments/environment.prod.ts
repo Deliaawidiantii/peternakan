@@ -2,9 +2,9 @@ export const environment = {
   production: true,
   apiUrl: 'https://internproject.my.id/api',
   reverb: {
-    key: 'peternakan-key',
+    key: 'w3mefnonsl3pzagxrji2',
     wsHost: 'internproject.my.id',
-    wsPort: 443,
-    forceTLS: true,
+    wsPort: 8080,
+    forceTLS: false,
   },
 };
