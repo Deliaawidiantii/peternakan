@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PeternakService {
 
-  private apiUrl = 'http://localhost:8000/api'; // Ganti sesuai IP kamu
+  private apiUrl = environment.apiUrl; // Ganti sesuai IP kamu
 
 
   constructor(private http: HttpClient) { }

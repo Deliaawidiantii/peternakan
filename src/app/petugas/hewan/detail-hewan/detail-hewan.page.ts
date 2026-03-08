@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router'; // Tambah Router
 import { ToastController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-detail-hewan',
@@ -14,7 +15,7 @@ export class DetailHewanPage implements OnInit {
   hewan: any = {}; // Ubah dari null ke empty object
   isLoading = true;
   barcodeId = '';
-  apiUrl = 'http://localhost:8000/api';
+  apiUrl = environment.apiUrl;
 
   constructor(
     private route: ActivatedRoute,

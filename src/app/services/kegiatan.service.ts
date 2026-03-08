@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class KegiatanService {
-  private apiUrl = 'http://localhost:8000/api'; // Ganti dengan URL backend Anda
+  private apiUrl = environment.apiUrl; // Ganti dengan URL backend Anda
 
   constructor(private http: HttpClient) {}
 

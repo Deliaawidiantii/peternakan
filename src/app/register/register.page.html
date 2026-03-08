@@ -21,54 +21,39 @@
       <form (ngSubmit)="onRegister()" #registerForm="ngForm">
 
         <ion-item>
-          <ion-input type="text" name="nama" placeholder="Nama Lengkap"
-                     [(ngModel)]="form.nama" required></ion-input>
+          <ion-input type="text" name="nama" placeholder="Nama Lengkap" [(ngModel)]="form.nama" required></ion-input>
         </ion-item>
 
         <ion-item>
-          <ion-input type="text" name="nik" placeholder="NIK"
-                     [(ngModel)]="form.nik" required></ion-input>
+          <ion-input type="text" name="nik" placeholder="NIK" [(ngModel)]="form.nik" required></ion-input>
         </ion-item>
 
         <ion-item>
-          <ion-input type="email" name="email" placeholder="Email"
-                     [(ngModel)]="form.email" required></ion-input>
+          <ion-input type="email" name="email" placeholder="Email" [(ngModel)]="form.email" required></ion-input>
         </ion-item>
 
         <!-- Ganti input Desa Binaan dengan ion-select -->
         <ion-item>
           <ion-label position="stacked">Desa Binaan <span style="color: red;">*</span></ion-label>
-          <ion-select 
-            placeholder="Pilih Desa Binaan"
-            name="desa_binaan"
-            [(ngModel)]="form.desa_binaan"
-            [disabled]="isLoadingDesa"
-            required>
-            <ion-select-option 
-              *ngFor="let desa of desaList" 
-              [value]="desa.id">
+          <ion-select placeholder="Pilih Desa Binaan" name="desa_binaan" [(ngModel)]="form.desa_binaan"
+            [disabled]="isLoadingDesa" required>
+            <ion-select-option *ngFor="let desa of desaList" [value]="desa.id">
               {{ desa.nama_desa || desa.nama || desa.desa }}
             </ion-select-option>
           </ion-select>
-          <ion-spinner 
-            *ngIf="isLoadingDesa" 
-            name="crescent" 
-            slot="end">
+          <ion-spinner *ngIf="isLoadingDesa" name="crescent" slot="end">
           </ion-spinner>
         </ion-item>
 
         <ion-item>
-          <ion-input type="text" name="no_telp" placeholder="No. Telepon"
-                     [(ngModel)]="form.no_telp" required></ion-input>
+          <ion-input type="text" name="no_telp" placeholder="No. Telepon" [(ngModel)]="form.no_telp"
+            required></ion-input>
         </ion-item>
 
         <!-- Password -->
         <ion-item>
-          <ion-input [type]="showPassword ? 'text' : 'password'"
-                     name="password"
-                     placeholder="Password"
-                     [(ngModel)]="form.password"
-                     required></ion-input>
+          <ion-input [type]="showPassword ? 'text' : 'password'" name="password" placeholder="Password"
+            [(ngModel)]="form.password" required></ion-input>
           <ion-button fill="clear" slot="end" (click)="togglePassword()" type="button">
             <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
           </ion-button>
@@ -76,17 +61,14 @@
 
         <!-- Konfirmasi Password -->
         <ion-item>
-          <ion-input [type]="showConfirmPassword ? 'text' : 'password'"
-                     name="password_confirmation"
-                     placeholder="Konfirmasi Password"
-                     [(ngModel)]="form.password_confirmation"
-                     required></ion-input>
+          <ion-input [type]="showConfirmPassword ? 'text' : 'password'" name="password_confirmation"
+            placeholder="Konfirmasi Password" [(ngModel)]="form.password_confirmation" required></ion-input>
           <ion-button fill="clear" slot="end" (click)="toggleConfirmPassword()" type="button">
             <ion-icon [name]="showConfirmPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
           </ion-button>
         </ion-item>
 
-        <ion-button expand="block" type="submit" color="primary" class="register-btn" >
+        <ion-button expand="block" type="submit" color="primary" class="register-btn">
           REGISTER
         </ion-button>
       </form>

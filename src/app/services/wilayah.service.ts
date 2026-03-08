@@ -1,13 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs'; // ← TAMBAHKAN INI
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WilayahService {
 
-  apiUrl = 'http://localhost:8000/api';
+  apiUrl = environment.apiUrl;
 
 
   constructor(private http: HttpClient) { }
