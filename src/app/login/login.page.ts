@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service'; // ← Sesuaikan path
-import { LoadingController, AlertController } from '@ionic/angular';
+import { LoadingController, AlertController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +20,8 @@ export class LoginPage {
     private authService: AuthService,
     private router: Router,
     private loadingController: LoadingController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private navCtrl: NavController
   ) { }
 
   togglePassword(): void {
@@ -62,8 +63,8 @@ export class LoginPage {
         if (response.success) {
           console.log('Login berhasil:', response.data.user);
           
-          // Redirect ke halaman petugas
-          this.router.navigate(['/petugas/tabs/home']);
+          // Redirect ke halaman petugas dan bersihkan stack
+          this.navCtrl.navigateRoot('/petugas/tabs/home');
           
           // Show success message (optional)
           const alert = await this.alertController.create({
