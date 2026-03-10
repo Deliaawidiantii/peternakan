@@ -42,6 +42,8 @@ export class MutasidijualPage implements OnInit {
         this.peternakList = res.data || [];
       } else if (Array.isArray(res)) {
         this.peternakList = res;
+      } else {
+        this.peternakList = res?.data || [];
       }
     });
   }
@@ -58,6 +60,10 @@ export class MutasidijualPage implements OnInit {
         .subscribe((res: any) => {
           if (res.success && res.data) {
             this.populasiList = res.data;
+          } else if (Array.isArray(res)) {
+            this.populasiList = res;
+          } else {
+            this.populasiList = res?.data || [];
           }
         });
     }

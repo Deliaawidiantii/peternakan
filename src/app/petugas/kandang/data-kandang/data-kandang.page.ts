@@ -52,8 +52,14 @@ export class DataKandangPage implements OnInit {
   // ✅ TAMBAH: Load data peternak & wilayah
   async loadDropdownData() {
     this.peternakService.getAll().subscribe({
-      next: (res) => {
-        this.peternakList = res.data || [];
+      next: (res: any) => {
+        if (res.success || res.status === 'success') {
+          this.peternakList = res.data || [];
+        } else if (Array.isArray(res)) {
+          this.peternakList = res;
+        } else {
+          this.peternakList = res?.data || [];
+        }
       },
       error: () => {
         this.showToast('Gagal memuat daftar pemilik', 'danger');
@@ -62,7 +68,13 @@ export class DataKandangPage implements OnInit {
 
     this.wilayahService.getWilayah().subscribe({
       next: (res: any) => {
-        this.wilayahList = res.data ?? [];
+        if (res.success || res.status === 'success') {
+          this.wilayahList = res.data || [];
+        } else if (Array.isArray(res)) {
+          this.wilayahList = res;
+        } else {
+          this.wilayahList = res?.data || [];
+        }
       },
       error: () => {
         this.showToast('Gagal memuat daftar desa', 'danger');
@@ -210,6 +222,17 @@ export class DataKandangPage implements OnInit {
     await loading.present();
 
     try {
+      // ✅ Request permissions first
+      const permission = await Geolocation.checkPermissions();
+      if (permission.location !== 'granted') {
+        const request = await Geolocation.requestPermissions();
+        if (request.location !== 'granted') {
+          await loading.dismiss();
+          await this.showToast('Izin lokasi tidak diberikan', 'warning');
+          return;
+        }
+      }
+
       const coordinates = await Geolocation.getCurrentPosition({
         enableHighAccuracy: true,
         timeout: 10000
@@ -222,7 +245,7 @@ export class DataKandangPage implements OnInit {
     } catch (error) {
       await loading.dismiss();
       console.error('Error getting location:', error);
-      await this.showToast('Gagal mengambil lokasi GPS', 'danger');
+      await this.showToast('Gagal mengambil lokasi GPS. Pastikan GPS aktif.', 'danger');
     }
   }
 
