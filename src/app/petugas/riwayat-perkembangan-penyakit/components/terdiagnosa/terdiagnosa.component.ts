@@ -1,4 +1,5 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-terdiagnosa',
@@ -7,22 +8,15 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
   standalone: false,
 })
 export class TerdiagnosaComponent implements OnInit  {
-  daftarKasus = [
-    {
-      tanggal : '10 Oktober 2025',
-      id: 'H001',
-      penyakit: 'Flu Sapi',
-      foto : 'assets/icon/penyakit1.jpg'
-    },
+  @Input() daftarKasus: any[] = [];
+  private backendUrl = environment.apiUrl.replace('/api', '');
 
-    {
-      
-      tanggal : '11 Oktober 2025',
-      id: 'H002',
-      penyakit: 'Cacingan',
-      foto : 'assets/icon/penyakit1.jpg'
-    }
-  ]
+  getFotoUrl(path: string) {
+    if (!path) return 'assets/icon/penyakit1.jpg';
+    if(path.includes('assets/')) return path;
+    return `${this.backendUrl}/storage/${path}`;
+  }
+
   constructor() { }
 
   ngOnInit() {}

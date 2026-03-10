@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { PopulasiService } from '../../../services/populasi.service';
 import { PeternakService } from '../../../services/peternak.service';
+import { PenyakitService } from '../../../services/penyakit.service';
+import { ToastController, LoadingController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-laporan-kasus-penyakit',
@@ -13,6 +16,10 @@ export class LaporanKasusPenyakitPage implements OnInit {
   jenisTernakOptions: any[] = [];
   peternakList: any[] = [];
   populasiList: any[] = []; // Menampung daftar hewan / populasi milih peternak terpilih
+
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  selectedFile: File | null = null;
+  photoPreview: string | null = null;
 
   formData = {
     peternakan_id: '',
@@ -30,6 +37,10 @@ export class LaporanKasusPenyakitPage implements OnInit {
   constructor(
     private populasiService: PopulasiService,
     private peternakService: PeternakService,
+    private penyakitService: PenyakitService,
+    private toastCtrl: ToastController,
+    private loadingCtrl: LoadingController,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -99,5 +110,73 @@ export class LaporanKasusPenyakitPage implements OnInit {
       this.formData.jenisKelamin = hewan.jenis_kelamin;
       this.formData.usia = hewan.umur;
     }
+  }
+
+  selectPhoto() {
+    this.fileInput.nativeElement.click();
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.photoPreview = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  async submitLaporan() {
+    if (!this.formData.peternakan_id || !this.formData.tanggal || !this.formData.gejala) {
+      const toast = await this.toastCtrl.create({
+        message: 'Mohon lengkapi Pemilik, Tanggal, dan Gejala Penyakit.',
+        duration: 2500,
+        color: 'warning'
+      });
+      toast.present();
+      return;
+    }
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Mengirim Laporan...'
+    });
+    await loading.present();
+
+    const data = new FormData();
+    data.append('peternakan_id', this.formData.peternakan_id);
+    data.append('tanggal', this.formData.tanggal);
+    data.append('deskripsi', this.formData.gejala);
+    if (this.formData.kategoriHewan) data.append('klompok', this.formData.kategoriHewan);
+    if (this.formData.jenisKelamin) data.append('jekel', this.formData.jenisKelamin);
+    if (this.formData.usia) data.append('usia', this.formData.usia);
+    if (this.selectedFile) {
+      data.append('foto', this.selectedFile);
+    }
+
+    this.penyakitService.laporKasus(data).subscribe({
+      next: async (res) => {
+        await loading.dismiss();
+        if (res.success) {
+          const toast = await this.toastCtrl.create({
+            message: 'Berhasil mengirim laporan kasus penyakit.',
+            duration: 2500,
+            color: 'success'
+          });
+          toast.present();
+          this.router.navigate(['/petugas/penyakit']);
+        }
+      },
+      error: async (err) => {
+        await loading.dismiss();
+        const toast = await this.toastCtrl.create({
+          message: err.error?.message || 'Terjadi kesalahan sistem.',
+          duration: 2500,
+          color: 'danger'
+        });
+        toast.present();
+      }
+    });
   }
 }

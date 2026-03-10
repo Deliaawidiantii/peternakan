@@ -63,18 +63,25 @@
 
   <!-- Deskripsi Gejala -->
   <ion-item lines="none" class="input-item">
-    <ion-textarea placeholder="Deskripsi Gejala"></ion-textarea>
+    <ion-textarea [(ngModel)]="formData.gejala" placeholder="Deskripsi Gejala"></ion-textarea>
   </ion-item>
 
   <!-- Unggah Foto -->
   <h3 class="section-title">Unggah Foto Hewan</h3>
-  <div class="upload-box">
+  <div class="upload-box" *ngIf="!photoPreview" (click)="selectPhoto()">
     <p class="upload-title">Tambahkan Foto</p>
     <p class="upload-desc">Unggah foto hewan yang sakit untuk analisis</p>
     <ion-button expand="block" fill="outline" color="medium" class="upload-btn">
       Pilih Foto
     </ion-button>
   </div>
+  
+  <div class="photo-preview-container" *ngIf="photoPreview" (click)="selectPhoto()">
+     <img [src]="photoPreview" class="preview-img" style="width: 100%; border-radius: 8px; margin-top: 10px; max-height: 250px; object-fit: cover; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" />
+     <ion-button fill="clear" color="medium" style="margin-top: 5px;">Ganti Foto</ion-button>
+  </div>
+  
+  <input type="file" #fileInput accept="image/*" style="display: none;" (change)="onFileSelected($event)" />
 
   <!-- Informasi Penyakit -->
   <h3 class="section-title">Informasi Penyakit</h3>
@@ -112,11 +119,11 @@
 
   <!-- Tombol Kirim -->
   <div class="submit-section">
-    <ion-button expand="block" color="primary" class="submit-btn">
+    <ion-button expand="block" color="primary" class="submit-btn" (click)="submitLaporan()">
       Kirim Laporan
     </ion-button>
 
-    <ion-button expand="block" color="danger" class="submit-btn">
+    <ion-button expand="block" color="danger" class="submit-btn" routerLink="/petugas/penyakit">
       Batal
     </ion-button>
 
