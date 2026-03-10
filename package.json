@@ -28,6 +28,7 @@
     "@capacitor/geolocation": "^7.1.6",
     "@capacitor/haptics": "7.0.2",
     "@capacitor/keyboard": "7.0.3",
+    "@capacitor/local-notifications": "^8.0.2",
     "@capacitor/status-bar": "7.0.3",
     "@ionic/angular": "^8.0.0",
     "ionicons": "^7.0.0",
@@ -50,6 +51,8 @@
     "@capacitor/cli": "7.4.4",
     "@ionic/angular-toolkit": "^12.0.0",
     "@types/jasmine": "~5.1.0",
+    "@types/pusher-js": "^4.2.2",
+    "@types/socket.io-client": "^1.4.36",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
     "@typescript-eslint/parser": "^8.18.0",
     "eslint": "^9.16.0",
@@ -63,6 +66,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "socket.io-client": "^4.8.3",
     "typescript": "~5.6.3"
   },
   "description": "An Ionic project"

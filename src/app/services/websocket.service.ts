@@ -51,9 +51,6 @@ export class WebsocketService {
                 body: `Anda mendapat tugas kegiatan baru: ${event.data?.jenis ?? 'Kegiatan'}`,
                 id: new Date().getTime(),
                 schedule: { at: new Date(Date.now() + 1000) }, // in 1 second
-                sound: null, // Default system sound
-                attachments: null,
-                actionTypeId: '',
                 extra: { kegiatan_id: event.data?.id } // attach data as extra payload
               }
             ]
