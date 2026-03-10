@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'; // ✅ TAMBAH INI
-import { LoadingController, ToastController } from '@ionic/angular'; // ✅ TAMBAH INI
+import { LoadingController, ToastController, AlertController, NavController } from '@ionic/angular'; // ✅ TAMBAH INI
 import { KandangService } from '../../../services/kandang.service'; // ✅ TAMBAH INI
 
 @Component({
@@ -20,7 +20,9 @@ export class DetailKandangPage implements OnInit {
     private route: ActivatedRoute, // ✅ TAMBAH
     private kandangService: KandangService, // ✅ TAMBAH
     private loadingCtrl: LoadingController, // ✅ TAMBAH
-    private toastCtrl: ToastController // ✅ TAMBAH
+    private toastCtrl: ToastController, // ✅ TAMBAH
+    private alertController: AlertController,
+    private navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -71,5 +73,68 @@ export class DetailKandangPage implements OnInit {
       position: 'bottom'
     });
     await toast.present();
+  }
+
+  // Navigate to edit
+  goToEdit() {
+    if (this.kandangId) {
+      this.navCtrl.navigateForward(`/petugas/data-kandang/${this.kandangId}`);
+    }
+  }
+
+  // Delete kandang
+  async deleteKandang() {
+    const alert = await this.alertController.create({
+      header: 'Konfirmasi',
+      message: `Apakah Anda yakin ingin menghapus data kandang ${this.kandang?.nama_kandang}?`,
+      buttons: [
+        {
+          text: 'Batal',
+          role: 'cancel',
+        },
+        {
+          text: 'Hapus',
+          role: 'destructive',
+          handler: async () => {
+            const loading = await this.loadingCtrl.create({
+              message: 'Menghapus data...',
+            });
+            await loading.present();
+
+            this.kandangService.deleteKandang(this.kandangId).subscribe({
+              next: async (response) => {
+                await loading.dismiss();
+
+                const successAlert = await this.alertController.create({
+                  header: 'Berhasil',
+                  message: 'Data kandang berhasil dihapus',
+                  buttons: [
+                    {
+                      text: 'OK',
+                      handler: () => {
+                        this.navCtrl.navigateBack('/petugas/kandang');
+                      },
+                    },
+                  ],
+                });
+                await successAlert.present();
+              },
+              error: async (error) => {
+                await loading.dismiss();
+
+                const errorAlert = await this.alertController.create({
+                  header: 'Error',
+                  message: 'Gagal menghapus data',
+                  buttons: ['OK'],
+                });
+                await errorAlert.present();
+              },
+            });
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 }

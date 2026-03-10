@@ -4,6 +4,16 @@
       <ion-back-button defaultHref="petugas/kandang"></ion-back-button>
     </ion-buttons>
     <ion-title>Detail Kandang</ion-title>
+
+    <!-- Tombol Edit & Hapus -->
+    <ion-buttons slot="end" *ngIf="kandang">
+      <ion-button (click)="goToEdit()">
+        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="deleteKandang()">
+        <ion-icon slot="icon-only" name="trash-outline" color="danger"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
