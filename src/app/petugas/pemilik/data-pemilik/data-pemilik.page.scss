@@ -135,3 +135,16 @@ ion-textarea {
   max-height: 60vh;
   overflow-y: auto;
 }
+
+// Improved ion-select styling
+ion-select {
+  --padding-start: 8px;
+  --padding-end: 8px;
+}
+
+ion-select-option {
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+}

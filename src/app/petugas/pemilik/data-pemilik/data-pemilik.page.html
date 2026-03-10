@@ -87,7 +87,8 @@
           placeholder="Pilih Desa"
           [(ngModel)]="form.wilayah_id"
           name="wilayah_id"
-          interface="alert"
+          interface="popover"
+          [compareWith]="compareWilayah"
           required>
           <ion-select-option *ngFor="let w of wilayahList" [value]="w.id">
             {{ w.nama_desa }}

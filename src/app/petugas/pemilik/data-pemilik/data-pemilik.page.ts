@@ -180,6 +180,10 @@ export class DataPemilikPage implements OnInit {
     });
   }
 
+  compareWilayah(w1: any, w2: any) {
+    return w1 && w2 ? w1 === w2 : w1 === w2;
+  }
+
   goBack() {
     this.navCtrl.back();
   }
