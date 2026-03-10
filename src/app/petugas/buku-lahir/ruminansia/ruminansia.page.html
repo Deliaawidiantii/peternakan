@@ -1,82 +1,85 @@
-<header>
-   <ion-toolbar color="light"> 
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Input Data Kelahiran</ion-title>
-    </ion-toolbar>
-  </header>
+<ion-header class="custom-header" translucent="true">
+  <ion-toolbar>
+    <div class="header-content">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/"></ion-back-button>
+      </ion-buttons>
+      <h2 class="header-title">Input Data Kelahiran</h2>
+      <div style="width: 40px;"></div>
+    </div>
+  </ion-toolbar>
+</ion-header>
 
+<ion-content fullscreen="true" class="ion-padding">
+  <div class="form-container">
+    <div class="form-section">
+      
+      <div class="form-group">
+        <label class="form-label">Tanggal Lahir</label>
+        <div class="date-input-wrapper">
+          <ion-input type="date" placeholder="Pilih Tanggal" class="form-input"></ion-input>
+          <ion-icon name="calendar-outline" class="calendar-icon"></ion-icon>
+        </div>
+      </div>
 
+      <div class="form-group">
+        <label class="form-label">ID Induk</label>
+        <ion-input type="text" placeholder="Masukkan ID Induk" class="form-input"></ion-input>
+      </div>
 
-<ion-content class="input-kelahiran-content">
-  <ion-list lines="none">
-    <!-- Tanggal Lahir -->
-    <ion-item>
-      <ion-label position="stacked">Tanggal Lahir</ion-label>
-      <ion-input placeholder="Pilih Tanggal" type="date"></ion-input>
-    </ion-item>
+      <div class="form-group">
+        <label class="form-label">Jenis Ruminansia</label>
+        <ion-select placeholder="Pilih Jenis" class="form-select">
+          <ion-select-option value="sapi">Sapi</ion-select-option>
+          <ion-select-option value="kambing">Kambing</ion-select-option>
+          <ion-select-option value="domba">Domba</ion-select-option>
+        </ion-select>
+      </div>
 
-    <!-- ID Induk -->
-    <ion-item>
-      <ion-label position="stacked">ID Induk</ion-label>
-      <ion-input placeholder="Masukkan ID Induk"></ion-input>
-    </ion-item>
+      <div class="form-group">
+        <label class="form-label">Ras</label>
+        <ion-input type="text" placeholder="Masukkan Ras" class="form-input"></ion-input>
+      </div>
 
-    <!-- Jenis Ruminansia -->
-    <ion-item>
-      <ion-label position="stacked">Jenis Ruminansia</ion-label>
-      <ion-select placeholder="Pilih Jenis">
-        <ion-select-option value="sapi">Sapi</ion-select-option>
-        <ion-select-option value="kambing">Kambing</ion-select-option>
-        <ion-select-option value="domba">Domba</ion-select-option>
-      </ion-select>
-    </ion-item>
+      <div class="form-group">
+        <label class="form-label">Jumlah Anak</label>
+        <ion-input type="number" placeholder="Masukkan Jumlah" class="form-input"></ion-input>
+      </div>
 
-    <ion-item>
-      <ion-label position="stacked">Ras</ion-label>
-      <ion-input placeholder="Masukkan Ras"></ion-input>
-    </ion-item>
+      <div class="form-group">
+        <label class="form-label">ID Anak Hewan (Jika Ada)</label>
+        <ion-input type="text" placeholder="Masukkan ID" class="form-input"></ion-input>
+      </div>
 
-    <!-- Jumlah Anak -->
-    <ion-item>
-      <ion-label position="stacked">Jumlah Anak</ion-label>
-      <ion-input placeholder="Masukkan Jumlah" type="number"></ion-input>
-    </ion-item>
+      <div class="form-group">
+        <label class="form-label">Jenis Kelamin Anak</label>
+        <ion-select placeholder="Pilih Jenis Kelamin" class="form-select">
+          <ion-select-option value="jantan">Jantan</ion-select-option>
+          <ion-select-option value="betina">Betina</ion-select-option>
+        </ion-select>
+      </div>
 
-    <!-- ID Anak -->
-    <ion-item>
-      <ion-label position="stacked">ID Anak Hewan (Jika Ada)</ion-label>
-      <ion-input placeholder="Masukkan ID"></ion-input>
-    </ion-item>
+      <div class="form-group">
+        <label class="form-label">Berat Lahir</label>
+        <ion-input type="number" placeholder="Masukkan Berat" class="form-input"></ion-input>
+      </div>
 
-    <!-- Jenis Kelamin Anak -->
-    <ion-item>
-      <ion-label position="stacked">Jenis Kelamin Anak</ion-label>
-      <ion-select placeholder="Pilih Jenis Kelamin">
-        <ion-select-option value="jantan">Jantan</ion-select-option>
-        <ion-select-option value="betina">Betina</ion-select-option>
-      </ion-select>
-    </ion-item>
+      <div class="form-group">
+        <label class="form-label">Status Kelahiran</label>
+        <ion-select placeholder="Pilih Status" class="form-select">
+          <ion-select-option value="hidup">Hidup</ion-select-option>
+          <ion-select-option value="mati">Mati</ion-select-option>
+        </ion-select>
+      </div>
 
-    <!-- Berat Lahir -->
-    <ion-item>
-      <ion-label position="stacked">Berat Lahir</ion-label>
-      <ion-input placeholder="Masukkan Berat" type="number"></ion-input>
-    </ion-item>
-
-    <!-- Status Kelahiran -->
-    <ion-item>
-      <ion-label position="stacked">Status Kelahiran</ion-label>
-      <ion-select placeholder="Pilih Status">
-        <ion-select-option value="hidup">Hidup</ion-select-option>
-        <ion-select-option value="mati">Mati</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </ion-list>
-
-  <!-- Tombol Simpan -->
-  <div class="btn-container">
-    <ion-button expand="block" class="btn-simpan">Simpan</ion-button>
+    </div>
   </div>
 </ion-content>
+
+<ion-footer class="ion-no-border custom-footer">
+  <div class="footer-content">
+    <ion-button expand="block" class="submit-btn" type="submit">
+      <span>Simpan</span>
+    </ion-button>
+  </div>
+</ion-footer>

@@ -49,9 +49,15 @@ export class PopulasiService {
     const headers = this.getHeaders();
     return this.http.get(`${this.apiUrl}/populasi/kategori`, { headers });
   }
-  // Method baru untuk get wilayah/desa
+  // Method baru untuk get wilayah/desa (auth required - current user based)
   getWilayahList(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/wilayah`);
+    const headers = this.getHeaders();
+    return this.http.get(`${this.apiUrl}/wilayah`, { headers });
+  }
+
+  // Method baru untuk get ALL wilayah (public)
+  getAllWilayahPublic(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/wilayah/public`);
   }
 
   // Method untuk get komoditas/jenis hewan

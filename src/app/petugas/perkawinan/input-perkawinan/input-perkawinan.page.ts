@@ -77,100 +77,13 @@ export class InputPerkawinanPage implements OnInit {
   ];
 
   // Data mapping untuk Kabupaten berdasarkan Provinsi
-  kabupatenMap: { [key: string]: any[] } = {
-    jawa_barat: [
-      { label: 'Bogor', value: 'bogor' },
-      { label: 'Bandung', value: 'bandung' },
-      { label: 'Sukabumi', value: 'sukabumi' },
-      { label: 'Cianjur', value: 'cianjur' },
-      { label: 'Tasikmalaya', value: 'tasikmalaya' },
-    ],
-    jawa_tengah: [
-      { label: 'Semarang', value: 'semarang' },
-      { label: 'Surakarta', value: 'surakarta' },
-      { label: 'Pekalongan', value: 'pekalongan' },
-      { label: 'Purwokerto', value: 'purwokerto' },
-      { label: 'Kudus', value: 'kudus' },
-    ],
-    jawa_timur: [
-      { label: 'Surabaya', value: 'surabaya' },
-      { label: 'Malang', value: 'malang' },
-      { label: 'Pasuruan', value: 'pasuruan' },
-      { label: 'Sidoarjo', value: 'sidoarjo' },
-      { label: 'Gresik', value: 'gresik' },
-    ],
-    kalimantan_selatan: [
-      { label: 'Banjarmasin', value: 'banjarmasin' },
-      { label: 'Banjarbaru', value: 'banjarbaru' },
-      { label: 'Kandangan', value: 'kandangan' },
-      { label: 'Martapura', value: 'martapura' },
-      { label: 'Tanah Laut', value: 'tanah_laut' },
-    ],
-    sumatera_utara: [
-      { label: 'Medan', value: 'medan' },
-      { label: 'Deli Serdang', value: 'deli_serdang' },
-      { label: 'Karo', value: 'karo' },
-      { label: 'Simalungun', value: 'simalungun' },
-      { label: 'Langkat', value: 'langkat' },
-    ],
-    bali: [
-      { label: 'Denpasar', value: 'denpasar' },
-      { label: 'Badung', value: 'badung' },
-      { label: 'Gianyar', value: 'gianyar' },
-      { label: 'Klungkung', value: 'klungkung' },
-      { label: 'Tabanan', value: 'tabanan' },
-    ],
-  };
+  kabupatenMap: { [key: string]: any[] } = {};
 
   // Data mapping untuk Kecamatan
-  kecamatanMap: { [key: string]: any[] } = {
-    banjarmasin: [
-      { label: 'Banjarmasin Timur', value: 'banjarmasin_timur' },
-      { label: 'Banjarmasin Barat', value: 'banjarmasin_barat' },
-      { label: 'Banjarmasin Selatan', value: 'banjarmasin_selatan' },
-      { label: 'Banjarmasin Utara', value: 'banjarmasin_utara' },
-    ],
-    bogor: [
-      { label: 'Bogor Selatan', value: 'bogor_selatan' },
-      { label: 'Bogor Timur', value: 'bogor_timur' },
-      { label: 'Bogor Barat', value: 'bogor_barat' },
-      { label: 'Bogor Utara', value: 'bogor_utara' },
-    ],
-    bandung: [
-      { label: 'Bandung Kulon', value: 'bandung_kulon' },
-      { label: 'Bandung Wetan', value: 'bandung_wetan' },
-      { label: 'Bandung Lor', value: 'bandung_lor' },
-      { label: 'Rancasari', value: 'rancasari' },
-    ],
-    semarang: [
-      { label: 'Semarang Timur', value: 'semarang_timur' },
-      { label: 'Semarang Barat', value: 'semarang_barat' },
-      { label: 'Semarang Selatan', value: 'semarang_selatan' },
-      { label: 'Semarang Utara', value: 'semarang_utara' },
-    ],
-  };
+  kecamatanMap: { [key: string]: any[] } = {};
 
   // Data mapping untuk Desa
-  desaMap: { [key: string]: any[] } = {
-    banjarmasin_timur: [
-      { label: 'Kuripan', value: 'kuripan' },
-      { label: 'Pekapuran Laut', value: 'pekapuran_laut' },
-      { label: 'Pekapuran Raya', value: 'pekapuran_raya' },
-      { label: 'Basirih', value: 'basirih' },
-    ],
-    bogor_selatan: [
-      { label: 'Cilendek Barat', value: 'cilendek_barat' },
-      { label: 'Cilendek Timur', value: 'cilendek_timur' },
-      { label: 'Cilendek Tengah', value: 'cilendek_tengah' },
-      { label: 'Tanjungsari', value: 'tanjungsari' },
-    ],
-    bandung_kulon: [
-      { label: 'Jajasan', value: 'jajasan' },
-      { label: 'Nyengseret', value: 'nyengseret' },
-      { label: 'Cigondewah', value: 'cigondewah' },
-      { label: 'Ciangsana', value: 'ciangsana' },
-    ],
-  };
+  desaMap: { [key: string]: any[] } = {};
 
   // List untuk dropdown yang berubah dinamis
   kabupatenList: any[] = [];
@@ -192,18 +105,52 @@ export class InputPerkawinanPage implements OnInit {
   loadDataMaster() {
     // Ambil data Master Jenis Hewan
     this.populasiService.getJenisHewan().subscribe((res: any) => {
+      let data: any[] = [];
       if (res.success || res.status === 'success') {
-        const data = res.data || [];
-        this.masterJenisHewan = data;
+        data = res.data || [];
+      } else if (Array.isArray(res)) {
+        data = res;
+      }
+      
+      this.masterJenisHewan = data;
+      // Ambil kategori unik untuk option Jenis Ternak
+      const uniqueKategori = Array.from(
+        new Set(data.map((item: any) => item.kategori)),
+      );
+      this.jenisTernakOptions = uniqueKategori.map((k) => ({
+        label: k,
+        value: k,
+      }));
+    });
 
-        // Ambil kategori unik untuk option Jenis Ternak
-        const uniqueKategori = Array.from(
-          new Set(data.map((item: any) => item.kategori)),
-        );
-        this.jenisTernakOptions = uniqueKategori.map((k) => ({
-          label: k,
-          value: k,
-        }));
+    // Ambil data ALL Wilayah (Provinsi -> Kabupaten -> Kecamatan -> Desa)
+    this.populasiService.getAllWilayahPublic().subscribe((res: any) => {
+      let data: any[] = [];
+      if (res.success || res.status === 'success') {
+        data = res.data || [];
+      } else if (Array.isArray(res)) {
+        data = res;
+      }
+      
+      // Reset dan Inisialisasi Root Data
+      this.provinsiOptions = [{ label: 'Jawa Barat', value: 'jawa_barat' }];
+      this.kabupatenMap = { 'jawa_barat': [{ label: 'Karawang', value: 'karawang' }] };
+      this.kecamatanMap = { 'karawang': [] };
+      this.desaMap = {};
+      
+      if (data && data.length > 0) {
+        // Ekstrak kecamatan unik
+        const uniqueKecamatan = Array.from(new Set(data.map((item: any) => item.nama_kecamatan)));
+        
+        // Isi list kecamatan milik karawang
+        this.kecamatanMap['karawang'] = uniqueKecamatan.map((k: any) => ({ label: k, value: k }));
+        
+        // Buat map desa berdasarkan kecamatan masing-masing
+        uniqueKecamatan.forEach((kec: any) => {
+          this.desaMap[kec] = data
+            .filter((w: any) => w.nama_kecamatan === kec)
+            .map((w: any) => ({ label: w.nama_desa, value: w.nama_desa, id: w.id }));
+        });
       }
     });
 
