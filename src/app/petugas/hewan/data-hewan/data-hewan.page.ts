@@ -7,6 +7,7 @@ import { AlertController, LoadingController, ToastController } from '@ionic/angu
 import { PopulasiService } from '../../../services/populasi.service';
 import { WilayahService } from '../../../services/wilayah.service';
 import { PeternakService } from '../../../services/peternak.service';
+import { KandangService } from '../../../services/kandang.service';
 
 @Component({
   selector: 'app-data-hewan',
@@ -225,7 +226,8 @@ export class DataHewanPage implements OnInit {
     private toastCtrl: ToastController,
     private populasiService: PopulasiService,
     private wilayahService: WilayahService,
-    private peternakService: PeternakService
+    private peternakService: PeternakService,
+    private kandangService: KandangService
   ) {}
 
   ngOnInit() {
@@ -273,18 +275,25 @@ export class DataHewanPage implements OnInit {
   loadKandangList() {
     this.isLoadingKandang = true;
     
-    // Pakai data dummy untuk sementara
-    setTimeout(() => {
-      this.kandangList = [
-        { id: 1, nama_kandang: 'Kandang A' },
-        { id: 2, nama_kandang: 'Kandang B' },
-        { id: 3, nama_kandang: 'Kandang C' },
-        { id: 4, nama_kandang: 'Kandang D' },
-        { id: 5, nama_kandang: 'Kandang E' }
-      ];
-      this.isLoadingKandang = false;
-      console.log('✅ Data kandang dummy loaded:', this.kandangList);
-    }, 300);
+    this.kandangService.getKandangList().subscribe({
+      next: (response: any) => {
+        if (response.success && response.data) {
+          this.kandangList = response.data;
+        } else if (Array.isArray(response)) {
+          this.kandangList = response;
+        } else {
+          this.kandangList = response?.data || [];
+        }
+        this.isLoadingKandang = false;
+        console.log('✅ Data kandang loaded:', this.kandangList);
+      },
+      error: (err: any) => {
+        console.error('❌ Error loading kandang:', err);
+        this.isLoadingKandang = false;
+        this.kandangList = [];
+        this.showToast('Gagal memuat data kandang', 'warning');
+      }
+    });
   }
 
   /**
