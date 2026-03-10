@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotifikasiService } from '../../services/notifikasi.service';
 import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notifikasi',
@@ -16,6 +17,7 @@ export class NotifikasiPage implements OnInit {
   constructor(
     private notifikasiService: NotifikasiService,
     private toastCtrl: ToastController,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -44,11 +46,24 @@ export class NotifikasiPage implements OnInit {
   }
 
   async markAsRead(item: any) {
-    if (item.read_at) return;
+    // Navigasi ke detail jika punya kegiatan ID
+    const proceedToDetail = () => {
+      const kegiatanId = item.data?.id || item.data?.kegiatan_id;
+      if (kegiatanId && item.type.includes('Kegiatan')) {
+        this.router.navigate(['/petugas/detail-kegiatan', kegiatanId]);
+      }
+    };
+
+    if (item.read_at) {
+      proceedToDetail();
+      return;
+    }
+
     this.notifikasiService.markAsRead(item.id).subscribe({
       next: (res) => {
         item.read_at = new Date().toISOString();
         this.unreadCount = Math.max(0, this.unreadCount - 1);
+        proceedToDetail();
       },
     });
   }

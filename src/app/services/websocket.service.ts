@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
+import { LocalNotifications } from '@capacitor/local-notifications';
 
 @Injectable({
   providedIn: 'root',
@@ -40,6 +41,26 @@ export class WebsocketService {
         console.log('🔔 Kegiatan baru received:', event);
 
         this.kegiatanCreated$.next(event);
+
+        // Trigger native OS local notification
+        try {
+          await LocalNotifications.schedule({
+            notifications: [
+              {
+                title: 'Data Kegiatan Baru',
+                body: `Anda mendapat tugas kegiatan baru: ${event.data?.jenis ?? 'Kegiatan'}`,
+                id: new Date().getTime(),
+                schedule: { at: new Date(Date.now() + 1000) }, // in 1 second
+                sound: null, // Default system sound
+                attachments: null,
+                actionTypeId: '',
+                extra: { kegiatan_id: event.data?.id } // attach data as extra payload
+              }
+            ]
+          });
+        } catch (e) {
+          console.error('Error triggering local notification', e);
+        }
 
         // Show toast notification
         const toast = await this.toastCtrl.create({

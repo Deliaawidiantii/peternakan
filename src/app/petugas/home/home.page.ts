@@ -5,6 +5,7 @@ import { PeternakService } from '../../services/peternak.service';
 import { WilayahService } from '../../services/wilayah.service';
 import { KandangService } from '../../services/kandang.service';
 import { KegiatanService } from '../../services/kegiatan.service';
+import { NotifikasiService } from '../../services/notifikasi.service';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +22,8 @@ export class HomePage implements OnInit {
     totalKandang: 0,
     totalKegiatan: 0
   };
+
+  unreadCount: number = 0;
 
   // Data Laporan Terbaru (dari Database)
   laporanTerbaru: any[] = [];
@@ -46,7 +49,8 @@ export class HomePage implements OnInit {
     private peternakService: PeternakService,
     private wilayahService: WilayahService,
     private kandangService: KandangService,
-    private kegiatanService: KegiatanService
+    private kegiatanService: KegiatanService,
+    private notifikasiService: NotifikasiService
   ) {}
 
   ngOnInit() {
@@ -58,7 +62,24 @@ export class HomePage implements OnInit {
     
     // Load data dari database
     this.loadStatistik();
-    this.loadLaporanTerbaru();
+    this.loadDataNotifikasi();
+  }
+
+  ionViewWillEnter() {
+    this.loadDataNotifikasi();
+  }
+
+  loadDataNotifikasi() {
+    this.notifikasiService.getNotifikasi(1).subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.unreadCount = res.unread_count || 0;
+        }
+      },
+      error: (err) => {
+        console.error('Error load notifikasi count:', err);
+      }
+    });
   }
 
   /**
