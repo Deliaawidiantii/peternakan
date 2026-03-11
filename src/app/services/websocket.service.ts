@@ -18,11 +18,22 @@ export class WebsocketService {
     private ngZone: NgZone,
   ) {}
 
-  connect() {
+  async connect() {
     if (this.echo) return; // already connected
 
     // Make Pusher available globally (required by Laravel Echo)
     (window as any).Pusher = Pusher;
+
+    // Buat Notification Channel untuk Android 8+ agar notifikasi memunculkan banner popup (heads-up)
+    try {
+      await LocalNotifications.createChannel({
+        id: 'realtime-notif',
+        name: 'Realtime Notifications',
+        description: 'Notifikasi real-time dari server',
+        importance: 5, // 5 = MAX importance (memunculkan Heads-Up popdown & suara)
+        visibility: 1, // Public visibility
+      });
+    } catch(e) { /* channel creation failure is fine on iOS/web */ }
 
     this.echo = new Echo({
       broadcaster: 'reverb',
@@ -44,13 +55,15 @@ export class WebsocketService {
 
         // Trigger native OS local notification
         try {
+          const generatedId = Math.floor(Math.random() * 10000) + 1; // 32-bit int safe
           await LocalNotifications.schedule({
             notifications: [
               {
                 title: 'Data Kegiatan Baru',
                 body: `Anda mendapat tugas kegiatan baru: ${event.data?.jenis ?? 'Kegiatan'}`,
-                id: new Date().getTime(),
-                schedule: { at: new Date(Date.now() + 1000) }, // in 1 second
+                id: generatedId,
+                channelId: 'realtime-notif',
+                schedule: { at: new Date(Date.now() + 500) }, // segera tunjukkan
                 extra: { kegiatan_id: event.data?.id } // attach data as extra payload
               }
             ]
