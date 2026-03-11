@@ -59,13 +59,11 @@ export class HomePage implements OnInit {
     
     // Load lokasi berdasarkan wilayah user
     this.loadLokasiInfo();
-    
-    // Load data dari database
-    this.loadStatistik();
-    this.loadDataNotifikasi();
   }
 
   ionViewWillEnter() {
+    // Load data dari database setiap kali halaman ditampilkan
+    this.loadStatistik();
     this.loadDataNotifikasi();
   }
 

@@ -70,16 +70,16 @@ export class LahirPage implements OnInit {
     private populasiService: PopulasiService,
   ) {
     this.lahirForm = this.fb.group({
-      eartagAnak: ['', Validators.required],
+      eartagAnak: [''],
       tanggalLahir: ['', Validators.required],
       jenisKelamin: ['', Validators.required],
       kondisi: ['', Validators.required],
       jenisTernakAnak: ['', Validators.required],
-      rumpunTernakAnak: ['', Validators.required],
-      beratBadan: ['', [Validators.required, Validators.min(0)]],
-      panjangBadan: ['', [Validators.required, Validators.min(0)]],
-      tinggiPundak: ['', [Validators.required, Validators.min(0)]],
-      lingkarDada: ['', [Validators.required, Validators.min(0)]],
+      rumpunTernakAnak: [''],
+      beratBadan: [''],
+      panjangBadan: [''],
+      tinggiPundak: [''],
+      lingkarDada: [''],
       catatan: [''],
     });
   }

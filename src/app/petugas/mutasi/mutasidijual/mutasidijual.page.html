@@ -68,24 +68,24 @@
 
   <ion-item class="input-item">
     <ion-label position="stacked">Tanggal Penjualan</ion-label>
-    <ion-input placeholder="Pilih Tanggal" type="date"></ion-input>
+    <ion-input placeholder="Pilih Tanggal" type="date" [(ngModel)]="tanggalPenjualan"></ion-input>
   </ion-item>
 
   <ion-item class="input-item">
     <ion-label position="stacked">Nama Pembeli</ion-label>
-    <ion-input type="number" placeholder="Masukkan Nama Pembeli"></ion-input>
+    <ion-input type="text" placeholder="Masukkan Nama Pembeli" [(ngModel)]="namaPembeli"></ion-input>
   </ion-item>
 
 
   <ion-item class="input-item">
     <ion-label position="stacked">Harga Jual</ion-label>
-    <ion-input type="number" placeholder="Masukkan Harga Jual"></ion-input>
+    <ion-input type="number" placeholder="Masukkan Harga Jual" [(ngModel)]="hargaJual"></ion-input>
   </ion-item>
 
 
   <ion-item class="input-item">
     <ion-label position="stacked">Deskripsi Tambahan (Opsional)</ion-label>
-    <ion-input type="number" placeholder="Masukan deksripsi tambahan"></ion-input>
+    <ion-input type="text" placeholder="Masukan deksripsi tambahan" [(ngModel)]="deskripsi"></ion-input>
   </ion-item>
 
   <!--  Tombol Simpan -->

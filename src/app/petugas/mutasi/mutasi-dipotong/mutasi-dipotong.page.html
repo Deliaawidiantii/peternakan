@@ -68,12 +68,12 @@
 
   <ion-item class="input-item">
     <ion-label position="stacked">Tanggal Pemotongan</ion-label>
-    <ion-input placeholder="Pilih Tanggal" type="date"></ion-input>
+    <ion-input placeholder="Pilih Tanggal" type="date" [(ngModel)]="tanggalPemotongan"></ion-input>
   </ion-item>
 
   <ion-item class="input-item">
     <ion-label position="stacked">Tujuan Potong</ion-label>
-    <ion-select placeholder="Pilih Tujuan">
+    <ion-select placeholder="Pilih Tujuan" [(ngModel)]="alasanPemotongan">
       <ion-select-option value="konsumsi">Konsumsi Pribadi</ion-select-option>
       <ion-select-option value="pasar">Dijual ke Pasar / Konsumen</ion-select-option>
       <ion-select-option value="sumbangan">Disumbangkan (Qurban / Aqiqah / Sosial)</ion-select-option>
