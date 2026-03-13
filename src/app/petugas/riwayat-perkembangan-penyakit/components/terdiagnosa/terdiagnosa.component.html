@@ -24,7 +24,8 @@
               fill="solid"
               class="update-btn"
               size="small"
-              routerLink="/petugas/update-status-penyakit"
+              [routerLink]="['/petugas/update-status-penyakit']"
+              [queryParams]="{ id: kasus.id }"
             >
               Update
             </ion-button>

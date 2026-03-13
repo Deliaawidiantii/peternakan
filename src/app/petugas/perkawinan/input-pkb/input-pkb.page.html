@@ -10,6 +10,29 @@
 <ion-content>
   <div class="form-container">
     <form #pkbForm="ngForm">
+
+      <ion-card class="section-card">
+        <ion-card-header>
+          <ion-card-title class="section-title">
+            <ion-icon name="person-circle-outline"></ion-icon>
+            Petugas Input (User Ionic)
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item lines="none">
+            <ion-label>
+              <p>Nama Petugas</p>
+              <h2>{{ formData.namaPetugas || '-' }}</h2>
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label>
+              <p>NIK Petugas</p>
+              <h2>{{ formData.nikPetugas || '-' }}</h2>
+            </ion-label>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
       
       <!-- Data Petugas -->
       <!-- <ion-card class="section-card">
@@ -75,6 +98,7 @@
               placeholder="Masukkan nomor eartag" 
               [(ngModel)]="formData.eartagBetina"
               name="eartagBetina"
+              readonly="true"
               required>
             </ion-input>
           </ion-item>
@@ -85,6 +109,7 @@
               placeholder="Pilih jenis ternak" 
               [(ngModel)]="formData.jenisTernak"
               name="jenisTernak"
+              disabled="true"
               required>
               <ion-select-option value="Sapi">Sapi</ion-select-option>
               <ion-select-option value="Kerbau">Kerbau</ion-select-option>
@@ -97,6 +122,7 @@
               placeholder="Pilih rumpun ternak" 
               [(ngModel)]="formData.rumpunTernak"
               name="rumpunTernak"
+              disabled="true"
               required>
               <ion-select-option value="PO">PO (Peranakan Ongole)</ion-select-option>
               <ion-select-option value="Brahmana">Brahmana</ion-select-option>
@@ -115,6 +141,7 @@
               placeholder="Masukkan umur induk" 
               [(ngModel)]="formData.umurInduk"
               name="umurInduk"
+              readonly="true"
               min="0"
               required>
             </ion-input>
@@ -200,6 +227,7 @@
               placeholder="Masukkan nama pemilik" 
               [(ngModel)]="formData.namaPemilik"
               name="namaPemilik"
+              readonly="true"
               required>
             </ion-input>
           </ion-item>
@@ -211,6 +239,7 @@
               placeholder="Masukkan NIK pemilik (16 digit)" 
               [(ngModel)]="formData.nikPemilik"
               name="nikPemilik"
+              readonly="true"
               maxlength="16"
               required>
             </ion-input>
@@ -236,6 +265,7 @@
               placeholder="Masukkan nama provinsi" 
               [(ngModel)]="formData.provinsi"
               name="provinsi"
+              readonly="true"
               required>
             </ion-input>
           </ion-item>
@@ -247,6 +277,7 @@
               placeholder="Masukkan nama kabupaten/kota" 
               [(ngModel)]="formData.kabupaten"
               name="kabupaten"
+              readonly="true"
               required>
             </ion-input>
           </ion-item>
@@ -258,6 +289,7 @@
               placeholder="Masukkan nama kecamatan" 
               [(ngModel)]="formData.kecamatan"
               name="kecamatan"
+              readonly="true"
               required>
             </ion-input>
           </ion-item>
@@ -269,46 +301,13 @@
               placeholder="Masukkan nama desa/kelurahan" 
               [(ngModel)]="formData.desa"
               name="desa"
+              readonly="true"
               required>
             </ion-input>
           </ion-item>
 
         </ion-card-content>
       </ion-card> 
-
-      <!-- Upload Foto -->
-      <ion-card class="section-card">
-        <ion-card-header>
-          <ion-card-title class="section-title">
-            <ion-icon name="camera-outline"></ion-icon>
-            Upload Foto
-          </ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          
-          <div class="photo-upload" (click)="fileInput.click()">
-            <ion-icon name="camera" class="upload-icon"></ion-icon>
-            <div class="photo-upload-text">
-              <strong>Klik untuk upload foto</strong><br>
-              <small>Format: JPG, PNG, JPEG (Max 5MB)</small>
-            </div>
-          </div>
-
-          <input 
-            #fileInput 
-            type="file" 
-            accept="image/*" 
-            style="display: none;" 
-            (change)="onFileSelected($event)">
-
-          <img 
-            *ngIf="previewImage" 
-            [src]="previewImage" 
-            class="photo-preview" 
-            alt="Preview">
-
-        </ion-card-content>
-      </ion-card>
 
     </form>
 

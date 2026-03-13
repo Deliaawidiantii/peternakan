@@ -8,59 +8,25 @@
 </ion-header>
 
 <ion-content class="ion-padding custom-bg">
+  <div *ngIf="kasusList.length === 0" class="empty-state">
+    Belum ada kasus penyakit.
+  </div>
 
-  <!-- Kasus 1 -->
-  <ion-item 
-    lines="none" 
-    class="case-item" 
-    [routerLink]="['/petugas/detail-penyakit']" 
-    [queryParams]="{ status: 'waiting' }">
-    <img src="assets/icon/penyakit2.jpg" alt="Penyakit Mulut dan Kuku" class="disease-image">
+  <ion-item
+    *ngFor="let kasus of kasusList"
+    lines="none"
+    class="case-item"
+    (click)="goToDetail(kasus)">
+    <img [src]="getFotoUrl(kasus.foto)" alt="Kasus penyakit" class="disease-image">
     <ion-label>
-      <h2>Penyakit Mulut dan Kuku</h2>
-      <p>Status: <span class="status waiting">Menunggu Verifikasi</span></p>
+      <h2>{{ kasus.diagnosa || kasus.jenis_penyakit || 'Menunggu Diagnosa' }}</h2>
+      <p>Gejala: {{ kasus.gejala || kasus.deskripsi || '-' }}</p>
+      <p>
+        Status:
+        <span class="status" [ngClass]="getStatusClass(kasus.status_validasi)">
+          {{ getStatusLabel(kasus.status_validasi) }}
+        </span>
+      </p>
     </ion-label>
   </ion-item>
-
-  <!-- Kasus 2 -->
-  <ion-item 
-    lines="none" 
-    class="case-item" 
-    [routerLink]="['/petugas/detail-penyakit']" 
-    [queryParams]="{ status: 'rejected' }">
-    <img src="assets/icon/penyakit3.jpg" alt="Mastitis pada Sapi Perah" class="disease-image">
-    <ion-label>
-      <h2>Mastitis pada Sapi Perah</h2>
-      <p>Catatan Admin: Data tidak lengkap</p>
-      <p>Status: <span class="status rejected">Ditolak</span></p>
-    </ion-label>
-  </ion-item>
-
-  <!-- Kasus 3 -->
-  <ion-item 
-    lines="none" 
-    class="case-item" 
-    [routerLink]="['/petugas/detail-penyakit']" 
-    [queryParams]="{ status: 'verified' }">
-    <img src="assets/icon/penyakit2.jpg" alt="Demam Tiga Hari" class="disease-image">
-    <ion-label>
-      <h2>Demam Tiga Hari</h2>
-      <p>Catatan Admin: Data sudah sesuai</p>
-      <p>Status: <span class="status verified">Terverifikasi</span></p>
-    </ion-label>
-  </ion-item>
-
-  <!-- Kasus 4 -->
-  <ion-item 
-    lines="none" 
-    class="case-item" 
-    [routerLink]="['/petugas/detail-penyakit']" 
-    [queryParams]="{ status: 'waiting' }">
-    <img src="assets/icon/penyakit3.jpg" alt="Anthrax pada Domba" class="disease-image">
-    <ion-label>
-      <h2>Anthrax pada Domba</h2>
-      <p>Status: <span class="status waiting">Menunggu Verifikasi</span></p>
-    </ion-label>
-  </ion-item>
-
 </ion-content>

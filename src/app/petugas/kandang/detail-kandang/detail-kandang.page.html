@@ -23,6 +23,8 @@
   <img *ngIf="kandang.foto_kandang_url" 
        [src]="kandang.foto_kandang_url" 
        [alt]="kandang.nama_kandang"
+      title="Foto kandang"
+      [title]="kandang.nama_kandang"
        class="kandang-image">
   
   <!-- Kalau gak ada foto, tampilkan placeholder -->
@@ -31,13 +33,13 @@
   </div>
 </div>
 
-<div *ngIf="isLoading" style="text-align: center; padding: 40px;">
+<div *ngIf="isLoading" class="page-state">
   <ion-spinner></ion-spinner>
   <p>Memuat data...</p>
 </div>
 
-<div *ngIf="!isLoading && !kandang" style="text-align: center; padding: 40px;">
-  <ion-icon name="alert-circle-outline" style="font-size: 64px; color: #d0dfe6;"></ion-icon>
+<div *ngIf="!isLoading && !kandang" class="page-state">
+  <ion-icon name="alert-circle-outline" class="state-icon"></ion-icon>
   <p>Data tidak ditemukan</p>
 </div>
 
@@ -69,7 +71,17 @@
 
      <div class="info-row">
       <p class="label">Lokasi</p>
-      <p class="value">{{ kandang.titik_kordinat || '-' }}</p>
+      <div class="value">
+        <p class="coords-text">{{ kandang.titik_kordinat || '-' }}</p>
+        <a *ngIf="hasValidCoordinates()"
+           [href]="getGoogleMapsUrl()"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="maps-link">
+          <ion-icon name="navigate-outline"></ion-icon>
+          Buka di Google Maps
+        </a>
+      </div>
     </div>
 
 

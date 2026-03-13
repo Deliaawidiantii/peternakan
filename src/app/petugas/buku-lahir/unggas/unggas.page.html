@@ -1,60 +1,94 @@
-<ion-header>
+<ion-header class="custom-header">
   <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button defaultHref="/petugas/buku-lahir"></ion-back-button>
     </ion-buttons>
     <ion-title>Input Data Kelahiran</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="input-kelahiran-content">
-  <ion-list lines="none">
-    <ion-item>
-      <ion-label position="stacked">Tanggal Lahir</ion-label>
-      <ion-input type="date" placeholder="Pilih Tanggal"></ion-input>
-    </ion-item>
+<ion-content class="ion-padding custom-bg">
+  <h1 class="page-title">Input Data Kelahiran Unggas</h1>
 
-    <ion-item>
-      <ion-label position="stacked">ID Induk</ion-label>
-      <ion-input placeholder="Masukkan ID Induk"></ion-input>
-    </ion-item>
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Tanggal Penetasan</ion-label>
+    <ion-input type="date" [(ngModel)]="form.tanggal_penetasan" placeholder="Pilih Tanggal"></ion-input>
+  </ion-item>
 
-    <ion-item>
-      <ion-label position="stacked">Jenis Unggas</ion-label>
-      <ion-select placeholder="Pilih Jenis">
-        <ion-select-option value="ayam">Ayam</ion-select-option>
-        <ion-select-option value="bebek">Bebek</ion-select-option>
-        <ion-select-option value="angsa">Angsa</ion-select-option>
-      </ion-select>
-    </ion-item>
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">ID Induk</ion-label>
+    <ion-input type="text" [(ngModel)]="form.id_induk" placeholder="Masukkan ID Induk"></ion-input>
+  </ion-item>
 
-    <ion-item>
-      <ion-label position="stacked">Ras</ion-label>
-      <ion-input placeholder="Masukkan Ras"></ion-input>
-    </ion-item>
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Jenis Unggas</ion-label>
+    <ion-select [(ngModel)]="form.jenis_unggas" placeholder="Pilih Jenis">
+      <ion-select-option value="ayam">Ayam</ion-select-option>
+      <ion-select-option value="bebek">Bebek</ion-select-option>
+      <ion-select-option value="angsa">Angsa</ion-select-option>
+    </ion-select>
+  </ion-item>
 
-    <ion-item>
-      <ion-label position="stacked">Jumlah Telur</ion-label>
-      <ion-input type="number" placeholder="Masukkan Jumlah"></ion-input>
-    </ion-item>
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Ras</ion-label>
+    <ion-input type="text" [(ngModel)]="form.ras" placeholder="Masukkan Ras"></ion-input>
+  </ion-item>
 
-    <ion-item>
-      <ion-label position="stacked">Jumlah Menetas</ion-label>
-      <ion-input type="number" placeholder="Masukkan Jumlah"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="stacked">Jumlah Hidup</ion-label>
-      <ion-input type="number" placeholder="Masukkan Jumlah"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="stacked">ID Anak Hewan (Jika Ada)</ion-label>
-      <ion-input placeholder="Masukkan ID"></ion-input>
-    </ion-item>
-  </ion-list>
-
-  <div class="btn-container">
-    <ion-button expand="block" class="btn-simpan">Simpan</ion-button>
+  <!-- Incubation Summary -->
+  <div class="section-divider">
+    <h2 class="section-title">Ringkasan Penetasan</h2>
   </div>
+
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Jumlah Telur</ion-label>
+    <ion-input type="number" [(ngModel)]="form.jumlah_telur" (ionChange)="calculateTotals()" placeholder="Masukkan Jumlah" min="0"></ion-input>
+  </ion-item>
+
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Jumlah Menetas</ion-label>
+    <ion-input type="number" [(ngModel)]="form.jumlah_menetas" (ionChange)="calculateTotals()" placeholder="Masukkan Jumlah" min="0"></ion-input>
+  </ion-item>
+
+  <!-- Hatched Breakdown -->
+  <div class="section-divider">
+    <h2 class="section-title">Rincian Anak Unggas yang Menetas</h2>
+    <p class="section-subtitle">Total: {{ form.total_menetas || 0 }}</p>
+  </div>
+
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Jumlah Normal</ion-label>
+    <ion-input type="number" [(ngModel)]="form.jumlah_normal" (ionChange)="calculateTotals()" placeholder="Anak yang sehat" min="0"></ion-input>
+  </ion-item>
+
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Jumlah Cacat</ion-label>
+    <ion-input type="number" [(ngModel)]="form.jumlah_cacat" (ionChange)="calculateTotals()" placeholder="Anak yang cacat" min="0"></ion-input>
+  </ion-item>
+
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Jumlah Mati</ion-label>
+    <ion-input type="number" [(ngModel)]="form.jumlah_mati" (ionChange)="calculateTotals()" placeholder="Anak yang mati saat atau setelah menetas" min="0"></ion-input>
+  </ion-item>
+
+  <!-- Generated IDs Display -->
+  <div class="section-divider" *ngIf="generatedIds.length > 0">
+    <h2 class="section-title">ID Anak Unggas yang Akan Dibuat</h2>
+  </div>
+
+  <div *ngIf="generatedIds && generatedIds.length > 0" class="ids-list">
+    <div *ngFor="let id of generatedIds" [ngClass]="'id-badge-' + id.status">
+      <div><strong>{{ id.label }}:</strong> {{ id.count }} ekor</div>
+      <div><small>Contoh pola: {{ id.idPattern }}</small></div>
+      <div><small>ID terbentuk: {{ id.ids.join(', ') }}</small></div>
+    </div>
+  </div>
+
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Catatan</ion-label>
+    <ion-textarea [(ngModel)]="form.catatan" placeholder="Catatan tambahan (opsional)" rows="3"></ion-textarea>
+  </ion-item>
+
+  <ion-button expand="block" class="save-btn" [disabled]="isSubmitting || !isFormValid()" (click)="submit()">
+    Simpan
+  </ion-button>
 </ion-content>

@@ -103,10 +103,10 @@ export class DataHewanPage implements OnInit {
           placeholder: 'Masukkan berat badan',
         },
         {
-          name: 'tinggiPunuk',
-          label: 'Tinggi Punuk (cm)',
+          name: 'tinggiPundak',
+          label: 'Tinggi Pundak (cm)',
           type: 'number',
-          placeholder: 'Masukkan tinggi punuk',
+          placeholder: 'Masukkan tinggi pundak',
         },
         {
           name: 'asal',
@@ -340,11 +340,6 @@ export class DataHewanPage implements OnInit {
     }
   }
 
-  toSnakeCase(str: string): string {
-    return str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
-  }
-
-
   async pilihKategoriUlang() {
     const buttons: any[] = Object.keys(this.kategoriMapping).map((key) => ({
       text: this.kategoriMapping[key].label,
@@ -392,18 +387,6 @@ export class DataHewanPage implements OnInit {
     });
     await loading.present();
 
-    // Prepare data_tambahan object untuk field dinamis
-    const dataTambahan: any = {};
-    this.currentFormFields.forEach(field => {
-      const value = this.formData[field.name];
-
-      if (value !== '' && value !== null && value !== undefined) {
-        const snakeKey = this.toSnakeCase(field.name);
-        dataTambahan[snakeKey] = value;
-      }
-    });
-
-
     // Prepare Payload sesuai struktur database
     const payload: any = {
       code: this.generateCode(),
@@ -411,21 +394,22 @@ export class DataHewanPage implements OnInit {
       jenis_hewan: this.formData.jenisHewan === 'lainnya_spesifik' 
         ? this.formData.jenisHewanLainnya 
         : this.formData.jenisHewan,
+      ras: this.formData.asal || null,
       jenis_kelamin: this.formData.jenisKelamin,
       umur: this.formData.umur || 0,
+      berat_badan: this.formData.beratBadan || null,
+      tinggi_pundak: this.formData.tinggiPundak || null,
       jumlah: 1,
       tanggal: new Date().toISOString().split('T')[0],
-      status: 'masuk',
+      status: this.formData.statusReproduksi || 'masuk',
       alasan_perubahan: null,
       status_validasi: 'pending',
-      data_tambahan: dataTambahan,
       peternakan_id: this.formData.idPemilik || null,
       kandang_id: this.formData.idKandang || null,
       wilayah_id: this.formData.desa,
       petugas_id: this.getPetugasId()
     };
 
-    console.log('📦 data_tambahan:', dataTambahan);
     console.log('📤 full payload:', payload);
     // Call API
     this.populasiService.createPopulasi(payload).subscribe({

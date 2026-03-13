@@ -75,6 +75,24 @@ export class DetailKandangPage implements OnInit {
     await toast.present();
   }
 
+  hasValidCoordinates(): boolean {
+    const raw = this.kandang?.titik_kordinat;
+    if (!raw || typeof raw !== 'string') return false;
+
+    const parts = raw.split(',').map((v: string) => v.trim());
+    if (parts.length !== 2) return false;
+
+    const lat = Number(parts[0]);
+    const lng = Number(parts[1]);
+    return !Number.isNaN(lat) && !Number.isNaN(lng);
+  }
+
+  getGoogleMapsUrl(): string {
+    if (!this.hasValidCoordinates()) return '#';
+    const parts = this.kandang.titik_kordinat.split(',').map((v: string) => v.trim());
+    return `https://www.google.com/maps?q=${parts[0]},${parts[1]}`;
+  }
+
   // Navigate to edit
   goToEdit() {
     if (this.kandangId) {

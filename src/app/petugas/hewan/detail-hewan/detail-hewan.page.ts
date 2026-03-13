@@ -110,6 +110,19 @@ export class DetailHewanPage implements OnInit {
     this.showToast('Menampilkan barcode: ' + this.barcodeId, 'primary');
   }
 
+  hasKandangInfo(): boolean {
+    return !!this.hewan?.kandang;
+  }
+
+  formatKandangId(): string {
+    const kandang = this.hewan?.kandang;
+    if (!kandang) return '-';
+    if (kandang.id_kandang) return kandang.id_kandang;
+    if (kandang.code) return kandang.code;
+    if (kandang.id) return `KNDG${String(kandang.id).padStart(3, '0')}`;
+    return '-';
+  }
+
   async showToast(message: string, color: string) {
     const toast = await this.toastController.create({
       message,

@@ -19,6 +19,106 @@ ion-back-button {
   --icon-font-size: 22px;
 }
 
+// Form styling
+.input-field {
+  --padding-start: 0;
+  --padding-end: 0;
+  margin-bottom: 12px;
+
+  ion-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+  }
+
+  ion-input, ion-select, ion-textarea {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+}
+
+// Section divider
+.section-divider {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  padding-top: 16px;
+  border-top: 2px solid #e0e0e0;
+
+  &:first-child {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+  }
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 4px 0;
+}
+
+.section-subtitle {
+  font-size: 13px;
+  color: #666;
+  margin: 2px 0 0 0;
+}
+
+// ID Badges
+.ids-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.id-badge-normal {
+  padding: 10px 12px;
+  background-color: #e8f5e9;
+  border-left: 4px solid #4caf50;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #2e7d32;
+}
+
+.id-badge-cacat {
+  padding: 10px 12px;
+  background-color: #fff3e0;
+  border-left: 4px solid #ff9800;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #e65100;
+}
+
+.id-badge-mati {
+  padding: 10px 12px;
+  background-color: #ffebee;
+  border-left: 4px solid #f44336;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #c62828;
+}
+
+// Page styling
+.page-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0e161b;
+  margin-bottom: 20px;
+}
+
+.save-btn {
+  margin-top: 12px;
+  --border-radius: 8px;
+  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
 
 .input-kelahiran-content {
   --background: white;

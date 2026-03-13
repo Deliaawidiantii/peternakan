@@ -1,85 +1,73 @@
-<ion-header class="custom-header" translucent="true">
-  <ion-toolbar>
-    <div class="header-content">
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/"></ion-back-button>
-      </ion-buttons>
-      <h2 class="header-title">Input Data Kelahiran</h2>
-      <div style="width: 40px;"></div>
-    </div>
+<ion-header class="custom-header">
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/petugas/buku-lahir"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Input Data Kelahiran</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen="true" class="ion-padding">
-  <div class="form-container">
-    <div class="form-section">
-      
-      <div class="form-group">
-        <label class="form-label">Tanggal Lahir</label>
-        <div class="date-input-wrapper">
-          <ion-input type="date" placeholder="Pilih Tanggal" class="form-input"></ion-input>
-          <ion-icon name="calendar-outline" class="calendar-icon"></ion-icon>
-        </div>
-      </div>
+<ion-content class="ion-padding custom-bg">
+  <h1 class="page-title">Input Data Kelahiran Ruminansia</h1>
 
-      <div class="form-group">
-        <label class="form-label">ID Induk</label>
-        <ion-input type="text" placeholder="Masukkan ID Induk" class="form-input"></ion-input>
-      </div>
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Tanggal Lahir</ion-label>
+    <ion-input type="date" [(ngModel)]="form.tanggal_lahir" (ionChange)="generateIdAnak()" placeholder="Pilih Tanggal"></ion-input>
+  </ion-item>
 
-      <div class="form-group">
-        <label class="form-label">Jenis Ruminansia</label>
-        <ion-select placeholder="Pilih Jenis" class="form-select">
-          <ion-select-option value="sapi">Sapi</ion-select-option>
-          <ion-select-option value="kambing">Kambing</ion-select-option>
-          <ion-select-option value="domba">Domba</ion-select-option>
-        </ion-select>
-      </div>
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">ID Induk</ion-label>
+    <ion-input type="text" [(ngModel)]="form.id_induk" placeholder="Masukkan ID Induk"></ion-input>
+  </ion-item>
 
-      <div class="form-group">
-        <label class="form-label">Ras</label>
-        <ion-input type="text" placeholder="Masukkan Ras" class="form-input"></ion-input>
-      </div>
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Jenis Ruminansia</ion-label>
+    <ion-select [(ngModel)]="form.jenis_ruminansia" (ionChange)="generateIdAnak()" placeholder="Pilih Jenis">
+      <ion-select-option value="sapi">Sapi</ion-select-option>
+      <ion-select-option value="kambing">Kambing</ion-select-option>
+      <ion-select-option value="domba">Domba</ion-select-option>
+    </ion-select>
+  </ion-item>
 
-      <div class="form-group">
-        <label class="form-label">Jumlah Anak</label>
-        <ion-input type="number" placeholder="Masukkan Jumlah" class="form-input"></ion-input>
-      </div>
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Ras</ion-label>
+    <ion-input type="text" [(ngModel)]="form.ras" placeholder="Masukkan Ras"></ion-input>
+  </ion-item>
 
-      <div class="form-group">
-        <label class="form-label">ID Anak Hewan (Jika Ada)</label>
-        <ion-input type="text" placeholder="Masukkan ID" class="form-input"></ion-input>
-      </div>
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Jenis Kelamin Anak</ion-label>
+    <ion-select [(ngModel)]="form.jenis_kelamin_anak" placeholder="Pilih Jenis Kelamin">
+      <ion-select-option value="jantan">Jantan</ion-select-option>
+      <ion-select-option value="betina">Betina</ion-select-option>
+    </ion-select>
+  </ion-item>
 
-      <div class="form-group">
-        <label class="form-label">Jenis Kelamin Anak</label>
-        <ion-select placeholder="Pilih Jenis Kelamin" class="form-select">
-          <ion-select-option value="jantan">Jantan</ion-select-option>
-          <ion-select-option value="betina">Betina</ion-select-option>
-        </ion-select>
-      </div>
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Berat Lahir (kg)</ion-label>
+    <ion-input type="number" [(ngModel)]="form.berat_lahir" placeholder="Masukkan Berat" min="0" step="0.1"></ion-input>
+  </ion-item>
 
-      <div class="form-group">
-        <label class="form-label">Berat Lahir</label>
-        <ion-input type="number" placeholder="Masukkan Berat" class="form-input"></ion-input>
-      </div>
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Status Kelahiran</ion-label>
+    <ion-select [(ngModel)]="form.status_kelahiran" (ionChange)="generateIdAnak()" placeholder="Pilih Status">
+      <ion-select-option value="normal">Normal</ion-select-option>
+      <ion-select-option value="cacat">Cacat</ion-select-option>
+      <ion-select-option value="mati">Mati</ion-select-option>
+    </ion-select>
+  </ion-item>
 
-      <div class="form-group">
-        <label class="form-label">Status Kelahiran</label>
-        <ion-select placeholder="Pilih Status" class="form-select">
-          <ion-select-option value="hidup">Hidup</ion-select-option>
-          <ion-select-option value="mati">Mati</ion-select-option>
-        </ion-select>
-      </div>
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">ID Anak Hewan (Auto-generated)</ion-label>
+    <ion-input type="text" [(ngModel)]="form.id_anak_hewan" placeholder="ID akan di-generate otomatis" readonly></ion-input>
+  </ion-item>
 
-    </div>
-  </div>
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">Catatan</ion-label>
+    <ion-textarea [(ngModel)]="form.catatan" placeholder="Catatan tambahan (opsional)" rows="3"></ion-textarea>
+  </ion-item>
+
+  <ion-button expand="block" class="save-btn" [disabled]="isSubmitting" (click)="submit()">
+    Simpan
+  </ion-button>
 </ion-content>
 
-<ion-footer class="ion-no-border custom-footer">
-  <div class="footer-content">
-    <ion-button expand="block" class="submit-btn" type="submit">
-      <span>Simpan</span>
-    </ion-button>
-  </div>
-</ion-footer>

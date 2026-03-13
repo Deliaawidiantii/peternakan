@@ -10,7 +10,13 @@
 </ion-header>
 
 <ion-content>
-  <ion-list lines="none" class="list-section">
+  <ion-list *ngIf="loading" lines="none" class="list-section">
+    <ion-item>
+      <ion-label>Memuat detail kegiatan...</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="!loading && kegiatan" lines="none" class="list-section">
     <!-- kegiatan -->
     <h2 class="section-title">Kegiatan</h2>
     <ion-item>
@@ -61,11 +67,55 @@
             Terlambat
           </span>
 
-          <span *ngIf="kegiatan?.status_aktual !== 'terlambat'">
+          <span *ngIf="kegiatan?.status_aktual === 'butuh_diselesaikan'" class="badge badge-warning">
+            Melewati jam selesai
+          </span>
+
+          <span *ngIf="kegiatan?.status_aktual !== 'terlambat' && kegiatan?.status_aktual !== 'butuh_diselesaikan'">
             {{ kegiatan?.status }}
           </span>
         </ion-label>
       </ion-item>
+
+      <div *ngIf="isRunning()">
+        <h2 class="section-title">Upload Bukti Kegiatan</h2>
+        <div class="upload-section">
+          <ion-button expand="block" fill="outline" color="medium" [disabled]="isSubmitting" (click)="photoInput.click()">
+            <ion-icon name="camera-outline" slot="start"></ion-icon>
+            Pilih Foto
+          </ion-button>
+
+          <input
+            #photoInput
+            type="file"
+            aria-label="Upload foto kegiatan"
+            accept="image/*"
+            class="hidden-input"
+            (change)="onFileSelected($event)"
+            multiple>
+
+          <div class="photo-preview" *ngIf="uploadedPhotos.length > 0">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="6" *ngFor="let photo of uploadedPhotos; let i = index">
+                  <div class="photo-item">
+                    <img [src]="photo.url" alt="Foto kegiatan">
+                    <ion-button
+                      fill="clear"
+                      size="small"
+                      color="danger"
+                      class="delete-btn"
+                      [disabled]="isSubmitting"
+                      (click)="deletePhoto(i)">
+                      <ion-icon name="close-circle"></ion-icon>
+                    </ion-button>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </div>
+      </div>
 
       <!-- FOTO LAPORAN (JIKA SELESAI) -->
       <div *ngIf="kegiatan?.status === 'selesai' && kegiatan?.laporan_kegiatan?.length > 0">
@@ -89,9 +139,19 @@
 
   <!-- button -->
     <div class="button-container"
-        *ngIf="kegiatan?.status === 'terjadwal' && !kegiatan?.terkunci_mulai">
-      <ion-button expand="block" color="secondary" (click)="mulai()">
+        *ngIf="canStart()">
+      <ion-button expand="block" color="secondary" [disabled]="isSubmitting" (click)="mulai()">
         Mulai Kegiatan
+      </ion-button>
+    </div>
+
+    <div class="button-container" *ngIf="isRunning()">
+      <ion-button
+        expand="block"
+        color="success"
+        [disabled]="isSubmitting || uploadedPhotos.length === 0"
+        (click)="selesai()">
+        Menyelesaikan Kegiatan
       </ion-button>
     </div>
 

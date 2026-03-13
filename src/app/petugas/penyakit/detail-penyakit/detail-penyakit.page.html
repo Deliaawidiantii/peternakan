@@ -1,102 +1,91 @@
 <ion-header class="custom-header">
   <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button defaultHref="/petugas/daftar-penyakit"></ion-back-button>
     </ion-buttons>
-    
     <ion-title>Detail Kasus</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="custom-bg ion-padding">
+  <div *ngIf="loading" class="loading-state">Memuat data...</div>
 
-  <div class="image-section"></div>
+  <ng-container *ngIf="!loading && kasus">
+    <div class="image-section" [style.backgroundImage]="'url(' + getFotoUrl(kasus.foto) + ')'">
+    </div>
 
-  <ion-card class="info-card">
-    <ion-card-header>
-      <ion-card-title>Informasi Hewan</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <div class="info-row">
-        <p class="label">Kelompok hewan</p>
-        <p class="value">Ruminansia</p>
-      </div>
-      <div class="info-row">
-        <p class="label">jenis hewan</p>
-        <p class="value">sapi</p>
-      </div>
-      <div class="info-row">
-        <p class="label">Nama pemilik</p>
-        <p class="value">Andri</p>
-      </div>
-      <div class="info-row">
-        <p class="label">Tanggal</p>
-        <p class="value">24-Februari-2025</p>
-      </div>
-      <div class="info-row">
-        <p class="label">jenis kelamin</p>
-        <p class="value">jantan</p>
-      </div>
-      <div class="info-row">
-        <p class="label">Usia</p>
-        <p class="value">3 tahun</p>
-      </div>
-      <div class="info-row">
-        <p class="label">status</p>
-        <p class="value">Terverifikasi</p>
-      </div>
-    </ion-card-content>
-  </ion-card>
+    <ion-card class="info-card">
+      <ion-card-header>
+        <ion-card-title>Informasi Hewan</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="info-row">
+          <p class="label">Kelompok hewan</p>
+          <p class="value">{{ kasus.klompok || '-' }}</p>
+        </div>
+        <div class="info-row">
+          <p class="label">Nama pemilik</p>
+          <p class="value">{{ kasus.peternakan?.nama_peternak || '-' }}</p>
+        </div>
+        <div class="info-row">
+          <p class="label">Tanggal</p>
+          <p class="value">{{ kasus.tanggal || '-' }}</p>
+        </div>
+        <div class="info-row">
+          <p class="label">Jenis kelamin</p>
+          <p class="value">{{ kasus.jekel || '-' }}</p>
+        </div>
+        <div class="info-row">
+          <p class="label">Usia</p>
+          <p class="value">{{ kasus.usia || '-' }}</p>
+        </div>
+        <div class="info-row">
+          <p class="label">Status</p>
+          <p class="value">{{ kasus.status_validasi === 'approved' ? 'Terverifikasi' : (kasus.status_validasi === 'rejected' ? 'Ditolak' : 'Menunggu Verifikasi') }}</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
 
-  <ion-card class="info-card">
-    <ion-card-header>
-      <ion-card-title>Deskripsi Gejala</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p>Demam tinggi, nafsu makan menurun, lesu, keluar cairan dari hidung dan mata.</p>
-    </ion-card-content>
-  </ion-card>
+    <ion-card class="info-card">
+      <ion-card-header>
+        <ion-card-title>Deskripsi Gejala</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{ kasus.gejala || kasus.deskripsi || '-' }}</p>
+      </ion-card-content>
+    </ion-card>
 
-  <ion-card class="info-card">
-    <ion-card-header>
-      <ion-card-title>Diagnosa Admin</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p>Penyakit Septicemia Epizootica (SE).</p>
-    </ion-card-content>
-  </ion-card>
+    <ion-card class="info-card">
+      <ion-card-header>
+        <ion-card-title>Diagnosa Admin</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{ kasus.diagnosa || kasus.jenis_penyakit || 'Menunggu Diagnosa' }}</p>
+      </ion-card-content>
+    </ion-card>
 
-  <ion-card class="info-card">
-    <ion-card-header>
-      <ion-card-title>Penyakit</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p>Malaria</p>
-    </ion-card-content>
-  </ion-card>
+    <ion-card class="info-card">
+      <ion-card-header>
+        <ion-card-title>Obat yang Diberikan</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{ kasus.penanganan || kasus.obat || '-' }}</p>
+      </ion-card-content>
+    </ion-card>
 
-  <ion-card class="info-card">
-    <ion-card-header>
-      <ion-card-title>Obat yang Diberikan</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p>Antibiotik (Ceftiofur), antiinflamasi (Flunixin), vitamin B kompleks.</p>
-    </ion-card-content>
-  </ion-card>
+    <ion-card class="info-card">
+      <ion-card-header>
+        <ion-card-title>Catatan Admin</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{ kasus.catatan_validasi || kasus.catatan_pemantauan || '-' }}</p>
+      </ion-card-content>
+    </ion-card>
 
-  <ion-card class="info-card">
-    <ion-card-header>
-      <ion-card-title>Catatan Admin</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p>Pastikan hewan mendapatkan istirahat yang cukup dan asupan nutrisi yang baik. Pantau suhu tubuh secara berkala.</p>
-    </ion-card-content>
-  </ion-card>
-
-  <div class="btn-container" routerLink="/petugas/update-status-penyakit">
-    <ion-button expand="block" class="update-btn">
-      Update Status Perkembangan Penyakit
-    </ion-button>
-  </div>
+    <div class="btn-container" *ngIf="isVerified()">
+      <ion-button expand="block" class="update-btn" (click)="openUpdateStatus()">
+        Update Status Perkembangan Penyakit
+      </ion-button>
+    </div>
+  </ng-container>
 </ion-content>
-

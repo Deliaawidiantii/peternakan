@@ -101,3 +101,27 @@ ion-card-title {
     }
   }
 }
+
+.page-state {
+  text-align: center;
+  padding: 40px;
+}
+
+.state-icon {
+  font-size: 64px;
+  color: #d0dfe6;
+}
+
+.coords-text {
+  margin: 0;
+}
+
+.maps-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #2563eb;
+  font-size: 13px;
+  margin-top: 4px;
+  text-decoration: none;
+}

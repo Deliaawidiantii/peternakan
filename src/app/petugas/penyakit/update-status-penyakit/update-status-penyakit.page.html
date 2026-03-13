@@ -1,9 +1,8 @@
 <ion-header class="custom-header">
   <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button defaultHref="/petugas/daftar-penyakit"></ion-back-button>
     </ion-buttons>
-    
     <ion-title>Input Data</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,35 +11,36 @@
   <h1 class="page-title">Pembaruan Status Penyakit</h1>
 
   <ion-item class="input-field" lines="none">
-    <ion-label position="stacked">Tanggal Update</ion-label>
-    <ion-input type="date" placeholder="Pilih Tanggal"></ion-input>
-  </ion-item>
-
-  <ion-item class="input-field" lines="none">
     <ion-label position="stacked">Status Terbaru</ion-label>
-    <ion-select placeholder="Pilih Status">
-      <ion-select-option value="one">Menunggu</ion-select-option>
-      <ion-select-option value="two">Dalam Perawatan</ion-select-option>
-      <ion-select-option value="three">Sembuh</ion-select-option>
+    <ion-select [(ngModel)]="form.status_perkembangan" placeholder="Pilih Status">
+      <ion-select-option value="terdiagnosa">Terdiagnosa</ion-select-option>
+      <ion-select-option value="dalamPerkembangan">Dalam Perkembangan</ion-select-option>
+      <ion-select-option value="sembuh">Sembuh</ion-select-option>
+      <ion-select-option value="mati">Mati</ion-select-option>
+      <ion-select-option value="selesai">Selesai</ion-select-option>
     </ion-select>
   </ion-item>
 
   <ion-item class="input-field" lines="none">
-    <ion-label position="stacked">Deskripsi Perkembangan</ion-label>
-    <ion-textarea
-      placeholder="Jelaskan perkembangan penyakit"
-      rows="4"
-    ></ion-textarea>
+    <ion-label position="stacked">Status Penanganan</ion-label>
+    <ion-select [(ngModel)]="form.status_penanganan" placeholder="Pilih Status Penanganan">
+      <ion-select-option value="belum_ditangani">Belum Ditangani</ion-select-option>
+      <ion-select-option value="dalam_perawatan">Dalam Perawatan</ion-select-option>
+      <ion-select-option value="sembuh">Sembuh</ion-select-option>
+      <ion-select-option value="mati">Mati</ion-select-option>
+    </ion-select>
   </ion-item>
 
   <ion-item class="input-field" lines="none">
-    <ion-label position="stacked">Catatan Tambahan</ion-label>
+    <ion-label position="stacked">Catatan Pemantauan</ion-label>
     <ion-textarea
-      placeholder="Tambahkan catatan jika ada"
-      rows="4"
-    ></ion-textarea>
+      [(ngModel)]="form.catatan_pemantauan"
+      placeholder="Catatan pemantauan..."
+      rows="4">
+    </ion-textarea>
   </ion-item>
 
-  <ion-button expand="block" class="save-btn" (click)="showAlert()">Simpan</ion-button>
+  <ion-button expand="block" class="save-btn" [disabled]="isSubmitting" (click)="submit()">
+    Simpan
+  </ion-button>
 </ion-content>
-

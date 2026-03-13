@@ -78,7 +78,7 @@ export class RequestKegiatanPage implements OnInit {
     this.isLoading = true;
 
     // Call API Store Kegiatan
-    const payload = this.requestForm.value;
+    const payload = { ...this.requestForm.value };
 
     // Convert date dan time format yang sesuai jika dari ionic datetime picker
     if (payload.tanggal && payload.tanggal.includes('T')) {
@@ -92,6 +92,11 @@ export class RequestKegiatanPage implements OnInit {
         hour12: false,
       });
     }
+
+    if (payload.jam_mulai) {
+      payload.jam_mulai = String(payload.jam_mulai).replace('.', ':').slice(0, 5);
+    }
+
     if (payload.jam_selesai && payload.jam_selesai.includes('T')) {
       const d = new Date(payload.jam_selesai);
       payload.jam_selesai = d.toLocaleTimeString('id-ID', {
@@ -99,6 +104,10 @@ export class RequestKegiatanPage implements OnInit {
         minute: '2-digit',
         hour12: false,
       });
+    }
+
+    if (payload.jam_selesai) {
+      payload.jam_selesai = String(payload.jam_selesai).replace('.', ':').slice(0, 5);
     }
 
     this.kegiatanService.requestKegiatan(payload).subscribe({
@@ -112,7 +121,12 @@ export class RequestKegiatanPage implements OnInit {
       error: async (err) => {
         await loading.dismiss();
         this.isLoading = false;
-        await this.showToast('Gagal mengirim request', 'danger');
+        const backendMessage =
+          err?.error?.message ||
+          (err?.error?.errors ? Object.values(err.error.errors).flat().join(' | ') : null) ||
+          'Gagal mengirim request';
+
+        await this.showToast(String(backendMessage), 'danger');
         console.error(err);
       },
     });

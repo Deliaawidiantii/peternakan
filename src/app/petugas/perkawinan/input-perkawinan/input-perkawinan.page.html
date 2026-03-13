@@ -5,7 +5,7 @@
         <ion-back-button defaultHref="/"></ion-back-button>
       </ion-buttons>
       <h2 class="header-title">Input IB (Inseminasi Buatan)</h2>
-      <div style="width: 40px;"></div>
+      <div class="header-spacer" aria-hidden="true"></div>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -101,37 +101,29 @@
 
       <div class="form-group">
         <label class="form-label">Eartag Betina</label>
-        <ion-input [(ngModel)]="formData.eartagBetina" placeholder="Masukkan Eartag Betina" class="form-input"
-          type="text"></ion-input>
+        <div class="searchable-select" (click)="openSearchModal('eartagBetina')" [class.disabled]="!formData.peternakan_id">
+          <span [class.placeholder]="!formData.eartagBetina">
+            {{ formData.eartagBetina || '-- Pilih Eartag Betina --' }}
+          </span>
+          <ion-icon name="search-outline"></ion-icon>
+        </div>
+        <div class="text-xs text-gray-500 mt-1">*Pilihan hanya ternak betina milik pemilik terpilih</div>
       </div>
 
-      <!-- Jenis Ternak - Searchable -->
       <div class="form-group">
         <label class="form-label">Jenis Ternak</label>
-        <div class="searchable-select" (click)="openSearchModal('jenisTernak')">
-          <span [class.placeholder]="!formData.jenisTernak">
-            {{ formData.jenisTernak || 'Pilih Jenis Ternak' }}
-          </span>
-          <ion-icon name="search-outline"></ion-icon>
-        </div>
+        <ion-input [(ngModel)]="formData.jenisTernak" placeholder="Terisi otomatis dari eartag" class="form-input" type="text" readonly="true"></ion-input>
       </div>
 
-      <!-- Rumpun Ternak - Searchable -->
       <div class="form-group">
         <label class="form-label">Rumpun Ternak</label>
-        <div class="searchable-select" (click)="openSearchModal('rumpunTernak')"
-          [class.disabled]="!formData.jenisTernak">
-          <span [class.placeholder]="!formData.rumpunTernak">
-            {{ formData.rumpunTernak || 'Pilih Rumpun Ternak' }}
-          </span>
-          <ion-icon name="search-outline"></ion-icon>
-        </div>
+        <ion-input [(ngModel)]="formData.rumpunTernak" placeholder="Terisi otomatis dari eartag" class="form-input" type="text" readonly="true"></ion-input>
       </div>
 
       <div class="form-group">
         <label class="form-label">Usia Ternak (Bulan)</label>
         <ion-input [(ngModel)]="formData.usiaTernak" placeholder="Masukkan Usia Ternak" class="form-input"
-          type="number"></ion-input>
+          type="number" readonly="true"></ion-input>
       </div>
     </div>
 

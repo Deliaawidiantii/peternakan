@@ -68,7 +68,7 @@
   <!-- tanggal Pindah -->
   <ion-item class="input-item">
     <ion-label position="stacked">Tanggal Pindah</ion-label>
-    <ion-input placeholder="Pilih Tanggal" type="date"></ion-input>
+    <ion-input placeholder="Pilih Tanggal" type="date" [(ngModel)]="tanggalPindah"></ion-input>
   </ion-item>
 
   <!-- Alamat Asal -->
@@ -84,8 +84,8 @@
   <!-- lokasi asal otomatis -->
   <ion-item lines="none" class="input-item">
     <ion-label position="stacked">Koordinat Asal</ion-label>
-    <ion-input palceholder="Koordinat akan muncul disini"
-      [value]="latitudeAsal && longitudeAsal ? latitudeAsal + ',' + longitudeAsal : 'Belum ada koordinat'" readonly>"
+    <ion-input placeholder="Koordinat akan muncul disini"
+      [value]="latitudeAsal && longitudeAsal ? latitudeAsal + ',' + longitudeAsal : 'Belum ada koordinat'" readonly>
     </ion-input>
   </ion-item>
 
@@ -106,9 +106,9 @@
   <!-- Lokasi tujuan otomatis -->
   <ion-item lines="none" class="input-item">
     <ion-label position="stacked">Koordinat Tujuan</ion-label>
-    <ion-input palceholder="Koordinat akan muncul disini"
+    <ion-input placeholder="Koordinat akan muncul disini"
       [value]="latitudeTujuan && longitudeTujuan ? latitudeTujuan + ',' + longitudeTujuan : 'Belum ada koordinat'"
-      readonly>"
+      readonly>
     </ion-input>
   </ion-item>
 

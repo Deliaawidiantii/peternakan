@@ -26,17 +26,23 @@ export class PenyakitService {
     });
   }
 
-  // Lapor Kasus Baru (menggunakan FormData karena ada file upload "foto")
+  // Get detail kasus
+  getPenyakitById(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/penyakit/${id}`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  // Lapor Kasus Baru (FormData karena upload foto)
   laporKasus(formData: FormData): Observable<any> {
     const token = localStorage.getItem('token');
-    // Content-Type dihilangkan supaya browser setting boundary form-data secara otomatis
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
     return this.http.post(`${this.apiUrl}/penyakit`, formData, { headers });
   }
 
-  // Update Status
+  // Update status perkembangan
   updateStatus(id: number, formData: FormData): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({

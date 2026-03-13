@@ -20,7 +20,7 @@
             <p class="case-id">Kelompok Hewan: {{ kasus.klompok || '-' }}</p>
             <p class="case-type">Jenis Penyakit: {{ kasus.jenis_penyakit }}</p>
 
-            <ion-button fill="solid" class="update-btn" size="small" routerLink="/petugas/update-status-penyakit">
+            <ion-button fill="solid" class="update-btn" size="small" [routerLink]="['/petugas/update-status-penyakit']" [queryParams]="{ id: kasus.id }">
               Update
             </ion-button>
           </ion-col>
