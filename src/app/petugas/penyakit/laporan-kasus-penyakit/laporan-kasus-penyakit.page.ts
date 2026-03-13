@@ -148,6 +148,7 @@ export class LaporanKasusPenyakitPage implements OnInit {
     data.append('peternakan_id', this.formData.peternakan_id);
     data.append('tanggal', this.formData.tanggal);
     data.append('deskripsi', this.formData.gejala);
+    if (this.formData.idHewan) data.append('code', this.formData.idHewan);
     if (this.formData.kategoriHewan) data.append('klompok', this.formData.kategoriHewan);
     if (this.formData.jenisKelamin) data.append('jekel', this.formData.jenisKelamin);
     if (this.formData.usia) data.append('usia', this.formData.usia);
