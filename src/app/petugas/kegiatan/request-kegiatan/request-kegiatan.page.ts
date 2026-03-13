@@ -123,7 +123,17 @@ export class RequestKegiatanPage implements OnInit {
         this.isLoading = false;
         const backendMessage =
           err?.error?.message ||
-          (err?.error?.errors ? Object.values(err.error.errors).flat().join(' | ') : null) ||
+          (err?.error?.errors
+            ? Object.values(err.error.errors)
+                .reduce((acc: string[], curr: unknown) => {
+                  if (Array.isArray(curr)) {
+                    return acc.concat(curr.map((v) => String(v)));
+                  }
+                  acc.push(String(curr));
+                  return acc;
+                }, [])
+                .join(' | ')
+            : null) ||
           'Gagal mengirim request';
 
         await this.showToast(String(backendMessage), 'danger');
