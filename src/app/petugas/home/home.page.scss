@@ -2,10 +2,16 @@
   --ion-font-family: var(--app-font);
 }
 
+.home-header {
+  position: sticky;
+  top: 0;
+  z-index: 70;
+}
+
 .home-hero {
   padding: 20px 20px 38px !important;
   background:
-    linear-gradient(135deg, rgba(17, 40, 68, 0.8) 0%, rgba(41, 83, 128, 0.76) 55%, rgba(90, 135, 177, 0.68) 100%),
+    linear-gradient(135deg, rgba(47, 119, 169, 0.82) 0%, rgba(77, 166, 221, 0.78) 50%, rgba(138, 205, 243, 0.68) 100%),
     url('/assets/icon/kelompok-hewan.jpg') center/cover no-repeat !important;
 }
 
@@ -46,13 +52,22 @@
 
 .hero-text {
   max-width: 100%;
+  width: 100%;
+}
+
+.hero-top-row {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  .gradient-title {
+    margin: 0;
+  }
 }
 
 .home-location-chip {
+  margin-top: 6px;
   max-width: calc(100% - 8px);
 }
 

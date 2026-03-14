@@ -92,19 +92,19 @@ ion-list {
 }
 
 .content-wrapper {
-  padding: 10px 18px 92px;
+  padding: 10px 18px 32px;
 }
 
 .content-wrapper.compact-bottom {
-  padding-bottom: 72px;
+  padding-bottom: 24px;
 }
 
 .content-wrapper.fab-bottom {
-  padding-bottom: 98px;
+  padding-bottom: 88px;
 }
 
 .content-wrapper.form-page {
-  padding-bottom: 88px;
+  padding-bottom: 32px;
 }
 
 .gradient-header {
@@ -1175,19 +1175,19 @@ ion-fab-button {
 
 @media (max-width: 480px) {
   .content-wrapper {
-    padding: 8px 16px 88px;
+    padding: 8px 16px 28px;
   }
 
   .content-wrapper.compact-bottom {
-    padding-bottom: 68px;
+    padding-bottom: 20px;
   }
 
   .content-wrapper.fab-bottom {
-    padding-bottom: 94px;
+    padding-bottom: 84px;
   }
 
   .content-wrapper.form-page {
-    padding-bottom: 84px;
+    padding-bottom: 28px;
   }
 
   .page-overlap {

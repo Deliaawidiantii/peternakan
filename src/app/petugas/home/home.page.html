@@ -1,17 +1,16 @@
-﻿<ion-header class="ion-no-border">
+﻿<ion-header class="ion-no-border home-header">
   <ion-toolbar>
     <div class="gradient-header home-hero">
       <div class="header-stack">
-        <div class="header-row">
-          <ion-button fill="clear" class="notif-btn" routerLink="/petugas/notifikasi">
-            <ion-icon name="notifications-outline"></ion-icon>
-            <ion-badge *ngIf="unreadCount > 0" color="danger" mode="ios" class="notif-badge">{{ unreadCount }}</ion-badge>
-          </ion-button>
-        </div>
-
         <div class="hero-row">
           <div class="hero-text">
-            <h2 class="gradient-title">Halo, {{ namaPetugas }}</h2>
+            <div class="hero-top-row">
+              <h2 class="gradient-title">Halo, {{ namaPetugas }}</h2>
+              <ion-button fill="clear" class="notif-btn" routerLink="/petugas/notifikasi">
+                <ion-icon name="notifications-outline"></ion-icon>
+                <ion-badge *ngIf="unreadCount > 0" color="danger" mode="ios" class="notif-badge">{{ unreadCount }}</ion-badge>
+              </ion-button>
+            </div>
             <span class="header-chip home-location-chip" *ngIf="lokasiInfo.desa && lokasiInfo.desa !== 'Loading...' && lokasiInfo.desa !== 'Error'">
               <ion-icon name="location-outline"></ion-icon>
               Wilayah kerja aktif: Desa {{ lokasiInfo.desa }}
@@ -27,7 +26,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="home-page-content" [fullscreen]="false" [forceOverscroll]="false">
   <div class="content-wrapper compact-bottom home-content">
     <div class="section-block first-section">
       <h3 class="section-label">

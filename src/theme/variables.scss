@@ -5,14 +5,14 @@
   --app-font: 'Plus Jakarta Sans', 'Noto Sans', sans-serif;
   --app-heading-font: 'Sora', 'Plus Jakarta Sans', sans-serif;
 
-  --app-brand-950: #112844;
-  --app-brand-900: #17355b;
-  --app-brand-800: #21456e;
-  --app-brand-700: #295380;
-  --app-brand-600: #3b6996;
-  --app-brand-500: #5a87b1;
-  --app-brand-300: #a9c3d8;
-  --app-brand-200: #dce7ef;
+  --app-brand-950: #1b4f73;
+  --app-brand-900: #23628f;
+  --app-brand-800: #2f77a9;
+  --app-brand-700: #3e8fc5;
+  --app-brand-600: #4da6dd;
+  --app-brand-500: #67bae9;
+  --app-brand-300: #b8daf2;
+  --app-brand-200: #e1f0fb;
 
   --app-accent-gold: #e5b264;
   --app-accent-sage: #5f8a72;
@@ -26,36 +26,36 @@
 
   --app-card-bg: rgba(255, 255, 255, 0.9);
   --app-card-radius: 22px;
-  --app-card-shadow: 0 18px 48px rgba(17, 40, 68, 0.08);
-  --app-card-shadow-soft: 0 10px 30px rgba(17, 40, 68, 0.06);
-  --app-border: rgba(41, 83, 128, 0.12);
+  --app-card-shadow: 0 18px 48px rgba(35, 98, 143, 0.12);
+  --app-card-shadow-soft: 0 10px 30px rgba(35, 98, 143, 0.08);
+  --app-border: rgba(62, 143, 197, 0.18);
 
-  --app-text-primary: #16314d;
-  --app-text-secondary: #61758d;
-  --app-text-muted: #93a5b5;
+  --app-text-primary: #123750;
+  --app-text-secondary: #4f728c;
+  --app-text-muted: #7da3bf;
 
-  --app-gradient: linear-gradient(135deg, #17355b 0%, #295380 48%, #5f88ad 100%);
-  --app-gradient-soft: radial-gradient(circle at top right, rgba(229, 178, 100, 0.26), transparent 34%), linear-gradient(160deg, #17355b 0%, #295380 55%, #5f88ad 100%);
+  --app-gradient: linear-gradient(135deg, #2f77a9 0%, #4da6dd 50%, #8acdf3 100%);
+  --app-gradient-soft: radial-gradient(circle at top right, rgba(229, 178, 100, 0.22), transparent 34%), linear-gradient(160deg, #2f77a9 0%, #4da6dd 55%, #8acdf3 100%);
   --app-panel-gradient: radial-gradient(circle at top left, rgba(229, 178, 100, 0.14), transparent 30%), linear-gradient(180deg, rgba(255,255,255,0.94) 0%, rgba(247,249,251,0.98) 100%);
 
   --app-input-bg: rgba(247, 249, 251, 0.96);
-  --app-input-border: rgba(41, 83, 128, 0.14);
-  --app-input-focus: rgba(41, 83, 128, 0.22);
+  --app-input-border: rgba(62, 143, 197, 0.22);
+  --app-input-focus: rgba(77, 166, 221, 0.3);
 
   --ion-background-color: var(--app-bg);
   --ion-text-color: var(--app-text-primary);
   --ion-font-family: var(--app-font);
 
-  --ion-color-primary: #295380;
-  --ion-color-primary-rgb: 41, 83, 128;
+  --ion-color-primary: #4da6dd;
+  --ion-color-primary-rgb: 77, 166, 221;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #24496f;
-  --ion-color-primary-tint: #3e6290;
+  --ion-color-primary-shade: #3f91c2;
+  --ion-color-primary-tint: #62b1e2;
 
   --ion-color-secondary: #e5b264;
   --ion-color-secondary-rgb: 229, 178, 100;
-  --ion-color-secondary-contrast: #17355b;
+  --ion-color-secondary-contrast: #1b4f73;
   --ion-color-secondary-contrast-rgb: 23, 53, 91;
   --ion-color-secondary-shade: #ca9d58;
   --ion-color-secondary-tint: #e8ba74;
@@ -76,7 +76,7 @@
 
   --ion-color-warning: #e5b264;
   --ion-color-warning-rgb: 229, 178, 100;
-  --ion-color-warning-contrast: #17355b;
+  --ion-color-warning-contrast: #1b4f73;
   --ion-color-warning-contrast-rgb: 23, 53, 91;
   --ion-color-warning-shade: #ca9d58;
   --ion-color-warning-tint: #e8ba74;
@@ -90,6 +90,6 @@
 
   --ion-toolbar-background: transparent;
   --ion-tab-bar-background: rgba(255, 255, 255, 0.96);
-  --ion-tab-bar-color: #93a5b5;
-  --ion-tab-bar-color-selected: #295380;
+  --ion-tab-bar-color: #7da3bf;
+  --ion-tab-bar-color-selected: #4da6dd;
 }
