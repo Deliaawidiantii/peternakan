@@ -2,6 +2,16 @@
   --ion-font-family: var(--app-font);
 }
 
+.header-inline-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-back-button {
+  --color: #fff;
+}
+
 .perkawinan-menu {
   display: flex;
   flex-direction: column;

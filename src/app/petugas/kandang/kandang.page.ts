@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { KandangService } from '../../services/kandang.service';
@@ -9,12 +9,14 @@ import { KandangService } from '../../services/kandang.service';
   styleUrls: ['./kandang.page.scss'],
   standalone: false,
 })
-export class KandangPage implements OnInit {
+export class KandangPage implements OnInit, OnDestroy {
   kandangList: any[] = [];
   searchText: string = '';
   selectedDesa: string = '';
   selectedStatus: string = '';
   isLoading: boolean = false;
+  private refreshTimer: ReturnType<typeof setInterval> | null = null;
+  private readonly AUTO_REFRESH_MS = 15000;
 
   constructor(
     private router: Router,
@@ -29,6 +31,15 @@ export class KandangPage implements OnInit {
   ionViewWillEnter() {
     // Reload data setiap kali halaman dibuka
     this.loadKandang();
+    this.startAutoRefresh();
+  }
+
+  ionViewWillLeave() {
+    this.stopAutoRefresh();
+  }
+
+  ngOnDestroy() {
+    this.stopAutoRefresh();
   }
 
   /**
@@ -136,5 +147,19 @@ export class KandangPage implements OnInit {
       position: 'bottom'
     });
     await toast.present();
+  }
+
+  private startAutoRefresh() {
+    this.stopAutoRefresh();
+    this.refreshTimer = setInterval(() => {
+      this.loadKandang();
+    }, this.AUTO_REFRESH_MS);
+  }
+
+  private stopAutoRefresh() {
+    if (this.refreshTimer) {
+      clearInterval(this.refreshTimer);
+      this.refreshTimer = null;
+    }
   }
 }

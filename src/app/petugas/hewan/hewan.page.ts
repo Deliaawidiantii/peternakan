@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { PopulasiService } from '../../services/populasi.service';
@@ -9,11 +9,13 @@ import { PopulasiService } from '../../services/populasi.service';
   styleUrls: ['./hewan.page.scss'],
   standalone: false,
 })
-export class HewanPage implements OnInit {
+export class HewanPage implements OnInit, OnDestroy {
   hewanList: any[] = [];
   searchText: string = '';
   selectedJenis: string = '';
   isLoading: boolean = false;
+  private refreshTimer: ReturnType<typeof setInterval> | null = null;
+  private readonly AUTO_REFRESH_MS = 15000;
 
   constructor(
     private actionSheetController: ActionSheetController,
@@ -27,6 +29,15 @@ export class HewanPage implements OnInit {
 
   ionViewWillEnter() {
     this.loadHewan();
+    this.startAutoRefresh();
+  }
+
+  ionViewWillLeave() {
+    this.stopAutoRefresh();
+  }
+
+  ngOnDestroy() {
+    this.stopAutoRefresh();
   }
 
   loadHewan() {
@@ -122,5 +133,19 @@ export class HewanPage implements OnInit {
     });
 
     await actionSheet.present();
+  }
+
+  private startAutoRefresh() {
+    this.stopAutoRefresh();
+    this.refreshTimer = setInterval(() => {
+      this.loadHewan();
+    }, this.AUTO_REFRESH_MS);
+  }
+
+  private stopAutoRefresh() {
+    if (this.refreshTimer) {
+      clearInterval(this.refreshTimer);
+      this.refreshTimer = null;
+    }
   }
 }

@@ -34,7 +34,7 @@ const routes: Routes = [
   },
   {
     path: 'lahir',
-    loadChildren: () => import('./lahir/lahir.module').then( m => m.LahirPageModule)
+    loadComponent: () => import('./lahir/lahir.page').then( m => m.LahirPage)
   },
   {
     path: 'detail-riwayat-perkawinan',

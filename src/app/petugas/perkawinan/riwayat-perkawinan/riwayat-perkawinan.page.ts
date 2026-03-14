@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { PerkawinanService } from '../../../services/perkawinan.service';
@@ -45,7 +45,7 @@ interface RiwayatPerkawinan {
   styleUrls: ['./riwayat-perkawinan.page.scss'],
   standalone: false,
 })
-export class RiwayatPerkawinanPage implements OnInit {
+export class RiwayatPerkawinanPage implements OnInit, OnDestroy {
   riwayatList: RiwayatPerkawinan[] = [];
   filteredRiwayat: RiwayatPerkawinan[] = [];
 
@@ -53,6 +53,8 @@ export class RiwayatPerkawinanPage implements OnInit {
   filterStatus: string = 'semua';
   currentPetugasName: string = '-';
   isLoading = false;
+  private refreshTimer: ReturnType<typeof setInterval> | null = null;
+  private readonly AUTO_REFRESH_MS = 15000;
 
   constructor(
     private router: Router,
@@ -70,6 +72,15 @@ export class RiwayatPerkawinanPage implements OnInit {
 
   ionViewWillEnter() {
     this.loadRiwayatData();
+    this.startAutoRefresh();
+  }
+
+  ionViewWillLeave() {
+    this.stopAutoRefresh();
+  }
+
+  ngOnDestroy() {
+    this.stopAutoRefresh();
   }
 
   async loadRiwayatData() {
@@ -278,5 +289,19 @@ export class RiwayatPerkawinanPage implements OnInit {
       position: 'bottom',
     });
     await toast.present();
+  }
+
+  private startAutoRefresh() {
+    this.stopAutoRefresh();
+    this.refreshTimer = setInterval(() => {
+      this.loadRiwayatData();
+    }, this.AUTO_REFRESH_MS);
+  }
+
+  private stopAutoRefresh() {
+    if (this.refreshTimer) {
+      clearInterval(this.refreshTimer);
+      this.refreshTimer = null;
+    }
   }
 }

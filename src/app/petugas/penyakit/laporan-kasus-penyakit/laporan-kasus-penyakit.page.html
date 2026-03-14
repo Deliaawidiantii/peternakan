@@ -102,7 +102,7 @@
           <ion-button fill="clear" color="primary">Ganti Foto</ion-button>
         </div>
 
-        <input type="file" #fileInput accept="image/*" style="display: none;" (change)="onFileSelected($event)" />
+        <input type="file" #fileInput accept="image/*" class="visually-hidden-input" title="Unggah foto hewan" aria-label="Unggah foto hewan" (change)="onFileSelected($event)" />
       </div>
 
       <div class="form-section">

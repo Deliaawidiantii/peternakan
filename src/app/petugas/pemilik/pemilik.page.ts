@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { PeternakService } from '../../services/peternak.service';
 import { AlertController } from '@ionic/angular';
@@ -9,12 +9,14 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./pemilik.page.scss'],
   standalone: false,
 })
-export class PemilikPage implements OnInit {
+export class PemilikPage implements OnInit, OnDestroy {
 
   query: string = '';
   pemilikList: any[] = [];
   filteredPemilik: any[] = [];
   isLoading: boolean = false;
+  private refreshTimer: ReturnType<typeof setInterval> | null = null;
+  private readonly AUTO_REFRESH_MS = 15000;
 
   constructor(
     private navCtrl: NavController,
@@ -29,6 +31,15 @@ export class PemilikPage implements OnInit {
   ionViewWillEnter() {
     // Reload data setiap kali masuk ke page ini
     this.loadPemilik();
+    this.startAutoRefresh();
+  }
+
+  ionViewWillLeave() {
+    this.stopAutoRefresh();
+  }
+
+  ngOnDestroy() {
+    this.stopAutoRefresh();
   }
 
   async loadPemilik() {
@@ -185,5 +196,19 @@ export class PemilikPage implements OnInit {
         event.target.complete();
       }
     });
+  }
+
+  private startAutoRefresh() {
+    this.stopAutoRefresh();
+    this.refreshTimer = setInterval(() => {
+      this.loadPemilik();
+    }, this.AUTO_REFRESH_MS);
+  }
+
+  private stopAutoRefresh() {
+    if (this.refreshTimer) {
+      clearInterval(this.refreshTimer);
+      this.refreshTimer = null;
+    }
   }
 }

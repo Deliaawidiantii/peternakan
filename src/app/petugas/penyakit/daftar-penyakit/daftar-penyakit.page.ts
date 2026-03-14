@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { PenyakitService } from '../../../services/penyakit.service';
@@ -10,11 +10,13 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ['./daftar-penyakit.page.scss'],
   standalone: false,
 })
-export class DaftarPenyakitPage implements OnInit {
+export class DaftarPenyakitPage implements OnInit, OnDestroy {
   kasusList: any[] = [];
   query = '';
   isLoading = false;
   private backendUrl = environment.apiUrl.replace('/api', '');
+  private refreshTimer: ReturnType<typeof setInterval> | null = null;
+  private readonly AUTO_REFRESH_MS = 15000;
 
   constructor(
     private penyakitService: PenyakitService,
@@ -50,6 +52,15 @@ export class DaftarPenyakitPage implements OnInit {
 
   ionViewWillEnter() {
     this.loadKasus();
+    this.startAutoRefresh();
+  }
+
+  ionViewWillLeave() {
+    this.stopAutoRefresh();
+  }
+
+  ngOnDestroy() {
+    this.stopAutoRefresh();
   }
 
   async loadKasus() {
@@ -94,5 +105,19 @@ export class DaftarPenyakitPage implements OnInit {
     this.router.navigate(['/petugas/detail-penyakit'], {
       queryParams: { id: kasus.id },
     });
+  }
+
+  private startAutoRefresh() {
+    this.stopAutoRefresh();
+    this.refreshTimer = setInterval(() => {
+      this.loadKasus();
+    }, this.AUTO_REFRESH_MS);
+  }
+
+  private stopAutoRefresh() {
+    if (this.refreshTimer) {
+      clearInterval(this.refreshTimer);
+      this.refreshTimer = null;
+    }
   }
 }

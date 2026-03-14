@@ -101,6 +101,19 @@ export class DetailHewanPage implements OnInit {
     this.showToast('Menampilkan barcode: ' + this.barcodeId, 'primary');
   }
 
+  getIdInduk(): string {
+    const tambahan = this.hewan?.data_tambahan;
+
+    if (tambahan && typeof tambahan === 'object') {
+      const fromDirect = tambahan.id_induk || tambahan.induk_id || tambahan.parent_id;
+      if (fromDirect) {
+        return String(fromDirect);
+      }
+    }
+
+    return '-';
+  }
+
   hasKandangInfo(): boolean {
     return !!this.getKandangInfo() || !!this.hewan?.kandang_id;
   }

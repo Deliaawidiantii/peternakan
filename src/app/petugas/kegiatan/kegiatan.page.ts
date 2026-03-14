@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { KegiatanService } from '../../services/kegiatan.service';
 
 @Component({
@@ -7,9 +7,11 @@ import { KegiatanService } from '../../services/kegiatan.service';
   styleUrls: ['./kegiatan.page.scss'],
   standalone: false,
 })
-export class KegiatanPage implements OnInit {
+export class KegiatanPage implements OnInit, OnDestroy {
   kegiatanBerjalan: any[] = [];
   isLoading = true;
+  private refreshTimer: ReturnType<typeof setInterval> | null = null;
+  private readonly AUTO_REFRESH_MS = 10000;
 
   constructor(private kegiatanService: KegiatanService) {}
 
@@ -19,6 +21,15 @@ export class KegiatanPage implements OnInit {
 
   ionViewWillEnter() {
     this.loadKegiatan();
+    this.startAutoRefresh();
+  }
+
+  ionViewWillLeave() {
+    this.stopAutoRefresh();
+  }
+
+  ngOnDestroy() {
+    this.stopAutoRefresh();
   }
 
   loadKegiatan() {
@@ -53,5 +64,19 @@ export class KegiatanPage implements OnInit {
       return 'heart-outline';
     if (j.includes('bersih') || j.includes('rawat')) return 'broom-outline';
     return 'calendar-outline';
+  }
+
+  private startAutoRefresh() {
+    this.stopAutoRefresh();
+    this.refreshTimer = setInterval(() => {
+      this.loadKegiatan();
+    }, this.AUTO_REFRESH_MS);
+  }
+
+  private stopAutoRefresh() {
+    if (this.refreshTimer) {
+      clearInterval(this.refreshTimer);
+      this.refreshTimer = null;
+    }
   }
 }

@@ -2,6 +2,13 @@
   --ion-font-family: var(--app-font);
 }
 
+.header-inline-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
 .editor-shell {
   padding-top: 10px;
 }

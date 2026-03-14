@@ -4,10 +4,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
   FormBuilder,
   FormGroup,
-  Validators,
+  FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { PopulasiService } from '../../../services/populasi.service';
+import { PerkawinanService } from '../../../services/perkawinan.service';
+import { SharedUiModule } from '../../../shared/shared-ui.module';
 
 interface HewanInduk {
   id: string;
@@ -16,58 +21,35 @@ interface HewanInduk {
   rumpunTernak: string;
 }
 
-interface DataLahir {
-  eartagInduk: string;
-  eartagAnak: string;
-  tanggalLahir: string;
-  jenisKelamin: 'Jantan' | 'Betina';
-  kondisi: 'Sehat' | 'Cacat' | 'Mati' | 'Prematur';
-  jenisTernakAnak: 'Sapi' | 'Kerbau';
-  rumpunTernakAnak: string;
-  beratBadan: number;
-  panjangBadan: number;
-  tinggiPundak: number;
-  lingkarDada: number;
-  fotoAnak?: string;
-  catatan?: string;
-}
-
 @Component({
   selector: 'app-lahir',
   templateUrl: './lahir.page.html',
   styleUrls: ['./lahir.page.scss'],
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule, SharedUiModule],
 })
 export class LahirPage implements OnInit {
   lahirForm: FormGroup;
   hewanInduk: HewanInduk | null = null;
-  fotoFileName: string = '';
+  fotoFileName = '';
 
   masterJenisHewan: any[] = [];
   jenisTernakOptions: any[] = [];
   rumpunTernakOptions: any[] = [];
 
-  // Dummy data induk untuk testing
-  hewanIndukList: HewanInduk[] = [
-    {
-      id: '1',
-      eartagBetina: 'ID-001-2024',
-      jenisTernak: 'Sapi',
-      rumpunTernak: 'Simental',
-    },
-    {
-      id: '2',
-      eartagBetina: 'ID-002-2024',
-      jenisTernak: 'Kerbau',
-      rumpunTernak: 'Kerbau Lumpur',
-    },
-  ];
+  perkawinanId: number | null = null;
+  currentDataTambahan: any = {};
+  isSubmitting = false;
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private populasiService: PopulasiService,
+    private perkawinanService: PerkawinanService,
+    private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController,
+    private alertCtrl: AlertController,
   ) {
     this.lahirForm = this.fb.group({
       eartagAnak: [''],
@@ -87,15 +69,15 @@ export class LahirPage implements OnInit {
   ngOnInit() {
     this.loadDataMaster();
 
-    // Ambil ID dari query params
     this.route.queryParams.subscribe((params) => {
-      const hewanId = params['eartagId'];
-      if (hewanId) {
-        this.loadHewanInduk(hewanId);
+      const id = Number(params['eartagId']) || null;
+      this.perkawinanId = id;
+
+      if (id) {
+        this.loadHewanInduk(id);
       }
     });
 
-    // Listen to changes on jenisTernakAnak to filter rumpun
     this.lahirForm
       .get('jenisTernakAnak')
       ?.valueChanges.subscribe((selectedKategori) => {
@@ -109,9 +91,7 @@ export class LahirPage implements OnInit {
         const data = res.data || [];
         this.masterJenisHewan = data;
 
-        const uniqueKategori = Array.from(
-          new Set(data.map((item: any) => item.kategori)),
-        );
+        const uniqueKategori = Array.from(new Set(data.map((item: any) => item.kategori)));
         this.jenisTernakOptions = uniqueKategori.map((k) => ({
           label: k,
           value: k,
@@ -124,7 +104,6 @@ export class LahirPage implements OnInit {
     this.rumpunTernakOptions = [];
     if (!selectedKategori) return;
 
-    // Reset rumpunTernakAnak form control
     if (this.lahirForm.get('jenisTernakAnak')?.value !== selectedKategori) {
       this.lahirForm.patchValue({ rumpunTernakAnak: '' });
     }
@@ -138,47 +117,125 @@ export class LahirPage implements OnInit {
     }));
   }
 
-  loadHewanInduk(id: string) {
-    // Cari hewan induk berdasarkan ID
-    const found = this.hewanIndukList.find((h) => h.id === id);
-    if (found) {
-      this.hewanInduk = found;
-    }
+  async loadHewanInduk(id: number) {
+    const loading = await this.loadingCtrl.create({ message: 'Memuat data induk...' });
+    await loading.present();
+
+    this.perkawinanService.show(id).subscribe({
+      next: async (res: any) => {
+        await loading.dismiss();
+        const data = res?.data || null;
+        if (!data) {
+          await this.showToast('Data induk tidak ditemukan', 'danger');
+          return;
+        }
+
+        this.currentDataTambahan = data?.data_tambahan || {};
+
+        const jenisRumpun = String(data?.jenis_rumpun || '');
+        const [jenis, rumpun] = jenisRumpun.includes(' - ')
+          ? jenisRumpun.split(' - ')
+          : [data?.populasi?.jenis_hewan || '-', data?.populasi?.ras || jenisRumpun || '-'];
+
+        this.hewanInduk = {
+          id: String(data?.id || ''),
+          eartagBetina: data?.eartag || data?.populasi?.code || '-',
+          jenisTernak: jenis,
+          rumpunTernak: rumpun,
+        };
+
+        if (!this.lahirForm.get('jenisTernakAnak')?.value && jenis) {
+          this.lahirForm.patchValue({ jenisTernakAnak: jenis });
+        }
+      },
+      error: async (err: any) => {
+        await loading.dismiss();
+        await this.showToast(err?.error?.message || 'Gagal memuat data induk', 'danger');
+      },
+    });
   }
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
       this.fotoFileName = file.name;
-      console.log('File selected:', file);
-      // TODO: Implement file upload
     }
   }
 
-  simpanData() {
-    if (!this.lahirForm.valid) {
-      alert('Mohon isi semua field yang diperlukan!');
+  async simpanData() {
+    if (!this.lahirForm.valid || !this.perkawinanId) {
+      await this.showToast('Mohon isi data kelahiran dengan lengkap', 'warning');
       return;
     }
 
-    const dataLahir: DataLahir = {
-      eartagInduk: this.hewanInduk?.eartagBetina || '',
-      ...this.lahirForm.value,
-      fotoAnak: this.fotoFileName || undefined,
+    this.isSubmitting = true;
+    const loading = await this.loadingCtrl.create({ message: 'Menyimpan data kelahiran...' });
+    await loading.present();
+
+    const values = this.lahirForm.value;
+    const mergedTambahan = {
+      ...this.currentDataTambahan,
+      lahir: {
+        eartag_anak: values.eartagAnak || null,
+        tanggal_lahir: values.tanggalLahir,
+        jenis_kelamin_anak: values.jenisKelamin,
+        kondisi_anak: values.kondisi,
+        jenis_ternak_anak: values.jenisTernakAnak,
+        rumpun_ternak_anak: values.rumpunTernakAnak || null,
+        berat_lahir_anak: values.beratBadan ? Number(values.beratBadan) : null,
+        panjang_badan_anak: values.panjangBadan ? Number(values.panjangBadan) : null,
+        tinggi_pundak_anak: values.tinggiPundak ? Number(values.tinggiPundak) : null,
+        lingkar_dada_anak: values.lingkarDada ? Number(values.lingkarDada) : null,
+        foto_anak: this.fotoFileName || null,
+        catatan: values.catatan || null,
+      },
     };
 
-    console.log('Data Lahir yang disimpan:', dataLahir);
-    alert('Data lahir berhasil disimpan!');
+    const payload: any = {
+      status: 'sudah_melahirkan',
+      tanggal_kelahiran: values.tanggalLahir,
+      data_tambahan: mergedTambahan,
+      catatan: values.catatan || this.currentDataTambahan?.catatan || null,
+    };
 
-    // TODO: Kirim data ke backend API
-    // await this.apiService.saveLahirData(dataLahir);
+    this.perkawinanService.update(this.perkawinanId, payload).subscribe({
+      next: async () => {
+        await loading.dismiss();
+        this.isSubmitting = false;
 
-    // Navigate kembali ke riwayat
-    this.router.navigate(['/petugas/perkawinan/riwayat-perkawinan']);
+        const alert = await this.alertCtrl.create({
+          header: 'Berhasil',
+          message: 'Data lahiran berhasil disimpan.',
+          buttons: ['OK'],
+          cssClass: 'custom-alert',
+        });
+        await alert.present();
+        await alert.onDidDismiss();
+
+        this.router.navigate(['/petugas/perkawinan/riwayat-perkawinan']);
+      },
+      error: async (err: any) => {
+        await loading.dismiss();
+        this.isSubmitting = false;
+        await this.showToast(err?.error?.message || 'Gagal menyimpan data lahiran', 'danger');
+      },
+    });
   }
 
   batal() {
-    console.log('Input lahir dibatalkan');
     this.router.navigate(['/petugas/perkawinan/riwayat-perkawinan']);
+  }
+
+  private async showToast(
+    message: string,
+    color: 'success' | 'warning' | 'danger' | 'primary' = 'primary',
+  ) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 2200,
+      color,
+      position: 'bottom',
+    });
+    await toast.present();
   }
 }

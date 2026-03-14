@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
+import { PerkawinanService } from '../../../services/perkawinan.service';
+import { AuthService } from '../../../services/auth.service';
 
 interface RiwayatPerkawinan {
   id: string;
@@ -9,7 +11,7 @@ interface RiwayatPerkawinan {
   hasPKB: boolean;
   hasLahir: boolean;
   eartagBetina: string;
-  jenisTernak: 'Sapi' | 'Kerbau';
+  jenisTernak: string;
   rumpunTernak: string;
   umurInduk?: number;
   tanggalIB?: string;
@@ -47,167 +49,132 @@ interface RiwayatPerkawinan {
   selector: 'app-detail-riwayat-perkawinan',
   templateUrl: './detail-riwayat-perkawinan.page.html',
   styleUrls: ['./detail-riwayat-perkawinan.page.scss'],
-  standalone: false
+  standalone: false,
 })
 export class DetailRiwayatPerkawinanPage implements OnInit {
-
   riwayat: RiwayatPerkawinan | null = null;
-  eartagId: string = '';
-  eartag: string = '';
+  eartagId = '';
+  eartag = '';
   isLoading = true;
-
-  // Mock data untuk testing
-  allRiwayatList: RiwayatPerkawinan[] = [
-    {
-      id: '1',
-      status: 'PKB',
-      hasIB: true,
-      hasPKB: true,
-      hasLahir: false,
-      eartagBetina: 'ID-001-2024',
-      jenisTernak: 'Sapi',
-      rumpunTernak: 'Simental',
-      umurInduk: 4,
-      usiaInduk: 48,
-      tanggalIB: '2024-01-15',
-      metodePerkawinan: 'IB',
-      inseminasiKe: 1,
-      kodeProduksi: 'SP-001',
-      kodeBatch: 'B-2024-01',
-      idPejantan: 'PJ-001',
-      tanggalPKB: '2024-02-20',
-      jenisPerkawinan: 'IB',
-      umurKebuntingan: 2,
-      prediksiLahir: '2024-10-15',
-      namaPemilik: 'Budi Santoso',
-      nikPemilik: '3201234567890001',
-      telpPemilik: '081234567890',
-      alamatPemilik: 'Jl. Merdeka No. 123',
-      provinsi: 'Jawa Barat',
-      kabupaten: 'Bandung',
-      kecamatan: 'Cibiru',
-      desa: 'Cipadung',
-      namaPetugas: 'Dr. Ahmad Fauzi',
-      nikPetugas: '3201234567890123',
-      telpPetugas: '081234567890',
-      foto: 'path/to/photo.jpg',
-      createdAt: '2024-01-15T10:00:00',
-      updatedAt: '2024-02-20T14:30:00'
-    },
-    {
-      id: '2',
-      status: 'Lahir',
-      hasIB: true,
-      hasPKB: true,
-      hasLahir: true,
-      eartagBetina: 'ID-002-2024',
-      jenisTernak: 'Kerbau',
-      rumpunTernak: 'Kerbau Lumpur',
-      umurInduk: 5,
-      usiaInduk: 60,
-      tanggalIB: '2023-12-10',
-      metodePerkawinan: 'Alam',
-      tanggalPKB: '2024-01-15',
-      jenisPerkawinan: 'Alami',
-      umurKebuntingan: 3,
-      prediksiLahir: '2024-09-10',
-      tanggalLahir: '2024-09-08',
-      jenisKelaminAnak: 'Betina',
-      beratLahirAnak: 32,
-      kondisiAnak: 'Sehat',
-      namaPemilik: 'Siti Rahayu',
-      nikPemilik: '3201234567890002',
-      telpPemilik: '081234567891',
-      alamatPemilik: 'Jl. Raya Rancasari No. 45',
-      provinsi: 'Jawa Barat',
-      kabupaten: 'Bandung',
-      kecamatan: 'Rancasari',
-      desa: 'Cipamokolan',
-      namaPetugas: 'Dr. Ahmad Fauzi',
-      nikPetugas: '3201234567890123',
-      telpPetugas: '081234567890',
-      foto: 'path/to/photo2.jpg',
-      createdAt: '2023-12-10T09:00:00',
-      updatedAt: '2024-09-08T08:15:00'
-    },
-    {
-      id: '3',
-      status: 'IB',
-      hasIB: true,
-      hasPKB: false,
-      hasLahir: false,
-      eartagBetina: 'ID-003-2024',
-      jenisTernak: 'Sapi',
-      rumpunTernak: 'PO',
-      usiaInduk: 36,
-      tanggalIB: '2024-03-01',
-      metodePerkawinan: 'IB',
-      inseminasiKe: 2,
-      kodeProduksi: 'SP-002',
-      kodeBatch: 'B-2024-03',
-      idPejantan: 'PJ-002',
-      namaPemilik: 'Joko Widodo',
-      nikPemilik: '3201234567890003',
-      telpPemilik: '081234567892',
-      alamatPemilik: 'Jl. Pasir Biru No. 88',
-      provinsi: 'Jawa Barat',
-      kabupaten: 'Bandung',
-      kecamatan: 'Cibiru',
-      desa: 'Pasir Biru',
-      namaPetugas: 'Dr. Sinta Maharani',
-      nikPetugas: '3201234567890124',
-      telpPetugas: '081234567891',
-      foto: 'path/to/photo3.jpg',
-      createdAt: '2024-03-01T11:00:00',
-      updatedAt: '2024-03-01T11:00:00'
-    }
-  ];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private navController: NavController
+    private navController: NavController,
+    private perkawinanService: PerkawinanService,
+    private authService: AuthService,
+    private toastCtrl: ToastController,
   ) {}
 
   ngOnInit() {
-    this.getRiwayatFromParams();
-  }
-
-  getRiwayatFromParams() {
     this.route.queryParams.subscribe((params: any) => {
-      this.eartagId = params['eartagId'];
-      this.eartag = params['eartag'];
-      
-      console.log('Params:', { eartagId: this.eartagId, eartag: this.eartag });
-      
+      this.eartagId = params['eartagId'] || '';
+      this.eartag = params['eartag'] || '';
+
       if (this.eartagId) {
-        this.loadRiwayatDetail();
+        this.loadRiwayatDetail(this.eartagId);
+      } else {
+        this.isLoading = false;
       }
     });
   }
 
-  loadRiwayatDetail() {
+  private loadRiwayatDetail(id: string) {
     this.isLoading = true;
-    
-    // Cari data berdasarkan ID dari mock data
-    const foundRiwayat = this.allRiwayatList.find(item => item.id === this.eartagId);
-    
-    if (foundRiwayat) {
-      this.riwayat = foundRiwayat;
-      console.log('Riwayat loaded:', this.riwayat);
-    } else {
-      console.warn('Data riwayat tidak ditemukan dengan ID:', this.eartagId);
-    }
-    
-    this.isLoading = false;
+
+    this.perkawinanService.show(Number(id)).subscribe({
+      next: (res: any) => {
+        const data = res?.data || null;
+        this.riwayat = data ? this.mapRiwayatItem(data) : null;
+        this.isLoading = false;
+      },
+      error: async (err: any) => {
+        this.riwayat = null;
+        this.isLoading = false;
+        await this.showToast(err?.error?.message || 'Gagal memuat detail riwayat', 'danger');
+      },
+    });
+  }
+
+  private mapRiwayatItem(item: any): RiwayatPerkawinan {
+    const tambahan = item?.data_tambahan || {};
+    const lokasi = tambahan?.lokasi || {};
+    const statusBackend = String(item?.status || 'menunggu_pkb');
+
+    const hasIB = true;
+    const hasPKB = ['sudah_pkb', 'sudah_melahirkan', 'akta_terbit'].includes(statusBackend);
+    const hasLahir = ['sudah_melahirkan', 'akta_terbit'].includes(statusBackend);
+    const statusLabel: 'IB' | 'PKB' | 'Lahir' = hasLahir ? 'Lahir' : hasPKB ? 'PKB' : 'IB';
+
+    const jenisRumpun = String(item?.jenis_rumpun || '');
+    const [jenis, rumpun] = jenisRumpun.includes(' - ')
+      ? jenisRumpun.split(' - ')
+      : [item?.populasi?.jenis_hewan || '-', item?.populasi?.ras || jenisRumpun || '-'];
+
+    return {
+      id: String(item?.id || ''),
+      status: statusLabel,
+      hasIB,
+      hasPKB,
+      hasLahir,
+      eartagBetina: item?.eartag || item?.populasi?.code || '-',
+      jenisTernak: jenis || '-',
+      rumpunTernak: rumpun || '-',
+      umurInduk: tambahan?.usia_ternak ? Math.floor(Number(tambahan.usia_ternak) / 12) : undefined,
+      usiaInduk: Number(tambahan?.usia_ternak || item?.populasi?.umur || 0) || undefined,
+      tanggalIB: item?.tanggal_kawin || undefined,
+      metodePerkawinan: item?.metode || '-',
+      inseminasiKe: tambahan?.inseminasi_ke ? Number(tambahan.inseminasi_ke) : undefined,
+      kodeProduksi: tambahan?.kode_produksi || undefined,
+      kodeBatch: tambahan?.kode_batch || undefined,
+      idPejantan: tambahan?.id_pejantan || undefined,
+      tanggalPKB: item?.tanggal_pkb || undefined,
+      jenisPerkawinan: item?.metode === 'Alami' ? 'Alami' : 'IB',
+      umurKebuntingan: tambahan?.pkb?.umur_kebuntingan ? Number(tambahan.pkb.umur_kebuntingan) : undefined,
+      prediksiLahir: tambahan?.pkb?.prediksi_lahir || undefined,
+      tanggalLahir: item?.tanggal_kelahiran || undefined,
+      jenisKelaminAnak: tambahan?.lahir?.jenis_kelamin_anak || undefined,
+      beratLahirAnak: tambahan?.lahir?.berat_lahir_anak ? Number(tambahan.lahir.berat_lahir_anak) : undefined,
+      kondisiAnak: tambahan?.lahir?.kondisi_anak || undefined,
+      namaPemilik: item?.peternakan?.nama_peternak || tambahan?.nama_pemilik || '-',
+      nikPemilik: item?.peternakan?.nik || tambahan?.nik_pemilik || '-',
+      telpPemilik: item?.peternakan?.no_telp || tambahan?.telp_pemilik || '-',
+      alamatPemilik: item?.peternakan?.alamat || tambahan?.alamat || '-',
+      provinsi: lokasi?.provinsi || '-',
+      kabupaten: lokasi?.kabupaten || '-',
+      kecamatan: lokasi?.kecamatan || '-',
+      desa: lokasi?.desa || '-',
+      namaPetugas:
+        tambahan?.petugas_input_pkb?.nama ||
+        tambahan?.petugas_input_ib?.nama ||
+        this.authService.getUser()?.nama ||
+        '-',
+      nikPetugas:
+        tambahan?.petugas_input_pkb?.nik ||
+        tambahan?.petugas_input_ib?.nik ||
+        this.authService.getUser()?.nik ||
+        '-',
+      telpPetugas:
+        tambahan?.petugas_input_pkb?.telp ||
+        tambahan?.petugas_input_ib?.telp ||
+        this.authService.getUser()?.no_telp ||
+        '-',
+      foto: tambahan?.foto || undefined,
+      createdAt: item?.created_at || new Date().toISOString(),
+      updatedAt: item?.updated_at || new Date().toISOString(),
+    };
   }
 
   getStatusColor(status: string): string {
-    switch(status) {
-      case 'IB': return 'primary';
-      case 'PKB': return 'warning';
-      case 'Lahir': return 'success';
-      default: return 'medium';
+    switch (status) {
+      case 'IB':
+        return 'primary';
+      case 'PKB':
+        return 'warning';
+      case 'Lahir':
+        return 'success';
+      default:
+        return 'medium';
     }
   }
 
@@ -218,31 +185,44 @@ export class DetailRiwayatPerkawinanPage implements OnInit {
       this.router.navigate(['/petugas/perkawinan/lahir'], {
         queryParams: {
           eartagId: this.riwayat.id,
-          eartag: this.riwayat.eartagBetina
-        }
+          eartag: this.riwayat.eartagBetina,
+        },
       });
-    } else if (this.riwayat.hasIB && !this.riwayat.hasPKB) {
+      return;
+    }
+
+    if (this.riwayat.hasIB && !this.riwayat.hasPKB) {
       this.router.navigate(['/petugas/perkawinan/input-pkb'], {
         queryParams: {
           eartagId: this.riwayat.id,
-          eartag: this.riwayat.eartagBetina
-        }
+          eartag: this.riwayat.eartagBetina,
+        },
       });
     }
   }
 
   editRiwayat() {
-    if (this.eartagId) {
-      this.router.navigate(['/petugas/perkawinan/edit-riwayat'], {
-        queryParams: {
-          eartagId: this.eartagId,
-          eartag: this.eartag
-        }
-      });
-    }
+    if (!this.eartagId) return;
+
+    this.router.navigate(['/petugas/perkawinan/edit-riwayat'], {
+      queryParams: {
+        eartagId: this.eartagId,
+        eartag: this.eartag,
+      },
+    });
   }
 
   goBack() {
     this.navController.back();
+  }
+
+  private async showToast(message: string, color: 'success' | 'warning' | 'danger' | 'primary' = 'primary') {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 2200,
+      color,
+      position: 'bottom',
+    });
+    await toast.present();
   }
 }

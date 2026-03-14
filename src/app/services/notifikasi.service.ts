@@ -46,4 +46,18 @@ export class NotifikasiService {
       headers: this.getHeaders(),
     });
   }
+
+  registerPushToken(token: string): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/notifikasi/push-token`,
+      { token },
+      { headers: this.getHeaders() },
+    );
+  }
+
+  removePushToken(): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/notifikasi/push-token`, {
+      headers: this.getHeaders(),
+    });
+  }
 }

@@ -2,6 +2,20 @@
   --ion-font-family: var(--app-font);
 }
 
+.header-inline-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-back-button {
+  --color: #fff;
+}
+
+.section-label-reset {
+  margin: 0;
+}
+
 .page-content {
   --background: var(--app-bg, #f5f7fa);
 }

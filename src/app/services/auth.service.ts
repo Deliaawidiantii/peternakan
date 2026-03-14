@@ -30,6 +30,24 @@ export class AuthService {
           // Simpan token ke localStorage
           localStorage.setItem('token', response.data.token);
           localStorage.setItem('user', JSON.stringify(response.data.user));
+
+          const pushToken = localStorage.getItem('fcm_push_token');
+          if (pushToken) {
+            const headers = new HttpHeaders({
+              'Authorization': `Bearer ${response.data.token}`,
+              'Accept': 'application/json',
+            });
+
+            this.http.post(
+              `${this.apiUrl}/notifikasi/push-token`,
+              { token: pushToken },
+              { headers }
+            ).subscribe({
+              error: (err) => {
+                console.error('Gagal sinkron token push saat login', err);
+              }
+            });
+          }
         }
       })
     );

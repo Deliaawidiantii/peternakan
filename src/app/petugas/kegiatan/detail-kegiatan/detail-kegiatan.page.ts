@@ -92,6 +92,7 @@ export class DetailKegiatanPage implements OnInit {
 
   canStart(): boolean {
     return (
+      this.kegiatan?.status_validasi === 'approved' &&
       (this.kegiatan?.status === 'terjadwal' ||
         this.kegiatan?.status === 'terlambat' ||
         this.kegiatan?.status_aktual === 'terlambat') &&
@@ -108,14 +109,18 @@ export class DetailKegiatanPage implements OnInit {
 
     this.isSubmitting = true;
     this.kegiatanService.mulaiKegiatan(this.kegiatan.id).subscribe({
-      next: async () => {
-        await this.showToast('Kegiatan dimulai', 'success');
+      next: async (res: any) => {
+        await this.showToast(res?.message || 'Kegiatan dimulai', 'success');
         this.isSubmitting = false;
         this.getDetail(this.kegiatan.id);
       },
       error: async (err) => {
         this.isSubmitting = false;
-        await this.showToast(err?.error?.message || 'Kegiatan tidak bisa dimulai', 'danger');
+        const message =
+          err?.error?.message ||
+          err?.error?.errors?.status?.[0] ||
+          'Kegiatan tidak bisa dimulai';
+        await this.showToast(message, 'danger');
       }
     });
   }

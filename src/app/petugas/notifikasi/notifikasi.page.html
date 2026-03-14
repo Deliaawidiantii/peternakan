@@ -2,7 +2,7 @@
   <ion-toolbar>
     <div class="gradient-header compact-header">
       <div class="header-row">
-        <div style="display:flex;align-items:center;gap:12px;min-width:0;">
+        <div class="header-inline-group">
           <ion-back-button defaultHref="/petugas/tabs/home" text=""></ion-back-button>
           <div class="header-copy">
             <h2 class="gradient-title">Notifikasi</h2>
@@ -21,7 +21,7 @@
 <ion-content class="page-content">
   <div class="content-wrapper">
     <div class="list-header-row" *ngIf="!isLoading && notifikasiList.length > 0">
-      <h3 class="section-label" style="margin:0;">
+      <h3 class="section-label section-label-reset">
         <ion-icon name="notifications-outline"></ion-icon>
         Daftar Notifikasi
       </h3>
