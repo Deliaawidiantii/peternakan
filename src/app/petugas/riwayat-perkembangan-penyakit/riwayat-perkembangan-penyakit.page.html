@@ -1,13 +1,11 @@
-<ion-header>
-  <ion-toolbar >
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Perkembangan Penyakit</ion-title>
-  </ion-toolbar>
+<app-page-header
+  title="Perkembangan Penyakit"
+  defaultHref="/petugas/penyakit"
+></app-page-header>
 
-  <!-- Status Tab ala Shopee -->
-  <div class="status-container">
+<ion-content class="custom-bg">
+  <div class="content-wrapper compact-bottom">
+    <div class="status-container page-card">
     <div class="status-item" [ngClass]="{ 'active': selectedComponent === 'terdiagnosa' }" (click)="openComponent('terdiagnosa')">
       <p>Terdiagnosa</p>
     </div>
@@ -28,32 +26,31 @@
       <p>Selesai</p>
     </div>
 
-  </div>
-</ion-header>
+    </div>
 
-<ion-content class="custom-bg">
-  <ng-container *ngIf="!selectedComponent">
+    <ng-container *ngIf="!selectedComponent">
     <ion-text class="section-title">Silakan pilih status perkembangan penyakit di atas</ion-text>
-  </ng-container>
+    </ng-container>
 
-  <!-- Komponen Dinamis -->
-  <ng-container *ngIf="selectedComponent === 'terdiagnosa'">
-    <app-terdiagnosa (close)="backToMain()" [daftarKasus]="getFilteredKasus('terdiagnosa')"></app-terdiagnosa>
-  </ng-container>
+    <!-- Komponen Dinamis -->
+    <ng-container *ngIf="selectedComponent === 'terdiagnosa'">
+      <app-terdiagnosa (close)="backToMain()" [daftarKasus]="getFilteredKasus('terdiagnosa')"></app-terdiagnosa>
+    </ng-container>
 
-  <ng-container *ngIf="selectedComponent === 'dalamPerkembangan'">
-    <app-dalam-perkembangan (close)="backToMain()" [daftarKasus]="getFilteredKasus('dalamPerkembangan')"></app-dalam-perkembangan>
-  </ng-container>
+    <ng-container *ngIf="selectedComponent === 'dalamPerkembangan'">
+      <app-dalam-perkembangan (close)="backToMain()" [daftarKasus]="getFilteredKasus('dalamPerkembangan')"></app-dalam-perkembangan>
+    </ng-container>
 
-  <ng-container *ngIf="selectedComponent === 'sembuh'">
-    <app-sembuh (close)="backToMain()" [daftarKasus]="getFilteredKasus('sembuh')"></app-sembuh>
-  </ng-container>
+    <ng-container *ngIf="selectedComponent === 'sembuh'">
+      <app-sembuh (close)="backToMain()" [daftarKasus]="getFilteredKasus('sembuh')"></app-sembuh>
+    </ng-container>
 
-  <ng-container *ngIf="selectedComponent === 'mati'">
-    <app-mati (close)="backToMain()" [daftarKasus]="getFilteredKasus('mati')"></app-mati>
-  </ng-container>
+    <ng-container *ngIf="selectedComponent === 'mati'">
+      <app-mati (close)="backToMain()" [daftarKasus]="getFilteredKasus('mati')"></app-mati>
+    </ng-container>
 
-  <ng-container *ngIf="selectedComponent === 'selesai'">
-    <app-selesai (close)="backToMain()" [daftarKasus]="getFilteredKasus('selesai')"></app-selesai>
-  </ng-container>
+    <ng-container *ngIf="selectedComponent === 'selesai'">
+      <app-selesai (close)="backToMain()" [daftarKasus]="getFilteredKasus('selesai')"></app-selesai>
+    </ng-container>
+  </div>
 </ion-content>

@@ -20,7 +20,7 @@
     <!-- Filter -->
     <div class="filter-row">
       <div class="filter-item">
-        <ion-select [(ngModel)]="selectedMonth" (ionChange)="applyFilters()" placeholder="Pilih Bulan">
+        <ion-select [(ngModel)]="selectedMonth" (ionChange)="applyFilters()" placeholder="Pilih Bulan" interface="action-sheet" [interfaceOptions]="{ header: 'Pilih Bulan' }">
           <ion-select-option value="">Semua Bulan</ion-select-option>
           <ion-select-option value="01">Januari</ion-select-option>
           <ion-select-option value="02">Februari</ion-select-option>
@@ -37,7 +37,7 @@
         </ion-select>
       </div>
       <div class="filter-item">
-        <ion-select [(ngModel)]="selectedAnimalType" (ionChange)="applyFilters()" placeholder="Pilih Jenis">
+        <ion-select [(ngModel)]="selectedAnimalType" (ionChange)="applyFilters()" placeholder="Pilih Jenis" interface="action-sheet" [interfaceOptions]="{ header: 'Pilih Jenis Ternak' }">
           <ion-select-option value="">Semua</ion-select-option>
           <ion-select-option *ngFor="let opt of jenisTernakOptions" [value]="opt.value">{{ opt.label
             }}</ion-select-option>

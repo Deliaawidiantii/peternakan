@@ -1,114 +1,54 @@
-ion-header {
-  ion-toolbar {
-    --background: #ffffff;
-    --border-width: 0 0 1px 0;
-    --border-color: #e8f1f6;
-
-    ion-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: #0e161b;
-    }
-
-    ion-back-button {
-      --color: #507e95;
-    }
-  }
+:host {
+  --ion-font-family: var(--app-font);
 }
 
-/* Content Background */
 .custom-bg {
-  --background: #f8fafb;
-  font-family: "Public Sans", "Noto Sans", sans-serif;
+  --background: transparent;
 }
 
-/* Section Title */
-.section-title {
-  display: block;
-  text-align: center;
-  padding: 40px 20px;
-  font-size: 16px;
-  color: #507e95;
-  font-weight: 500;
-}
-
-/* Utility Classes */
-ion-content {
-  --padding-bottom: 20px;
-}
-
-
-ion-header {
-  ion-toolbar {
-    --background: #ffffff;
-    --border-width: 0 0 1px 0;
-    --border-color: #e8f1f6;
-
-    ion-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: #0e161b;
-    }
-
-    ion-back-button {
-      --color: #507e95;
-    }
-  }
-}
-
-/* ===== STYLE 1: MINIMALIS ===== */
 .status-container {
   display: flex;
   gap: 8px;
-  padding: 12px 16px;
-  background: #ffffff;
-  border-bottom: 1px solid #e8f1f6;
+  padding: 10px;
+  margin-bottom: 14px;
   overflow-x: auto;
-  scroll-behavior: smooth;
 
   &::-webkit-scrollbar {
     display: none;
   }
-
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 
 .status-item {
   flex: 0 0 auto;
-  padding: 8px 16px;
+  min-width: 94px;
+  padding: 8px 12px;
   text-align: center;
+  border: 1px solid var(--app-input-border);
+  border-radius: 12px;
+  background: rgba(247, 249, 251, 0.96);
   cursor: pointer;
-  border: 1px solid #d4e6f1;
-  border-radius: 6px;
-  background: #f8fafb;
-  transition: all 0.3s ease;
-  white-space: nowrap;
 
   p {
-    font-size: 12px;
-    font-weight: 500;
-    color: #507e95;
     margin: 0;
-    letter-spacing: 0.3px;
-  }
-
-  &:hover {
-    border-color: #a0b8c8;
-    background: #f0f7fb;
-
-    p {
-      color: #3c5d78;
-    }
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--app-text-secondary);
   }
 
   &.active {
-    background: #63bce9;
-    border-color: #63bce9;
+    border-color: transparent;
+    background: linear-gradient(135deg, var(--app-brand-700), var(--app-brand-500));
 
     p {
       color: #ffffff;
-      font-weight: 600;
     }
   }
+}
+
+.section-title {
+  display: block;
+  text-align: center;
+  padding: 20px 14px;
+  font-size: 14px;
+  color: var(--app-text-secondary);
 }

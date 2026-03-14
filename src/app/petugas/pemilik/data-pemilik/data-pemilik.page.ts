@@ -4,6 +4,7 @@ import { PeternakService } from '../../../services/peternak.service';
 import { WilayahService } from '../../../services/wilayah.service';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
+import { ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-data-pemilik',
@@ -12,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
   standalone: false,
 })
 export class DataPemilikPage implements OnInit {
+  @ViewChild('fotoPemilikInput') fotoPemilikInput!: ElementRef<HTMLInputElement>;
 
   isEditMode: boolean = false;
   peternakId: number | null = null;
@@ -27,6 +29,9 @@ export class DataPemilikPage implements OnInit {
     jenis_kelamin: '',
     wilayah_id: '' // ✅ DIISI DARI DROPDOWN
   };
+
+  fotoPemilikFile: File | null = null;
+  previewFotoPemilik: string | null = null;
 
   errors: string[] = [];
 
@@ -89,6 +94,8 @@ export class DataPemilikPage implements OnInit {
             jenis_kelamin: data.jenis_kelamin,
             wilayah_id: data.wilayah_id
           };
+
+          this.previewFotoPemilik = data.foto_peternak_url || null;
         }
       },
       error: async (error) => {
@@ -127,9 +134,22 @@ export class DataPemilikPage implements OnInit {
     });
     await loading.present();
 
+    const formData = new FormData();
+    formData.append('nik', this.form.nik);
+    formData.append('nama_peternak', this.form.nama_peternak);
+    formData.append('alamat', this.form.alamat);
+    formData.append('no_telp', this.form.no_telp);
+    formData.append('tanggal_lahir', this.form.tanggal_lahir);
+    formData.append('jenis_kelamin', this.form.jenis_kelamin);
+    formData.append('wilayah_id', this.form.wilayah_id as any);
+
+    if (this.fotoPemilikFile) {
+      formData.append('foto_peternak', this.fotoPemilikFile);
+    }
+
     const apiCall = this.isEditMode
-      ? this.peternakService.update(this.peternakId!, this.form)
-      : this.peternakService.create(this.form);
+      ? this.peternakService.update(this.peternakId!, formData)
+      : this.peternakService.create(formData);
 
     apiCall.subscribe({
       next: async (response) => {
@@ -182,6 +202,19 @@ export class DataPemilikPage implements OnInit {
 
   compareWilayah(w1: any, w2: any) {
     return w1 && w2 ? w1 === w2 : w1 === w2;
+  }
+
+  pickFotoPemilik() {
+    this.fotoPemilikInput?.nativeElement?.click();
+  }
+
+  onFotoPemilikSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    this.fotoPemilikFile = file;
+    this.previewFotoPemilik = URL.createObjectURL(file);
   }
 
   goBack() {

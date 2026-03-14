@@ -42,14 +42,14 @@ export class PeternakService {
 
   // Create peternak
   create(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/peternak`, data, { 
+    return this.http.post(`${this.apiUrl}/peternak`, data, {
       headers: this.getHeaders() 
     });
   }
 
   // Update peternak
   update(id: number, data: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/peternak/${id}`, data, { 
+    return this.http.put(`${this.apiUrl}/peternak/${id}`, data, {
       headers: this.getHeaders() 
     });
   }

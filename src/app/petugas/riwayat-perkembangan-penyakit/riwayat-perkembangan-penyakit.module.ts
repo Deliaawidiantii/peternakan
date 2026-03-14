@@ -10,6 +10,7 @@ import { RiwayatPerkembanganPenyakitPage } from './riwayat-perkembangan-penyakit
 
 
 import { ComponentsModule } from './components.module';
+import { SharedUiModule } from '../../shared/shared-ui.module';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { ComponentsModule } from './components.module';
     IonicModule,
     RiwayatPerkembanganPenyakitPageRoutingModule,
     ComponentsModule,
+    SharedUiModule,
     
   ],
   declarations: [RiwayatPerkembanganPenyakitPage]

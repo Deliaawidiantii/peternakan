@@ -33,6 +33,27 @@
         <h3 class="section-title">Identitas Dasar</h3>
 
         <div class="form-group">
+          <label class="form-label">Foto Pemilik</label>
+          <div class="upload-area" (click)="pickFotoPemilik()">
+            <ion-icon name="camera-outline" class="upload-icon"></ion-icon>
+            <p class="upload-text">{{ previewFotoPemilik ? 'Ganti foto pemilik' : 'Tambah foto pemilik' }}</p>
+            <p class="upload-subtext">Format JPG/PNG, maksimal 2MB.</p>
+          </div>
+
+          <input
+            #fotoPemilikInput
+            type="file"
+            accept="image/*"
+            hidden
+            (change)="onFotoPemilikSelected($event)"
+          />
+
+          <div *ngIf="previewFotoPemilik" class="preview-container">
+            <img [src]="previewFotoPemilik" alt="Preview foto pemilik" />
+          </div>
+        </div>
+
+        <div class="form-group">
           <label class="form-label">NIK</label>
           <ion-item class="input-field">
             <ion-input

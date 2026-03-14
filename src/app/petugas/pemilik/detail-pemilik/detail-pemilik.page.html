@@ -29,9 +29,16 @@
 
     <ng-container *ngIf="!isLoading && pemilik">
       <div class="page-card owner-hero-card">
-        <div class="owner-avatar">
+        <div class="owner-avatar" *ngIf="!pemilik?.foto_peternak_url">
           <span>{{ pemilik?.nama_peternak ? (pemilik.nama_peternak | slice:0:1) : 'P' }}</span>
         </div>
+
+        <img
+          *ngIf="pemilik?.foto_peternak_url"
+          [src]="pemilik.foto_peternak_url"
+          alt="Foto pemilik"
+          class="owner-avatar-photo"
+        />
 
         <div class="owner-copy">
           <p class="hero-eyebrow">Pemilik ternak</p>

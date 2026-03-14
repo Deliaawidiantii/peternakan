@@ -1,62 +1,66 @@
-<ion-header>
-  <ion-toolbar color="light">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/petugas/kegiatan"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Jadwal Kegiatan</ion-title>
-  </ion-toolbar>
+<app-page-header
+  title="Jadwal Kegiatan"
+  defaultHref="/petugas/kegiatan"
+></app-page-header>
 
-  <ion-segment value="semua" (ionChange)="segmentChanged($event)">
-    <ion-segment-button value="semua">
-      <ion-label>Semua</ion-label>
-    </ion-segment-button>
+<ion-content class="page-content">
+  <div class="content-wrapper compact-bottom jadwal-shell">
+    <div class="segment-card page-card">
+      <ion-segment [value]="selectedTab" (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="semua">
+          <ion-label>Semua</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="akan_datang">
+          <ion-label>Akan Datang</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="berjalan">
+          <ion-label>Berjalan</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="selesai">
+          <ion-label>Selesai</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
 
-    <ion-segment-button value="akan_datang">
-      <ion-label>Akan Datang</ion-label>
-    </ion-segment-button>
+    <app-loading-state
+      *ngIf="loading"
+      [card]="true"
+      title="Memuat jadwal kegiatan"
+      caption="Menyiapkan daftar kegiatan lapangan."
+    ></app-loading-state>
 
-    <ion-segment-button value="berjalan">
-      <ion-label>Berjalan</ion-label>
-    </ion-segment-button>
+    <app-empty-state
+      *ngIf="!loading && kegiatanList.length === 0"
+      icon="calendar-outline"
+      title="Tidak ada kegiatan"
+      caption="Coba pilih tab status lain untuk melihat jadwal yang tersedia."
+    ></app-empty-state>
 
-    <ion-segment-button value="selesai">
-      <ion-label>Selesai</ion-label>
-    </ion-segment-button>
-  </ion-segment>
+    <div class="cards-list" *ngIf="!loading && kegiatanList.length > 0">
+      <div
+        class="data-card border-blue jadwal-item"
+        *ngFor="let kegiatan of kegiatanList"
+        (click)="goToDetail(kegiatan.id)"
+      >
+        <div class="card-top-row">
+          <div>
+            <p class="card-title">{{ kegiatan.jenis }}</p>
+            <p class="card-subtitle">{{ getStatusLabel(kegiatan) }}</p>
+          </div>
+          <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
+        </div>
 
-</ion-header>
-
-<ion-content>
-
-  <!-- Loading -->
-  <ion-spinner *ngIf="loading" class="ion-padding"></ion-spinner>
-
-  <!-- List -->
-  <ion-list *ngIf="!loading && kegiatanList.length > 0" lines="none">
-    <ion-item
-      *ngFor="let kegiatan of kegiatanList"
-      button
-      (click)="goToDetail(kegiatan.id)"
-    >
-      <ion-avatar slot="start" class="icon-box">
-        <ion-icon name="calendar-outline"></ion-icon>
-      </ion-avatar>
-
-      <ion-label>
-        <h2>{{ kegiatan.jenis }}</h2>
-        <p>{{ getStatusLabel(kegiatan) }}</p>
-        <p>{{ kegiatan.tanggal }} | {{ kegiatan.jam_mulai }} - {{ kegiatan.jam_selesai }}</p>
-        <p>📍 {{ kegiatan.lokasi }}</p>
-      </ion-label>
-
-      <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
-    </ion-item>
-  </ion-list>
-
-  <!-- Empty State -->
-  <div *ngIf="!loading && kegiatanList.length === 0" class="ion-text-center ion-padding">
-    <ion-icon name="calendar-outline" size="large"></ion-icon>
-    <p>Tidak ada kegiatan</p>
+        <div class="card-meta schedule-meta">
+          <span class="meta-item">
+            <ion-icon name="time-outline"></ion-icon>
+            {{ kegiatan.tanggal }} | {{ kegiatan.jam_mulai }} - {{ kegiatan.jam_selesai }}
+          </span>
+          <span class="meta-item">
+            <ion-icon name="location-outline"></ion-icon>
+            {{ kegiatan.lokasi || '-' }}
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
-
 </ion-content>

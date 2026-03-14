@@ -2,6 +2,10 @@
   --ion-font-family: var(--app-font);
 }
 
+.header-action-btn.danger {
+  --color: #ff4d4f !important;
+}
+
 .header-action-btn {
   --background: transparent;
   --color: #ffffff;
@@ -38,6 +42,15 @@
     font-weight: 800;
     color: var(--app-brand-700);
   }
+}
+
+.owner-avatar-photo {
+  width: 92px;
+  height: 92px;
+  border-radius: 28px;
+  object-fit: cover;
+  border: 1px solid rgba(62, 143, 197, 0.22);
+  box-shadow: var(--app-card-shadow-soft);
 }
 
 .owner-copy {
