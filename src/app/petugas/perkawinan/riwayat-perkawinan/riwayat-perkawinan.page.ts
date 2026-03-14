@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController, ToastController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { PerkawinanService } from '../../../services/perkawinan.service';
 import { AuthService } from '../../../services/auth.service';
 
@@ -52,13 +52,13 @@ export class RiwayatPerkawinanPage implements OnInit {
   searchTerm: string = '';
   filterStatus: string = 'semua';
   currentPetugasName: string = '-';
+  isLoading = false;
 
   constructor(
     private router: Router,
     private alertCtrl: AlertController,
     private perkawinanService: PerkawinanService,
     private authService: AuthService,
-    private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
   ) {}
 
@@ -73,21 +73,20 @@ export class RiwayatPerkawinanPage implements OnInit {
   }
 
   async loadRiwayatData() {
-    const loading = await this.loadingCtrl.create({ message: 'Memuat riwayat ternak...' });
-    await loading.present();
+    this.isLoading = true;
 
     this.perkawinanService.index().subscribe({
       next: async (res: any) => {
-        await loading.dismiss();
+        this.isLoading = false;
         const data = Array.isArray(res?.data) ? res.data : [];
         this.riwayatList = data.map((item: any) => this.mapRiwayatItem(item));
         this.applyFilters();
       },
       error: async (err: any) => {
-        await loading.dismiss();
+        this.isLoading = false;
         this.riwayatList = [];
         this.applyFilters();
-        await this.showToast(err?.error?.message || 'Gagal memuat riwayat ternak', 'danger');
+        await this.showToast(err?.error?.message || 'Gagal memuat riwayat perkawinan', 'danger');
       },
     });
   }
