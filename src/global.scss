@@ -52,6 +52,13 @@ ion-header ion-toolbar {
   --padding-end: 0;
 }
 
+ion-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--app-bg-soft);
+}
+
 ion-toolbar {
   --min-height: 68px;
 }
@@ -180,6 +187,7 @@ ion-list {
   --padding-start: 10px;
   --padding-end: 10px;
   border: 1px solid rgba(255, 255, 255, 0.16);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
@@ -196,6 +204,7 @@ ion-list {
   font-size: 12px;
   font-weight: 700;
   line-height: 1.4;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 
   ion-icon {
@@ -250,6 +259,7 @@ ion-list {
   border-radius: var(--app-card-radius);
   box-shadow: var(--app-card-shadow-soft);
   overflow: hidden;
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 
@@ -502,6 +512,7 @@ ion-list {
   border: 1px solid var(--app-border);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.97) 0%, rgba(247, 249, 251, 0.94) 100%);
   box-shadow: var(--app-card-shadow-soft);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
 
@@ -738,6 +749,7 @@ ion-list {
   border: 1px solid var(--app-input-border);
   background: rgba(255, 255, 255, 0.88);
   box-shadow: var(--app-card-shadow-soft);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 
@@ -809,6 +821,7 @@ ion-list {
   border-radius: 26px;
   padding: 20px 18px;
   box-shadow: var(--app-card-shadow-soft);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 
@@ -1065,6 +1078,7 @@ ion-list {
 .custom-footer {
   --background: rgba(255, 255, 255, 0.94);
   box-shadow: 0 -12px 30px rgba(17, 40, 68, 0.08);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 

@@ -25,9 +25,9 @@ export class AppComponent implements OnInit {
       // Setup capacitor plugins for native Android/iOS
       if (this.platform.is('capacitor')) {
         try {
-          // Buat background status bar jadi tembus pandang (overlay)
-          await StatusBar.setOverlaysWebView({ overlay: true });
-          // Tulisan di status bar dibuat terang/putih, bisa diganti Style.Dark atau Light
+          // Jangan overlay webview agar konten tidak menembus ke area status bar.
+          await StatusBar.setOverlaysWebView({ overlay: false });
+          // Pakai ikon gelap agar kontras di background status bar terang.
           await StatusBar.setStyle({ style: Style.Dark });
         } catch (e) {
           console.error('Error setting status bar', e);
