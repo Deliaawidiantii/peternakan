@@ -78,6 +78,21 @@ export class AuthService {
     return this.http.get(`${this.apiUrl}/profile`, { headers });
   }
 
+  updateProfile(payload: FormData): Observable<any> {
+    const token = this.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.post(`${this.apiUrl}/profile/update`, payload, { headers }).pipe(
+      tap((response: any) => {
+        if (response?.success && response?.data) {
+          localStorage.setItem('user', JSON.stringify(response.data));
+        }
+      })
+    );
+  }
+
   getToken(): string | null {
     return localStorage.getItem('token');
   }

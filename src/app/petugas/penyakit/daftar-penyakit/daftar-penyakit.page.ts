@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { PenyakitService } from '../../../services/penyakit.service';
 import { environment } from '../../../../environments/environment';
@@ -12,14 +12,37 @@ import { environment } from '../../../../environments/environment';
 })
 export class DaftarPenyakitPage implements OnInit {
   kasusList: any[] = [];
+  query = '';
+  isLoading = false;
   private backendUrl = environment.apiUrl.replace('/api', '');
 
   constructor(
     private penyakitService: PenyakitService,
-    private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
     private router: Router,
   ) {}
+
+  get filteredKasus(): any[] {
+    const term = this.query.trim().toLowerCase();
+    if (!term) {
+      return this.kasusList;
+    }
+
+    return this.kasusList.filter((item) => {
+      const text = [
+        item?.code,
+        item?.diagnosa,
+        item?.jenis_penyakit,
+        item?.gejala,
+        item?.deskripsi,
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase();
+
+      return text.includes(term);
+    });
+  }
 
   ngOnInit() {
     this.loadKasus();
@@ -30,16 +53,15 @@ export class DaftarPenyakitPage implements OnInit {
   }
 
   async loadKasus() {
-    const loading = await this.loadingCtrl.create({ message: 'Memuat daftar kasus...' });
-    await loading.present();
+    this.isLoading = true;
 
     this.penyakitService.getPenyakit().subscribe({
       next: async (res) => {
-        await loading.dismiss();
+        this.isLoading = false;
         this.kasusList = Array.isArray(res?.data) ? res.data : [];
       },
       error: async (err) => {
-        await loading.dismiss();
+        this.isLoading = false;
         const toast = await this.toastCtrl.create({
           message: err?.error?.message || 'Gagal memuat daftar kasus penyakit',
           color: 'danger',
@@ -57,9 +79,9 @@ export class DaftarPenyakitPage implements OnInit {
   }
 
   getStatusClass(status: string): string {
-    if (status === 'approved') return 'verified';
+    if (status === 'approved') return 'approved';
     if (status === 'rejected') return 'rejected';
-    return 'waiting';
+    return 'pending';
   }
 
   getStatusLabel(status: string): string {

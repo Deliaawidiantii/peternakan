@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   ToastController,
-  LoadingController,
   NavController,
 } from '@ionic/angular';
 import { KegiatanService } from '../../../services/kegiatan.service';
@@ -32,7 +31,6 @@ export class RequestKegiatanPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private toastController: ToastController,
-    private loadingController: LoadingController,
     private navCtrl: NavController,
     private kegiatanService: KegiatanService,
     private peternakService: PeternakService,
@@ -113,22 +111,16 @@ export class RequestKegiatanPage implements OnInit {
       return;
     }
 
-    const loading = await this.loadingController.create({
-      message: 'Mengirim request...',
-    });
-    await loading.present();
     this.isLoading = true;
 
     this.kegiatanService.requestKegiatan(payload).subscribe({
       next: async (res) => {
-        await loading.dismiss();
         this.isLoading = false;
         await this.showToast('Request kegiatan berhasil dikirim', 'success');
         this.requestForm.reset();
         this.navCtrl.navigateBack('/petugas/kegiatan');
       },
       error: async (err) => {
-        await loading.dismiss();
         this.isLoading = false;
         const backendMessage =
           err?.error?.message ||

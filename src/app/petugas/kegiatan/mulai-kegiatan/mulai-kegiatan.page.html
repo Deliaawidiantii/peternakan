@@ -1,114 +1,85 @@
-<ion-header>
-  <ion-toolbar color="light">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/petugas/kegiatan" text=""></ion-back-button>
-    </ion-buttons>
-    <ion-title>Detail Kegiatan</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-page-header
+  title="Mulai Kegiatan"
+  subtitle="Pantau detail kegiatan berjalan dan upload dokumentasi lapangan."
+  defaultHref="/petugas/kegiatan"
+></app-page-header>
 
-<ion-content>
-  <ion-list lines="none" class="list-section">
+<ion-content class="page-content">
+  <div class="content-wrapper compact-bottom">
+    <app-loading-state
+      *ngIf="isLoading"
+      [card]="true"
+      title="Memuat detail kegiatan"
+      caption="Menyiapkan data kegiatan berjalan."
+    ></app-loading-state>
 
-    <!-- kegiatan -->
-    <h2 class="section-title">Kegiatan</h2>
-    <ion-item>
-      <ion-icon name="calendar-outline" slot="start" class="icon-bg"></ion-icon>
-      <ion-label>{{kegiatan?.jenis}}</ion-label>
-    </ion-item>
+    <app-empty-state
+      *ngIf="!isLoading && !kegiatan"
+      icon="clipboard-outline"
+      title="Detail kegiatan tidak ditemukan"
+      caption="Data kegiatan belum tersedia atau tidak dapat dimuat."
+    ></app-empty-state>
 
-    <!-- Date -->
-    <ion-item>
-      <ion-icon name="calendar-outline" slot="start" class="icon-bg"></ion-icon>
-      <ion-label>{{kegiatan?.tanggal}}</ion-label>
-    </ion-item>
+    <ng-container *ngIf="!isLoading && kegiatan">
+      <div class="page-card activity-hero-card">
+        <div class="hero-copy">
+          <p class="hero-eyebrow">Kegiatan Aktif</p>
+          <h2>{{ kegiatan?.jenis || '-' }}</h2>
+          <p class="hero-subtext">{{ kegiatan?.tanggal || '-' }} | {{ kegiatan?.jam_mulai || '-' }} - {{ kegiatan?.jam_selesai || '-' }}</p>
+        </div>
 
-    <!-- timing -->
-    <ion-item>
-      <ion-icon name="time-outline" slot="start" class="icon-bg"></ion-icon>
-      <ion-label>{{ kegiatan?.jam_mulai }} - {{ kegiatan?.jam_selesai }}</ion-label>
-    </ion-item>
-
-    <!-- lokasi -->
-    <ion-item>
-      <ion-icon name="location-outline" slot="start" class="icon-bg"></ion-icon>
-      <ion-label>{{ kegiatan?.lokasi }}</ion-label>
-    </ion-item>
-
-    <!-- deskripsi -->
-    <h2 class="section-title">Deskripsi</h2>
-    <p class="desc-text">{{ kegiatan?.deskripsi }}</p>
-
-    <!-- petugas -->
-    <h2 class="section-title">Petugas</h2>
-    <ion-item>
-      <ion-label>{{ kegiatan?.petugas?.nama }}</ion-label>
-    </ion-item>
-
-    <!-- status -->
-    <h2 class="section-title">Status</h2>
-    <ion-item>
-      <ion-icon name="ellipse-outline" slot="start" class="icon-bg"></ion-icon>
-      <ion-label>
-        <span *ngIf="kegiatan?.status_aktual === 'terlambat'" class="badge badge-danger">
-          Terlambat
-        </span>
-        <span *ngIf="kegiatan?.status_aktual !== 'terlambat'">
-          {{ kegiatan?.status }}
-        </span>
-      </ion-label>
-    </ion-item>
-
-    <!-- Upload Foto Section -->
-    <h2 class="section-title">Dokumentasi</h2>
-    <div class="upload-section">
-      <ion-button expand="block" fill="outline" color="medium" (click)="selectPhoto()">
-        <ion-icon name="camera-outline" slot="start"></ion-icon>
-        Upload Foto Kegiatan
-      </ion-button>
-      
-      <!-- Preview foto yang sudah diupload -->
-      <div class="photo-preview" *ngIf="uploadedPhotos && uploadedPhotos.length > 0">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="6" *ngFor="let photo of uploadedPhotos; let i = index">
-              <div class="photo-item">
-                <img [src]="photo.url" alt="Foto kegiatan">
-                <ion-button fill="clear" size="small" color="danger" 
-                            class="delete-btn" (click)="deletePhoto(i)">
-                  <ion-icon name="close-circle"></ion-icon>
-                </ion-button>
-              </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+        <span class="status-badge" [ngClass]="getStatusClass()">{{ getStatusLabel() }}</span>
       </div>
-    </div>
 
-  </ion-list>
+      <div class="page-card detail-panel">
+        <div class="panel-head">
+          <h3>Ringkasan</h3>
+          <p>Informasi lokasi, petugas, dan catatan kegiatan.</p>
+        </div>
 
-  <!-- button -->
-  <div class="button-container"
-      *ngIf="kegiatan?.status === 'sedang_berjalan'">
+        <div class="card-meta summary-meta">
+          <span class="meta-item">
+            <ion-icon name="location-outline"></ion-icon>
+            {{ kegiatan?.lokasi || '-' }}
+          </span>
+          <span class="meta-item">
+            <ion-icon name="person-outline"></ion-icon>
+            {{ kegiatan?.petugas?.nama || '-' }}
+          </span>
+        </div>
 
-    <ion-button
-      expand="block"
-      color="success"
-      (click)="selesai()"
-      [disabled]="uploadedPhotos.length === 0">
+        <p class="kegiatan-desc">{{ kegiatan?.deskripsi || '-' }}</p>
+      </div>
 
-      Selesaikan Kegiatan
-    </ion-button>
+      <div class="page-card detail-panel">
+        <div class="panel-head">
+          <h3>Dokumentasi</h3>
+          <p>Upload foto kegiatan sebagai bukti pelaksanaan.</p>
+        </div>
+
+        <ion-button expand="block" fill="outline" class="secondary-btn" (click)="selectPhoto()">
+          <ion-icon name="camera-outline" slot="start"></ion-icon>
+          Upload Foto Kegiatan
+        </ion-button>
+
+        <div class="photo-grid" *ngIf="uploadedPhotos && uploadedPhotos.length > 0">
+          <div class="photo-item" *ngFor="let photo of uploadedPhotos; let i = index">
+            <img [src]="photo.url" alt="Foto kegiatan" />
+            <ion-button fill="clear" size="small" color="danger" class="delete-btn" (click)="deletePhoto(i)">
+              <ion-icon name="close-circle"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions" *ngIf="kegiatan?.status === 'sedang_berjalan'">
+        <ion-button expand="block" class="submit-btn" (click)="selesai()" [disabled]="uploadedPhotos.length === 0 || isSubmitting">
+          Selesaikan Kegiatan
+        </ion-button>
+      </div>
+    </ng-container>
+
+    <input type="file" #fileInput accept="image/*" class="hidden-input" aria-label="Upload foto kegiatan" (change)="onFileSelected($event)" multiple>
   </div>
-
-  <!-- Hidden file input -->
-  <input
-    type="file"
-    #fileInput
-    accept="image/*"
-    style="display: none;"
-    (change)="onFileSelected($event)"
-    multiple>
-
 </ion-content>
 

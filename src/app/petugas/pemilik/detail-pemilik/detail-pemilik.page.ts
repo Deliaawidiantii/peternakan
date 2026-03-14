@@ -45,15 +45,8 @@ export class DetailPemilikPage implements OnInit {
   async loadDetailPemilik(id: number) {
     this.isLoading = true;
 
-    const loading = await this.loadingController.create({
-      message: 'Memuat data...',
-      spinner: 'crescent',
-    });
-    await loading.present();
-
     this.peternakService.getById(id).subscribe({
       next: async (response) => {
-        await loading.dismiss();
         this.isLoading = false;
 
         if (response.success) {
@@ -65,7 +58,6 @@ export class DetailPemilikPage implements OnInit {
         }
       },
       error: async (error) => {
-        await loading.dismiss();
         this.isLoading = false;
         console.error('Error loading detail:', error);
 

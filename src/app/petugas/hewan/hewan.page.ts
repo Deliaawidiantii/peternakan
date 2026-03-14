@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, LoadingController } from '@ionic/angular';
+import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { PopulasiService } from '../../services/populasi.service';
 
@@ -13,12 +13,11 @@ export class HewanPage implements OnInit {
   hewanList: any[] = [];
   searchText: string = '';
   selectedJenis: string = '';
-  isLoading: boolean = false; // ← TAMBAHKAN INI
+  isLoading: boolean = false;
 
   constructor(
     private actionSheetController: ActionSheetController,
     private router: Router,
-    private loadingCtrl: LoadingController,
     private populasiService: PopulasiService,
   ) {}
 
@@ -27,35 +26,27 @@ export class HewanPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    // Reload data setiap kali halaman dibuka
     this.loadHewan();
   }
 
-  async loadHewan() {
-    this.isLoading = true; // ← TAMBAHKAN INI
-
-    const loading = await this.loadingCtrl.create({
-      message: 'Memuat data...',
-    });
-    await loading.present();
+  loadHewan() {
+    this.isLoading = true;
 
     const params: any = {};
     if (this.selectedJenis) params.jenis_hewan = this.selectedJenis;
 
     this.populasiService.getPopulasi(params).subscribe({
-      next: async (res) => {
-        this.isLoading = false; // ← TAMBAHKAN INI
-        await loading.dismiss();
+      next: (res) => {
+        this.isLoading = false;
         if (res.success) {
           this.hewanList = res.data;
-          console.log('Data hewan:', this.hewanList); // Debug
+          console.log('Data hewan:', this.hewanList);
         }
       },
-      error: async (err) => {
-        this.isLoading = false; // ← TAMBAHKAN INI
-        await loading.dismiss();
+      error: (err) => {
+        this.isLoading = false;
         console.error('Error loading hewan:', err);
-        this.hewanList = []; // Set empty array on error
+        this.hewanList = [];
       },
     });
   }
@@ -67,9 +58,9 @@ export class HewanPage implements OnInit {
 
   searchHewan(event: any) {
     this.searchText = event.target.value;
-    // TODO: Implement search logic
     console.log('Search:', this.searchText);
   }
+
   goToDetail(id: any) {
     this.router.navigate(['/petugas/detail-hewan', id]);
   }

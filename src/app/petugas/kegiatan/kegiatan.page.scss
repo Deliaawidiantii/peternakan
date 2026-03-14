@@ -1,95 +1,38 @@
-:host {
+﻿:host {
   --ion-font-family: var(--app-font);
-}
-
-.page-content {
-  --background: var(--app-bg, #f5f7fa);
-}
-
-.content-wrapper {
-  padding: 4px 16px 100px;
-}
-
-.section-block {
-  margin-bottom: 24px;
 }
 
 .quick-menu {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
-.menu-card {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
+.activity-item {
   cursor: pointer;
-  transition: all 0.2s;
-
-  &:active {
-    transform: scale(0.98);
-  }
 }
 
-.menu-card-icon {
-  width: 50px;
-  height: 50px;
-  min-width: 50px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  ion-icon {
-    font-size: 24px;
-    color: inherit;
-  }
-
-  &.blue {
-    background: linear-gradient(135deg, #e8f0fe, #d2e3fc);
-    color: #1a73e8;
-  }
-
-  &.green {
-    background: linear-gradient(135deg, #e6f4ea, #ceead6);
-    color: #188038;
-  }
-
-  &.orange {
-    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-    color: #e37400;
-  }
-
-  &.purple {
-    background: linear-gradient(135deg, #f3e5f5, #e1bee7);
-    color: #7b1fa2;
-  }
-}
-
-.menu-card-text {
+.activity-copy {
   flex: 1;
   min-width: 0;
-
-  h3 {
-    font-size: 15px;
-    font-weight: 600;
-    color: #1e293b;
-    margin: 0 0 4px 0;
-  }
-
-  p {
-    font-size: 12px;
-    color: #64748b;
-    margin: 0;
-  }
 }
 
-.arrow {
-  font-size: 18px;
-  color: #94a3b8;
+.activity-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--app-text-primary);
+  margin: 0 0 4px;
+}
+
+.activity-meta {
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--app-text-secondary);
+  margin: 0;
+}
+
+.activity-action {
+  margin-left: auto;
+  --border-radius: 14px;
+  min-width: 72px;
 }

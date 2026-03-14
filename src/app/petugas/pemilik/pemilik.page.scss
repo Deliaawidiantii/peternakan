@@ -6,33 +6,34 @@
   --background: var(--app-bg, #f5f7fa);
 }
 
-.content-wrapper {
-  padding: 4px 16px 100px;
+.list-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 16px 4px;
 }
 
-.cards-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.pemilik-section-title {
+  margin: 0;
 }
 
 .pemilik-row {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
 }
 
 .avatar-circle {
-  width: 46px;
-  height: 46px;
-  min-width: 46px;
+  width: 58px;
+  height: 58px;
+  min-width: 58px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
 
   span {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
     color: #ffffff;
   }
@@ -41,6 +42,30 @@
 .pemilik-info {
   flex: 1;
   min-width: 0;
+}
+
+.pemilik-stack {
+  gap: 16px;
+}
+
+.card-top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.title-wrap {
+  min-width: 0;
+}
+
+.card-title {
+  font-size: 17px;
+}
+
+.secondary-meta {
+  margin-top: 10px;
 }
 
 .arrow-icon {

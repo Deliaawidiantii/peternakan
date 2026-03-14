@@ -1,4 +1,50 @@
-ion-card-title {
-  font-size: 1.1em;
-  font-weight: 600;
+:host {
+  --ion-font-family: var(--app-font);
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-field ion-icon[slot='start'] {
+  color: var(--app-brand-700);
+  margin-right: 10px;
+}
+
+.preferences-section {
+  gap: 0;
+}
+
+.preference-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px;
+  border-radius: 22px;
+  background: rgba(247, 249, 251, 0.98);
+  border: 1px solid rgba(41, 83, 128, 0.08);
+}
+
+.pref-copy {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+
+  h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--app-text-primary);
+    margin: 0 0 4px;
+  }
+
+  p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--app-text-secondary);
+    margin: 0;
+  }
 }

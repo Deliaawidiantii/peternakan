@@ -1,29 +1,38 @@
-<ion-header class="ion-no-border">
+﻿<ion-header class="ion-no-border">
   <ion-toolbar>
     <div class="gradient-header home-hero">
-      <div class="hero-row">
-        <div class="hero-text">
-          <h2 class="gradient-title">Hai, {{namaPetugas}} 👋</h2>
-          <p class="gradient-subtitle">Selamat datang di sistem peternakan</p>
+      <div class="header-stack">
+        <div class="header-row">
+          <ion-button fill="clear" class="notif-btn" routerLink="/petugas/notifikasi">
+            <ion-icon name="notifications-outline"></ion-icon>
+            <ion-badge *ngIf="unreadCount > 0" color="danger" mode="ios" class="notif-badge">{{ unreadCount }}</ion-badge>
+          </ion-button>
         </div>
-        <ion-button fill="clear" class="notif-btn" routerLink="/petugas/notifikasi">
-          <ion-icon name="notifications-outline"></ion-icon>
-          <ion-badge *ngIf="unreadCount > 0" color="danger" mode="ios" class="notif-badge">{{ unreadCount }}</ion-badge>
-        </ion-button>
+
+        <div class="hero-row">
+          <div class="hero-text">
+            <h2 class="gradient-title">Halo, {{ namaPetugas }}</h2>
+            <span class="header-chip home-location-chip" *ngIf="lokasiInfo.desa && lokasiInfo.desa !== 'Loading...' && lokasiInfo.desa !== 'Error'">
+              <ion-icon name="location-outline"></ion-icon>
+              Wilayah kerja aktif: Desa {{ lokasiInfo.desa }}
+            </span>
+            <span class="header-chip home-location-chip" *ngIf="!lokasiInfo.desa || lokasiInfo.desa === 'Loading...' || lokasiInfo.desa === 'Error'">
+              <ion-icon name="location-outline"></ion-icon>
+              Memuat wilayah kerja...
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen="true">
-  <div class="content-wrapper">
-
-    <!-- Statistik Cards -->
-    <div class="section-block">
+  <div class="content-wrapper compact-bottom home-content">
+    <div class="section-block first-section">
       <h3 class="section-label">
         <ion-icon name="stats-chart-outline"></ion-icon>
         Statistik
-        <span class="location-tag" *ngIf="lokasiInfo.desa">📍 Desa {{ lokasiInfo.desa }}</span>
       </h3>
 
       <div class="stats-grid">
@@ -33,7 +42,7 @@
           </div>
           <div class="stat-info">
             <h3>{{ stats.totalTernak }}</h3>
-            <p>Ternak</p>
+            <p>Total Ternak</p>
           </div>
         </div>
         <div class="stat-card">
@@ -42,7 +51,7 @@
           </div>
           <div class="stat-info">
             <h3>{{ stats.totalPemilik }}</h3>
-            <p>Pemilik</p>
+            <p>Total Pemilik</p>
           </div>
         </div>
         <div class="stat-card">
@@ -51,7 +60,7 @@
           </div>
           <div class="stat-info">
             <h3>{{ stats.totalKandang }}</h3>
-            <p>Kandang</p>
+            <p>Total Kandang</p>
           </div>
         </div>
         <div class="stat-card">
@@ -60,13 +69,12 @@
           </div>
           <div class="stat-info">
             <h3>{{ stats.totalKegiatan }}</h3>
-            <p>Kegiatan</p>
+            <p>Kegiatan Aktif</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Menu Grid -->
     <div class="section-block">
       <h3 class="section-label">
         <ion-icon name="grid-outline"></ion-icon>
@@ -125,13 +133,6 @@
       </div>
     </div>
 
-    <!-- Lokasi -->
-    <div class="location-bar" *ngIf="lokasiInfo.desa">
-      <ion-icon name="location-outline"></ion-icon>
-      <span>Desa {{ lokasiInfo.desa }}</span>
-    </div>
-
-    <!-- Laporan Terbaru -->
     <div class="section-block">
       <h3 class="section-label">
         <ion-icon name="document-text-outline"></ion-icon>
@@ -140,39 +141,44 @@
 
       <div class="page-card">
         <div class="report-item" *ngFor="let laporan of laporanTerbaru">
-          <div class="icon-circle"
-            [ngClass]="laporan.iconColor === '#16a34a' ? 'green' : laporan.iconColor === '#f59e0b' ? 'orange' : laporan.iconColor === '#ef4444' ? 'red' : 'blue'">
+          <div class="icon-circle" [ngClass]="laporan.iconColor === '#16a34a' ? 'green' : laporan.iconColor === '#f59e0b' ? 'orange' : laporan.iconColor === '#ef4444' ? 'red' : 'blue'">
             <ion-icon [name]="laporan.icon"></ion-icon>
           </div>
           <div class="report-text">
             <p class="report-title">{{ laporan.title }}</p>
             <p class="report-sub">{{ laporan.subtitle }}</p>
           </div>
-          <span *ngIf="laporan.status" class="status-badge" [ngClass]="laporan.statusClass">
-            {{ laporan.status }}
-          </span>
+          <span *ngIf="laporan.status" class="status-badge" [ngClass]="laporan.statusClass">{{ laporan.status }}</span>
           <span *ngIf="laporan.note" class="report-note">{{ laporan.note }}</span>
         </div>
 
         <div class="report-empty" *ngIf="laporanTerbaru.length === 0 && !isLoadingLaporan">
-          <ion-icon name="document-outline"></ion-icon>
-          <p>Belum ada laporan</p>
+          <div class="empty-icon">
+            <ion-icon name="document-outline"></ion-icon>
+          </div>
+          <p>Belum ada laporan terbaru</p>
         </div>
 
         <div class="report-loading" *ngIf="isLoadingLaporan">
-          <ion-spinner name="crescent" color="primary"></ion-spinner>
-          <p>Memuat data...</p>
+          <div class="custom-loader compact">
+            <div class="loader-orbit">
+              <span class="loader-dot"></span>
+              <span class="loader-dot dot-two"></span>
+              <span class="loader-dot dot-three"></span>
+            </div>
+            <div class="loader-copy">
+              <h3>Memuat laporan</h3>
+              <p>Menyiapkan ringkasan terbaru untuk Anda.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
   </div>
 
-  <!-- FAB Scan -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button routerLink="/petugas/scan" color="primary">
       <ion-icon name="qr-code-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
 </ion-content>

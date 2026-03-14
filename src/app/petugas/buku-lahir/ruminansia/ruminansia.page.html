@@ -1,72 +1,87 @@
-<ion-header class="custom-header">
-  <ion-toolbar color="light">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/petugas/buku-lahir"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Input Data Kelahiran</ion-title>
+﻿<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <div class="gradient-header form-header">
+      <div class="header-shell">
+        <ion-back-button defaultHref="/petugas/buku-lahir" text=""></ion-back-button>
+        <div class="header-copy">
+          <h2 class="gradient-title">Buku Lahir Ruminansia</h2>
+          <p class="gradient-subtitle">Lengkapi data induk dan anak. ID anak akan dibuat otomatis saat data berhasil tersimpan.</p>
+        </div>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding custom-bg">
-  <h1 class="page-title">Input Data Kelahiran Ruminansia</h1>
+<ion-content class="page-content">
+  <div class="content-wrapper">
+    <div class="page-card form-intro">
+      <h3>Pencatatan kelahiran yang lebih rapi</h3>
+      <p>Status anak untuk ruminansia mengikuti tiga kondisi utama: Normal, Cacat, atau Mati. Data ini akan langsung dipakai saat pembuatan ID anak.</p>
+    </div>
 
-  <ion-item class="input-field" lines="none">
-    <ion-label position="stacked">Tanggal Lahir</ion-label>
-    <ion-input type="date" [(ngModel)]="form.tanggal_lahir" placeholder="Pilih Tanggal"></ion-input>
-  </ion-item>
+    <div class="form-stack">
+      <ion-item class="input-field" lines="none">
+        <ion-label position="stacked">Tanggal Lahir</ion-label>
+        <ion-input type="date" [(ngModel)]="form.tanggal_lahir" placeholder="Pilih Tanggal"></ion-input>
+      </ion-item>
 
-  <ion-item class="input-field" lines="none">
-    <ion-label position="stacked">ID Induk</ion-label>
-    <ion-input type="text" [(ngModel)]="form.id_induk" placeholder="Masukkan kode/eartag induk"></ion-input>
-  </ion-item>
+      <ion-item class="input-field" lines="none">
+        <ion-label position="stacked">ID Induk</ion-label>
+        <ion-input type="text" [(ngModel)]="form.id_induk" placeholder="Masukkan kode atau eartag induk"></ion-input>
+      </ion-item>
 
-  <ion-item class="input-field" lines="none">
-    <ion-label position="stacked">Jenis Ruminansia</ion-label>
-    <ion-select [(ngModel)]="form.jenis_ruminansia" placeholder="Pilih Jenis">
-      <ion-select-option value="sapi">Sapi</ion-select-option>
-      <ion-select-option value="kambing">Kambing</ion-select-option>
-      <ion-select-option value="domba">Domba</ion-select-option>
-    </ion-select>
-  </ion-item>
+      <ion-item class="input-field" lines="none">
+        <ion-label position="stacked">Jenis Ruminansia</ion-label>
+        <ion-select [(ngModel)]="form.jenis_ruminansia" placeholder="Pilih Jenis">
+          <ion-select-option value="sapi">Sapi</ion-select-option>
+          <ion-select-option value="kambing">Kambing</ion-select-option>
+          <ion-select-option value="domba">Domba</ion-select-option>
+        </ion-select>
+      </ion-item>
 
-  <ion-item class="input-field" lines="none">
-    <ion-label position="stacked">Ras</ion-label>
-    <ion-input type="text" [(ngModel)]="form.ras" placeholder="Masukkan Ras"></ion-input>
-  </ion-item>
+      <ion-item class="input-field" lines="none">
+        <ion-label position="stacked">Ras</ion-label>
+        <ion-input type="text" [(ngModel)]="form.ras" placeholder="Masukkan Ras"></ion-input>
+      </ion-item>
 
-  <ion-item class="input-field" lines="none">
-    <ion-label position="stacked">Jenis Kelamin Anak</ion-label>
-    <ion-select [(ngModel)]="form.jenis_kelamin_anak" placeholder="Pilih Jenis Kelamin">
-      <ion-select-option value="jantan">Jantan</ion-select-option>
-      <ion-select-option value="betina">Betina</ion-select-option>
-    </ion-select>
-  </ion-item>
+      <ion-item class="input-field" lines="none">
+        <ion-label position="stacked">Jenis Kelamin Anak</ion-label>
+        <ion-select [(ngModel)]="form.jenis_kelamin_anak" placeholder="Pilih Jenis Kelamin">
+          <ion-select-option value="jantan">Jantan</ion-select-option>
+          <ion-select-option value="betina">Betina</ion-select-option>
+        </ion-select>
+      </ion-item>
 
-  <ion-item class="input-field" lines="none">
-    <ion-label position="stacked">Berat Lahir (kg)</ion-label>
-    <ion-input type="number" [(ngModel)]="form.berat_lahir" placeholder="Masukkan Berat" min="0" step="0.1"></ion-input>
-  </ion-item>
+      <ion-item class="input-field" lines="none">
+        <ion-label position="stacked">Berat Lahir (kg)</ion-label>
+        <ion-input type="number" [(ngModel)]="form.berat_lahir" placeholder="Masukkan Berat" min="0" step="0.1"></ion-input>
+      </ion-item>
 
-  <ion-item class="input-field" lines="none">
-    <ion-label position="stacked">Status Kelahiran</ion-label>
-    <ion-select [(ngModel)]="form.status_kelahiran" placeholder="Pilih Status">
-      <ion-select-option value="normal">Normal</ion-select-option>
-      <ion-select-option value="cacat">Cacat</ion-select-option>
-      <ion-select-option value="mati">Mati</ion-select-option>
-    </ion-select>
-  </ion-item>
+      <ion-item class="input-field" lines="none">
+        <ion-label position="stacked">Status Kelahiran</ion-label>
+        <ion-select [(ngModel)]="form.status_kelahiran" placeholder="Pilih Status">
+          <ion-select-option value="normal">Normal</ion-select-option>
+          <ion-select-option value="cacat">Cacat</ion-select-option>
+          <ion-select-option value="mati">Mati</ion-select-option>
+        </ion-select>
+      </ion-item>
 
-  <ion-item class="input-field" lines="none">
-    <ion-label position="stacked">ID Anak Hewan</ion-label>
-    <ion-text color="medium">ID anak dibuat otomatis setelah data berhasil tersimpan.</ion-text>
-  </ion-item>
+      <div class="page-card auto-id-note">
+        <ion-icon name="sparkles-outline"></ion-icon>
+        <div>
+          <h3>ID Anak Otomatis</h3>
+          <p>ID anak hewan tidak perlu diketik manual. Sistem akan membuatkannya setelah data kelahiran tersimpan.</p>
+        </div>
+      </div>
 
-  <ion-item class="input-field" lines="none">
-    <ion-label position="stacked">Catatan</ion-label>
-    <ion-textarea [(ngModel)]="form.catatan" placeholder="Catatan tambahan (opsional)" rows="3"></ion-textarea>
-  </ion-item>
+      <ion-item class="input-field" lines="none">
+        <ion-label position="stacked">Catatan</ion-label>
+        <ion-textarea [(ngModel)]="form.catatan" placeholder="Catatan tambahan (opsional)" rows="3"></ion-textarea>
+      </ion-item>
 
-  <ion-button expand="block" class="save-btn" [disabled]="isSubmitting" (click)="submit()">
-    Simpan
-  </ion-button>
+      <ion-button expand="block" class="save-btn" [disabled]="isSubmitting" (click)="submit()">
+        Simpan
+      </ion-button>
+    </div>
+  </div>
 </ion-content>

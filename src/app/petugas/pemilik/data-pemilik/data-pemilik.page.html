@@ -1,127 +1,155 @@
-<ion-content class="data-pemilik-content">
-
-  <ion-toolbar color="">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/petugas/pemilik"></ion-back-button>
-    </ion-buttons>
-    <ion-title>{{ isEditMode ? 'Edit Pemilik' : 'Tambah Pemilik Baru' }}</ion-title> 
-  </ion-toolbar> 
-
-  <!-- Error Messages -->
-  <div class="alert-error" *ngIf="errors.length > 0">
-    <ion-icon name="alert-circle-outline"></ion-icon>
-    <div class="alert-content">
-      <strong>Terjadi Kesalahan:</strong>
-      <ul>
-        <li *ngFor="let error of errors">{{ error }}</li>
-      </ul>
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <div class="gradient-header compact-header">
+      <div class="detail-toolbar-copy">
+        <ion-back-button defaultHref="/petugas/pemilik" text=""></ion-back-button>
+        <div class="header-copy">
+          <h2 class="gradient-title">{{ isEditMode ? 'Edit Data Pemilik' : 'Input Data Pemilik' }}</h2>
+          <p class="gradient-subtitle">Lengkapi identitas peternak dengan data yang rapi dan mudah diverifikasi.</p>
+        </div>
+      </div>
     </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="page-content">
+  <div class="content-wrapper form-page">
+    <div class="page-card form-intro-card">
+      <h3>{{ isEditMode ? 'Perbarui data pemilik' : 'Tambahkan pemilik baru' }}</h3>
+      <p>Data pemilik yang lengkap membantu proses pendataan kandang, hewan, dan kegiatan lapangan menjadi lebih akurat.</p>
+    </div>
+
+    <div class="alert-error page-card" *ngIf="errors.length > 0">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <div class="alert-content">
+        <strong>Data belum bisa disimpan</strong>
+        <ul>
+          <li *ngFor="let error of errors">{{ error }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="form-container">
+      <div class="form-section">
+        <h3 class="section-title">Identitas Dasar</h3>
+
+        <div class="form-group">
+          <label class="form-label">NIK</label>
+          <ion-item class="input-field">
+            <ion-input
+              type="text"
+              placeholder="Masukkan NIK 16 digit"
+              [(ngModel)]="form.nik"
+              name="nik"
+              maxlength="16"
+              required
+            ></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Nama Lengkap</label>
+          <ion-item class="input-field">
+            <ion-input
+              type="text"
+              placeholder="Masukkan nama lengkap"
+              [(ngModel)]="form.nama_peternak"
+              name="nama_peternak"
+              required
+            ></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Jenis Kelamin</label>
+          <ion-item class="input-field">
+            <ion-select
+              placeholder="Pilih jenis kelamin"
+              [(ngModel)]="form.jenis_kelamin"
+              name="jenis_kelamin"
+              interface="action-sheet"
+              required
+            >
+              <ion-select-option value="Laki-laki">Laki-laki</ion-select-option>
+              <ion-select-option value="Perempuan">Perempuan</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Tanggal Lahir</label>
+          <ion-item class="input-field">
+            <ion-datetime
+              presentation="date"
+              placeholder="Pilih tanggal lahir"
+              [(ngModel)]="form.tanggal_lahir"
+              name="tanggal_lahir"
+              required
+            ></ion-datetime>
+          </ion-item>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3 class="section-title">Kontak dan Wilayah</h3>
+
+        <div class="form-group">
+          <label class="form-label">Nomor HP</label>
+          <ion-item class="input-field">
+            <ion-input
+              type="tel"
+              placeholder="Masukkan nomor HP"
+              [(ngModel)]="form.no_telp"
+              name="no_telp"
+              required
+            ></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Desa / Wilayah</label>
+          <ion-item class="input-field">
+            <ion-select
+              placeholder="Pilih desa"
+              [(ngModel)]="form.wilayah_id"
+              name="wilayah_id"
+              interface="action-sheet"
+              [compareWith]="compareWilayah"
+              required
+            >
+              <ion-select-option *ngFor="let w of wilayahList" [value]="w.id">
+                {{ w.nama_desa }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Alamat</label>
+          <ion-item class="input-field">
+            <ion-textarea
+              autoGrow="true"
+              placeholder="Masukkan alamat lengkap"
+              [(ngModel)]="form.alamat"
+              name="alamat"
+              rows="4"
+              required
+            ></ion-textarea>
+          </ion-item>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <ion-button class="submit-btn" expand="block" type="submit">
+          <ion-icon name="save-outline" slot="start"></ion-icon>
+          {{ isEditMode ? 'Update Data Pemilik' : 'Simpan Data Pemilik' }}
+        </ion-button>
+
+        <ion-button class="secondary-btn" expand="block" fill="outline" type="button" (click)="goBack()">
+          <ion-icon name="close-outline" slot="start"></ion-icon>
+          Batal
+        </ion-button>
+      </div>
+    </form>
   </div>
-
-  <!-- Form Input -->
-  <form (ngSubmit)="onSubmit()">
-    <ion-list lines="none" class="list-data-pemilik">
-      
-      <ion-label position="stacked" class="form-label">NIK *</ion-label>
-      <ion-item>
-        <ion-input 
-          type="text" 
-          placeholder="Masukkan NIK (16 digit)"
-          [(ngModel)]="form.nik"
-          name="nik"
-          maxlength="16"
-          required>
-        </ion-input>
-      </ion-item> 
-
-      <ion-label position="stacked">Nama Lengkap *</ion-label>
-      <ion-item> 
-        <ion-input 
-          type="text" 
-          placeholder="Masukkan Nama Lengkap"
-          [(ngModel)]="form.nama_peternak"
-          name="nama_peternak"
-          required>
-        </ion-input>
-      </ion-item>
-
-      <ion-label position="stacked">Jenis Kelamin *</ion-label>
-      <ion-item>
-        <ion-select 
-          placeholder="Pilih Jenis Kelamin"
-          [(ngModel)]="form.jenis_kelamin"
-          name="jenis_kelamin"
-          required>
-          <ion-select-option value="Laki-laki">Laki-laki</ion-select-option>
-          <ion-select-option value="Perempuan">Perempuan</ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-label position="stacked">Tanggal Lahir *</ion-label>
-      <ion-item>
-        <ion-datetime 
-          presentation="date"
-          placeholder="Pilih Tanggal Lahir"
-          [(ngModel)]="form.tanggal_lahir"
-          name="tanggal_lahir"
-          display-format="DD/MM/YYYY"
-          required>
-        </ion-datetime>
-      </ion-item>
-
-      <ion-label position="stacked">Nomor HP *</ion-label>
-      <ion-item>
-        <ion-input 
-          type="tel" 
-          placeholder="Masukkan Nomor HP (08xxxxxxxxxx)"
-          [(ngModel)]="form.no_telp"
-          name="no_telp"
-          required>
-        </ion-input>
-      </ion-item>
-
-      <!-- WILAYAH / DESA -->
-      <ion-label position="stacked">Desa / Wilayah *</ion-label>
-      <ion-item>
-        <ion-select 
-          placeholder="Pilih Desa"
-          [(ngModel)]="form.wilayah_id"
-          name="wilayah_id"
-          interface="popover"
-          [compareWith]="compareWilayah"
-          required>
-          <ion-select-option *ngFor="let w of wilayahList" [value]="w.id">
-            {{ w.nama_desa }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-      
-      <ion-label position="stacked">Alamat *</ion-label>
-      <ion-item>
-        <ion-textarea 
-          autoGrow="true" 
-          placeholder="Masukkan Alamat Lengkap"
-          [(ngModel)]="form.alamat"
-          name="alamat"
-          rows="3"
-          required>
-        </ion-textarea>
-      </ion-item>
-      
-    </ion-list>
-
-    <!-- Tombol Simpan -->
-    <div class="button-container">
-      <ion-button class="btn-save" expand="block" color="success" type="submit">
-        <ion-icon name="save-outline" slot="start"></ion-icon>
-        {{ isEditMode ? 'Update Data' : 'Simpan Data' }}
-      </ion-button>
-      
-      <ion-button class="btn-cancel" expand="block" color="danger" (click)="goBack()" type="button">
-        <ion-icon name="close-outline" slot="start"></ion-icon>
-        Batal
-      </ion-button>
-    </div>
-  </form>
-  
 </ion-content>

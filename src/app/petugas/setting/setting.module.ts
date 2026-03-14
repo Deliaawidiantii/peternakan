@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { SettingPageRoutingModule } from './setting-routing.module';
 import { SettingPage } from './setting.page';
+import { SharedUiModule } from '../../shared/shared-ui.module';
 
 @NgModule({
   imports: [
@@ -11,6 +12,7 @@ import { SettingPage } from './setting.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
+    SharedUiModule,
     SettingPageRoutingModule,
   ],
   declarations: [SettingPage],

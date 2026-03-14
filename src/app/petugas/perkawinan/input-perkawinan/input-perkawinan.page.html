@@ -1,236 +1,218 @@
-<ion-header class="custom-header" translucent="true">
+﻿<ion-header class="ion-no-border">
   <ion-toolbar>
-    <div class="header-content">
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/"></ion-back-button>
-      </ion-buttons>
-      <h2 class="header-title">Input Perkawinan / IB</h2>
-      <div class="header-spacer" aria-hidden="true"></div>
+    <div class="gradient-header form-header">
+      <div class="header-shell">
+        <ion-back-button defaultHref="/petugas/perkawinan" text=""></ion-back-button>
+        <div class="header-copy">
+          <h2 class="gradient-title">Input Perkawinan</h2>
+          <p class="gradient-subtitle">Pilih pemilik terlebih dahulu agar data ternak betina dan wilayah terisi otomatis.</p>
+        </div>
+      </div>
     </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen="true" class="ion-padding">
+<ion-content fullscreen="true" class="page-content">
+  <div class="content-wrapper">
+    <div class="page-card form-intro">
+      <h3>Alur input yang lebih cepat</h3>
+      <p>Setelah pemilik dipilih, eartag betina yang tersedia akan difilter otomatis. Data jenis, rumpun, dan usia ternak akan ikut terisi dari hewan terpilih.</p>
+    </div>
 
-  <!-- Form Container -->
-  <div class="form-container">
+    <div class="form-container">
+      <div class="form-section">
+        <h3 class="section-title">Data Pemilik</h3>
 
-    <!-- SECTION: Data Pemilik -->
-    <div class="form-section">
-      <h3 class="section-title">Data Pemilik</h3>
-
-      <!-- Pemilik - Searchable -->
-      <div class="form-group">
-        <label class="form-label">Pilih Pemilik (Peternak)</label>
-        <div class="searchable-select" (click)="openSearchModal('pemilik')">
-          <span [class.placeholder]="!formData.namaPemilik">
-            {{ formData.namaPemilik || '-- Ketuk Untuk Memilih --' }}
-          </span>
-          <ion-icon name="search-outline"></ion-icon>
+        <div class="form-group">
+          <label class="form-label">Pilih Pemilik (Peternak)</label>
+          <div class="searchable-select" (click)="openSearchModal('pemilik')">
+            <span [class.placeholder]="!formData.namaPemilik">
+              {{ formData.namaPemilik || '-- Ketuk untuk memilih --' }}
+            </span>
+            <ion-icon name="search-outline"></ion-icon>
+          </div>
+          <div class="field-hint">Memilih dari daftar akan mengisi data identitas dan wilayah secara otomatis.</div>
         </div>
-        <div class="text-xs text-gray-500 mt-1">*Memilih dari dropdown akan mengisi form di bawah secara otomatis</div>
-      </div>
 
-      <div class="form-group">
-        <label class="form-label">Nama Pemilik</label>
-        <ion-input [(ngModel)]="formData.namaPemilik" placeholder="Masukkan Nama Pemilik" class="form-input" type="text"
-          readonly="true"></ion-input>
-      </div>
+        <div class="form-group">
+          <label class="form-label">Nama Pemilik</label>
+          <ion-input [(ngModel)]="formData.namaPemilik" placeholder="Masukkan Nama Pemilik" class="form-input" type="text" readonly="true"></ion-input>
+        </div>
 
-      <div class="form-group">
-        <label class="form-label">NIK Pemilik</label>
-        <ion-input [(ngModel)]="formData.nikPemilik" placeholder="Masukkan NIK Pemilik" class="form-input" type="text"
-          readonly="true"></ion-input>
-      </div>
+        <div class="form-group">
+          <label class="form-label">NIK Pemilik</label>
+          <ion-input [(ngModel)]="formData.nikPemilik" placeholder="Masukkan NIK Pemilik" class="form-input" type="text" readonly="true"></ion-input>
+        </div>
 
-      <div class="form-group">
-        <label class="form-label">Alamat</label>
-        <ion-textarea [(ngModel)]="formData.alamat" placeholder="Masukkan Alamat Pemilik" class="form-textarea"
-          rows="3"></ion-textarea>
-      </div>
+        <div class="form-group">
+          <label class="form-label">Alamat</label>
+          <ion-textarea [(ngModel)]="formData.alamat" placeholder="Masukkan Alamat Pemilik" class="form-textarea" rows="3"></ion-textarea>
+        </div>
 
-      <!-- Provinsi - Searchable -->
-      <div class="form-group">
-        <label class="form-label">Provinsi</label>
-        <div class="searchable-select" (click)="openSearchModal('provinsi')">
-          <span [class.placeholder]="!formData.provinsi">
-            {{ getLabel('provinsi', formData.provinsi) || 'Pilih Provinsi' }}
-          </span>
-          <ion-icon name="search-outline"></ion-icon>
+        <div class="form-group">
+          <label class="form-label">Provinsi</label>
+          <div class="searchable-select" (click)="openSearchModal('provinsi')">
+            <span [class.placeholder]="!formData.provinsi">
+              {{ getLabel('provinsi', formData.provinsi) || 'Pilih Provinsi' }}
+            </span>
+            <ion-icon name="search-outline"></ion-icon>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Kabupaten</label>
+          <div class="searchable-select" (click)="openSearchModal('kabupaten')" [class.disabled]="!formData.provinsi">
+            <span [class.placeholder]="!formData.kabupaten">
+              {{ getLabel('kabupaten', formData.kabupaten) || 'Pilih Kabupaten' }}
+            </span>
+            <ion-icon name="search-outline"></ion-icon>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Kecamatan</label>
+          <div class="searchable-select" (click)="openSearchModal('kecamatan')" [class.disabled]="!formData.kabupaten">
+            <span [class.placeholder]="!formData.kecamatan">
+              {{ getLabel('kecamatan', formData.kecamatan) || 'Pilih Kecamatan' }}
+            </span>
+            <ion-icon name="search-outline"></ion-icon>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Desa</label>
+          <div class="searchable-select" (click)="openSearchModal('desa')" [class.disabled]="!formData.kecamatan">
+            <span [class.placeholder]="!formData.desa">
+              {{ getLabel('desa', formData.desa) || 'Pilih Desa' }}
+            </span>
+            <ion-icon name="search-outline"></ion-icon>
+          </div>
         </div>
       </div>
 
-      <!-- Kabupaten - Searchable -->
-      <div class="form-group">
-        <label class="form-label">Kabupaten</label>
-        <div class="searchable-select" (click)="openSearchModal('kabupaten')" [class.disabled]="!formData.provinsi">
-          <span [class.placeholder]="!formData.kabupaten">
-            {{ getLabel('kabupaten', formData.kabupaten) || 'Pilih Kabupaten' }}
-          </span>
-          <ion-icon name="search-outline"></ion-icon>
+      <div class="form-section">
+        <h3 class="section-title">Data Hewan Betina</h3>
+
+        <div class="form-group">
+          <label class="form-label">Eartag Betina</label>
+          <div class="searchable-select" (click)="openSearchModal('eartagBetina')" [class.disabled]="!formData.peternakan_id">
+            <span [class.placeholder]="!formData.eartagBetina">
+              {{ formData.eartagBetina || '-- Pilih Eartag Betina --' }}
+            </span>
+            <ion-icon name="search-outline"></ion-icon>
+          </div>
+          <div class="field-hint">Pilihan hanya menampilkan ternak betina aktif milik pemilik yang sudah dipilih.</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Jenis Ternak</label>
+          <ion-input [(ngModel)]="formData.jenisTernak" placeholder="Terisi otomatis dari eartag" class="form-input" type="text" readonly="true"></ion-input>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Rumpun Ternak</label>
+          <ion-input [(ngModel)]="formData.rumpunTernak" placeholder="Terisi otomatis dari eartag" class="form-input" type="text" readonly="true"></ion-input>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Usia Ternak (Bulan)</label>
+          <ion-input [(ngModel)]="formData.usiaTernak" placeholder="Terisi otomatis dari eartag" class="form-input" type="number" readonly="true"></ion-input>
         </div>
       </div>
 
-      <!-- Kecamatan - Searchable -->
-      <div class="form-group">
-        <label class="form-label">Kecamatan</label>
-        <div class="searchable-select" (click)="openSearchModal('kecamatan')" [class.disabled]="!formData.kabupaten">
-          <span [class.placeholder]="!formData.kecamatan">
-            {{ getLabel('kecamatan', formData.kecamatan) || 'Pilih Kecamatan' }}
-          </span>
-          <ion-icon name="search-outline"></ion-icon>
+      <div class="form-section">
+        <h3 class="section-title">Data Perkawinan / IB</h3>
+
+        <div class="form-group">
+          <label class="form-label">Tanggal Perkawinan / IB</label>
+          <div class="date-input-wrapper">
+            <ion-input [(ngModel)]="formData.tanggalPerkawinan" placeholder="Pilih Tanggal" class="form-input" type="date"></ion-input>
+            <ion-icon name="calendar-outline" class="calendar-icon"></ion-icon>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Metode Perkawinan</label>
+          <ion-select [(ngModel)]="formData.metodePerkawinan" placeholder="Pilih Metode Perkawinan" class="form-select">
+            <ion-select-option value="">Pilih Metode</ion-select-option>
+            <ion-select-option value="inseminasi_buatan">Inseminasi Buatan</ion-select-option>
+            <ion-select-option value="kawin_alami">Kawin Alami</ion-select-option>
+          </ion-select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Inseminasi ke</label>
+          <ion-select [(ngModel)]="formData.inseminasiKe" placeholder="Pilih Inseminasi ke" class="form-select">
+            <ion-select-option value="">Pilih Inseminasi ke</ion-select-option>
+            <ion-select-option value="1">1</ion-select-option>
+            <ion-select-option value="2">2</ion-select-option>
+            <ion-select-option value="3">3</ion-select-option>
+          </ion-select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">ID Pejantan</label>
+          <ion-input [(ngModel)]="formData.idPejantan" placeholder="Masukkan ID Pejantan" class="form-input" type="text"></ion-input>
+          <div class="field-hint">Untuk input IB, data pejantan diketik manual karena belum tersedia di database.</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Kode Produksi (Opsional)</label>
+          <ion-input [(ngModel)]="formData.kodeProduksi" placeholder="Masukkan Kode Produksi" class="form-input" type="text"></ion-input>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Kode Batch (Opsional)</label>
+          <ion-input [(ngModel)]="formData.kodeBatch" placeholder="Masukkan Kode Batch" class="form-input" type="text"></ion-input>
         </div>
       </div>
 
-      <!-- Desa - Searchable -->
-      <div class="form-group">
-        <label class="form-label">Desa</label>
-        <div class="searchable-select" (click)="openSearchModal('desa')" [class.disabled]="!formData.kecamatan">
-          <span [class.placeholder]="!formData.desa">
-            {{ getLabel('desa', formData.desa) || 'Pilih Desa' }}
-          </span>
-          <ion-icon name="search-outline"></ion-icon>
+      <div class="form-section">
+        <h3 class="section-title">Upload Foto</h3>
+
+        <div class="form-group">
+          <label class="form-label">Foto Hewan</label>
+          <div class="upload-area" (click)="fileInput.click()">
+            <ion-icon name="cloud-upload-outline" class="upload-icon"></ion-icon>
+            <p class="upload-text">Tap untuk memilih foto atau drag and drop</p>
+            <p class="upload-subtext">PNG, JPG, GIF maksimal 5 MB</p>
+          </div>
+          <input #fileInput type="file" accept="image/*" hidden (change)="onFileSelected($event)" />
+          <div *ngIf="formData.fotoHewan" class="file-preview">
+            <ion-icon name="checkmark-circle-outline" class="success-icon"></ion-icon>
+            <p class="file-name">{{ formData.fotoHewan }}</p>
+          </div>
         </div>
       </div>
     </div>
 
-
-    <!-- SECTION: Data Hewan Betina -->
-    <div class="form-section">
-      <h3 class="section-title">Data Hewan Betina</h3>
-
-      <div class="form-group">
-        <label class="form-label">Eartag Betina</label>
-        <div class="searchable-select" (click)="openSearchModal('eartagBetina')" [class.disabled]="!formData.peternakan_id">
-          <span [class.placeholder]="!formData.eartagBetina">
-            {{ formData.eartagBetina || '-- Pilih Eartag Betina --' }}
-          </span>
-          <ion-icon name="search-outline"></ion-icon>
-        </div>
-        <div class="text-xs text-gray-500 mt-1">*Pilihan hanya ternak betina milik pemilik terpilih</div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Jenis Ternak</label>
-        <ion-input [(ngModel)]="formData.jenisTernak" placeholder="Terisi otomatis dari eartag" class="form-input" type="text" readonly="true"></ion-input>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Rumpun Ternak</label>
-        <ion-input [(ngModel)]="formData.rumpunTernak" placeholder="Terisi otomatis dari eartag" class="form-input" type="text" readonly="true"></ion-input>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Usia Ternak (Bulan)</label>
-        <ion-input [(ngModel)]="formData.usiaTernak" placeholder="Masukkan Usia Ternak" class="form-input"
-          type="number" readonly="true"></ion-input>
-      </div>
-    </div>
-
-    <!-- SECTION: Data Perkawinan/IB -->
-    <div class="form-section">
-      <h3 class="section-title">Data Perkawinan/IB</h3>
-
-      <div class="form-group">
-        <label class="form-label">Tanggal Perkawinan/IB</label>
-        <div class="date-input-wrapper">
-          <ion-input [(ngModel)]="formData.tanggalPerkawinan" placeholder="Pilih Tanggal" class="form-input"
-            type="date"></ion-input>
-          <ion-icon name="calendar-outline" class="calendar-icon"></ion-icon>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Metode Perkawinan</label>
-        <ion-select [(ngModel)]="formData.metodePerkawinan" placeholder="Pilih Metode Perkawinan" class="form-select">
-          <ion-select-option value="">Pilih Metode</ion-select-option>
-          <ion-select-option value="inseminasi_buatan">Inseminasi Buatan</ion-select-option>
-          <ion-select-option value="kawin_alami">Kawin Alami</ion-select-option>
-        </ion-select>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Inseminasi ke</label>
-        <ion-select [(ngModel)]="formData.inseminasiKe" placeholder="Pilih Inseminasi ke" class="form-select">
-          <ion-select-option value="">Pilih Inseminasi ke</ion-select-option>
-          <ion-select-option value="1">1</ion-select-option>
-          <ion-select-option value="2">2</ion-select-option>
-          <ion-select-option value="3">3</ion-select-option>
-        </ion-select>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">ID Pejantan</label>
-        <ion-input [(ngModel)]="formData.idPejantan" placeholder="Masukkan ID Pejantan" class="form-input"
-          type="text"></ion-input>
-        <div class="text-xs text-gray-500 mt-1">*Untuk input IB, data pejantan diketik manual karena tidak tersedia di database</div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Kode Produksi (Opsional)</label>
-        <ion-input [(ngModel)]="formData.kodeProduksi" placeholder="Masukkan Kode Produksi" class="form-input"
-          type="text"></ion-input>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Kode Batch (Opsional)</label>
-        <ion-input [(ngModel)]="formData.kodeBatch" placeholder="Masukkan Kode Batch" class="form-input"
-          type="text"></ion-input>
-      </div>
-    </div>
-
-
-    <!-- SECTION: Upload Foto -->
-    <div class="form-section">
-      <h3 class="section-title">Upload Foto</h3>
-
-      <div class="form-group">
-        <label class="form-label">Foto Hewan</label>
-        <div class="upload-area" (click)="fileInput.click()">
-          <ion-icon name="cloud-upload-outline" class="upload-icon"></ion-icon>
-          <p class="upload-text">Tap untuk memilih foto atau drag & drop</p>
-          <p class="upload-subtext">PNG, JPG, GIF (Max 5MB)</p>
-        </div>
-        <input #fileInput type="file" accept="image/*" hidden (change)="onFileSelected($event)" />
-        <div *ngIf="formData.fotoHewan" class="file-preview">
-          <ion-icon name="checkmark-circle-outline" class="success-icon"></ion-icon>
-          <p class="file-name">{{ formData.fotoHewan }}</p>
-        </div>
-      </div>
-    </div>
-
+    <ion-modal [isOpen]="isSearchModalOpen" (didDismiss)="isSearchModalOpen = false" [breakpoints]="[0, 0.6, 0.9]" [initialBreakpoint]="0.6">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>{{ searchModalTitle }}</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="isSearchModalOpen = false">Tutup</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+          <ion-toolbar>
+            <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="filterSearchList()" placeholder="Ketik untuk mencari..." debounce="150"></ion-searchbar>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-list>
+            <ion-item *ngFor="let item of filteredSearchList" (click)="selectSearchItem(item)" button detail="false">
+              <ion-label>{{ item.label }}</ion-label>
+              <ion-icon *ngIf="item.selected" name="checkmark-circle" color="primary" slot="end"></ion-icon>
+            </ion-item>
+            <ion-item *ngIf="filteredSearchList.length === 0">
+              <ion-label class="ion-text-center" color="medium">Tidak ada hasil ditemukan</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
   </div>
-
-  <!-- SEARCH MODAL -->
-  <ion-modal [isOpen]="isSearchModalOpen" (didDismiss)="isSearchModalOpen = false" [breakpoints]="[0, 0.6, 0.9]"
-    [initialBreakpoint]="0.6">
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>{{ searchModalTitle }}</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="isSearchModalOpen = false">Tutup</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-        <ion-toolbar>
-          <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="filterSearchList()" placeholder="Ketik untuk mencari..."
-            debounce="150"></ion-searchbar>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <ion-list>
-          <ion-item *ngFor="let item of filteredSearchList" (click)="selectSearchItem(item)" button detail="false">
-            <ion-label>{{ item.label }}</ion-label>
-            <ion-icon *ngIf="item.selected" name="checkmark-circle" color="primary" slot="end"></ion-icon>
-          </ion-item>
-          <ion-item *ngIf="filteredSearchList.length === 0">
-            <ion-label class="ion-text-center" color="medium">Tidak ada hasil ditemukan</ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
-
 </ion-content>
 
 <ion-footer class="ion-no-border custom-footer">

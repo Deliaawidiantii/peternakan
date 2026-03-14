@@ -1,29 +1,27 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar>
-    <div class="gradient-header">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <ion-back-button defaultHref="/petugas/tabs/home" style="--color:#fff;"></ion-back-button>
-        <div>
-          <h2 class="gradient-title">Catatan Kelahiran</h2>
-          <p class="gradient-subtitle">Data kelahiran ternak</p>
-        </div>
-      </div>
-    </div>
-  </ion-toolbar>
-</ion-header>
+<app-page-header
+  title="Catatan Kelahiran"
+  subtitle="Data kelahiran ternak dari berbagai kelompok hewan."
+  defaultHref="/petugas/tabs/home"
+></app-page-header>
 
 <ion-content class="page-content">
   <div class="content-wrapper">
 
     <!-- Search -->
     <div class="modern-searchbar">
-      <ion-searchbar placeholder="Cari catatan kelahiran..." debounce="200"></ion-searchbar>
+      <ion-searchbar
+        placeholder="Cari catatan kelahiran..."
+        [(ngModel)]="searchQuery"
+        (ionInput)="applyFilters()"
+        debounce="200"
+      ></ion-searchbar>
     </div>
 
     <!-- Filter -->
     <div class="filter-row">
       <div class="filter-item">
-        <ion-select [(ngModel)]="selectedMonth" placeholder="Pilih Bulan">
+        <ion-select [(ngModel)]="selectedMonth" (ionChange)="applyFilters()" placeholder="Pilih Bulan">
+          <ion-select-option value="">Semua Bulan</ion-select-option>
           <ion-select-option value="01">Januari</ion-select-option>
           <ion-select-option value="02">Februari</ion-select-option>
           <ion-select-option value="03">Maret</ion-select-option>
@@ -39,7 +37,7 @@
         </ion-select>
       </div>
       <div class="filter-item">
-        <ion-select [(ngModel)]="selectedAnimalType" placeholder="Pilih Jenis">
+        <ion-select [(ngModel)]="selectedAnimalType" (ionChange)="applyFilters()" placeholder="Pilih Jenis">
           <ion-select-option value="">Semua</ion-select-option>
           <ion-select-option *ngFor="let opt of jenisTernakOptions" [value]="opt.value">{{ opt.label
             }}</ion-select-option>
@@ -49,45 +47,32 @@
 
     <!-- Section Title -->
     <div class="list-header-row">
-      <h3 class="section-label" style="margin:0;">
+      <h3 class="section-label buku-lahir-section-title">
         <ion-icon name="happy-outline"></ion-icon>
         Kelahiran Terbaru
       </h3>
+      <span class="count-badge">{{ filteredBirthRecords.length }}</span>
     </div>
 
-    <!-- List -->
-    <div class="page-card">
-      <div class="info-item-global" routerLink="/petugas/detail-kelahiran" style="cursor:pointer;">
-        <div class="icon-circle green">
-          <ion-icon name="happy-outline"></ion-icon>
-        </div>
-        <div style="flex:1;min-width:0;">
-          <p style="font-size:14px;font-weight:600;color:#1e293b;margin:0 0 2px 0;">2024-07-20 | Sapi | SP123</p>
-          <p style="font-size:12px;color:#64748b;margin:0;">Induk: Sapi Betina #123</p>
-        </div>
-        <ion-icon name="chevron-forward-outline" style="font-size:18px;color:#94a3b8;"></ion-icon>
-      </div>
+    <app-empty-state
+      *ngIf="filteredBirthRecords.length === 0"
+      icon="happy-outline"
+      title="Tidak ada catatan kelahiran"
+      caption="Coba ubah kata kunci pencarian atau filter bulan dan jenis."
+    ></app-empty-state>
 
-      <div class="info-item-global" style="cursor:pointer;">
-        <div class="icon-circle orange">
+    <div class="page-card" *ngIf="filteredBirthRecords.length > 0">
+      <div class="info-item-global buku-lahir-item" *ngFor="let record of filteredBirthRecords" routerLink="/petugas/detail-kelahiran">
+        <div class="icon-circle" [ngClass]="getRecordIconColor(record.animalType)">
           <ion-icon name="happy-outline"></ion-icon>
         </div>
-        <div style="flex:1;min-width:0;">
-          <p style="font-size:14px;font-weight:600;color:#1e293b;margin:0 0 2px 0;">2024-07-15 | Kambing | KMBNG223</p>
-          <p style="font-size:12px;color:#64748b;margin:0;">Induk: Kambing Betina #456</p>
-        </div>
-        <ion-icon name="chevron-forward-outline" style="font-size:18px;color:#94a3b8;"></ion-icon>
-      </div>
 
-      <div class="info-item-global" style="cursor:pointer;">
-        <div class="icon-circle blue">
-          <ion-icon name="happy-outline"></ion-icon>
+        <div class="record-copy">
+          <p class="record-title">{{ record.date }} | {{ formatAnimalLabel(record.animalType) }} | {{ record.childId }}</p>
+          <p class="record-subtitle">Induk: {{ record.parentId }} • Status: {{ record.status }}</p>
         </div>
-        <div style="flex:1;min-width:0;">
-          <p style="font-size:14px;font-weight:600;color:#1e293b;margin:0 0 2px 0;">2024-07-10 | Ayam | AYM334</p>
-          <p style="font-size:12px;color:#64748b;margin:0;">Induk: Ayam Betina #789</p>
-        </div>
-        <ion-icon name="chevron-forward-outline" style="font-size:18px;color:#94a3b8;"></ion-icon>
+
+        <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
       </div>
     </div>
 

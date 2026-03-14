@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
+import { SharedUiModule } from '../../shared/shared-ui.module';
 
 import { BukuLahirPageRoutingModule } from './buku-lahir-routing.module';
 
@@ -13,6 +14,7 @@ import { BukuLahirPage } from './buku-lahir.page';
     CommonModule,
     FormsModule,
     IonicModule,
+    SharedUiModule,
     BukuLahirPageRoutingModule
   ],
   declarations: [BukuLahirPage]

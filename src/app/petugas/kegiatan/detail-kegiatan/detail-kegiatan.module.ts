@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
+import { SharedUiModule } from '../../../shared/shared-ui.module';
 
 import { DetailKegiatanPageRoutingModule } from './detail-kegiatan-routing.module';
 
@@ -13,6 +14,7 @@ import { DetailKegiatanPage } from './detail-kegiatan.page';
     CommonModule,
     FormsModule,
     IonicModule,
+    SharedUiModule,
     DetailKegiatanPageRoutingModule
   ],
   declarations: [DetailKegiatanPage]

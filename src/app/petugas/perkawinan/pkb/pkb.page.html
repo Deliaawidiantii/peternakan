@@ -1,107 +1,96 @@
-<ion-header class="custom-header" translucent="true">
-  <ion-toolbar>
-    <div class="header-content">
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/"></ion-back-button>
-      </ion-buttons>
-      <h2 class="header-title">Daftar Hewan Siap PKB (Baru)</h2>
-      <div style="width: 40px;"></div>
+<app-page-header
+  title="Daftar Hewan Siap PKB"
+  subtitle="Pilih hewan yang memenuhi syarat untuk proses PKB."
+  defaultHref="/petugas/perkawinan"
+></app-page-header>
+
+<ion-content class="page-content">
+  <div class="content-wrapper compact-bottom">
+    <div class="modern-searchbar">
+      <ion-searchbar
+        placeholder="Cari ID, eartag, atau pemilik"
+        [(ngModel)]="searchTerm"
+        (ionInput)="filterHewan()"
+      ></ion-searchbar>
     </div>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content fullscreen="true" class="ion-padding">
-
-  <!-- Filter Section -->
-  <div class="filter-section">
-    <ion-searchbar
-      placeholder="Cari ID atau Eartagg..."
-      [(ngModel)]="searchTerm"
-      (ionInput)="filterHewan()"
-      class="search-bar"
-    ></ion-searchbar>
-    
     <div class="filter-buttons">
-      <button 
-        class="filter-btn" 
-        [class.active]="selectedFilter === 'all'"
-        (click)="setFilter('all')"
-      >
-        Semua
-      </button>
-      <button 
-        class="filter-btn" 
-        [class.active]="selectedFilter === 'sapi'"
-        (click)="setFilter('sapi')"
-      >
-        Sapi
-      </button>
-      <button 
-        class="filter-btn" 
-        [class.active]="selectedFilter === 'kambing'"
-        (click)="setFilter('kambing')"
-      >
-        Kambing
-      </button>
-      <button 
-        class="filter-btn" 
-        [class.active]="selectedFilter === 'kerbau'"
-        (click)="setFilter('kerbau')"
-      >
-        Kerbau
-      </button>
-    </div>
-  </div>
-
-  <!-- Hewan List -->
-  <div class="hewan-list">
-    <div *ngIf="filteredHewan.length === 0" class="empty-state">
-      <ion-icon name="search-outline"></ion-icon>
-      <p>Tidak ada hewan yang sesuai</p>
+      <ion-button fill="clear" size="small" [class.active]="selectedFilter === 'all'" (click)="setFilter('all')">Semua</ion-button>
+      <ion-button fill="clear" size="small" [class.active]="selectedFilter === 'sapi'" (click)="setFilter('sapi')">Sapi</ion-button>
+      <ion-button fill="clear" size="small" [class.active]="selectedFilter === 'kambing'" (click)="setFilter('kambing')">Kambing</ion-button>
+      <ion-button fill="clear" size="small" [class.active]="selectedFilter === 'kerbau'" (click)="setFilter('kerbau')">Kerbau</ion-button>
     </div>
 
-    <div *ngFor="let hewan of filteredHewan" class="hewan-card" (click)="lihatDetail(hewan)">
-      <!-- Left Section: ID & Info Singkat -->
-      <div class="card-left">
-        <div class="hewan-id-badge">
-          <span class="id-label">ID:</span>
-          <span class="id-value">{{ hewan.id }}</span>
-        </div>
-        
-        <div class="quick-info">
-          <div class="info-row">
-            <span class="info-label">Eartagg:</span>
-            <span class="info-value">{{ hewan.eartag }}</span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">Pemilik:</span>
-            <span class="info-value">{{ hewan.pemilik }}</span>
-          </div>
-        </div>
+    <div class="list-header-row">
+      <h3 class="section-label pkb-section-title">
+        <ion-icon name="git-compare-outline"></ion-icon>
+        Hewan Tersaring
+      </h3>
+      <span class="count-badge">{{ filteredHewan.length }}</span>
+    </div>
 
-        <span class="hewan-type-badge" [class]="'type-' + hewan.jenis.toLowerCase()">
-          {{ hewan.jenis }}
-        </span>
-      </div>
+    <app-empty-state
+      *ngIf="filteredHewan.length === 0"
+      icon="search-outline"
+      title="Data tidak ditemukan"
+      caption="Coba ubah kata kunci atau filter jenis hewan."
+    ></app-empty-state>
 
-      <!-- Right Section: Action Button -->
-      <div class="card-right">
-        <button 
-          class="action-btn primary"
-          (click)="lakukanPKB(hewan); $event.stopPropagation()"
-          [disabled]="hewan.status !== 'siap'"
-        >
-          <ion-icon name="checkmark-circle-outline"></ion-icon>
-          <span>PKB</span>
-        </button>
-        <button 
-          class="action-btn secondary"
-          (click)="lihatDetail(hewan); $event.stopPropagation()"
-        >
-          <ion-icon name="chevron-forward-outline"></ion-icon>
-        </button>
+    <div class="cards-list" *ngIf="filteredHewan.length > 0">
+      <div class="data-card border-blue" *ngFor="let hewan of filteredHewan" (click)="lihatDetail(hewan)">
+        <div class="pkb-row">
+          <div class="icon-circle" [ngClass]="getJenisColor(hewan.jenis)">
+            <ion-icon [name]="getJenisIcon(hewan.jenis)"></ion-icon>
+          </div>
+
+          <div class="pkb-copy">
+            <div class="card-top-row">
+              <div>
+                <p class="card-title">{{ hewan.eartag }}</p>
+                <p class="card-subtitle">ID {{ hewan.id }} | {{ hewan.pemilik }}</p>
+              </div>
+              <span class="status-badge" [ngClass]="getStatusClass(hewan.status)">
+                {{ getStatusLabel(hewan.status) }}
+              </span>
+            </div>
+
+            <div class="card-meta">
+              <span class="meta-item">
+                <ion-icon name="paw-outline"></ion-icon>
+                {{ hewan.jenis }}
+              </span>
+              <span class="meta-item">
+                <ion-icon name="leaf-outline"></ion-icon>
+                {{ hewan.rumpun }}
+              </span>
+              <span class="meta-item">
+                <ion-icon name="time-outline"></ion-icon>
+                {{ hewan.usia }} bulan
+              </span>
+            </div>
+
+            <div class="pkb-actions">
+              <ion-button
+                size="small"
+                class="submit-btn"
+                [disabled]="hewan.status !== 'siap'"
+                (click)="lakukanPKB(hewan); $event.stopPropagation()"
+              >
+                Proses PKB
+              </ion-button>
+
+              <ion-button
+                size="small"
+                fill="outline"
+                class="secondary-btn"
+                (click)="lihatDetail(hewan); $event.stopPropagation()"
+              >
+                Detail
+              </ion-button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
 </ion-content>

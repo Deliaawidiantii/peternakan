@@ -1,62 +1,75 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/petugas/home"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Notifikasi <ion-badge color="danger" *ngIf="unreadCount > 0">{{ unreadCount }}</ion-badge></ion-title>
-    <ion-buttons slot="end" *ngIf="unreadCount > 0">
-      <ion-button (click)="markAllAsRead()">
-        <ion-icon slot="icon-only" name="checkmark-done-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+﻿<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <div class="gradient-header compact-header">
+      <div class="header-row">
+        <div style="display:flex;align-items:center;gap:12px;min-width:0;">
+          <ion-back-button defaultHref="/petugas/tabs/home" text=""></ion-back-button>
+          <div class="header-copy">
+            <h2 class="gradient-title">Notifikasi</h2>
+            <p class="gradient-subtitle">Semua pembaruan tugas dan aktivitas terbaru akan muncul di sini.</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <ion-button class="header-action-btn" fill="clear" *ngIf="unreadCount > 0" (click)="markAllAsRead()">
+            <ion-icon slot="icon-only" name="checkmark-done-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="notif-content">
+<ion-content class="page-content">
+  <div class="content-wrapper">
+    <div class="list-header-row" *ngIf="!isLoading && notifikasiList.length > 0">
+      <h3 class="section-label" style="margin:0;">
+        <ion-icon name="notifications-outline"></ion-icon>
+        Daftar Notifikasi
+      </h3>
+      <span class="count-badge">{{ notifikasiList.length }}</span>
+    </div>
 
-  <!-- Loading State -->
-  <div class="loading-state" *ngIf="isLoading">
-    <div class="loading-card">
+    <div class="loading-state" *ngIf="isLoading">
       <ion-spinner name="crescent" color="primary"></ion-spinner>
       <p>Memuat notifikasi...</p>
     </div>
-  </div>
 
-  <!-- Empty State -->
-  <div class="empty-state" *ngIf="!isLoading && notifikasiList.length === 0">
-    <div class="empty-illustration">
-      <div class="bell-circle">
+    <div class="empty-state-global" *ngIf="!isLoading && notifikasiList.length === 0">
+      <div class="empty-icon">
         <ion-icon name="notifications-outline"></ion-icon>
       </div>
-      <div class="pulse-ring"></div>
+      <h3>Belum Ada Notifikasi</h3>
+      <p>Semua notifikasi baru akan tampil di sini.</p>
     </div>
-    <h3>Belum Ada Notifikasi</h3>
-    <p>Semua notifikasi baru akan tampil di sini.<br>Tetap pantau untuk update terbaru!</p>
-  </div>
 
-  <!-- Notifikasi List -->
-  <div class="notif-list-container" *ngIf="!isLoading && notifikasiList.length > 0">
-    <ion-list lines="none">
-      <ion-item class="notif-item" *ngFor="let item of notifikasiList" [ngClass]="{'unread': !item.read_at}"
-        (click)="markAsRead(item)">
+    <div class="cards-list notif-stack" *ngIf="!isLoading && notifikasiList.length > 0">
+      <div class="data-card notif-card" *ngFor="let item of notifikasiList" [class.unread]="!item.read_at" (click)="markAsRead(item)">
+        <div class="notif-main">
+          <div class="notif-icon-wrap" [ngClass]="getIconProps(item.type).bg">
+            <ion-icon [name]="getIconProps(item.type).name"></ion-icon>
+          </div>
 
-        <div class="notif-icon-wrap" slot="start" [ngClass]="getIconProps(item.type).bg">
-          <ion-icon [name]="getIconProps(item.type).name"></ion-icon>
+          <div class="notif-copy">
+            <div class="notif-title-row">
+              <h3>{{ item.data?.title || 'Notifikasi' }}</h3>
+              <span class="notif-status" *ngIf="!item.read_at">Baru</span>
+            </div>
+            <p class="notif-msg">{{ item.data?.message || 'Ada pemberitahuan baru' }}</p>
+            <div class="notif-meta-row">
+              <span class="meta-item">
+                <ion-icon name="time-outline"></ion-icon>
+                {{ getTimeAgo(item.created_at) }}
+              </span>
+            </div>
+          </div>
         </div>
 
-        <ion-label>
-          <h2>{{ item.data?.title || 'Notifikasi' }}</h2>
-          <p class="notif-msg">{{ item.data?.message || 'Ada pemberitahuan baru' }}</p>
-          <p class="notif-time-inline">
-            <ion-icon name="time-outline"></ion-icon>
-            {{ getTimeAgo(item.created_at) }}
-          </p>
-        </ion-label>
-
-        <div class="unread-dot" *ngIf="!item.read_at" slot="end"></div>
-
-      </ion-item>
-    </ion-list>
+        <div class="notif-actions">
+          <ion-button fill="clear" class="notif-delete-btn" (click)="deleteNotifikasi(item, $event)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </div>
   </div>
-
 </ion-content>

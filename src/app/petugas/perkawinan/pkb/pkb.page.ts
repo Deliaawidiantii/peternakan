@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
 interface HewanData {
   id: string;
@@ -117,6 +115,34 @@ export class PKBPage implements OnInit {
 
   filterHewan() {
     // Filter sudah dilakukan melalui getter filteredHewan
+  }
+
+  getJenisIcon(jenis: string): string {
+    const value = (jenis || '').toLowerCase();
+    if (value.includes('kambing')) return 'logo-octocat';
+    if (value.includes('kerbau')) return 'fish-outline';
+    return 'paw-outline';
+  }
+
+  getJenisColor(jenis: string): string {
+    const value = (jenis || '').toLowerCase();
+    if (value.includes('kambing')) return 'orange';
+    if (value.includes('kerbau')) return 'teal';
+    return 'blue';
+  }
+
+  getStatusClass(status: string): string {
+    const value = (status || '').toLowerCase();
+    if (value === 'siap') return 'approved';
+    if (value === 'dalam proses') return 'pending';
+    return 'rejected';
+  }
+
+  getStatusLabel(status: string): string {
+    const value = (status || '').toLowerCase();
+    if (value === 'siap') return 'Siap';
+    if (value === 'dalam proses') return 'Dalam Proses';
+    return 'Belum Siap';
   }
 
   // Navigate ke detail PKB page dengan queryParams

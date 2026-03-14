@@ -1,182 +1,82 @@
-/* Header */
-.custom-header {
-  ion-toolbar {
-    --background: #ffffff;
-    --border-width: 0 0 1px 0;
-    --border-color: #e8f1f6;
-
-    ion-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: #0e161b;
-    }
-
-    ion-back-button {
-      --color: #507e95;
-    }
-  }
+﻿:host {
+  --ion-font-family: var(--app-font);
 }
 
-/* Content Background */
-.custom-bg {
-  --background: #f8fafb;
-  font-family: "Public Sans", "Noto Sans", sans-serif;
+.form-intro,
+.case-summary,
+.warning-card {
+  padding: 18px;
+  margin-bottom: 14px;
 }
 
-/* Page Title */
-.page-title {
-  font-size: 20px;
+.form-intro h3,
+.warning-card h3,
+.case-summary h3 {
+  font-size: 16px;
   font-weight: 700;
-  color: #0e161b;
-  margin: 0 0 24px 0;
-  padding: 0;
-  line-height: 1.4;
+  color: var(--app-text-primary);
+  margin: 0 0 6px;
 }
 
-/* Input Field Styling */
-.input-field {
-  --background: #ffffff;
-  --padding-start: 16px;
-  --padding-end: 16px;
-  --inner-padding-end: 0;
-  --min-height: auto;
-  
-  background: #ffffff;
-  border-radius: 10px;
-  border: 1px solid #e8f1f6;
-  margin-bottom: 16px;
-  padding: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-  transition: all 0.3s ease;
-
-  &:hover {
-    border-color: #d4e6f1;
-    box-shadow: 0 2px 8px rgba(99, 188, 233, 0.1);
-  }
-
-  &:focus-within {
-    border-color: #63bce9;
-    box-shadow: 0 4px 12px rgba(99, 188, 233, 0.15);
-  }
-}
-
-/* Label Styling */
-ion-label {
+.form-intro p,
+.warning-card p,
+.case-summary p {
   font-size: 13px;
-  font-weight: 600;
-  color: #0e161b;
+  line-height: 1.7;
+  color: var(--app-text-secondary);
+  margin: 0;
+}
+
+.case-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.summary-copy {
+  min-width: 0;
+}
+
+.summary-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--app-text-muted);
   margin-bottom: 8px;
-  display: block;
 }
 
-/* Input, Select, Textarea Styling */
-ion-input,
-ion-select,
-ion-textarea {
-  font-size: 14px;
-  color: #0e161b;
-  --padding-top: 8px;
-  --padding-bottom: 8px;
-  --placeholder-color: #a0b8c8;
-  --placeholder-opacity: 0.7;
+.summary-badge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: capitalize;
 }
 
-/* Input specific */
-ion-input {
-  --padding-start: 0;
-  --padding-end: 0;
+.summary-badge.ready {
+  background: rgba(47, 143, 98, 0.14);
+  color: #26704e;
 }
 
-/* Select specific */
-ion-select {
-  --padding-start: 0;
-  --padding-end: 0;
-  width: 100%;
+.summary-badge.blocked {
+  background: rgba(229, 178, 100, 0.18);
+  color: #9a691c;
 }
 
-ion-select::part(icon) {
-  color: #507e95;
-  opacity: 1;
-  margin-right: 4px;
+.warning-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
 }
 
-/* Textarea specific */
-ion-textarea {
-  --padding-start: 0;
-  --padding-end: 0;
-  font-family: "Public Sans", "Noto Sans", sans-serif;
-  min-height: 100px;
-}
-
-ion-textarea::part(native) {
-  resize: vertical;
-}
-
-/* Save Button */
-.save-btn {
-  --background: #63bce9;
-  --color: #ffffff;
-  --border-radius: 10px;
-  
-  height: 48px;
-  font-size: 15px;
-  font-weight: 600;
-  text-transform: none;
-  margin-top: 24px;
-  margin-bottom: 12px;
-  --box-shadow: 0 4px 12px rgba(99, 188, 233, 0.3);
-  letter-spacing: 0.3px;
-
-  &:hover {
-    --box-shadow: 0 6px 16px rgba(99, 188, 233, 0.4);
-  }
-
-  &:active {
-    --box-shadow: 0 2px 8px rgba(99, 188, 233, 0.25);
-  }
-}
-
-/* Select Options Styling */
-ion-select-option {
-  --color: #0e161b;
-  font-size: 14px;
-}
-
-/* Select Interface (Popover/Alert) */
-.select-interface-option {
-  color: #0e161b;
-  
-  &:hover {
-    background: #f0f7fb;
-  }
-}
-
-/* Responsive */
-@media screen and (max-width: 600px) {
-  .page-title {
-    font-size: 18px;
-    margin-bottom: 20px;
-  }
-
-  .input-field {
-    margin-bottom: 14px;
-    padding: 10px;
-  }
-
-  ion-label {
-    font-size: 12px;
-    margin-bottom: 6px;
-  }
-
-  ion-input,
-  ion-select,
-  ion-textarea {
-    font-size: 13px;
-  }
-
-  .save-btn {
-    height: 44px;
-    font-size: 14px;
-    margin-top: 20px;
-  }
+.warning-card ion-icon {
+  font-size: 24px;
+  color: var(--app-accent-gold);
+  margin-top: 2px;
 }

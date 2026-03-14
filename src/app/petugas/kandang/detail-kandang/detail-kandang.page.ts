@@ -38,14 +38,8 @@ export class DetailKandangPage implements OnInit {
   async loadKandangDetail() {
     this.isLoading = true;
 
-    const loading = await this.loadingCtrl.create({
-      message: 'Memuat detail kandang...'
-    });
-    await loading.present();
-
     this.kandangService.getKandangById(this.kandangId).subscribe({
       next: async (response) => {
-        await loading.dismiss();
         this.isLoading = false;
 
         if (response.success) {
@@ -56,7 +50,6 @@ export class DetailKandangPage implements OnInit {
         }
       },
       error: async (error) => {
-        await loading.dismiss();
         this.isLoading = false;
         console.error('Error:', error);
         await this.showToast('Terjadi kesalahan saat memuat data', 'danger');

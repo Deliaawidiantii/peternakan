@@ -1,106 +1,143 @@
-<ion-header>
-  <ion-toolbar color="light">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="petugas/kandang"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Detail Kandang</ion-title>
+<app-page-header
+  title="Detail Kandang"
+  subtitle="Ringkasan kandang, kapasitas, pemilik, dan titik lokasi."
+  defaultHref="/petugas/kandang"
+>
+  <ion-button header-actions fill="clear" class="detail-action-btn" *ngIf="kandang" (click)="goToEdit()">
+    <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+  </ion-button>
+  <ion-button header-actions fill="clear" class="detail-action-btn danger" *ngIf="kandang" (click)="deleteKandang()">
+    <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+  </ion-button>
+</app-page-header>
 
-    <!-- Tombol Edit & Hapus -->
-    <ion-buttons slot="end" *ngIf="kandang">
-      <ion-button (click)="goToEdit()">
-        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
-      </ion-button>
-      <ion-button (click)="deleteKandang()">
-        <ion-icon slot="icon-only" name="trash-outline" color="danger"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="page-content">
+  <div class="content-wrapper compact-bottom detail-kandang-shell">
+    <app-loading-state
+      *ngIf="isLoading"
+      [card]="true"
+      title="Memuat detail kandang"
+      caption="Menyiapkan informasi lokasi dan kepemilikan kandang."
+    ></app-loading-state>
 
-<ion-content class="kandang-detail-content">
-<div class="image-section" *ngIf="kandang">
-  <!-- Kalau ada foto, tampilkan img -->
-  <img *ngIf="kandang.foto_kandang_url" 
-       [src]="kandang.foto_kandang_url" 
-       [alt]="kandang.nama_kandang"
-      title="Foto kandang"
-      [title]="kandang.nama_kandang"
-       class="kandang-image">
-  
-  <!-- Kalau gak ada foto, tampilkan placeholder -->
-  <div *ngIf="!kandang.foto_kandang_url" class="image-placeholder">
-    <ion-icon name="home-outline"></ion-icon>
-  </div>
-</div>
+    <app-empty-state
+      *ngIf="!isLoading && !kandang"
+      icon="alert-circle-outline"
+      title="Data kandang tidak ditemukan"
+      caption="Data yang Anda cari belum tersedia atau sudah tidak aktif."
+    ></app-empty-state>
 
-<div *ngIf="isLoading" class="page-state">
-  <ion-spinner></ion-spinner>
-  <p>Memuat data...</p>
-</div>
+    <ng-container *ngIf="!isLoading && kandang">
+      <div class="page-card kandang-hero-card">
+        <div class="hero-image-shell">
+          <img
+            *ngIf="kandang.foto_kandang_url"
+            [src]="kandang.foto_kandang_url"
+            alt="Foto kandang"
+            title="Foto kandang"
+            class="hero-image"
+          />
 
-<div *ngIf="!isLoading && !kandang" class="page-state">
-  <ion-icon name="alert-circle-outline" class="state-icon"></ion-icon>
-  <p>Data tidak ditemukan</p>
-</div>
+          <div *ngIf="!kandang.foto_kandang_url" class="hero-image placeholder">
+            <ion-icon name="home-outline"></ion-icon>
+          </div>
+        </div>
 
-<ion-card *ngIf="!isLoading && kandang">
-  <ion-card-header>
-    <ion-card-title>Informasi kandang</ion-card-title>
-  </ion-card-header>
+        <div class="hero-copy">
+          <div class="hero-top">
+            <div>
+              <p class="hero-eyebrow">Kandang ternak</p>
+              <h2>{{ kandang.nama_kandang || 'Nama kandang belum diisi' }}</h2>
+              <p class="hero-id">{{ kandang.id_kandang || ('KNDG' + kandang.id) }}</p>
+            </div>
 
-  <ion-card-content>
-    <div class="info-row">
-      <p class="label">ID Kandang</p>
-      <p class="value">{{ kandang.id_kandang }}</p>
-    </div>
+            <span class="status-badge" [ngClass]="kandang.status_kandang === 'Individu' ? 'approved' : 'pending'">
+              {{ kandang.status_kandang || 'Belum diatur' }}
+            </span>
+          </div>
 
-     <div class="info-row">
-      <p class="label">Nama Kandang</p>
-      <p class="value">{{ kandang.nama_kandang }}</p>
-    </div>
-
-     <div class="info-row">
-      <p class="label">Nama Pemilik</p>
-      <p class="value">{{ kandang.pemilik || '-' }}</p>
-    </div>
-
-     <div class="info-row">
-      <p class="label">Desa</p>
-      <p class="value">{{ kandang.lokasi || '-' }}</p>
-    </div>
-
-     <div class="info-row">
-      <p class="label">Lokasi</p>
-      <div class="value">
-        <p class="coords-text">{{ kandang.titik_kordinat || '-' }}</p>
-        <a *ngIf="hasValidCoordinates()"
-           [href]="getGoogleMapsUrl()"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="maps-link">
-          <ion-icon name="navigate-outline"></ion-icon>
-          Buka di Google Maps
-        </a>
+          <div class="hero-meta">
+            <span class="meta-item" *ngIf="kandang.jenis_komoditas">
+              <ion-icon name="cube-outline"></ion-icon>
+              {{ kandang.jenis_komoditas }}
+            </span>
+            <span class="meta-item" *ngIf="kandang.kapasitas">
+              <ion-icon name="layers-outline"></ion-icon>
+              {{ kandang.kapasitas }} ekor
+            </span>
+            <span class="meta-item">
+              <ion-icon name="location-outline"></ion-icon>
+              {{ kandang.lokasi || '-' }}
+            </span>
+          </div>
+        </div>
       </div>
-    </div>
 
+      <div class="detail-grid">
+        <div class="page-card detail-panel">
+          <div class="panel-head">
+            <h3>Informasi Utama</h3>
+            <p>Data identitas kandang yang tercatat di sistem.</p>
+          </div>
 
-     <div class="info-row">
-      <p class="label">Status Kandang</p>
-      <p class="value">{{ kandang.status_kandang }}</p>
-    </div>
+          <div class="info-list">
+            <div class="info-item-row">
+              <span class="info-label">ID Kandang</span>
+              <span class="info-value">{{ kandang.id_kandang || ('KNDG' + kandang.id) }}</span>
+            </div>
+            <div class="info-item-row">
+              <span class="info-label">Nama Kandang</span>
+              <span class="info-value">{{ kandang.nama_kandang || '-' }}</span>
+            </div>
+            <div class="info-item-row">
+              <span class="info-label">Nama Pemilik</span>
+              <span class="info-value">{{ kandang.pemilik || '-' }}</span>
+            </div>
+            <div class="info-item-row">
+              <span class="info-label">Status Kandang</span>
+              <span class="info-value">{{ kandang.status_kandang || '-' }}</span>
+            </div>
+            <div class="info-item-row">
+              <span class="info-label">Kapasitas</span>
+              <span class="info-value">{{ kandang.kapasitas ? (kandang.kapasitas + ' ekor') : '-' }}</span>
+            </div>
+            <div class="info-item-row">
+              <span class="info-label">Komoditas</span>
+              <span class="info-value">{{ kandang.jenis_komoditas || '-' }}</span>
+            </div>
+          </div>
+        </div>
 
-     <div class="info-row">
-      <p class="label">Kapasitas</p>
-      <p class="value">{{ kandang.kapasitas }} ekor</p>
-    </div>
+        <div class="page-card detail-panel">
+          <div class="panel-head">
+            <h3>Lokasi Kandang</h3>
+            <p>Wilayah kandang dan koordinat yang bisa langsung dibuka di Google Maps.</p>
+          </div>
 
-     <div class="info-row">
-      <p class="label">Komoditas</p>
-      <p class="value">{{ kandang.jenis_komoditas }}</p>
-    </div>
+          <div class="location-stack">
+            <div class="location-card">
+              <span class="location-label">Desa Binaan</span>
+              <strong>{{ kandang.lokasi || '-' }}</strong>
+            </div>
 
-  </ion-card-content>
-</ion-card>
+            <div class="location-card">
+              <span class="location-label">Koordinat</span>
+              <strong>{{ kandang.titik_kordinat || '-' }}</strong>
+            </div>
 
+            <a
+              *ngIf="hasValidCoordinates()"
+              [href]="getGoogleMapsUrl()"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="maps-cta"
+            >
+              <ion-icon name="navigate-outline"></ion-icon>
+              Buka lokasi di Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
 </ion-content>

@@ -23,6 +23,7 @@ export class MulaiKegiatanPage implements OnInit {
   }[] = [];
 
   isSubmitting = false;
+  isLoading = false;
 
   kegiatanId: string = '';
   selectedFiles: File[] = [];
@@ -45,6 +46,7 @@ export class MulaiKegiatanPage implements OnInit {
    * Load detail kegiatan dari database
    */
   async loadKegiatanDetail() {
+    this.isLoading = true;
     const loading = await this.loadingController.create({
       message: 'Memuat data...',
     });
@@ -54,6 +56,7 @@ export class MulaiKegiatanPage implements OnInit {
       this.kegiatanService.getKegiatanById(Number(this.kegiatanId)).subscribe({
         next: (response: any) => {
           loading.dismiss();
+          this.isLoading = false;
           if (response.success) {
             this.kegiatan = response.data;
           } else {
@@ -63,6 +66,7 @@ export class MulaiKegiatanPage implements OnInit {
         },
         error: (error: any) => {
           loading.dismiss();
+          this.isLoading = false;
           this.showToast(error.error?.message || 'Gagal memuat data kegiatan', 'danger');
           console.error('Error loading kegiatan:', error);
           this.router.navigate(['/petugas/kegiatan']);
@@ -70,9 +74,25 @@ export class MulaiKegiatanPage implements OnInit {
       });
     } catch (error: any) {
       await loading.dismiss();
+      this.isLoading = false;
       this.showToast('Gagal memuat data kegiatan', 'danger');
       console.error('Error loading kegiatan:', error);
     }
+  }
+
+  getStatusClass(): 'approved' | 'pending' | 'rejected' {
+    const status = (this.kegiatan?.status_aktual || this.kegiatan?.status || '').toLowerCase();
+    if (status === 'selesai') return 'approved';
+    if (status === 'dibatalkan') return 'rejected';
+    return 'pending';
+  }
+
+  getStatusLabel(): string {
+    const status = (this.kegiatan?.status_aktual || this.kegiatan?.status || '').toLowerCase();
+    if (status === 'selesai') return 'Selesai';
+    if (status === 'dibatalkan') return 'Dibatalkan';
+    if (status === 'sedang_berjalan') return 'Sedang Berjalan';
+    return this.kegiatan?.status || '-';
   }
 
   /**

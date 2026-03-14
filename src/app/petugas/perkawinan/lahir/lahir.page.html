@@ -1,167 +1,151 @@
-<ion-header class="custom-header" translucent="true">
-  <ion-toolbar>
-    <div class="header-content">
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/petugas/perkawinan/riwayat-perkawinan"></ion-back-button>
-      </ion-buttons>
-      <h2 class="header-title">Input Data Lahir</h2>
-      <div style="width: 40px;"></div>
-    </div>
-  </ion-toolbar>
-</ion-header>
+<app-page-header
+  title="Input Data Lahir"
+  subtitle="Lengkapi data anak ternak, pengukuran, dan dokumentasi kelahiran."
+  defaultHref="/petugas/perkawinan/riwayat-perkawinan"
+></app-page-header>
 
-<ion-content fullscreen="true" class="ion-padding">
-
-  <form [formGroup]="lahirForm" (ngSubmit)="simpanData()">
-
-    <!-- Info Card -->
-    <div class="info-card">
-      <div class="card-header">
-        <h3 class="card-title">Data Induk</h3>
-        <p class="card-subtitle">{{ hewanInduk?.eartagBetina || 'ID Hewan' }}</p>
-      </div>
+<ion-content class="page-content">
+  <div class="content-wrapper form-page">
+    <div class="page-card form-intro-card">
+      <h3>Data induk aktif</h3>
+      <p>{{ hewanInduk?.eartagBetina || 'Belum ada data induk dipilih' }}</p>
     </div>
 
-    <!-- Section: Data Anak -->
-    <div class="form-section">
-      <h3 class="section-title">Data Anak</h3>
+    <form [formGroup]="lahirForm" (ngSubmit)="simpanData()" class="form-container">
+      <div class="form-section">
+        <h3 class="section-title">Data Anak</h3>
 
-      <div class="form-group">
-        <label class="form-label">Eartag Anak</label>
-        <ion-input formControlName="eartagAnak" placeholder="Masukkan Eartag Anak" class="form-input"
-          type="text"></ion-input>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Tanggal Lahir</label>
-        <div class="date-input-wrapper">
-          <ion-input formControlName="tanggalLahir" placeholder="Pilih Tanggal" class="form-input"
-            type="date"></ion-input>
-          <ion-icon name="calendar-outline" class="calendar-icon"></ion-icon>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Jenis Kelamin</label>
-        <ion-select formControlName="jenisKelamin" placeholder="Pilih Jenis Kelamin" class="form-select">
-          <ion-select-option value="Jantan">Jantan</ion-select-option>
-          <ion-select-option value="Betina">Betina</ion-select-option>
-        </ion-select>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Kondisi Anak</label>
-        <ion-select formControlName="kondisi" placeholder="Pilih Kondisi" class="form-select">
-          <ion-select-option value="Sehat">Sehat</ion-select-option>
-          <ion-select-option value="Cacat">Cacat</ion-select-option>
-          <ion-select-option value="Mati">Mati</ion-select-option>
-          <ion-select-option value="Prematur">Prematur</ion-select-option>
-        </ion-select>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Jenis Ternak Anak</label>
-        <ion-select formControlName="jenisTernakAnak" placeholder="Pilih Jenis Ternak" class="form-select">
-          <ion-select-option *ngFor="let option of jenisTernakOptions" [value]="option.value">
-            {{ option.label }}
-          </ion-select-option>
-        </ion-select>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Rumpun Ternak Anak</label>
-        <ion-select formControlName="rumpunTernakAnak" placeholder="Pilih Rumpun" class="form-select">
-          <ion-select-option *ngFor="let option of rumpunTernakOptions" [value]="option.value">
-            {{ option.label }}
-          </ion-select-option>
-        </ion-select>
-      </div>
-    </div>
-
-    <!-- Section: Pengukuran Anak -->
-    <div class="form-section">
-      <h3 class="section-title">Pengukuran Anak (kg/cm)</h3>
-
-      <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Berat Badan (kg)</label>
-          <ion-input formControlName="beratBadan" placeholder="0" class="form-input" type="number"
-            step="0.1"></ion-input>
+          <label class="form-label">Eartag Anak</label>
+          <ion-item class="input-field" lines="none">
+            <ion-input formControlName="eartagAnak" placeholder="Masukkan eartag anak"></ion-input>
+          </ion-item>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Panjang Badan (cm)</label>
-          <ion-input formControlName="panjangBadan" placeholder="0" class="form-input" type="number"
-            step="0.1"></ion-input>
+          <label class="form-label">Tanggal Lahir</label>
+          <ion-item class="input-field" lines="none">
+            <ion-input type="date" formControlName="tanggalLahir"></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Jenis Kelamin</label>
+            <ion-item class="input-field" lines="none">
+              <ion-select formControlName="jenisKelamin" placeholder="Pilih jenis kelamin">
+                <ion-select-option value="Jantan">Jantan</ion-select-option>
+                <ion-select-option value="Betina">Betina</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Kondisi Anak</label>
+            <ion-item class="input-field" lines="none">
+              <ion-select formControlName="kondisi" placeholder="Pilih kondisi">
+                <ion-select-option value="Sehat">Sehat</ion-select-option>
+                <ion-select-option value="Cacat">Cacat</ion-select-option>
+                <ion-select-option value="Mati">Mati</ion-select-option>
+                <ion-select-option value="Prematur">Prematur</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Jenis Ternak Anak</label>
+            <ion-item class="input-field" lines="none">
+              <ion-select formControlName="jenisTernakAnak" placeholder="Pilih jenis ternak">
+                <ion-select-option *ngFor="let option of jenisTernakOptions" [value]="option.value">
+                  {{ option.label }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Rumpun Ternak Anak</label>
+            <ion-item class="input-field" lines="none">
+              <ion-select formControlName="rumpunTernakAnak" placeholder="Pilih rumpun">
+                <ion-select-option *ngFor="let option of rumpunTernakOptions" [value]="option.value">
+                  {{ option.label }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
         </div>
       </div>
 
-      <div class="form-row">
+      <div class="form-section">
+        <h3 class="section-title">Pengukuran Anak (kg/cm)</h3>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Berat Badan</label>
+            <ion-item class="input-field" lines="none">
+              <ion-input type="number" step="0.1" formControlName="beratBadan" placeholder="0"></ion-input>
+            </ion-item>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Panjang Badan</label>
+            <ion-item class="input-field" lines="none">
+              <ion-input type="number" step="0.1" formControlName="panjangBadan" placeholder="0"></ion-input>
+            </ion-item>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Tinggi Pundak</label>
+            <ion-item class="input-field" lines="none">
+              <ion-input type="number" step="0.1" formControlName="tinggiPundak" placeholder="0"></ion-input>
+            </ion-item>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Lingkar Dada</label>
+            <ion-item class="input-field" lines="none">
+              <ion-input type="number" step="0.1" formControlName="lingkarDada" placeholder="0"></ion-input>
+            </ion-item>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3 class="section-title">Dokumentasi dan Catatan</h3>
+
         <div class="form-group">
-          <label class="form-label">Tinggi Pundak (cm)</label>
-          <ion-input formControlName="tinggiPundak" placeholder="0" class="form-input" type="number"
-            step="0.1"></ion-input>
+          <label class="form-label">Foto Anak</label>
+          <input #fileInput type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
+          <ion-button expand="block" fill="outline" class="secondary-btn" type="button" (click)="fileInput.click()">
+            <ion-icon name="cloud-upload-outline" slot="start"></ion-icon>
+            Pilih Foto
+          </ion-button>
+          <p class="file-name" *ngIf="fotoFileName">{{ fotoFileName }}</p>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Lingkar Dada (cm)</label>
-          <ion-input formControlName="lingkarDada" placeholder="0" class="form-input" type="number"
-            step="0.1"></ion-input>
+          <label class="form-label">Catatan</label>
+          <ion-item class="input-field" lines="none">
+            <ion-textarea formControlName="catatan" rows="4" placeholder="Tambahkan catatan jika ada"></ion-textarea>
+          </ion-item>
         </div>
       </div>
-    </div>
 
-    <!-- Section: Upload Foto -->
-    <div class="form-section">
-      <h3 class="section-title">Upload Foto</h3>
-
-      <div class="form-group">
-        <label class="form-label">Foto Anak</label>
-        <div class="file-upload-container">
-          <input #fileInput type="file" accept="image/*" (change)="onFileSelected($event)" class="file-input" hidden />
-          <button type="button" (click)="fileInput.click()" class="upload-btn">
-            <ion-icon name="cloud-upload-outline"></ion-icon>
-            <span>Pilih Foto</span>
-          </button>
-          <p class="file-name" *ngIf="fotoFileName">
-            {{ fotoFileName }}
-          </p>
-        </div>
+      <div class="form-actions dual-actions">
+        <ion-button type="button" expand="block" fill="outline" class="secondary-btn" (click)="batal()">
+          Batal
+        </ion-button>
+        <ion-button type="submit" expand="block" class="submit-btn" [disabled]="!lahirForm.valid">
+          Simpan Data Lahir
+        </ion-button>
       </div>
+    </form>
+
+    <div class="page-card info-note">
+      <ion-icon name="information-circle-outline"></ion-icon>
+      <p>Pastikan semua data terisi dengan benar sebelum menyimpan.</p>
     </div>
-
-    <!-- Section: Catatan -->
-    <div class="form-section">
-      <h3 class="section-title">Catatan Tambahan</h3>
-
-      <div class="form-group">
-        <label class="form-label">Catatan</label>
-        <ion-textarea formControlName="catatan" placeholder="Tambahkan catatan jika ada" class="form-textarea"
-          rows="3"></ion-textarea>
-      </div>
-    </div>
-
-    <!-- Action Buttons -->
-    <div class="action-section">
-      <button type="button" class="btn btn-secondary" (click)="batal()">
-        <ion-icon name="close-outline"></ion-icon>
-        <span>Batal</span>
-      </button>
-
-      <button type="submit" class="btn btn-primary" [disabled]="!lahirForm.valid">
-        <ion-icon name="save-outline"></ion-icon>
-        <span>Simpan Data Lahir</span>
-      </button>
-    </div>
-
-  </form>
-
-  <!-- Info Section -->
-  <div class="info-section">
-    <ion-icon name="information-circle-outline" class="info-icon"></ion-icon>
-    <p class="info-text">
-      Pastikan semua data telah terisi dengan benar sebelum menyimpan.
-    </p>
   </div>
-
 </ion-content>

@@ -5,9 +5,13 @@ import { AlertController, LoadingController, ToastController } from '@ionic/angu
 interface BirthDetail {
   birthDate: string;
   childId: string;
+  kelompokHewan: string;
   animalType: string;
+  ras: string;
   childCount: number;
   parentId: string;
+  gender: string;
+  birthWeight: string;
   status: string;
 }
 
@@ -22,9 +26,13 @@ export class DetailKelahiranPage implements OnInit {
   birthDetail: BirthDetail = {
     birthDate: '18 Agustus 2024',
     childId: 'AN-S-KRW-0824-001',
+    kelompokHewan: 'Ruminansia',
     animalType: 'Sapi',
+    ras: 'Brahmana',
     childCount: 1,
     parentId: 'IN-S-KRW-0034',
+    gender: 'Jantan',
+    birthWeight: '10 kg',
     status: 'Normal'
   };
 
@@ -108,9 +116,21 @@ export class DetailKelahiranPage implements OnInit {
   // EDIT
   // ============================
   editRecord() {
-    console.log('Edit data:', this.birthDetail);
-    // arahkan ke halaman edit
-    // this.router.navigate(['/petugas/edit-kelahiran', this.birthDetail.childId]);
+    this.router.navigate(['/petugas/buku-lahir/edit-buku-lahir']);
+  }
+
+  getStatusClass(status: string): string {
+    const normalized = (status || '').toLowerCase();
+
+    if (normalized.includes('normal') || normalized.includes('sehat')) {
+      return 'approved';
+    }
+
+    if (normalized.includes('prematur') || normalized.includes('warning')) {
+      return 'pending';
+    }
+
+    return 'rejected';
   }
 
 }

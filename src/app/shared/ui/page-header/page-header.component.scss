@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+.page-header-row {
+  align-items: flex-start;
+}
+
+.page-header-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}

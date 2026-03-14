@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { KandangService } from '../../services/kandang.service';
 
 @Component({
@@ -18,7 +18,6 @@ export class KandangPage implements OnInit {
 
   constructor(
     private router: Router,
-    private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
     private kandangService: KandangService
   ) { }
@@ -38,11 +37,6 @@ export class KandangPage implements OnInit {
   async loadKandang() {
     this.isLoading = true;
 
-    const loading = await this.loadingCtrl.create({
-      message: 'Memuat data kandang...',
-    });
-    await loading.present();
-
     // Build parameters untuk filter
     const params: any = {};
     if (this.searchText) params.nama_kandang = this.searchText;
@@ -52,7 +46,6 @@ export class KandangPage implements OnInit {
     this.kandangService.getKandangList(params).subscribe({
       next: async (res) => {
         this.isLoading = false;
-        await loading.dismiss();
 
         if (res.success) {
           this.kandangList = res.data;
@@ -64,7 +57,6 @@ export class KandangPage implements OnInit {
       },
       error: async (err) => {
         this.isLoading = false;
-        await loading.dismiss();
         console.error('Error loading kandang:', err);
         this.kandangList = []; // Set empty array on error
         await this.showToast('Terjadi kesalahan saat memuat data', 'danger');

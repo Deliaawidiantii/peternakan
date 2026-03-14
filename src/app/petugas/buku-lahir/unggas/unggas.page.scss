@@ -1,175 +1,71 @@
-.custom-header {
-  display: flex;
-  align-items: center;
-  padding: 14px 16px;
-  background-color: #fff;
-  border-bottom: 1px solid #fff;
-  gap: 8px;
+﻿:host {
+  --ion-font-family: var(--app-font);
 }
 
-.custom-header h2 {
-  font-size: 18px;
-  font-weight: 600;
-  color: #0e161b;
+.form-header {
+  padding-bottom: 36px;
+}
+
+.header-shell {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.header-copy {
+  min-width: 0;
+}
+
+.form-intro {
+  padding: 18px;
+  margin-bottom: 14px;
+}
+
+.form-intro h3,
+.auto-id-note h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--app-text-primary);
+  margin: 0 0 6px;
+}
+
+.form-intro p,
+.auto-id-note p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--app-text-secondary);
   margin: 0;
 }
 
-ion-back-button {
-  --color: #0e161b;
-  --icon-font-size: 22px;
-}
-
-// Form styling
-.input-field {
-  --padding-start: 0;
-  --padding-end: 0;
-  margin-bottom: 12px;
-
-  ion-label {
-    font-size: 14px;
-    font-weight: 500;
-    color: #333;
-  }
-
-  ion-input, ion-select, ion-textarea {
-    --padding-start: 12px;
-    --padding-end: 12px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 14px;
-  }
-}
-
-// Section divider
 .section-divider {
-  margin-top: 24px;
-  margin-bottom: 16px;
-  padding-top: 16px;
-  border-top: 2px solid #e0e0e0;
-
-  &:first-child {
-    border-top: none;
-    padding-top: 0;
-    margin-top: 0;
-  }
+  margin: 24px 0 10px;
 }
 
-.section-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: #333;
-  margin: 0 0 4px 0;
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 0;
 }
 
-.section-subtitle {
-  font-size: 13px;
-  color: #666;
-  margin: 2px 0 0 0;
-}
-
-// ID Badges
-.ids-list {
+.auto-id-note {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 16px;
-  padding: 12px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px;
+  margin: 4px 0 12px;
 }
 
-.id-badge-normal {
-  padding: 10px 12px;
-  background-color: #e8f5e9;
-  border-left: 4px solid #4caf50;
-  border-radius: 4px;
-  font-size: 13px;
-  color: #2e7d32;
+.auto-id-note ion-icon {
+  font-size: 24px;
+  color: var(--app-brand-700);
+  margin-top: 2px;
 }
 
-.id-badge-cacat {
-  padding: 10px 12px;
-  background-color: #fff3e0;
-  border-left: 4px solid #ff9800;
-  border-radius: 4px;
-  font-size: 13px;
-  color: #e65100;
-}
-
-.id-badge-mati {
-  padding: 10px 12px;
-  background-color: #ffebee;
-  border-left: 4px solid #f44336;
-  border-radius: 4px;
-  font-size: 13px;
-  color: #c62828;
-}
-
-// Page styling
-.page-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: #0e161b;
-  margin-bottom: 20px;
-}
-
-.save-btn {
-  margin-top: 12px;
-  --border-radius: 8px;
-  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-
-.input-kelahiran-content {
-  --background: white;
-  font-family: 'Public Sans', 'Noto Sans', sans-serif;
-  padding: 16px;
-}
-
-ion-item {
-  --background: #ffffff;
-  --border-color: #d1dfe6;
-  --inner-padding-end: 8px;
-  border: 1px solid #d1dfe6;
-  border-radius: 10px;
-  margin-bottom: 14px;
-  padding-left: 10px;
-  padding-right: 10px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-}
-
-ion-label {
-  color: #0e161b;
-  font-weight: 500;
-  margin-bottom: 6px;
-}
-
-ion-input,
-ion-select {
-  --color: #0e161b;
-  --placeholder-color: #507e95;
-  --padding-start: 8px;
-  --background: transparent;
-  height: 45px;
-  font-size: 15px;
-}
-
-ion-select::part(icon) {
-  color: #507e95;
-}
-
-.btn-container {
-  padding: 16px;
-  text-align: center;
-}
-
-.btn-simpan {
-  --background: #a6d9f2;
-  --color: #0e161b;
-  font-weight: 700;
-  letter-spacing: 0.015em;
-  border-radius: 10px;
-  width: 100%;
-  height: 48px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+@media (min-width: 768px) {
+  .status-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
 }

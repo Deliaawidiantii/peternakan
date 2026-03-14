@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { NotifikasiService } from '../../services/notifikasi.service';
-import { ToastController } from '@ionic/angular';
+﻿import { Component, OnInit } from '@angular/core';
+import { AlertController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { NotifikasiService } from '../../services/notifikasi.service';
 
 @Component({
   selector: 'app-notifikasi',
@@ -11,13 +11,14 @@ import { Router } from '@angular/router';
 })
 export class NotifikasiPage implements OnInit {
   notifikasiList: any[] = [];
-  isLoading: boolean = true;
-  unreadCount: number = 0;
+  isLoading = true;
+  unreadCount = 0;
 
   constructor(
     private notifikasiService: NotifikasiService,
     private toastCtrl: ToastController,
-    private router: Router
+    private alertCtrl: AlertController,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -33,85 +34,140 @@ export class NotifikasiPage implements OnInit {
     this.notifikasiService.getNotifikasi().subscribe({
       next: (res: any) => {
         if (res.success) {
-          this.notifikasiList = res.data;
-          this.unreadCount = res.unread_count;
+          this.notifikasiList = Array.isArray(res.data) ? res.data : [];
+          this.unreadCount = res.unread_count || 0;
         }
         this.isLoading = false;
       },
-      error: (err) => {
+      error: async (err) => {
         console.error(err);
         this.isLoading = false;
+        await this.presentToast('Gagal memuat notifikasi', 'danger');
       },
     });
   }
 
   async markAsRead(item: any) {
-    // Navigasi ke detail jika punya kegiatan ID
-    const proceedToDetail = () => {
+    const goToDetail = () => {
       const kegiatanId = item.data?.id || item.data?.kegiatan_id;
-      if (kegiatanId && item.type.includes('Kegiatan')) {
+      if (kegiatanId && String(item.type || '').includes('Kegiatan')) {
         this.router.navigate(['/petugas/detail-kegiatan', kegiatanId]);
       }
     };
 
     if (item.read_at) {
-      proceedToDetail();
+      goToDetail();
       return;
     }
 
     this.notifikasiService.markAsRead(item.id).subscribe({
-      next: (res) => {
+      next: () => {
         item.read_at = new Date().toISOString();
         this.unreadCount = Math.max(0, this.unreadCount - 1);
-        proceedToDetail();
+        goToDetail();
+      },
+      error: async () => {
+        await this.presentToast('Gagal memperbarui status notifikasi', 'danger');
       },
     });
+  }
+
+  async deleteNotifikasi(item: any, event: Event) {
+    event.stopPropagation();
+
+    const alert = await this.alertCtrl.create({
+      header: 'Hapus notifikasi',
+      message: 'Notifikasi ini akan dihapus dari daftar. Lanjutkan?',
+      buttons: [
+        {
+          text: 'Batal',
+          role: 'cancel',
+        },
+        {
+          text: 'Hapus',
+          role: 'destructive',
+          handler: () => {
+            this.notifikasiService.deleteNotifikasi(item.id).subscribe({
+              next: async () => {
+                this.notifikasiList = this.notifikasiList.filter((notif) => notif.id !== item.id);
+                if (!item.read_at) {
+                  this.unreadCount = Math.max(0, this.unreadCount - 1);
+                }
+                await this.presentToast('Notifikasi berhasil dihapus', 'success');
+              },
+              error: async () => {
+                await this.presentToast('Gagal menghapus notifikasi', 'danger');
+              },
+            });
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 
   markAllAsRead() {
-    if (this.unreadCount === 0) return;
+    if (this.unreadCount === 0) {
+      return;
+    }
+
     this.notifikasiService.markAllAsRead().subscribe({
-      next: async (res) => {
-        this.notifikasiList.forEach(
-          (n) => (n.read_at = new Date().toISOString()),
-        );
+      next: async () => {
+        this.notifikasiList = this.notifikasiList.map((item) => ({
+          ...item,
+          read_at: item.read_at || new Date().toISOString(),
+        }));
         this.unreadCount = 0;
-        const toast = await this.toastCtrl.create({
-          message: 'Semua notifikasi ditandai dibaca',
-          duration: 2000,
-          color: 'success',
-        });
-        toast.present();
+        await this.presentToast('Semua notifikasi ditandai dibaca', 'success');
+      },
+      error: async () => {
+        await this.presentToast('Gagal menandai semua notifikasi', 'danger');
       },
     });
   }
 
-  getIconProps(type: string): any {
+  getIconProps(type: string): { name: string; bg: string } {
     switch (type) {
       case 'App\\Notifications\\PenyakitNotification':
-        return { name: 'warning-outline', color: 'danger', bg: 'bg-red' };
+        return { name: 'medkit-outline', bg: 'bg-red' };
       case 'App\\Notifications\\KegiatanNotification':
-        return { name: 'calendar-outline', color: 'primary', bg: 'bg-blue' };
+        return { name: 'calendar-outline', bg: 'bg-blue' };
       case 'App\\Notifications\\PerkawinanNotification':
-        return { name: 'heart-outline', color: 'success', bg: 'bg-green' };
+        return { name: 'heart-outline', bg: 'bg-green' };
       default:
-        return {
-          name: 'notifications-outline',
-          color: 'medium',
-          bg: 'bg-blue',
-        };
+        return { name: 'notifications-outline', bg: 'bg-blue' };
     }
   }
 
   getTimeAgo(dateString: string): string {
-    if (!dateString) return '';
+    if (!dateString) {
+      return '';
+    }
+
     const date = new Date(dateString);
     const now = new Date();
     const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
-    if (seconds < 60) return 'Baru saja';
-    if (seconds < 3600) return Math.floor(seconds / 60) + ' menit lalu';
-    if (seconds < 86400) return Math.floor(seconds / 3600) + ' jam lalu';
-    return Math.floor(seconds / 86400) + ' hari lalu';
+    if (seconds < 60) {
+      return 'Baru saja';
+    }
+    if (seconds < 3600) {
+      return `${Math.floor(seconds / 60)} menit lalu`;
+    }
+    if (seconds < 86400) {
+      return `${Math.floor(seconds / 3600)} jam lalu`;
+    }
+    return `${Math.floor(seconds / 86400)} hari lalu`;
+  }
+
+  private async presentToast(message: string, color: 'success' | 'danger' | 'primary') {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 2200,
+      color,
+      position: 'bottom',
+    });
+    await toast.present();
   }
 }

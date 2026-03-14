@@ -1,32 +1,60 @@
-<ion-header class="custom-header">
-  <ion-toolbar color="light">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Kasus Penyakit</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-page-header
+  title="Daftar Kasus Penyakit"
+  subtitle="Tinjau kasus yang masuk lalu lanjutkan ke pembaruan perkembangan."
+  defaultHref="/petugas/penyakit"
+></app-page-header>
 
-<ion-content class="ion-padding custom-bg">
-  <div *ngIf="kasusList.length === 0" class="empty-state">
-    Belum ada kasus penyakit.
-  </div>
+<ion-content class="page-content">
+  <div class="content-wrapper compact-bottom">
+    <div class="modern-searchbar">
+      <ion-searchbar
+        placeholder="Cari diagnosa, gejala, atau kode kasus"
+        [(ngModel)]="query"
+      ></ion-searchbar>
+    </div>
 
-  <ion-item
-    *ngFor="let kasus of kasusList"
-    lines="none"
-    class="case-item"
-    (click)="goToDetail(kasus)">
-    <img [src]="getFotoUrl(kasus.foto)" alt="Kasus penyakit" class="disease-image">
-    <ion-label>
-      <h2>{{ kasus.diagnosa || kasus.jenis_penyakit || 'Menunggu Diagnosa' }}</h2>
-      <p>Gejala: {{ kasus.gejala || kasus.deskripsi || '-' }}</p>
-      <p>
-        Status:
-        <span class="status" [ngClass]="getStatusClass(kasus.status_validasi)">
+    <div class="list-header-row">
+      <h3 class="section-label kasus-section-title">
+        <ion-icon name="document-text-outline"></ion-icon>
+        Daftar Kasus
+      </h3>
+      <span class="count-badge">{{ filteredKasus.length }}</span>
+    </div>
+
+    <app-loading-state
+      *ngIf="isLoading"
+      [card]="true"
+      title="Memuat data kasus"
+      caption="Menyusun daftar kasus penyakit terbaru."
+    ></app-loading-state>
+
+    <app-empty-state
+      *ngIf="!isLoading && filteredKasus.length === 0"
+      icon="medkit-outline"
+      title="Belum ada kasus penyakit"
+      [caption]="query ? 'Tidak ada hasil yang cocok dengan pencarian Anda.' : 'Kasus penyakit yang dilaporkan akan muncul di sini.'"
+    ></app-empty-state>
+
+    <div class="page-card" *ngIf="!isLoading && filteredKasus.length > 0">
+      <div class="info-item-global case-item" *ngFor="let kasus of filteredKasus" (click)="goToDetail(kasus)">
+        <img [src]="getFotoUrl(kasus.foto)" alt="Foto kasus penyakit" class="case-image" />
+
+        <div class="case-copy">
+          <p class="case-title">{{ kasus.code || ('KS-' + kasus.id) }}</p>
+          <p class="case-subtitle">{{ kasus.diagnosa || kasus.jenis_penyakit || 'Menunggu Diagnosa' }}</p>
+
+          <div class="card-meta">
+            <span class="meta-item">
+              <ion-icon name="pulse-outline"></ion-icon>
+              {{ kasus.gejala || kasus.deskripsi || '-' }}
+            </span>
+          </div>
+        </div>
+
+        <span class="status-badge" [ngClass]="getStatusClass(kasus.status_validasi)">
           {{ getStatusLabel(kasus.status_validasi) }}
         </span>
-      </p>
-    </ion-label>
-  </ion-item>
+      </div>
+    </div>
+  </div>
 </ion-content>

@@ -1,56 +1,51 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar>
-    <div class="gradient-header">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <ion-back-button defaultHref="/petugas/tabs/home" style="--color:#fff;"></ion-back-button>
-        <div>
-          <h2 class="gradient-title">Penyakit</h2>
-          <p class="gradient-subtitle">Kelola data penyakit hewan</p>
-        </div>
-      </div>
-    </div>
-  </ion-toolbar>
-</ion-header>
+<app-page-header
+  title="Penyakit"
+  subtitle="Pantau kasus penyakit, update perkembangan, dan riwayat penanganan."
+  defaultHref="/petugas/tabs/home"
+></app-page-header>
 
 <ion-content class="page-content">
-  <div class="content-wrapper">
+  <div class="content-wrapper compact-bottom">
+    <div class="section-block">
+      <h3 class="section-label">
+        <ion-icon name="medkit-outline"></ion-icon>
+        Manajemen Penyakit
+      </h3>
 
-    <div class="penyakit-menu">
+      <div class="penyakit-menu">
+        <div class="menu-card" routerLink="/petugas/laporan-kasus-penyakit">
+          <div class="menu-card-icon red">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </div>
+          <div class="menu-card-text">
+            <h3>Laporan Kasus Penyakit</h3>
+            <p>Buat laporan kasus baru berdasarkan temuan di lapangan.</p>
+          </div>
+          <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
+        </div>
 
-      <div class="menu-card" routerLink="/petugas/laporan-kasus-penyakit">
-        <div class="menu-card-icon red">
-          <ion-icon name="add-circle-outline"></ion-icon>
+        <div class="menu-card" routerLink="/petugas/daftar-penyakit">
+          <div class="menu-card-icon orange">
+            <ion-icon name="create-outline"></ion-icon>
+          </div>
+          <div class="menu-card-text">
+            <h3>Perbarui Kasus Penyakit</h3>
+            <p>Kelola status validasi dan perkembangan kasus yang berjalan.</p>
+          </div>
+          <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
         </div>
-        <div class="menu-card-text">
-          <h3>Laporan Kasus Penyakit</h3>
-          <p>Buat laporan kasus penyakit baru</p>
+
+        <div class="menu-card" routerLink="/petugas/riwayat-perkembangan-penyakit">
+          <div class="menu-card-icon blue">
+            <ion-icon name="time-outline"></ion-icon>
+          </div>
+          <div class="menu-card-text">
+            <h3>Riwayat Penyakit</h3>
+            <p>Lihat riwayat perkembangan dan hasil penanganan kasus.</p>
+          </div>
+          <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
         </div>
-        <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
       </div>
-
-      <div class="menu-card" routerLink="/petugas/daftar-penyakit">
-        <div class="menu-card-icon orange">
-          <ion-icon name="create-outline"></ion-icon>
-        </div>
-        <div class="menu-card-text">
-          <h3>Perbaharui Kasus Penyakit</h3>
-          <p>Perbaharui informasi kasus penyakit yang ada</p>
-        </div>
-        <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
-      </div>
-
-      <div class="menu-card" routerLink="/petugas/riwayat-perkembangan-penyakit">
-        <div class="menu-card-icon blue">
-          <ion-icon name="time-outline"></ion-icon>
-        </div>
-        <div class="menu-card-text">
-          <h3>Riwayat Penyakit</h3>
-          <p>Lihat riwayat kasus penyakit</p>
-        </div>
-        <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
-      </div>
-
     </div>
-
   </div>
 </ion-content>

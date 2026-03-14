@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { PeternakService } from '../../services/peternak.service';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-pemilik',
@@ -19,7 +19,6 @@ export class PemilikPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private peternakService: PeternakService,
-    private loadingController: LoadingController,
     private alertController: AlertController
   ) { }
 
@@ -35,15 +34,8 @@ export class PemilikPage implements OnInit {
   async loadPemilik() {
     this.isLoading = true;
 
-    const loading = await this.loadingController.create({
-      message: 'Memuat data...',
-      spinner: 'crescent'
-    });
-    await loading.present();
-
     this.peternakService.getAll().subscribe({
       next: async (response) => {
-        await loading.dismiss();
         this.isLoading = false;
 
         if (response.success) {
@@ -63,7 +55,6 @@ export class PemilikPage implements OnInit {
         }
       },
       error: async (error) => {
-        await loading.dismiss();
         this.isLoading = false;
         console.error('Error loading pemilik:', error);
 
@@ -123,15 +114,8 @@ export class PemilikPage implements OnInit {
           text: 'Hapus',
           role: 'destructive',
           handler: async () => {
-            const loading = await this.loadingController.create({
-              message: 'Menghapus data...'
-            });
-            await loading.present();
-
             this.peternakService.delete(pemilik.id).subscribe({
               next: async (response) => {
-                await loading.dismiss();
-                
                 const successAlert = await this.alertController.create({
                   header: 'Berhasil',
                   message: 'Data pemilik berhasil dihapus',
@@ -143,8 +127,6 @@ export class PemilikPage implements OnInit {
                 this.loadPemilik();
               },
               error: async (error) => {
-                await loading.dismiss();
-                
                 const errorAlert = await this.alertController.create({
                   header: 'Error',
                   message: 'Gagal menghapus data',

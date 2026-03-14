@@ -1,38 +1,58 @@
-.custom-bg {
-	--background: #f6f8fb;
+﻿:host {
+  --ion-font-family: var(--app-font);
 }
 
-.page-title {
-	font-size: 20px;
-	font-weight: 700;
-	color: #1f2937;
-	margin: 4px 0 14px;
+.form-header {
+  padding-bottom: 36px;
 }
 
-.input-field {
-	--padding-start: 0;
-	--padding-end: 0;
-	margin-bottom: 12px;
-
-	ion-label {
-		font-size: 13px;
-		font-weight: 600;
-		color: #374151;
-		margin-bottom: 6px;
-	}
-
-	ion-input,
-	ion-select,
-	ion-textarea {
-		--padding-start: 12px;
-		--padding-end: 12px;
-		border: 1px solid #d5dbe3;
-		border-radius: 10px;
-		background: #fff;
-	}
+.header-shell {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
 }
 
-.save-btn {
-	margin-top: 14px;
-	--border-radius: 10px;
+.header-copy {
+  min-width: 0;
+}
+
+.form-intro {
+  padding: 18px;
+  margin-bottom: 14px;
+}
+
+.form-intro h3,
+.auto-id-note h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--app-text-primary);
+  margin: 0 0 6px;
+}
+
+.form-intro p,
+.auto-id-note p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--app-text-secondary);
+  margin: 0;
+}
+
+.form-stack {
+  padding-top: 2px;
+}
+
+.auto-id-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px;
+  margin: 4px 0 12px;
+}
+
+.auto-id-note ion-icon {
+  font-size: 24px;
+  color: var(--app-brand-700);
+  margin-top: 2px;
 }

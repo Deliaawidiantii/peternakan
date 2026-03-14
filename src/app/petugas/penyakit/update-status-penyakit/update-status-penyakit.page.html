@@ -1,58 +1,73 @@
-<ion-header class="custom-header">
-  <ion-toolbar color="light">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/petugas/daftar-penyakit"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Input Data</ion-title>
-  </ion-toolbar>
-</ion-header>
+﻿<app-page-header
+  title="Perbarui Penyakit"
+  subtitle="Pantau perkembangan kasus penyakit dan simpan perubahan status dengan lebih jelas."
+  defaultHref="/petugas/daftar-penyakit"
+></app-page-header>
 
-<ion-content class="ion-padding custom-bg">
-  <h1 class="page-title">Pembaruan Status Penyakit</h1>
+<ion-content class="page-content">
+  <div class="content-wrapper form-page">
+    <div class="page-card form-intro">
+      <h3>Pembaruan status yang lebih terarah</h3>
+      <p>Kasus hanya bisa diperbarui setelah approved. Ringkasan kasus ditampilkan terlebih dahulu agar petugas tidak salah memperbarui data.</p>
+    </div>
 
-  <ion-item class="input-field" lines="none" *ngIf="kasus">
-    <ion-label position="stacked">Ringkasan Kasus</ion-label>
-    <ion-text color="medium">
-      {{ kasus.code || '-' }} | {{ kasus.jenis_penyakit || 'Menunggu Diagnosa' }} | Validasi: {{ kasus.status_validasi || '-' }}
-    </ion-text>
-  </ion-item>
+    <div class="page-card case-summary" *ngIf="kasus">
+      <div class="summary-copy">
+        <div class="summary-label">Ringkasan Kasus</div>
+        <h3>{{ kasus.code || '-' }}</h3>
+        <p>{{ kasus.jenis_penyakit || 'Menunggu Diagnosa' }}</p>
+      </div>
+      <span class="summary-badge" [ngClass]="isApprovedCase() ? 'ready' : 'blocked'">{{ kasus.status_validasi || '-' }}</span>
+    </div>
 
-  <ion-item class="input-field" lines="none" *ngIf="kasus && !isApprovedCase()">
-    <ion-label position="stacked">Status Update</ion-label>
-    <ion-text color="warning">Kasus ini belum approved, jadi status belum bisa diperbarui.</ion-text>
-  </ion-item>
+    <div class="page-card warning-card" *ngIf="kasus && !isApprovedCase()">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <div>
+        <h3>Kasus belum approved</h3>
+        <p>Status perkembangan belum bisa diperbarui sampai validasi kasus disetujui.</p>
+      </div>
+    </div>
 
-  <ion-item class="input-field" lines="none">
-    <ion-label position="stacked">Status Terbaru</ion-label>
-    <ion-select [(ngModel)]="form.status_perkembangan" placeholder="Pilih Status">
-      <ion-select-option value="terdiagnosa">Terdiagnosa</ion-select-option>
-      <ion-select-option value="dalamPerkembangan">Dalam Perkembangan</ion-select-option>
-      <ion-select-option value="sembuh">Sembuh</ion-select-option>
-      <ion-select-option value="mati">Mati</ion-select-option>
-      <ion-select-option value="selesai">Selesai</ion-select-option>
-    </ion-select>
-  </ion-item>
+    <div class="form-container">
+      <div class="form-section">
+        <h3 class="section-title">Status Perkembangan</h3>
 
-  <ion-item class="input-field" lines="none">
-    <ion-label position="stacked">Status Penanganan</ion-label>
-    <ion-select [(ngModel)]="form.status_penanganan" placeholder="Pilih Status Penanganan">
-      <ion-select-option value="belum_ditangani">Belum Ditangani</ion-select-option>
-      <ion-select-option value="dalam_perawatan">Dalam Perawatan</ion-select-option>
-      <ion-select-option value="sembuh">Sembuh</ion-select-option>
-      <ion-select-option value="mati">Mati</ion-select-option>
-    </ion-select>
-  </ion-item>
+        <div class="form-group">
+          <label class="form-label">Status Terbaru</label>
+          <ion-item class="input-field" lines="none">
+            <ion-select [(ngModel)]="form.status_perkembangan" placeholder="Pilih status terbaru">
+              <ion-select-option value="terdiagnosa">Terdiagnosa</ion-select-option>
+              <ion-select-option value="dalamPerkembangan">Dalam Perkembangan</ion-select-option>
+              <ion-select-option value="sembuh">Sembuh</ion-select-option>
+              <ion-select-option value="mati">Mati</ion-select-option>
+              <ion-select-option value="selesai">Selesai</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
 
-  <ion-item class="input-field" lines="none">
-    <ion-label position="stacked">Catatan Pemantauan</ion-label>
-    <ion-textarea
-      [(ngModel)]="form.catatan_pemantauan"
-      placeholder="Catatan pemantauan..."
-      rows="4">
-    </ion-textarea>
-  </ion-item>
+        <div class="form-group">
+          <label class="form-label">Status Penanganan</label>
+          <ion-item class="input-field" lines="none">
+            <ion-select [(ngModel)]="form.status_penanganan" placeholder="Pilih status penanganan">
+              <ion-select-option value="belum_ditangani">Belum Ditangani</ion-select-option>
+              <ion-select-option value="dalam_perawatan">Dalam Perawatan</ion-select-option>
+              <ion-select-option value="sembuh">Sembuh</ion-select-option>
+              <ion-select-option value="mati">Mati</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
 
-  <ion-button expand="block" class="save-btn" [disabled]="isSubmitting || isLoadingKasus || !isApprovedCase()" (click)="submit()">
-    Simpan
-  </ion-button>
+        <div class="form-group">
+          <label class="form-label">Catatan Pemantauan</label>
+          <ion-item class="input-field" lines="none">
+            <ion-textarea [(ngModel)]="form.catatan_pemantauan" placeholder="Catatan pemantauan..." rows="4"></ion-textarea>
+          </ion-item>
+        </div>
+
+        <ion-button expand="block" class="save-btn" [disabled]="isSubmitting || isLoadingKasus || !isApprovedCase()" (click)="submit()">
+          Simpan
+        </ion-button>
+      </div>
+    </div>
+  </div>
 </ion-content>

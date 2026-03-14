@@ -1,11 +1,11 @@
-<ion-header class="ion-no-border">
+﻿<ion-header class="ion-no-border">
   <ion-toolbar>
     <div class="gradient-header">
       <div style="display:flex;align-items:center;gap:12px;">
         <ion-back-button defaultHref="/petugas/tabs/home" style="--color:#fff;"></ion-back-button>
         <div>
           <h2 class="gradient-title">Kegiatan</h2>
-          <p class="gradient-subtitle">Kelola kegiatan peternakan</p>
+          <p class="gradient-subtitle">Kelola kegiatan peternakan dengan alur yang lebih ringkas dan rapi.</p>
         </div>
       </div>
     </div>
@@ -14,8 +14,6 @@
 
 <ion-content [fullscreen]="true" class="page-content">
   <div class="content-wrapper">
-
-    <!-- Akses Cepat -->
     <div class="section-block">
       <h3 class="section-label">
         <ion-icon name="flash-outline"></ion-icon>
@@ -29,7 +27,7 @@
           </div>
           <div class="menu-card-text">
             <h3>Jadwal Kegiatan</h3>
-            <p>Lihat jadwal kegiatan yang akan datang</p>
+            <p>Lihat agenda kegiatan yang akan datang.</p>
           </div>
           <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
         </div>
@@ -40,7 +38,7 @@
           </div>
           <div class="menu-card-text">
             <h3>Riwayat Kegiatan</h3>
-            <p>Lihat catatan kegiatan sebelumnya</p>
+            <p>Lihat catatan kegiatan yang sudah dikerjakan.</p>
           </div>
           <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
         </div>
@@ -51,14 +49,13 @@
           </div>
           <div class="menu-card-text">
             <h3>Request Kegiatan</h3>
-            <p>Ajukan permintaan kegiatan baru</p>
+            <p>Ajukan kebutuhan kegiatan baru secara langsung.</p>
           </div>
           <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
         </div>
       </div>
     </div>
 
-    <!-- Kegiatan Berjalan -->
     <div class="section-block">
       <h3 class="section-label">
         <ion-icon name="pulse-outline"></ion-icon>
@@ -79,22 +76,19 @@
       </div>
 
       <div class="page-card" *ngIf="!isLoading && kegiatanBerjalan.length > 0">
-        <div class="info-item-global" *ngFor="let item of kegiatanBerjalan"
-          [routerLink]="['/petugas/detail-kegiatan', item.id]" style="cursor:pointer;">
+        <div class="info-item-global activity-item" *ngFor="let item of kegiatanBerjalan" [routerLink]="['/petugas/detail-kegiatan', item.id]">
           <div class="icon-circle purple">
             <ion-icon [name]="getIconName(item.jenis)"></ion-icon>
           </div>
-          <div style="flex:1;min-width:0;">
-            <p style="font-size:14px;font-weight:600;color:#1e293b;margin:0 0 2px 0;">{{ item.jenis }}</p>
-            <p style="font-size:12px;color:#64748b;margin:0;">{{ item.tanggal | date:'dd MMMM yyyy' }} · {{
-              item.jam_mulai }} - {{ item.jam_selesai }}</p>
+          <div class="activity-copy">
+            <p class="activity-title">{{ item.jenis }}</p>
+            <p class="activity-meta">{{ item.tanggal | date:'dd MMMM yyyy' }} | {{ item.jam_mulai }} - {{ item.jam_selesai }}</p>
           </div>
-          <ion-button size="small" fill="outline" color="primary">
+          <ion-button size="small" fill="solid" color="primary" class="activity-action">
             Lihat
           </ion-button>
         </div>
       </div>
     </div>
-
   </div>
 </ion-content>

@@ -39,6 +39,32 @@
   padding: 0 4px;
 }
 
+.buku-lahir-section-title {
+  margin: 0;
+}
+
+.buku-lahir-item {
+  cursor: pointer;
+}
+
+.record-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.record-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--app-text-primary);
+  margin: 0 0 4px;
+}
+
+.record-subtitle {
+  font-size: 12px;
+  color: var(--app-text-secondary);
+  margin: 0;
+}
+
 ion-fab {
   margin: 0 8px 8px 0;
 }

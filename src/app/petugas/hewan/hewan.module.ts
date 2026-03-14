@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
+import { SharedUiModule } from '../../shared/shared-ui.module';
 
 import { HewanPageRoutingModule } from './hewan-routing.module';
 
@@ -13,6 +14,7 @@ import { HewanPage } from './hewan.page';
     CommonModule,
     FormsModule,
     IonicModule,
+    SharedUiModule,
     HewanPageRoutingModule
   ],
   declarations: [HewanPage]

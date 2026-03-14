@@ -1,246 +1,39 @@
-.data-hewan-content {
-  --background: #f8fafb;
-  font-family: "Public Sans", "Noto Sans", sans-serif;
-  padding-bottom: 20px;
+:host {
+  --ion-font-family: var(--app-font);
 }
 
-/* Alert No Kategori */
+.detail-toolbar-copy {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+}
+
 .no-kategori-alert {
   padding: 20px;
-  margin-top: 20px;
-
-  ion-card {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    border-radius: 12px;
-    margin: 0;
-    
-    ion-card-content {
-      text-align: center;
-      padding: 24px 20px;
-      
-      p {
-        color: #4b5563;
-        font-size: 14px;
-        margin: 0 0 16px 0;
-        line-height: 1.6;
-      }
-
-      ion-button {
-        margin-top: 8px;
-      }
-    }
-  }
 }
 
-/* Form List Container */
-.list-data-hewan {
-  padding: 20px 20px 0 20px;
-  margin-top: 0;
-  background: transparent;
-
-  // Spacing untuk setiap group label + item
-  > ion-label {
-    margin-top: 8px;
-    
-    &:first-child {
-      margin-top: 0;
-    }
-  }
-
-  > div {
-    margin-bottom: 8px;
-
-    ion-label:first-child {
-      margin-top: 8px;
-    }
-  }
-}
-
-/* Label Styling */
-ion-label[position="stacked"] {
-  font-size: 13px;
-  font-weight: 600;
-  color: #374151;
-  margin-bottom: 6px;
-  margin-left: 4px;
-  padding-left: 0;
-  
-  span {
-    color: #ef4444;
-    font-weight: 700;
-  }
-}
-
-/* Item Styling */
-.list-data-hewan ion-item {
-  --background: #ffffff;
-  --border-color: #e5e7eb;
-  --min-height: 44px;
-  --padding-start: 12px;
-  --inner-padding-end: 12px;
-  --padding-top: 6px;
-  --padding-bottom: 6px;
-  
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  margin-bottom: 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-
-  &.item-has-focus,
-  &.item-interactive.ion-focused {
-    --border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-  }
-}
-
-/* Input Fields */
-ion-input,
-ion-textarea,
-ion-select {
-  color: #1f2937;
-  font-size: 14px;
-  font-weight: 400;
-  --placeholder-color: #9ca3af;
-  --placeholder-opacity: 1;
-}
-
-ion-textarea {
-  --padding-top: 8px;
-  --padding-bottom: 8px;
-  min-height: 80px;
-}
-
-// Fix untuk select arrow
-ion-select::part(icon) {
-  color: #6b7280;
-  opacity: 1;
-}
-
-/* Animation untuk field dinamis */
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Button Container */
-.button-container {
-  padding: 0 20px;
-  margin: 20px 0 0 0;
+.alert-body {
   display: flex;
-  justify-content: center;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 18px;
 
-  &:last-of-type {
-    margin-bottom: 20px;
-  }
-
-  ion-button {
-    --border-radius: 10px;
-    --padding-top: 14px;
-    --padding-bottom: 14px;
-    --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    
-    font-size: 15px;
-    font-weight: 600;
-    width: 100%;
-    max-width: 400px;
-    text-transform: none;
-    letter-spacing: 0.3px;
-    margin: 0;
-    height: 48px;
-  }
-}
-
-/* Button Variants */
-.btn-save {
-  --background: #10b981;
-  --background-activated: #059669;
-  --background-focused: #059669;
-  --background-hover: #059669;
-}
-
-.btn-cancel {
-  --background: #ef4444;
-  --background-activated: #dc2626;
-  --background-focused: #dc2626;
-  --background-hover: #dc2626;
-}
-
-.btn-next {
-  --background: #3b82f6;
-  --background-activated: #2563eb;
-  --background-focused: #2563eb;
-  --background-hover: #2563eb;
-}
-
-/* Header Toolbar Enhancement */
-ion-header ion-toolbar {
-  --padding-start: 8px;
-  --padding-end: 8px;
-  
-  ion-title {
+  h3 {
     font-size: 17px;
-    font-weight: 600;
-    color: #1f2937;
+    font-weight: 700;
+    color: var(--app-text-primary);
+    margin: 0 0 6px;
   }
 
-  ion-button {
-    --color: #374151;
-    
-    ion-icon {
-      font-size: 22px;
-    }
-  }
-
-  ion-back-button {
-    --color: #374151;
-  }
-}
-
-/* Responsive - Tablet & Desktop */
-@media (min-width: 768px) {
-  .list-data-hewan {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 24px 24px 0 24px;
-  }
-  
-  .button-container {
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .no-kategori-alert {
-    max-width: 600px;
-    margin: 20px auto;
-  }
-}
-
-
-.kategori-header {
-  margin: 16px 0;
-  
-  ion-card {
+  p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--app-text-secondary);
     margin: 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    
-    ion-card-header {
-      padding: 16px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      
-      ion-card-title {
-        color: white;
-        font-size: 18px;
-        font-weight: 600;
-        text-align: center;
-      }
-    }
   }
+}
+
+.kategori-intro {
+  margin-bottom: 18px;
 }

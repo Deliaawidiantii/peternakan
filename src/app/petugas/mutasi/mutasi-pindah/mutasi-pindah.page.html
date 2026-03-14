@@ -1,135 +1,156 @@
-<ion-header>
-  <ion-toolbar color="light">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/petugas/mutasi"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Mutasi Hewan (pindah)</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-page-header
+  title="Mutasi Pindah"
+  subtitle="Input data perpindahan hewan agar riwayat lokasi tetap akurat."
+  defaultHref="/petugas/mutasi"
+></app-page-header>
 
-<ion-content class="ion-padding">
+<ion-content class="page-content">
+  <div class="content-wrapper form-page">
+    <div class="page-card form-intro-card">
+      <h3>Catat mutasi dengan rapi</h3>
+      <p>Pilih pemilik dan hewan terlebih dahulu, lalu isi lokasi asal serta tujuan sebelum menyimpan mutasi.</p>
+    </div>
 
-  <h2 class="judul-section">Input Data Pemindahan Hewan</h2>
+    <div class="form-container">
+      <div class="form-section">
+        <h3 class="section-title">Data Hewan</h3>
 
-  <!-- Pilih Pemilik -->
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Pilih Pemilik</ion-label>
-    <ion-select placeholder="-- Ketuk Untuk Memilih --" (ionChange)="onPemilikChange($event)">
-      <ion-select-option value="">-- Pilih Pemilik --</ion-select-option>
-      <ion-select-option *ngFor="let p of peternakList" [value]="p.id">
-        {{ p.nama_peternak }} ({{ p.nik }})
-      </ion-select-option>
-    </ion-select>
-  </ion-item>
+        <div class="form-group">
+          <label class="form-label">Pilih Pemilik</label>
+          <ion-item lines="none" class="input-field">
+            <ion-select [(ngModel)]="peternakan_id" placeholder="Pilih pemilik" (ionChange)="onPemilikChange($event)">
+              <ion-select-option value="">Pilih pemilik</ion-select-option>
+              <ion-select-option *ngFor="let p of peternakList" [value]="p.id">
+                {{ p.nama_peternak }} ({{ p.nik }})
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
 
-  <!-- Pilih Hewan -->
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Pilih Hewan</ion-label>
-    <ion-select placeholder="-- Pilih Hewan --" (ionChange)="onHewanChange($event)"
-      [disabled]="populasiList.length === 0">
-      <ion-select-option value="">-- Pilih Hewan --</ion-select-option>
-      <ion-select-option *ngFor="let h of populasiList" [value]="h.id">
-        {{ h.code }} - {{ h.jenis_hewan }} ({{ h.jenis_kelamin }})
-      </ion-select-option>
-    </ion-select>
-  </ion-item>
+        <div class="form-group">
+          <label class="form-label">Pilih Hewan</label>
+          <ion-item lines="none" class="input-field">
+            <ion-select [(ngModel)]="populasi_id" placeholder="Pilih hewan" (ionChange)="onHewanChange($event)" [disabled]="populasiList.length === 0">
+              <ion-select-option value="">Pilih hewan</ion-select-option>
+              <ion-select-option *ngFor="let h of populasiList" [value]="h.id">
+                {{ h.code }} - {{ h.jenis_hewan }} ({{ h.jenis_kelamin }})
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
 
-  <!-- ID Hewan -->
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">ID Hewan</ion-label>
-    <ion-input placeholder="ID Hewan" [(ngModel)]="idHewan" readonly></ion-input>
-  </ion-item>
+        <div class="readonly-grid">
+          <div class="form-group">
+            <label class="form-label">ID Hewan</label>
+            <ion-item lines="none" class="input-field">
+              <ion-input [value]="idHewan" readonly></ion-input>
+            </ion-item>
+          </div>
 
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Kelompok Hewan</ion-label>
-    <ion-input placeholder="Kelompok Hewan" [(ngModel)]="kelompokHewan" readonly></ion-input>
-  </ion-item>
+          <div class="form-group">
+            <label class="form-label">Kelompok Hewan</label>
+            <ion-item lines="none" class="input-field">
+              <ion-input [value]="kelompokHewan" readonly></ion-input>
+            </ion-item>
+          </div>
 
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Jenis Hewan</ion-label>
-    <ion-input placeholder="Jenis Hewan" [(ngModel)]="jenisHewan" readonly></ion-input>
-  </ion-item>
+          <div class="form-group">
+            <label class="form-label">Jenis Hewan</label>
+            <ion-item lines="none" class="input-field">
+              <ion-input [value]="jenisHewan" readonly></ion-input>
+            </ion-item>
+          </div>
 
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Ras</ion-label>
-    <ion-input placeholder="Ras" [(ngModel)]="ras" readonly></ion-input>
-  </ion-item>
+          <div class="form-group">
+            <label class="form-label">Ras</label>
+            <ion-item lines="none" class="input-field">
+              <ion-input [value]="ras" readonly></ion-input>
+            </ion-item>
+          </div>
 
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Umur</ion-label>
-    <ion-input placeholder="Umur" [(ngModel)]="umur" readonly></ion-input>
-  </ion-item>
+          <div class="form-group">
+            <label class="form-label">Umur</label>
+            <ion-item lines="none" class="input-field">
+              <ion-input [value]="umur" readonly></ion-input>
+            </ion-item>
+          </div>
 
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Berat Badan</ion-label>
-    <ion-input placeholder="Masukkan Berat Badan" [(ngModel)]="beratBadan"></ion-input>
-  </ion-item>
+          <div class="form-group">
+            <label class="form-label">Berat Badan</label>
+            <ion-item lines="none" class="input-field">
+              <ion-input placeholder="Masukkan berat badan" [(ngModel)]="beratBadan"></ion-input>
+            </ion-item>
+          </div>
+        </div>
 
-  <!-- tanggal Pindah -->
-  <ion-item class="input-item">
-    <ion-label position="stacked">Tanggal Pindah</ion-label>
-    <ion-input placeholder="Pilih Tanggal" type="date" [(ngModel)]="tanggalPindah"></ion-input>
-  </ion-item>
+        <div class="form-group">
+          <label class="form-label">Tanggal Pindah</label>
+          <ion-item lines="none" class="input-field">
+            <ion-input type="date" [(ngModel)]="tanggalPindah"></ion-input>
+          </ion-item>
+        </div>
+      </div>
 
-  <!-- Alamat Asal -->
-  <h3 class="sub-judul">Alamat Asal</h3>
+      <div class="form-section">
+        <h3 class="section-title">Lokasi Asal</h3>
 
-  <!-- lokasi Manual -->
+        <div class="form-group">
+          <label class="form-label">Alamat Asal</label>
+          <ion-item lines="none" class="input-field">
+            <ion-input placeholder="Masukkan alamat asal" [(ngModel)]="alamatAsal"></ion-input>
+          </ion-item>
+        </div>
 
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Alamat Asal</ion-label>
-    <ion-input placeholder="Masukkan Alamat" [(ngModel)]="alamatAsal"></ion-input>
-  </ion-item>
+        <div class="form-group">
+          <label class="form-label">Koordinat Asal</label>
+          <ion-item lines="none" class="input-field">
+            <ion-input [value]="latitudeAsal && longitudeAsal ? latitudeAsal + ', ' + longitudeAsal : 'Belum ada koordinat'" readonly></ion-input>
+          </ion-item>
+        </div>
 
-  <!-- lokasi asal otomatis -->
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Koordinat Asal</ion-label>
-    <ion-input placeholder="Koordinat akan muncul disini"
-      [value]="latitudeAsal && longitudeAsal ? latitudeAsal + ',' + longitudeAsal : 'Belum ada koordinat'" readonly>
-    </ion-input>
-  </ion-item>
+        <ion-button expand="block" fill="outline" class="secondary-btn" (click)="getLokasiAsal()">
+          <ion-icon name="location-outline" slot="start"></ion-icon>
+          Ambil Lokasi Asal
+        </ion-button>
+      </div>
 
-  <ion-button expand="block" color="secondary" (click)="getLokasiAsal()" class="btn-lokasi">
-    <ion-icon name="location" slot="start"></ion-icon>
-    Dapatkan Lokasi Asal
-  </ion-button>
+      <div class="form-section">
+        <h3 class="section-title">Lokasi Tujuan</h3>
 
-  <!-- Alamat Tujuan -->
-  <h3 class="sub-judul">Lokasi Tujuan</h3>
+        <div class="form-group">
+          <label class="form-label">Alamat Tujuan</label>
+          <ion-item lines="none" class="input-field">
+            <ion-input placeholder="Masukkan alamat tujuan" [(ngModel)]="alamatTujuan"></ion-input>
+          </ion-item>
+        </div>
 
-  <!-- lokasi tujuan manual -->
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Alamat Tujuan</ion-label>
-    <ion-input placeholder="Masukkan Alamat Tujuan" [(ngModel)]="alamatTujuan"></ion-input>
-  </ion-item>
+        <div class="form-group">
+          <label class="form-label">Koordinat Tujuan</label>
+          <ion-item lines="none" class="input-field">
+            <ion-input [value]="latitudeTujuan && longitudeTujuan ? latitudeTujuan + ', ' + longitudeTujuan : 'Belum ada koordinat'" readonly></ion-input>
+          </ion-item>
+        </div>
 
-  <!-- Lokasi tujuan otomatis -->
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Koordinat Tujuan</ion-label>
-    <ion-input placeholder="Koordinat akan muncul disini"
-      [value]="latitudeTujuan && longitudeTujuan ? latitudeTujuan + ',' + longitudeTujuan : 'Belum ada koordinat'"
-      readonly>
-    </ion-input>
-  </ion-item>
+        <ion-button expand="block" fill="outline" class="secondary-btn" (click)="getLokasiTujuan()">
+          <ion-icon name="navigate-outline" slot="start"></ion-icon>
+          Ambil Lokasi Tujuan
+        </ion-button>
+      </div>
 
-  <ion-button expand="block" color="secondary" (click)="getLokasiTujuan()" class="btn-lokasi">
-    <ion-icon name="location" slot="start"></ion-icon>
-    Dapatkan Lokasi Tujuan
-  </ion-button>
+      <div class="form-section">
+        <h3 class="section-title">Catatan Tambahan</h3>
 
-  <!-- Deskripsi Tambahan  -->
+        <div class="form-group">
+          <label class="form-label">Deskripsi</label>
+          <ion-item lines="none" class="input-field">
+            <ion-textarea autoGrow="true" rows="4" placeholder="Tambahkan deskripsi tambahan" [(ngModel)]="deskripsi"></ion-textarea>
+          </ion-item>
+        </div>
 
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Deskripsi Tambahan (Opsional)</ion-label>
-    <ion-textarea placeholder="Tambahkan deskripsi tambahan" autoGrow="true" [(ngModel)]="deskripsi">
-    </ion-textarea>
-  </ion-item>
-
-  <!-- Tombol Simpan -->
-  <div class="btn-container">
-    <ion-button expand="block" color="primary" (click)="simpanData()">
-      Simpan
-    </ion-button>
+        <ion-button expand="block" class="submit-btn" [disabled]="isSubmitting" (click)="simpanData()">
+          {{ isSubmitting ? 'Menyimpan...' : 'Simpan Mutasi Pindah' }}
+        </ion-button>
+      </div>
+    </div>
   </div>
-
 </ion-content>

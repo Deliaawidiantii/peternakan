@@ -1,70 +1,87 @@
-<ion-header>
-    <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-            <ion-back-button defaultHref="/petugas/profile"></ion-back-button>
-        </ion-buttons>
-        <ion-title>Setting Aplikasi</ion-title>
-    </ion-toolbar>
-</ion-header>
+<app-page-header
+  title="Pengaturan"
+  subtitle="Kelola email, keamanan akun, dan preferensi notifikasi."
+  defaultHref="/petugas/profile"
+></app-page-header>
 
-<ion-content class="ion-padding">
+<ion-content class="page-content">
+  <div class="content-wrapper form-page">
+    <div class="page-card form-intro-card">
+      <h3>Atur pengalaman aplikasi</h3>
+      <p>Semua pengaturan penting dirangkum dalam satu tempat supaya akun petugas tetap aman dan mudah dikelola.</p>
+    </div>
 
-    <!-- Ubah Email -->
-    <ion-card>
-        <ion-card-header>
-            <ion-card-title>Profil Akun</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-            <form [formGroup]="emailForm" (ngSubmit)="simpanEmail()">
-                <ion-item>
-                    <ion-icon name="mail-outline" slot="start" color="medium"></ion-icon>
-                    <ion-label position="stacked">Email</ion-label>
-                    <ion-input type="email" formControlName="email"></ion-input>
-                </ion-item>
-                <div class="ion-padding-top">
-                    <ion-button expand="block" type="submit" [disabled]="emailForm.invalid">Update Email</ion-button>
-                </div>
-            </form>
-        </ion-card-content>
-    </ion-card>
+    <div class="form-container">
+      <div class="form-section">
+        <div class="panel-head">
+          <h3>Profil Akun</h3>
+          <p>Perbarui email aktif yang digunakan untuk akun Anda.</p>
+        </div>
 
-    <!-- Ubah Password -->
-    <ion-card>
-        <ion-card-header>
-            <ion-card-title>Keamanan</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-            <form [formGroup]="passwordForm" (ngSubmit)="simpanPassword()">
-                <ion-item>
-                    <ion-label position="stacked">Password Lama</ion-label>
-                    <ion-input type="password" formControlName="oldPassword"></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-label position="stacked">Password Baru</ion-label>
-                    <ion-input type="password" formControlName="newPassword"></ion-input>
-                </ion-item>
-                <div class="ion-padding-top">
-                    <ion-button expand="block" color="secondary" type="submit" [disabled]="passwordForm.invalid">Update
-                        Password</ion-button>
-                </div>
-            </form>
-        </ion-card-content>
-    </ion-card>
+        <form [formGroup]="emailForm" (ngSubmit)="simpanEmail()" class="settings-form">
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <ion-item class="input-field">
+              <ion-icon name="mail-outline" slot="start"></ion-icon>
+              <ion-input type="email" formControlName="email" placeholder="Masukkan email aktif"></ion-input>
+            </ion-item>
+          </div>
 
-    <!-- Notifikasi Permission -->
-    <ion-card>
-        <ion-card-header>
-            <ion-card-title>Preferensi</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-            <ion-list lines="none">
-                <ion-item>
-                    <ion-icon name="notifications-outline" slot="start" color="primary"></ion-icon>
-                    <ion-label>Izinkan Notifikasi</ion-label>
-                    <ion-toggle slot="end" [(ngModel)]="notifikasiAktif" (ionChange)="toggleNotifikasi()"></ion-toggle>
-                </ion-item>
-            </ion-list>
-        </ion-card-content>
-    </ion-card>
+          <ion-button expand="block" class="submit-btn" type="submit" [disabled]="emailForm.invalid">
+            Update Email
+          </ion-button>
+        </form>
+      </div>
 
+      <div class="form-section">
+        <div class="panel-head">
+          <h3>Keamanan</h3>
+          <p>Ganti password secara berkala untuk menjaga keamanan akun.</p>
+        </div>
+
+        <form [formGroup]="passwordForm" (ngSubmit)="simpanPassword()" class="settings-form">
+          <div class="form-group">
+            <label class="form-label">Password Lama</label>
+            <ion-item class="input-field">
+              <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+              <ion-input type="password" formControlName="oldPassword" placeholder="Masukkan password lama"></ion-input>
+            </ion-item>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password Baru</label>
+            <ion-item class="input-field">
+              <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
+              <ion-input type="password" formControlName="newPassword" placeholder="Masukkan password baru"></ion-input>
+            </ion-item>
+          </div>
+
+          <ion-button expand="block" class="submit-btn" type="submit" [disabled]="passwordForm.invalid">
+            Update Password
+          </ion-button>
+        </form>
+      </div>
+
+      <div class="form-section preferences-section">
+        <div class="panel-head">
+          <h3>Preferensi</h3>
+          <p>Tentukan notifikasi yang ingin Anda terima dari aplikasi.</p>
+        </div>
+
+        <div class="preference-card">
+          <div class="pref-copy">
+            <span class="menu-card-icon blue">
+              <ion-icon name="notifications-outline"></ion-icon>
+            </span>
+            <div>
+              <h4>Izinkan Notifikasi</h4>
+              <p>Aktifkan notifikasi agar update kegiatan dan verifikasi tidak terlewat.</p>
+            </div>
+          </div>
+
+          <ion-toggle [(ngModel)]="notifikasiAktif" (ionChange)="toggleNotifikasi()"></ion-toggle>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>

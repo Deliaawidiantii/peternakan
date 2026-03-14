@@ -8,6 +8,7 @@ import { LahirPageRoutingModule } from './lahir-routing.module';
 
 import { LahirPage } from './lahir.page';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SharedUiModule } from '../../../shared/shared-ui.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     IonicModule,
     LahirPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedUiModule
   ],
   declarations: [LahirPage]
 })

@@ -1,32 +1,22 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar>
-    <div class="gradient-header">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <ion-back-button defaultHref="/petugas/tabs/home" style="--color:#fff;"></ion-back-button>
-        <div>
-          <h2 class="gradient-title">Hewan Ternak</h2>
-          <p class="gradient-subtitle">Data populasi hewan ternak</p>
-        </div>
-      </div>
-    </div>
-  </ion-toolbar>
-</ion-header>
+<app-page-header
+  title="Hewan Ternak"
+  subtitle="Data populasi hewan ternak."
+  defaultHref="/petugas/tabs/home"
+></app-page-header>
 
 <ion-content class="page-content">
-  <div class="content-wrapper">
+  <div class="content-wrapper fab-bottom hewan-content">
 
-    <!-- Search -->
     <div class="modern-searchbar">
       <ion-searchbar placeholder="Cari hewan..." [(ngModel)]="searchText" (ionInput)="searchHewan($event)"
         debounce="200">
       </ion-searchbar>
     </div>
 
-    <!-- Filter -->
-    <div class="filter-row">
-      <div class="filter-item">
+    <div class="filters-bar hewan-filters">
+      <div class="filter-card">
         <ion-select [(ngModel)]="selectedJenis" (ionChange)="filterJenis($event)" placeholder="Semua Jenis"
-          interface="popover">
+          interface="action-sheet">
           <ion-select-option value="">Semua Jenis</ion-select-option>
           <ion-select-option value="sapi">Sapi</ion-select-option>
           <ion-select-option value="kambing">Kambing</ion-select-option>
@@ -37,16 +27,28 @@
       </div>
     </div>
 
-    <!-- List Header -->
     <div class="list-header-row">
-      <h3 class="section-label" style="margin:0;">
+      <h3 class="section-label hewan-section-title">
         <ion-icon name="paw-outline"></ion-icon>
         Daftar Hewan
       </h3>
       <span class="count-badge">{{ hewanList.length }}</span>
     </div>
 
-    <!-- Empty State -->
+    <div class="loading-state" *ngIf="isLoading">
+      <div class="custom-loader">
+        <div class="loader-orbit">
+          <span class="loader-dot"></span>
+          <span class="loader-dot dot-two"></span>
+          <span class="loader-dot dot-three"></span>
+        </div>
+        <div class="loader-copy">
+          <h3>Memuat data hewan</h3>
+          <p>Menyiapkan daftar populasi ternak Anda.</p>
+        </div>
+      </div>
+    </div>
+
     <div class="empty-state-global" *ngIf="hewanList.length === 0 && !isLoading">
       <div class="empty-icon">
         <ion-icon name="paw-outline"></ion-icon>
@@ -55,14 +57,7 @@
       <p>Klik tombol + untuk menambahkan hewan baru</p>
     </div>
 
-    <!-- Loading -->
-    <div class="loading-state" *ngIf="isLoading">
-      <ion-spinner name="crescent"></ion-spinner>
-      <p>Memuat data hewan...</p>
-    </div>
-
-    <!-- Hewan List -->
-    <div class="cards-list" *ngIf="hewanList.length > 0 && !isLoading">
+    <div class="cards-list hewan-stack" *ngIf="hewanList.length > 0 && !isLoading">
       <div class="data-card"
         [ngClass]="hewan.status_validasi === 'approved' ? 'border-green' : hewan.status_validasi === 'pending' ? 'border-orange' : 'border-red'"
         *ngFor="let hewan of hewanList" (click)="goToDetail(hewan.id)" tappable>
@@ -81,7 +76,7 @@
 
         <p class="card-subtitle">{{ hewan.jenis_hewan | titlecase }}</p>
 
-        <div class="card-meta">
+        <div class="card-meta primary-meta">
           <span class="meta-item" *ngIf="hewan.umur">
             <ion-icon name="calendar-outline"></ion-icon>
             {{ hewan.umur }} bln

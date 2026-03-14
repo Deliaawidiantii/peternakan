@@ -7,67 +7,50 @@
   --background: var(--app-bg, #f5f7fa);
 }
 
-.content-wrapper {
-  padding: 4px 16px 100px;
+.hewan-content {
+  padding-top: 6px;
 }
 
-/* Filter Row */
-.filter-row {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 16px;
+.hewan-filters {
+  grid-template-columns: 1fr;
 }
 
-.filter-item {
-  flex: 1;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
-  overflow: hidden;
-
-  ion-select {
-    --padding-start: 14px;
-    --padding-end: 10px;
-    width: 100%;
-    font-size: 14px;
-  }
-}
-
-/* List Header */
 .list-header-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   padding: 0 4px;
 }
 
-/* Cards List */
-.cards-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.hewan-section-title {
+  margin: 0;
 }
 
-/* Card Top Row */
+.hewan-stack {
+  gap: 16px;
+}
+
 .card-top-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 6px;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
 .card-id-badge {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
-/* Kategori Tag */
 .kategori-tag {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 9px;
+  border-radius: 999px;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.3px;
@@ -98,7 +81,18 @@
   }
 }
 
-/* FAB */
+.card-title {
+  font-size: 18px;
+}
+
+.primary-meta {
+  margin-top: 14px;
+}
+
+.card-footer {
+  margin-top: 14px;
+}
+
 ion-fab {
   margin: 0 8px 8px 0;
 }

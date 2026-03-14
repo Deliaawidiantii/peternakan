@@ -1,37 +1,40 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar>
-    <div class="gradient-header">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <ion-back-button defaultHref="/petugas/tabs/home" style="--color:#fff;"></ion-back-button>
-        <div>
-          <h2 class="gradient-title">Daftar Kandang</h2>
-          <p class="gradient-subtitle">Data kandang ternak</p>
-        </div>
-      </div>
-    </div>
-  </ion-toolbar>
-</ion-header>
+<app-page-header
+  title="Daftar Kandang"
+  subtitle="Data kandang ternak."
+  defaultHref="/petugas/tabs/home"
+></app-page-header>
 
 <ion-content class="page-content">
-  <div class="content-wrapper">
+  <div class="content-wrapper fab-bottom kandang-content">
 
-    <!-- Search -->
-    <div class="modern-searchbar">
+    <div class="modern-searchbar kandang-search">
       <ion-searchbar placeholder="Cari kandang..." [(ngModel)]="searchText" (ionInput)="searchKandang($event)"
         debounce="200">
       </ion-searchbar>
     </div>
 
-    <!-- List Header -->
     <div class="list-header-row">
-      <h3 class="section-label" style="margin:0;">
+      <h3 class="section-label kandang-section-title">
         <ion-icon name="home-outline"></ion-icon>
         Daftar Kandang
       </h3>
       <span class="count-badge">{{ kandangList.length }}</span>
     </div>
 
-    <!-- Empty State -->
+    <div class="loading-state" *ngIf="isLoading">
+      <div class="custom-loader">
+        <div class="loader-orbit">
+          <span class="loader-dot"></span>
+          <span class="loader-dot dot-two"></span>
+          <span class="loader-dot dot-three"></span>
+        </div>
+        <div class="loader-copy">
+          <h3>Memuat kandang</h3>
+          <p>Menata data kandang agar lebih mudah dibaca.</p>
+        </div>
+      </div>
+    </div>
+
     <div class="empty-state-global" *ngIf="kandangList.length === 0 && !isLoading">
       <div class="empty-icon">
         <ion-icon name="home-outline"></ion-icon>
@@ -40,15 +43,13 @@
       <p>Klik tombol + untuk menambahkan kandang baru</p>
     </div>
 
-    <!-- Kandang List -->
-    <div class="cards-list" *ngIf="kandangList.length > 0">
+    <div class="cards-list kandang-stack" *ngIf="kandangList.length > 0 && !isLoading">
       <div class="data-card" [ngClass]="kandang.status_kandang === 'Individu' ? 'border-blue' : 'border-green'"
         *ngFor="let kandang of kandangList" (click)="goToDetail(kandang.id)" tappable>
 
         <div class="kandang-row">
-          <!-- Photo -->
           <div class="kandang-thumb" *ngIf="kandang.foto_kandang_url">
-            <img [src]="kandang.foto_kandang_url" [alt]="kandang.nama_kandang">
+            <img [src]="kandang.foto_kandang_url" alt="Foto kandang" title="Foto kandang">
           </div>
           <div class="kandang-thumb placeholder" *ngIf="!kandang.foto_kandang_url">
             <ion-icon name="home-outline"></ion-icon>
@@ -56,23 +57,27 @@
 
           <div class="kandang-info">
             <div class="card-top-row">
-              <span class="card-title">{{ kandang.id_kandang || 'KNDG' + kandang.id }}</span>
+              <div class="title-block">
+                <span class="card-title">{{ kandang.id_kandang || 'KNDG' + kandang.id }}</span>
+                <p class="card-subtitle">{{ kandang.nama_kandang || 'Nama kandang belum diisi' }}</p>
+              </div>
               <span class="status-badge" [ngClass]="kandang.status_kandang === 'Individu' ? 'approved' : 'pending'">
                 {{ kandang.status_kandang }}
               </span>
             </div>
-            <p class="card-subtitle">{{ kandang.nama_kandang || 'N/A' }}</p>
-            <div class="card-meta">
+
+            <div class="card-meta primary-meta">
               <span class="meta-item" *ngIf="kandang.jenis_komoditas">
                 <ion-icon name="cube-outline"></ion-icon>
                 {{ kandang.jenis_komoditas }}
               </span>
               <span class="meta-item" *ngIf="kandang.kapasitas">
                 <ion-icon name="layers-outline"></ion-icon>
-                {{ kandang.kapasitas }}
+                {{ kandang.kapasitas }} ekor
               </span>
             </div>
-            <div class="card-meta" style="margin-top:4px;">
+
+            <div class="detail-grid">
               <span class="meta-item" *ngIf="kandang.pemilik">
                 <ion-icon name="person-outline"></ion-icon>
                 {{ kandang.pemilik }}

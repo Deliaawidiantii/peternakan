@@ -107,10 +107,6 @@ export class BukuLahirPage implements OnInit {
     });
   }
 
-  ngDoCheck() {
-    this.applyFilters();
-  }
-
   // Fungsi filter data berdasarkan bulan, jenis hewan, dan pencarian
   applyFilters() {
     this.filteredBirthRecords = this.allBirthRecords.filter((record) => {
@@ -124,7 +120,7 @@ export class BukuLahirPage implements OnInit {
 
       // Filter berdasarkan jenis hewan
       if (this.selectedAnimalType) {
-        if (record.animalType !== this.selectedAnimalType) {
+        if (record.animalType.toLowerCase() !== this.selectedAnimalType.toLowerCase()) {
           return false;
         }
       }
@@ -148,6 +144,19 @@ export class BukuLahirPage implements OnInit {
     this.selectedMonth = '';
     this.selectedAnimalType = '';
     this.searchQuery = '';
+    this.applyFilters();
+  }
+
+  formatAnimalLabel(type: string): string {
+    if (!type) return '-';
+    return type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
+  }
+
+  getRecordIconColor(type: string): string {
+    const value = (type || '').toLowerCase();
+    if (value.includes('sapi')) return 'green';
+    if (value.includes('kambing')) return 'orange';
+    return 'blue';
   }
 
   // Pilih kelompok hewan

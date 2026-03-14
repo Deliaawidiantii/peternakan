@@ -1,79 +1,95 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/petugas/kegiatan"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Request Kegiatan</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-page-header
+  title="Request Kegiatan"
+  subtitle="Buat jadwal kegiatan baru dengan data waktu, lokasi, dan peternak terkait."
+  defaultHref="/petugas/kegiatan"
+></app-page-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
-  <div class="header-section">
-    <h2>Buat Request Kegiatan</h2>
-    <p>Isi form di bawah untuk menjadwalkan kegiatan baru</p>
-  </div>
-
-  <form [formGroup]="requestForm" (ngSubmit)="submitRequest()">
-    <ion-list lines="full">
-
-      <!-- Jenis Kegiatan -->
-      <ion-item>
-        <ion-label position="stacked">Jenis Kegiatan <ion-text color="danger">*</ion-text></ion-label>
-        <ion-select formControlName="jenis" placeholder="Pilih jenis kegiatan">
-          <ion-select-option *ngFor="let j of jenisKegiatan" [value]="j.id">
-            {{ j.name }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <!-- Pemilik/Peternak (Opsional) -->
-      <ion-item>
-        <ion-label position="stacked">Terkait Peternak (Opsional)</ion-label>
-        <ion-select formControlName="peternakan_id" placeholder="Pilih Peternak (jika ada)">
-          <ion-select-option [value]="null">Umum / Tidak Spesifik</ion-select-option>
-          <ion-select-option *ngFor="let p of peternakList" [value]="p.id">
-            {{ p.nama_peternak }} ({{ p.nik }})
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <!-- Tanggal -->
-      <ion-item>
-        <ion-label position="stacked">Tanggal <ion-text color="danger">*</ion-text></ion-label>
-        <ion-input type="date" formControlName="tanggal"></ion-input>
-      </ion-item>
-
-      <!-- Jam Mulai -->
-      <ion-item>
-        <ion-label position="stacked">Jam Mulai <ion-text color="danger">*</ion-text></ion-label>
-        <ion-input type="time" formControlName="jam_mulai"></ion-input>
-      </ion-item>
-
-      <!-- Jam Selesai -->
-      <ion-item>
-        <ion-label position="stacked">Jam Selesai <ion-text color="danger">*</ion-text></ion-label>
-        <ion-input type="time" formControlName="jam_selesai"></ion-input>
-      </ion-item>
-
-      <!-- Lokasi -->
-      <ion-item>
-        <ion-label position="stacked">Lokasi <ion-text color="danger">*</ion-text></ion-label>
-        <ion-input type="text" formControlName="lokasi" placeholder="Lokasi kegiatan dilaksanakan"></ion-input>
-      </ion-item>
-
-      <!-- Deskripsi -->
-      <ion-item>
-        <ion-label position="stacked">Deskripsi <ion-text color="danger">*</ion-text></ion-label>
-        <ion-textarea formControlName="deskripsi" placeholder="Tulis rincian kegiatan..." rows="3"></ion-textarea>
-      </ion-item>
-
-    </ion-list>
-
-    <div class="ion-padding-top">
-      <ion-button expand="block" type="submit" [disabled]="!requestForm.valid || isLoading">
-        <ion-spinner name="crescent" *ngIf="isLoading"></ion-spinner>
-        <span *ngIf="!isLoading">Simpan Request</span>
-      </ion-button>
+<ion-content class="page-content">
+  <div class="content-wrapper form-page">
+    <div class="page-card form-intro-card">
+      <h3>Susun request kegiatan</h3>
+      <p>Isi informasi kegiatan secara lengkap agar jadwal yang diajukan mudah diproses dan langsung siap ditindaklanjuti.</p>
     </div>
-  </form>
+
+    <form [formGroup]="requestForm" (ngSubmit)="submitRequest()" class="form-container">
+      <div class="form-section">
+        <h3 class="section-title">Informasi Jadwal</h3>
+
+        <div class="form-group">
+          <label class="form-label">Jenis Kegiatan</label>
+          <ion-item class="input-field">
+            <ion-select formControlName="jenis" placeholder="Pilih jenis kegiatan" interface="action-sheet">
+              <ion-select-option *ngFor="let j of jenisKegiatan" [value]="j.id">
+                {{ j.name }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Terkait Peternak</label>
+          <ion-item class="input-field">
+            <ion-select formControlName="peternakan_id" placeholder="Pilih peternak jika ada" interface="action-sheet">
+              <ion-select-option [value]="null">Umum / Tidak spesifik</ion-select-option>
+              <ion-select-option *ngFor="let p of peternakList" [value]="p.id">
+                {{ p.nama_peternak }} ({{ p.nik }})
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+
+        <div class="schedule-grid">
+          <div class="form-group">
+            <label class="form-label">Tanggal</label>
+            <ion-item class="input-field">
+              <ion-input type="date" formControlName="tanggal"></ion-input>
+            </ion-item>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Jam Mulai</label>
+            <ion-item class="input-field">
+              <ion-input type="time" formControlName="jam_mulai"></ion-input>
+            </ion-item>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Jam Selesai</label>
+            <ion-item class="input-field">
+              <ion-input type="time" formControlName="jam_selesai"></ion-input>
+            </ion-item>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3 class="section-title">Lokasi dan Catatan</h3>
+
+        <div class="form-group">
+          <label class="form-label">Lokasi</label>
+          <ion-item class="input-field">
+            <ion-input type="text" formControlName="lokasi" placeholder="Lokasi kegiatan dilaksanakan"></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Deskripsi</label>
+          <ion-item class="input-field">
+            <ion-textarea formControlName="deskripsi" placeholder="Tulis rincian kegiatan..." rows="4"></ion-textarea>
+          </ion-item>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <ion-button expand="block" type="submit" class="submit-btn" [disabled]="!requestForm.valid || isLoading">
+          <ion-spinner name="crescent" *ngIf="isLoading" slot="start"></ion-spinner>
+          <span>{{ isLoading ? 'Menyimpan Request...' : 'Simpan Request' }}</span>
+        </ion-button>
+
+        <ion-button expand="block" fill="outline" class="secondary-btn" type="button" (click)="resetForm()">
+          Reset Form
+        </ion-button>
+      </div>
+    </form>
+  </div>
 </ion-content>

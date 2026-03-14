@@ -1,140 +1,152 @@
-<ion-header>
-  <ion-toolbar color="light">
-
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-
-    <ion-title>Laporan Kasus Baru</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <div class="gradient-header compact-header">
+      <div class="detail-toolbar-copy">
+        <ion-back-button defaultHref="/petugas/penyakit" text=""></ion-back-button>
+        <div class="header-copy">
+          <h2 class="gradient-title">Laporan Kasus Baru</h2>
+          <p class="gradient-subtitle">Catat gejala, hewan terkait, dan unggah foto pendukung untuk analisis penyakit.</p>
+        </div>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="custom-page ion-padding">
-  <!-- Pilih Pemilik -->
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Pemilik Hewan</ion-label>
-    <ion-select placeholder="Pilih Pemilik Hewan" (ionChange)="onPemilikChange($event)">
-      <ion-select-option value="">-- Ketuk Untuk Memilih --</ion-select-option>
-      <ion-select-option *ngFor="let p of peternakList" [value]="p.id">
-        {{ p.nama_peternak }} (NIK: {{ p.nik }})
-      </ion-select-option>
-    </ion-select>
-  </ion-item>
+<ion-content class="page-content">
+  <div class="content-wrapper form-page">
+    <div class="page-card form-intro-card">
+      <h3>Laporkan kasus penyakit</h3>
+      <p>Pilih pemilik dan hewan terlebih dahulu, lalu isi gejala yang terlihat agar diagnosa awal lebih mudah dilakukan.</p>
+    </div>
 
-  <!-- Nama Pemilik -->
-  <ion-item lines="none" class="input-item" style="display: none;">
-    <ion-label position="stacked">Nama Pemilik</ion-label>
-    <ion-input [(ngModel)]="formData.namaPemilik" placeholder="Nama Pemilik" readonly></ion-input>
-  </ion-item>
+    <div class="form-container">
+      <div class="form-section">
+        <h3 class="section-title">Hewan Terdampak</h3>
 
-  <!-- ID Hewan -->
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">ID Hewan / Eartag</ion-label>
-    <ion-select placeholder="Pilih Hewan" (ionChange)="onHewanChange($event)"
-      [disabled]="!formData.peternakan_id || populasiList.length === 0">
-      <ion-select-option value="">-- Pilih ID Hewan / Eartag --</ion-select-option>
-      <ion-select-option *ngFor="let h of populasiList" [value]="h.id">
-        {{ h.code || h.eartag }} - {{ h.jenis_hewan }}
-      </ion-select-option>
-    </ion-select>
-  </ion-item>
+        <div class="form-group">
+          <label class="form-label">Pemilik Hewan</label>
+          <ion-item class="input-field">
+            <ion-select placeholder="Pilih pemilik hewan" (ionChange)="onPemilikChange($event)" interface="action-sheet">
+              <ion-select-option value="">-- Ketuk untuk memilih --</ion-select-option>
+              <ion-select-option *ngFor="let p of peternakList" [value]="p.id">
+                {{ p.nama_peternak }} (NIK: {{ p.nik }})
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
 
-  <!-- Kelompok Hewan -->
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Kelompok Hewan</ion-label>
-    <ion-input [(ngModel)]="formData.kategoriHewan" placeholder="Kelompok Hewan" readonly></ion-input>
-  </ion-item>
+        <div class="form-group">
+          <label class="form-label">ID Hewan / Eartag</label>
+          <ion-item class="input-field">
+            <ion-select
+              placeholder="Pilih hewan"
+              (ionChange)="onHewanChange($event)"
+              [disabled]="!formData.peternakan_id || populasiList.length === 0"
+              interface="action-sheet"
+            >
+              <ion-select-option value="">-- Pilih ID hewan / eartag --</ion-select-option>
+              <ion-select-option *ngFor="let h of populasiList" [value]="h.id">
+                {{ h.code || h.eartag }} - {{ h.jenis_hewan }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
 
-  <!-- Jenis Hewan -->
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Jenis Hewan</ion-label>
-    <ion-input [(ngModel)]="formData.jenisTernak" placeholder="Jenis Hewan" readonly></ion-input>
-  </ion-item>
+        <div class="summary-grid">
+          <div class="summary-card">
+            <span>Kelompok Hewan</span>
+            <strong>{{ formData.kategoriHewan || '-' }}</strong>
+          </div>
+          <div class="summary-card">
+            <span>Jenis Hewan</span>
+            <strong>{{ formData.jenisTernak || '-' }}</strong>
+          </div>
+          <div class="summary-card">
+            <span>Usia</span>
+            <strong>{{ formData.usia ? (formData.usia + ' bulan') : '-' }}</strong>
+          </div>
+          <div class="summary-card">
+            <span>Jenis Kelamin</span>
+            <strong>{{ formData.jenisKelamin || '-' }}</strong>
+          </div>
+        </div>
+      </div>
 
-  <!-- Usia -->
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Usia (Bulan)</ion-label>
-    <ion-input [(ngModel)]="formData.usia" placeholder="Usia (Bulan)" readonly></ion-input>
-  </ion-item>
+      <div class="form-section">
+        <h3 class="section-title">Gejala dan Dokumentasi</h3>
 
-  <!-- Jenis Kelamin -->
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Jenis Kelamin</ion-label>
-    <ion-input [(ngModel)]="formData.jenisKelamin" placeholder="Jenis Kelamin" readonly></ion-input>
-  </ion-item>
+        <div class="form-group">
+          <label class="form-label">Tanggal Pengamatan</label>
+          <ion-item class="input-field">
+            <ion-input [(ngModel)]="formData.tanggal" placeholder="Tanggal pengamatan" type="date"></ion-input>
+          </ion-item>
+        </div>
 
-  <!-- Tanggal -->
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Tanggal Pengamatan</ion-label>
-    <ion-input [(ngModel)]="formData.tanggal" placeholder="Tanggal Pengamatan" type="date"></ion-input>
-  </ion-item>
+        <div class="form-group">
+          <label class="form-label">Deskripsi Gejala</label>
+          <ion-item class="input-field">
+            <ion-textarea
+              [(ngModel)]="formData.gejala"
+              placeholder="Masukkan deskripsi gejala yang teramati"
+            ></ion-textarea>
+          </ion-item>
+        </div>
 
-  <!-- Deskripsi Gejala -->
-  <ion-item lines="none" class="input-item">
-    <ion-label position="stacked">Deskripsi Gejala</ion-label>
-    <ion-textarea [(ngModel)]="formData.gejala" placeholder="Masukkan deskripsi gejala yang teramati"></ion-textarea>
-  </ion-item>
+        <div class="upload-area" *ngIf="!photoPreview" (click)="selectPhoto()">
+          <ion-icon name="images-outline" class="upload-icon"></ion-icon>
+          <p class="upload-text">Tambahkan foto hewan</p>
+          <p class="upload-subtext">Foto yang jelas membantu analisis gejala secara lebih cepat.</p>
+        </div>
 
-  <!-- Unggah Foto -->
-  <h3 class="section-title">Unggah Foto Hewan</h3>
-  <div class="upload-box" *ngIf="!photoPreview" (click)="selectPhoto()">
-    <p class="upload-title">Tambahkan Foto</p>
-    <p class="upload-desc">Unggah foto hewan yang sakit untuk analisis</p>
-    <ion-button expand="block" fill="outline" color="medium" class="upload-btn">
-      Pilih Foto
-    </ion-button>
-  </div>
-  
-  <div class="photo-preview-container" *ngIf="photoPreview" (click)="selectPhoto()">
-     <img [src]="photoPreview" class="preview-img" style="width: 100%; border-radius: 8px; margin-top: 10px; max-height: 250px; object-fit: cover; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" />
-     <ion-button fill="clear" color="medium" style="margin-top: 5px;">Ganti Foto</ion-button>
-  </div>
-  
-  <input type="file" #fileInput accept="image/*" style="display: none;" (change)="onFileSelected($event)" />
+        <div class="photo-preview-container" *ngIf="photoPreview" (click)="selectPhoto()">
+          <img [src]="photoPreview" class="preview-img" alt="Preview Foto Hewan" />
+          <ion-button fill="clear" color="primary">Ganti Foto</ion-button>
+        </div>
 
-  <!-- Informasi Penyakit -->
-  <h3 class="section-title">Informasi Penyakit</h3>
-  <ion-list class="info-list">
-    <ion-item lines="none" class="info-item">
-      <ion-avatar slot="start" class="info-icon">
-        <ion-icon name="help-circle-outline"></ion-icon>
-      </ion-avatar>
-      <ion-label>
-        <h2>Menunggu Diagnosa</h2>
-        <p>Penyakit</p>
-      </ion-label>
-    </ion-item>
+        <input type="file" #fileInput accept="image/*" style="display: none;" (change)="onFileSelected($event)" />
+      </div>
 
-    <ion-item lines="none" class="info-item">
-      <ion-avatar slot="start" class="info-icon">
-        <ion-icon name="help-circle-outline"></ion-icon>
-      </ion-avatar>
-      <ion-label>
-        <h2>Menunggu Diagnosa</h2>
-        <p>Diagnosa</p>
-      </ion-label>
-    </ion-item>
+      <div class="form-section">
+        <h3 class="section-title">Informasi Penyakit</h3>
 
-    <ion-item lines="none" class="info-item">
-      <ion-avatar slot="start" class="info-icon">
-        <ion-icon name="help-circle-outline"></ion-icon>
-      </ion-avatar>
-      <ion-label>
-        <h2>Menunggu Diagnosa</h2>
-        <p>Obat</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+        <div class="info-stack">
+          <div class="info-status-card">
+            <ion-icon name="help-circle-outline"></ion-icon>
+            <div>
+              <strong>Menunggu Diagnosa</strong>
+              <p>Penyakit</p>
+            </div>
+          </div>
 
-  <!-- Tombol Kirim -->
-  <div class="submit-section">
-    <ion-button expand="block" color="primary" class="submit-btn" (click)="submitLaporan()">
-      Kirim Laporan
-    </ion-button>
+          <div class="info-status-card">
+            <ion-icon name="medkit-outline"></ion-icon>
+            <div>
+              <strong>Menunggu Diagnosa</strong>
+              <p>Diagnosa</p>
+            </div>
+          </div>
 
-    <ion-button expand="block" color="danger" class="submit-btn" routerLink="/petugas/penyakit">
-      Batal
-    </ion-button>
+          <div class="info-status-card">
+            <ion-icon name="bandage-outline"></ion-icon>
+            <div>
+              <strong>Menunggu Diagnosa</strong>
+              <p>Obat</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <div class="form-actions">
+        <ion-button expand="block" class="submit-btn" (click)="submitLaporan()">
+          <ion-icon name="paper-plane-outline" slot="start"></ion-icon>
+          Kirim Laporan
+        </ion-button>
+
+        <ion-button expand="block" class="secondary-btn" fill="outline" routerLink="/petugas/penyakit">
+          <ion-icon name="close-outline" slot="start"></ion-icon>
+          Batal
+        </ion-button>
+      </div>
+    </div>
   </div>
 </ion-content>

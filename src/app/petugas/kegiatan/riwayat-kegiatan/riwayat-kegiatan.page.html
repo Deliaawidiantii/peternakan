@@ -1,63 +1,55 @@
-<ion-header translucent="true">
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/petugas/kegiatan"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Riwayat Kegiatan</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-page-header
+  title="Riwayat Kegiatan"
+  subtitle="Lacak kegiatan yang selesai atau dibatalkan."
+  defaultHref="/petugas/kegiatan"
+></app-page-header>
 
-<ion-content class="riwayat-page ion-padding">
-  <!-- Pencarian -->
-  <div class="search-container">
-    <ion-searchbar placeholder="Cari kegiatan..." [value]="searchQuery" (ionInput)="onSearchChange($event)">
-    </ion-searchbar>
-  </div>
+<ion-content class="page-content">
+  <div class="content-wrapper compact-bottom">
+    <div class="modern-searchbar">
+      <ion-searchbar placeholder="Cari kegiatan..." [value]="searchQuery" (ionInput)="onSearchChange($event)"></ion-searchbar>
+    </div>
 
-  <!-- Filter -->
-  <div class="filter-container">
-    <ion-item lines="none" class="filter-item">
-      <ion-label>Filter Status</ion-label>
-      <ion-select interface="popover" [(ngModel)]="selectedStatus" (ionChange)="onFilterChange()">
-        <ion-select-option value="Semua">Semua</ion-select-option>
-        <ion-select-option value="Selesai">Selesai</ion-select-option>
-        <ion-select-option value="Dibatalkan">Dibatalkan</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </div>
-
-  <!-- Loading -->
-  <div class="ion-text-center ion-padding" *ngIf="isLoading">
-    <ion-spinner name="crescent"></ion-spinner>
-    <p>Memuat riwayat kegiatan...</p>
-  </div>
-
-  <!-- Empty State -->
-  <div class="empty-state" *ngIf="!isLoading && riwayatList.length === 0">
-    <ion-icon name="document-text-outline"></ion-icon>
-    <p>Tidak ada riwayat kegiatan ditemukan</p>
-  </div>
-
-  <!-- Riwayat Kegiatan -->
-  <div class="riwayat-list" *ngIf="!isLoading && riwayatList.length > 0">
-    <div class="riwayat-card" *ngFor="let item of riwayatList">
-
-      <!-- Icon dinamis berdasarkan status -->
-      <div [ngClass]="{'card-icon': true, 'cancel': (item.status === 'dibatalkan')}">
-        <ion-icon [name]="getIconName(item.jenis)"></ion-icon>
+    <div class="filters-bar single-filter">
+      <div class="filter-card">
+        <ion-select interface="popover" [(ngModel)]="selectedStatus" (ionChange)="onFilterChange()" placeholder="Pilih status">
+          <ion-select-option value="Semua">Semua</ion-select-option>
+          <ion-select-option value="Selesai">Selesai</ion-select-option>
+          <ion-select-option value="Dibatalkan">Dibatalkan</ion-select-option>
+        </ion-select>
       </div>
+    </div>
 
-      <div class="card-info">
-        <h3>{{ item.jenis }}</h3>
-        <p>{{ item.tanggal | date:'dd MMMM yyyy' }}</p>
-        <p class="description-text" *ngIf="item.deskripsi">{{ item.deskripsi }}</p>
+    <app-loading-state
+      *ngIf="isLoading"
+      [card]="true"
+      title="Memuat riwayat kegiatan"
+      caption="Menyiapkan histori kegiatan dari server."
+    ></app-loading-state>
+
+    <app-empty-state
+      *ngIf="!isLoading && riwayatList.length === 0"
+      icon="document-text-outline"
+      title="Tidak ada riwayat"
+      caption="Coba ubah kata kunci pencarian atau status filter."
+    ></app-empty-state>
+
+    <div class="page-card" *ngIf="!isLoading && riwayatList.length > 0">
+      <div class="info-item-global riwayat-item" *ngFor="let item of riwayatList">
+        <div class="icon-circle" [ngClass]="(item.status_aktual || item.status) === 'dibatalkan' ? 'red' : 'green'">
+          <ion-icon [name]="getIconName(item.jenis)"></ion-icon>
+        </div>
+
+        <div class="riwayat-copy">
+          <p class="card-title">{{ item.jenis }}</p>
+          <p class="card-subtitle">{{ item.tanggal | date:'dd MMMM yyyy' }}</p>
+          <p class="riwayat-desc" *ngIf="item.deskripsi">{{ item.deskripsi }}</p>
+        </div>
+
+        <span class="status-badge" [ngClass]="(item.status_aktual || item.status) === 'dibatalkan' ? 'rejected' : 'approved'">
+          {{ (item.status_aktual || item.status) === 'dibatalkan' ? 'Dibatalkan' : 'Selesai' }}
+        </span>
       </div>
-
-      <span class="status"
-        [ngClass]="{'selesai': (item.status === 'selesai'), 'batal': (item.status === 'dibatalkan')}">
-        {{ item.status === 'selesai' ? 'Selesai' : 'Dibatalkan' }}
-      </span>
-
     </div>
   </div>
 </ion-content>

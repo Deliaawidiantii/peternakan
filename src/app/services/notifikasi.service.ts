@@ -40,4 +40,10 @@ export class NotifikasiService {
       { headers: this.getHeaders() },
     );
   }
+
+  deleteNotifikasi(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/notifikasi/${id}`, {
+      headers: this.getHeaders(),
+    });
+  }
 }

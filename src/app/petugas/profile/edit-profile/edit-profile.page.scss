@@ -1,87 +1,100 @@
-.edit-profile-content {
-  --background: #f8fafb;
-  font-family: "Public Sans", "Noto Sans", sans-serif;
+﻿:host {
+  --ion-font-family: var(--app-font);
 }
 
-/* Profile Section */
-.profile-container {
+.editor-shell {
+  padding-top: 10px;
+}
+
+.editor-profile-card,
+.status-note {
+  padding: 20px;
+  margin-bottom: 14px;
+}
+
+.editor-profile-card {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 16px;
+  gap: 16px;
+  cursor: pointer;
 }
 
 .profile-photo {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD9FFPmYqCAkkEfCN82FxnpNoz1DhsPoq47JQ2EyXMROqxN1FCbaMQDUOHYddSbN73f-xJdy5H8UC7S0wPwnVa-SfpnvjddtRdvkrvE4JzVTEFfNQBYwQrDgBntxpFbyn8fu5b1kDW0hFeE9HcpiC94tB63vOhGwLax7FqH3jRgxWoJF5yf6zyONSg2HRocb-ZardSMzTImlxS7vO3QfDDpv5Mr2LqK7xBximNQ3OCk29mw71JcxYGPe0OIMxGd_XE3iZhFSikzVArC");
+  width: 92px;
+  height: 92px;
+  min-width: 92px;
+  border-radius: 26px;
+  background: linear-gradient(135deg, rgba(41, 83, 128, 0.12), rgba(169, 195, 216, 0.42));
   background-size: cover;
   background-position: center;
-  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+  ion-icon {
+    font-size: 30px;
+    color: var(--app-brand-700);
+  }
 }
 
-.profile-text h2 {
+.profile-text h2,
+.status-note h3 {
   font-size: 18px;
-  font-weight: 600;
-  color: #0e161b;
+  font-weight: 700;
+  color: var(--app-text-primary);
+  margin: 0 0 6px;
+}
+
+.profile-text p,
+.status-note p {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--app-text-secondary);
   margin: 0;
-  text-align: center;
 }
 
-.profile-text p {
-  font-size: 13px;
-  color: #507e95;
-  margin: 4px 0 0 0;
+.email-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(244, 247, 250, 0.96);
+  color: var(--app-brand-700);
+  font-size: 12px;
+  font-weight: 700;
 }
 
-/* Form List */
-.form-list {
-  padding: 0 24px;
+.status-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+
+  ion-icon {
+    font-size: 24px;
+    color: var(--app-brand-700);
+    margin-top: 2px;
+  }
 }
 
-ion-item {
-  --background: #e8eff3;
-  --min-height: 42px;        /* lebih kecil dari default 56px */
-  --padding-start: 10px;
-  --inner-padding-end: 10px;
-  --padding-top: 4px;
-  --padding-bottom: 4px;
-
-  border-radius: 8px;
-  margin-bottom: 10px;
+.button-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
 }
 
-ion-label {
-  font-size: 13px;
-  font-weight: 500;
-  color: #0e161b;
-  margin-bottom: 2px;
+.cancel-btn {
+  --border-radius: 18px;
+  height: 52px;
+  font-weight: 700;
 }
 
-ion-input,
-ion-textarea,
-ion-select {
-  color: #0e161b;
-  font-size: 14px;
-  min-height: 24px;  /* biar input nggak bikin tinggi item */
-}
-
-ion-textarea {
-  --padding-top: 4px;
-  --padding-bottom: 4px;
-  font-size: 14px;
-}
-
-/* Button */
-.button-container {
-  padding: 16px;
-}
-
-ion-button {
-  --background: #63bce9;
-  --color: #0e161b;
-  font-weight: 600;
-  --border-radius: 8px;
-  font-size: 15px;
+@media (max-width: 480px) {
+  .editor-profile-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }

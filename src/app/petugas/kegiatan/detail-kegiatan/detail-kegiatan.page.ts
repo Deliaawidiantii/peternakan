@@ -58,6 +58,38 @@ export class DetailKegiatanPage implements OnInit {
     return `${this.baseUrl}/storage/${path}`;
   }
 
+  resolveStatusLabel(): string {
+    if (this.kegiatan?.status_aktual === 'terlambat') {
+      return 'Terlambat';
+    }
+
+    if (this.kegiatan?.status_aktual === 'butuh_diselesaikan') {
+      return 'Melewati jam selesai';
+    }
+
+    return this.kegiatan?.status || '-';
+  }
+
+  resolveStatusClass(): string {
+    if (this.kegiatan?.status_aktual === 'terlambat') {
+      return 'rejected';
+    }
+
+    if (this.kegiatan?.status_aktual === 'butuh_diselesaikan') {
+      return 'pending';
+    }
+
+    if (this.kegiatan?.status === 'selesai') {
+      return 'approved';
+    }
+
+    if (this.kegiatan?.status === 'sedang_berjalan') {
+      return 'approved';
+    }
+
+    return 'pending';
+  }
+
   canStart(): boolean {
     return (
       (this.kegiatan?.status === 'terjadwal' ||

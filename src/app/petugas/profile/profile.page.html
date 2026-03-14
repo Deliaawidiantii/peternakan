@@ -1,151 +1,150 @@
-<ion-header class="profile-header-bar">
+﻿<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title class="header-title">Profil</ion-title>
-    <ion-buttons slot="end">
-      <ion-button routerLink="/petugas/setting" class="header-icon-btn">
-        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
-      </ion-button>
-      <ion-button (click)="goToEditProfile()" class="header-icon-btn">
-        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <div class="gradient-header profile-header">
+      <div class="header-row">
+        <div class="header-copy">
+          <h2 class="gradient-title">Profil</h2>
+          <p class="gradient-subtitle">Kelola identitas petugas dan lihat ringkasan akun Anda.</p>
+        </div>
+        <div class="header-actions">
+          <ion-button routerLink="/petugas/setting" class="header-action-btn" fill="clear">
+            <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+          </ion-button>
+          <ion-button (click)="goToEditProfile()" class="header-action-btn" fill="clear">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="profile-content">
+<ion-content class="page-content">
+  <div class="content-wrapper profile-shell">
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="custom-loader">
+        <div class="loader-orbit">
+          <span class="loader-dot"></span>
+          <span class="loader-dot dot-two"></span>
+          <span class="loader-dot dot-three"></span>
+        </div>
+        <div class="loader-copy">
+          <h3>Memuat profil</h3>
+          <p>Menyiapkan ringkasan akun petugas.</p>
+        </div>
+      </div>
+    </div>
 
-  <!-- Loading State -->
-  <div *ngIf="isLoading" class="loading-container">
-    <ion-spinner name="crescent" color="primary"></ion-spinner>
-    <p>Memuat profil...</p>
-  </div>
-
-  <!-- Profile Content -->
-  <div *ngIf="!isLoading && user">
-
-    <!-- Profile Hero Card -->
-    <div class="profile-hero">
-      <div class="hero-bg"></div>
-      <div class="hero-content">
+    <ng-container *ngIf="!isLoading && user">
+      <div class="page-card profile-hero-card">
         <div class="avatar-wrapper">
-          <img
-            [src]="user.foto || 'https://ui-avatars.com/api/?name=' + user.nama + '&background=4f7cff&color=fff&size=200&font-size=0.4&bold=true'"
-            alt="Foto Profil" class="avatar-img" />
+          <img [src]="getAvatarUrl()" alt="Foto Profil" class="avatar-img" />
           <div class="avatar-badge" *ngIf="user.is_verified">
-            <ion-icon name="checkmark-circle" color="success"></ion-icon>
-          </div>
-        </div>
-        <h2 class="hero-name">{{ user.nama }}</h2>
-        <p class="hero-role">
-          <ion-icon name="shield-checkmark-outline"></ion-icon>
-          {{ user.role === 'petugas' ? 'Petugas Lapangan' : user.role }}
-        </p>
-        <div class="hero-nik">
-          <span>NIK: {{ user.nik }}</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Informasi Pribadi -->
-    <div class="info-section">
-      <h3 class="section-title">
-        <ion-icon name="person-circle-outline"></ion-icon>
-        Informasi Pribadi
-      </h3>
-
-      <div class="info-card">
-        <div class="info-item">
-          <div class="info-icon blue">
-            <ion-icon name="mail-outline"></ion-icon>
-          </div>
-          <div class="info-text">
-            <span class="info-label">Email</span>
-            <span class="info-value">{{ user.email }}</span>
+            <ion-icon name="checkmark"></ion-icon>
           </div>
         </div>
 
-        <div class="info-item">
-          <div class="info-icon green">
-            <ion-icon name="call-outline"></ion-icon>
-          </div>
-          <div class="info-text">
-            <span class="info-label">No. HP</span>
-            <span class="info-value">{{ user.no_telp || '-' }}</span>
-          </div>
-        </div>
+        <h2 class="profile-name">{{ user.nama }}</h2>
+        <p class="profile-role">{{ getRoleLabel() }}</p>
 
-        <div class="info-item" *ngIf="user.alamat">
-          <div class="info-icon orange">
+        <div class="profile-meta">
+          <span class="meta-item">
+            <ion-icon name="card-outline"></ion-icon>
+            NIK {{ user.nik || '-' }}
+          </span>
+          <span class="meta-item">
             <ion-icon name="location-outline"></ion-icon>
-          </div>
-          <div class="info-text">
-            <span class="info-label">Alamat</span>
-            <span class="info-value">{{ user.alamat }}</span>
-          </div>
+            {{ namaDesa || '-' }}
+          </span>
+          <span class="meta-item">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+            {{ user.is_verified ? 'Terverifikasi' : 'Belum terverifikasi' }}
+          </span>
         </div>
+      </div>
 
-        <div class="info-item" *ngIf="user.desa_binaan || namaDesa">
-          <div class="info-icon purple">
-            <ion-icon name="business-outline"></ion-icon>
-          </div>
-          <div class="info-text">
-            <span class="info-label">Desa Binaan</span>
-            <span class="info-value">{{ namaDesa }}</span>
-          </div>
-        </div>
+      <div class="section-block">
+        <h3 class="section-label">
+          <ion-icon name="person-circle-outline"></ion-icon>
+          Informasi Pribadi
+        </h3>
 
-        <div class="info-item">
-          <div class="info-icon" [ngClass]="user.is_verified ? 'teal' : 'red'">
-            <ion-icon [name]="user.is_verified ? 'checkmark-circle-outline' : 'close-circle-outline'"></ion-icon>
+        <div class="cards-list">
+          <div class="data-card info-data-card border-blue">
+            <div class="info-row">
+              <ion-icon class="plain-info-icon blue" name="mail-outline"></ion-icon>
+              <div>
+                <p class="info-label">Email</p>
+                <p class="info-value">{{ user.email || '-' }}</p>
+              </div>
+            </div>
           </div>
-          <div class="info-text">
-            <span class="info-label">Status Akun</span>
-            <span class="info-value" [ngClass]="user.is_verified ? 'text-success' : 'text-warning'">
-              {{ user.is_verified ? 'Terverifikasi' : 'Belum Terverifikasi' }}
-            </span>
+
+          <div class="data-card info-data-card border-green">
+            <div class="info-row">
+              <ion-icon class="plain-info-icon green" name="call-outline"></ion-icon>
+              <div>
+                <p class="info-label">Nomor HP</p>
+                <p class="info-value">{{ user.no_telp || '-' }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="data-card info-data-card border-orange">
+            <div class="info-row">
+              <ion-icon class="plain-info-icon orange" name="home-outline"></ion-icon>
+              <div>
+                <p class="info-label">Alamat</p>
+                <p class="info-value">{{ user.alamat || '-' }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="data-card info-data-card border-blue">
+            <div class="info-row">
+              <ion-icon class="plain-info-icon purple" name="business-outline"></ion-icon>
+              <div>
+                <p class="info-label">Desa Binaan</p>
+                <p class="info-value">{{ namaDesa || '-' }}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Riwayat Aktivitas -->
-    <div class="info-section">
-      <h3 class="section-title">
-        <ion-icon name="time-outline"></ion-icon>
-        Riwayat Aktivitas
-      </h3>
+      <div class="section-block">
+        <h3 class="section-label">
+          <ion-icon name="time-outline"></ion-icon>
+          Riwayat Aktivitas
+        </h3>
 
-      <div class="info-card">
-        <div class="info-item">
-          <div class="info-icon blue">
-            <ion-icon name="calendar-outline"></ion-icon>
+        <div class="cards-list">
+          <div class="data-card info-data-card border-blue">
+            <div class="info-row">
+              <ion-icon class="plain-info-icon blue" name="calendar-outline"></ion-icon>
+              <div>
+                <p class="info-label">Total Kunjungan</p>
+                <p class="info-value muted">Coming soon</p>
+              </div>
+            </div>
           </div>
-          <div class="info-text">
-            <span class="info-label">Total Kunjungan</span>
-            <span class="info-value muted">Coming soon</span>
-          </div>
-        </div>
 
-        <div class="info-item no-border">
-          <div class="info-icon green">
-            <ion-icon name="document-text-outline"></ion-icon>
-          </div>
-          <div class="info-text">
-            <span class="info-label">Laporan Dibuat</span>
-            <span class="info-value muted">Coming soon</span>
+          <div class="data-card info-data-card border-green">
+            <div class="info-row">
+              <ion-icon class="plain-info-icon green" name="document-text-outline"></ion-icon>
+              <div>
+                <p class="info-label">Laporan Dibuat</p>
+                <p class="info-value muted">Coming soon</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Tombol Logout -->
-    <div class="logout-section">
       <ion-button expand="block" fill="outline" color="danger" (click)="logout()" class="logout-btn">
         <ion-icon name="log-out-outline" slot="start"></ion-icon>
-        LOGOUT
+        Logout
       </ion-button>
-    </div>
-
+    </ng-container>
   </div>
-
 </ion-content>

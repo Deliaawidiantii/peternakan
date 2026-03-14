@@ -1,143 +1,165 @@
-<ion-header>
-  <ion-toolbar color="light">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/petugas/pemilik" text=""></ion-back-button>
-    </ion-buttons>
-    <ion-title>Detail Pemilik</ion-title>
+<app-page-header
+  title="Detail Pemilik"
+  subtitle="Profil peternak, data ternak, dan kandang yang terhubung."
+  defaultHref="/petugas/pemilik"
+>
+  <ion-button header-actions fill="clear" class="header-action-btn" *ngIf="pemilik" (click)="goToEdit()">
+    <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+  </ion-button>
+  <ion-button header-actions fill="clear" class="header-action-btn danger" *ngIf="pemilik" (click)="deletePemilik()">
+    <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+  </ion-button>
+</app-page-header>
 
-    <!-- Tombol Edit & Hapus -->
-    <ion-buttons slot="end" *ngIf="pemilik">
-      <ion-button (click)="goToEdit()">
-        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
-      </ion-button>
-      <ion-button (click)="deletePemilik()">
-        <ion-icon slot="icon-only" name="trash-outline" color="danger"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="page-content">
+  <div class="content-wrapper compact-bottom">
+    <app-loading-state
+      *ngIf="isLoading"
+      [card]="true"
+      title="Memuat data pemilik"
+      caption="Mengambil profil, ternak, dan kandang terkait."
+    ></app-loading-state>
 
-<ion-content class="detail-pemilik-page">
+    <app-empty-state
+      *ngIf="!isLoading && !pemilik"
+      icon="alert-circle-outline"
+      title="Data tidak ditemukan"
+      caption="Data pemilik tidak dapat dimuat dari server."
+    ></app-empty-state>
 
-  <!-- Loading State -->
-  <div *ngIf="isLoading" class="loading-container">
-    <ion-spinner name="crescent"></ion-spinner>
-    <p>Memuat data pemilik...</p>
+    <ng-container *ngIf="!isLoading && pemilik">
+      <div class="page-card owner-hero-card">
+        <div class="owner-avatar">
+          <span>{{ pemilik?.nama_peternak ? (pemilik.nama_peternak | slice:0:1) : 'P' }}</span>
+        </div>
+
+        <div class="owner-copy">
+          <p class="hero-eyebrow">Pemilik ternak</p>
+          <h2>{{ pemilik.nama_peternak }}</h2>
+          <p class="hero-id">NIK {{ pemilik.nik || '-' }}</p>
+
+          <div class="hero-meta">
+            <span class="meta-item">
+              <ion-icon name="call-outline"></ion-icon>
+              {{ pemilik.no_telp || '-' }}
+            </span>
+            <span class="meta-item">
+              <ion-icon name="location-outline"></ion-icon>
+              {{ pemilik.wilayah?.nama_desa || '-' }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-grid">
+        <div class="page-card detail-panel">
+          <div class="panel-head">
+            <h3>Informasi Pribadi</h3>
+            <p>Data dasar pemilik yang digunakan di seluruh pendataan ternak.</p>
+          </div>
+
+          <div class="info-list">
+            <div class="info-item-row">
+              <span class="info-label">Jenis Kelamin</span>
+              <span class="info-value">{{ pemilik.jenis_kelamin || '-' }}</span>
+            </div>
+            <div class="info-item-row">
+              <span class="info-label">Tanggal Lahir</span>
+              <span class="info-value">{{ formatDate(pemilik.tanggal_lahir) }}</span>
+            </div>
+            <div class="info-item-row">
+              <span class="info-label">Nomor HP</span>
+              <span class="info-value">{{ pemilik.no_telp || '-' }}</span>
+            </div>
+            <div class="info-item-row">
+              <span class="info-label">Alamat</span>
+              <span class="info-value">{{ pemilik.alamat || '-' }}</span>
+            </div>
+            <div class="info-item-row">
+              <span class="info-label">Desa / Wilayah</span>
+              <span class="info-value">{{ pemilik.wilayah?.nama_desa || '-' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-card detail-panel">
+          <div class="panel-head">
+            <h3>Ternak Terdaftar</h3>
+            <p>Ringkasan hewan ternak milik pemilik ini.</p>
+          </div>
+
+          <app-empty-state
+            *ngIf="ternakList.length === 0"
+            icon="paw-outline"
+            title="Belum ada data ternak"
+            caption="Ternak yang terhubung akan tampil di sini."
+          ></app-empty-state>
+
+          <div class="cards-list mini-stack" *ngIf="ternakList.length > 0">
+            <div class="data-card border-green mini-card" *ngFor="let ternak of ternakList">
+              <div class="card-top-row">
+                <div>
+                  <p class="card-title">{{ ternak.code || '-' }}</p>
+                  <p class="card-subtitle">{{ ternak.jenis_hewan || '-' }}</p>
+                </div>
+                <span class="status-badge approved">{{ ternak.kategori || '-' }}</span>
+              </div>
+              <div class="card-meta">
+                <span class="meta-item">
+                  <ion-icon [name]="ternak.jenis_kelamin === 'Jantan' ? 'male' : 'female'"></ion-icon>
+                  {{ ternak.jenis_kelamin || '-' }}
+                </span>
+                <span class="meta-item">
+                  <ion-icon name="calendar-outline"></ion-icon>
+                  {{ ternak.umur ? (ternak.umur + ' bln') : '-' }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-card detail-panel full-span">
+          <div class="panel-head">
+            <h3>Kandang Terkait</h3>
+            <p>Daftar kandang yang dimiliki atau terhubung dengan pemilik ini.</p>
+          </div>
+
+          <app-empty-state
+            *ngIf="kandangList.length === 0"
+            icon="home-outline"
+            title="Belum ada data kandang"
+            caption="Kandang yang terhubung akan tampil di sini."
+          ></app-empty-state>
+
+          <div class="cards-list mini-stack" *ngIf="kandangList.length > 0">
+            <div class="data-card border-blue mini-card" *ngFor="let kandang of kandangList">
+              <div class="card-top-row">
+                <div>
+                  <p class="card-title">{{ kandang.nama_kandang || '-' }}</p>
+                  <p class="card-subtitle">{{ kandang.id_kandang || ('KNDG' + kandang.id) }}</p>
+                </div>
+                <span class="status-badge" [ngClass]="kandang.status_kandang === 'Individu' ? 'approved' : 'pending'">
+                  {{ kandang.status_kandang || '-' }}
+                </span>
+              </div>
+              <div class="card-meta">
+                <span class="meta-item">
+                  <ion-icon name="cube-outline"></ion-icon>
+                  {{ kandang.jenis_komoditas || '-' }}
+                </span>
+                <span class="meta-item">
+                  <ion-icon name="layers-outline"></ion-icon>
+                  {{ kandang.kapasitas ? (kandang.kapasitas + ' ekor') : '-' }}
+                </span>
+                <span class="meta-item">
+                  <ion-icon name="location-outline"></ion-icon>
+                  {{ kandang.lokasi || kandang.wilayah?.nama_desa || '-' }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
   </div>
-
-  <!-- Content (Show when loaded) -->
-  <div *ngIf="!isLoading && pemilik">
-
-    <!-- Header Info -->
-    <div class="pemilik-info">
-      <h2>{{ pemilik.nama_peternak }}</h2>
-      <p>NIK: {{ pemilik.nik }}</p>
-    </div>
-
-    <!-- Informasi Pemilik -->
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Informasi Pemilik</ion-card-title>
-      </ion-card-header>
-
-      <ion-card-content>
-        <div class="info-item">
-          <p class="label">
-            <ion-icon name="person-outline"></ion-icon>
-            Jenis Kelamin
-          </p>
-          <p class="value">{{ pemilik.jenis_kelamin }}</p>
-        </div>
-
-        <div class="info-item">
-          <p class="label">
-            <ion-icon name="calendar-outline"></ion-icon>
-            Tanggal Lahir
-          </p>
-          <p class="value">{{ formatDate(pemilik.tanggal_lahir) }}</p>
-        </div>
-
-        <div class="info-item">
-          <p class="label">
-            <ion-icon name="call-outline"></ion-icon>
-            Nomor HP
-          </p>
-          <p class="value">{{ pemilik.no_telp }}</p>
-        </div>
-
-        <div class="info-item">
-          <p class="label">
-            <ion-icon name="location-outline"></ion-icon>
-            Alamat
-          </p>
-          <p class="value">{{ pemilik.alamat }}</p>
-        </div>
-
-        <div class="info-item">
-          <p class="label">
-            <ion-icon name="map-outline"></ion-icon>
-            Desa/Wilayah
-          </p>
-          <p class="value">{{ pemilik.wilayah?.nama_desa || '-' }}</p>
-        </div>
-      </ion-card-content>
-    </ion-card>
-
-    <!-- Hewan Ternak -->
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Hewan Ternak</ion-card-title>
-      </ion-card-header>
-
-      <ion-card-content>
-        <div class="empty-state-small" *ngIf="ternakList.length === 0">
-          <ion-icon name="paw-outline"></ion-icon>
-          <p>Belum ada data ternak</p>
-        </div>
-
-        <ion-list *ngIf="ternakList.length > 0">
-          <ion-item *ngFor="let ternak of ternakList">
-            <ion-icon name="paw-outline" slot="start" color="primary"></ion-icon>
-            <ion-label>
-              <h2>{{ ternak.code }} - {{ ternak.jenis_hewan }}</h2>
-              <p>Kelamin: {{ ternak.jenis_kelamin }} | Kelompok: {{ ternak.kategori }}</p>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
-
-    <!-- Kandang -->
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Kandang</ion-card-title>
-      </ion-card-header>
-
-      <ion-card-content>
-        <div class="empty-state-small" *ngIf="kandangList.length === 0">
-          <ion-icon name="home-outline"></ion-icon>
-          <p>Belum ada data kandang</p>
-        </div>
-
-        <ion-list *ngIf="kandangList.length > 0">
-          <ion-item *ngFor="let kandang of kandangList">
-            <ion-icon name="home-outline" slot="start" color="secondary"></ion-icon>
-            <ion-label>
-              <h2>{{ kandang.nama_kandang }}</h2>
-              <p>Komoditas: {{ kandang.jenis_komoditas }} | Kapasitas: {{ kandang.kapasitas }} ekor</p>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
-
-  </div>
-
-  <!-- Error State -->
-  <div *ngIf="!isLoading && !pemilik" class="empty-state">
-    <ion-icon name="alert-circle-outline"></ion-icon>
-    <h3>Data Tidak Ditemukan</h3>
-    <p>Data pemilik tidak dapat dimuat</p>
-  </div>
-
 </ion-content>

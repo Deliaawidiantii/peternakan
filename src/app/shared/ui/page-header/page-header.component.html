@@ -1,0 +1,19 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <div class="gradient-header" [class.compact-header]="compact">
+      <div class="header-row page-header-row">
+        <div class="page-header-main">
+          <ion-back-button *ngIf="showBackButton" [defaultHref]="defaultHref" text=""></ion-back-button>
+          <div class="header-copy">
+            <h2 class="gradient-title">{{ title }}</h2>
+            <p class="gradient-subtitle" *ngIf="subtitle">{{ subtitle }}</p>
+          </div>
+        </div>
+
+        <div class="header-actions" *ngIf="true">
+          <ng-content select="[header-actions]"></ng-content>
+        </div>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>

@@ -65,6 +65,7 @@ export class HomePage implements OnInit {
     // Load data dari database setiap kali halaman ditampilkan
     this.loadStatistik();
     this.loadDataNotifikasi();
+    this.loadLaporanTerbaru();
   }
 
   loadDataNotifikasi() {
