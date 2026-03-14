@@ -96,16 +96,20 @@ export class DetailKandangPage implements OnInit {
   // Delete kandang
   async deleteKandang() {
     const alert = await this.alertController.create({
-      header: 'Konfirmasi',
-      message: `Apakah Anda yakin ingin menghapus data kandang ${this.kandang?.nama_kandang}?`,
+      cssClass: 'app-confirm-alert',
+      header: 'Hapus kandang?',
+      subHeader: this.kandang?.nama_kandang || 'Data kandang',
+      message: 'Data yang dihapus tidak dapat dikembalikan lagi.',
       buttons: [
         {
           text: 'Batal',
           role: 'cancel',
+          cssClass: 'confirm-cancel',
         },
         {
-          text: 'Hapus',
+          text: 'Ya, Hapus',
           role: 'destructive',
+          cssClass: 'confirm-delete',
           handler: async () => {
             const loading = await this.loadingCtrl.create({
               message: 'Menghapus data...',
@@ -116,29 +120,17 @@ export class DetailKandangPage implements OnInit {
               next: async (response) => {
                 await loading.dismiss();
 
-                const successAlert = await this.alertController.create({
-                  header: 'Berhasil',
-                  message: 'Data kandang berhasil dihapus',
-                  buttons: [
-                    {
-                      text: 'OK',
-                      handler: () => {
-                        this.navCtrl.navigateBack('/petugas/kandang');
-                      },
-                    },
-                  ],
-                });
-                await successAlert.present();
+                if (response?.success) {
+                  await this.showToast('Data kandang berhasil dihapus', 'success');
+                  this.navCtrl.navigateBack('/petugas/kandang');
+                } else {
+                  await this.showToast('Gagal menghapus data kandang', 'danger');
+                }
               },
               error: async (error) => {
                 await loading.dismiss();
-
-                const errorAlert = await this.alertController.create({
-                  header: 'Error',
-                  message: 'Gagal menghapus data',
-                  buttons: ['OK'],
-                });
-                await errorAlert.present();
+                console.error('Delete kandang error:', error);
+                await this.showToast('Gagal menghapus data kandang', 'danger');
               },
             });
           },

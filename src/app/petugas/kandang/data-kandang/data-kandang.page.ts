@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Geolocation } from '@capacitor/geolocation';
@@ -17,6 +17,8 @@ import { WilayahService } from '../../../services/wilayah.service';
 export class DataKandangPage implements OnInit {
   
   previewUrl: string | undefined;
+  isEditMode = false;
+  kandangId: number | null = null;
   
   // ✅ TAMBAH: Form Data
   formData = {
@@ -35,6 +37,7 @@ export class DataKandangPage implements OnInit {
   wilayahList: any[] = [];
 
   constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
@@ -47,6 +50,53 @@ export class DataKandangPage implements OnInit {
   ngOnInit() {
     // ✅ TAMBAH: Load dropdown data
     this.loadDropdownData();
+
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.isEditMode = true;
+      this.kandangId = Number(id);
+      this.loadKandangForEdit();
+    }
+  }
+
+  async loadKandangForEdit() {
+    if (!this.kandangId) return;
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Memuat data kandang...'
+    });
+    await loading.present();
+
+    this.kandangService.getKandangById(this.kandangId).subscribe({
+      next: async (res: any) => {
+        await loading.dismiss();
+
+        if (!res?.success || !res?.data) {
+          await this.showToast('Data kandang tidak ditemukan', 'danger');
+          this.router.navigate(['/petugas/kandang']);
+          return;
+        }
+
+        const data = res.data;
+        this.formData = {
+          nama_kandang: data.nama_kandang || '',
+          peternak_id: Number(data.peternak_id) || 0,
+          wilayah_id: Number(data.wilayah_id) || 0,
+          jenis_komoditas: data.jenis_komoditas || '',
+          kapasitas: Number(data.kapasitas) || 0,
+          status_kandang: data.status_kandang || 'Individu',
+          titik_kordinat: data.titik_kordinat || '',
+          foto_kandang: null,
+        };
+
+        this.previewUrl = data.foto_kandang_url || undefined;
+      },
+      error: async () => {
+        await loading.dismiss();
+        await this.showToast('Gagal memuat data kandang', 'danger');
+        this.router.navigate(['/petugas/kandang']);
+      }
+    });
   }
 
   // ✅ TAMBAH: Load data peternak & wilayah
@@ -288,7 +338,7 @@ export class DataKandangPage implements OnInit {
   }
 
   const loading = await this.loadingCtrl.create({
-    message: 'Menyimpan data kandang...'
+    message: this.isEditMode ? 'Memperbarui data kandang...' : 'Menyimpan data kandang...'
   });
   await loading.present();
 
@@ -314,14 +364,26 @@ export class DataKandangPage implements OnInit {
     console.log(`  ${key}:`, value);
   });
 
-  this.kandangService.createKandang(formData).subscribe({
+  const request$ = this.isEditMode && this.kandangId
+    ? this.kandangService.updateKandang(this.kandangId, formData)
+    : this.kandangService.createKandang(formData);
+
+  request$.subscribe({
     next: async (response) => {
       console.log('✅ SUCCESS Response:', response);
       await loading.dismiss();
 
       if (response.success) {
-        await this.showToast('Kandang berhasil ditambahkan', 'success');
-        this.router.navigate(['/petugas/kandang']);
+        await this.showToast(
+          this.isEditMode ? 'Data kandang berhasil diperbarui' : 'Kandang berhasil ditambahkan',
+          'success'
+        );
+
+        if (this.isEditMode && this.kandangId) {
+          this.router.navigate(['/petugas/detail-kandang', this.kandangId]);
+        } else {
+          this.router.navigate(['/petugas/kandang']);
+        }
       } else {
         await this.showToast(response.message || 'Terjadi kesalahan', 'danger');
       }

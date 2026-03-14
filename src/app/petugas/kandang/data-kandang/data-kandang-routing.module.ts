@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: DataKandangPage
+  },
+  {
+    path: ':id',
+    component: DataKandangPage
   }
 ];
 

@@ -4,7 +4,7 @@
       <div class="detail-toolbar-copy">
         <ion-back-button defaultHref="/petugas/kandang" text=""></ion-back-button>
         <div class="header-copy">
-          <h2 class="gradient-title">Input Data Kandang</h2>
+          <h2 class="gradient-title">{{ isEditMode ? 'Edit Data Kandang' : 'Input Data Kandang' }}</h2>
         </div>
       </div>
     </div>
@@ -14,8 +14,8 @@
 <ion-content class="page-content">
   <div class="content-wrapper form-page">
     <div class="page-card form-intro-card">
-      <h3>Lengkapi data kandang</h3>
-      <p>Pastikan nama kandang, pemilik, wilayah, dan koordinat diisi dengan jelas agar mudah ditelusuri di lapangan.</p>
+      <h3>{{ isEditMode ? 'Perbarui data kandang' : 'Lengkapi data kandang' }}</h3>
+      <p>{{ isEditMode ? 'Pastikan perubahan data kandang sudah benar sebelum disimpan kembali.' : 'Pastikan nama kandang, pemilik, wilayah, dan koordinat diisi dengan jelas agar mudah ditelusuri di lapangan.' }}</p>
     </div>
 
     <div class="form-container">
@@ -119,7 +119,7 @@
       <div class="form-actions">
         <ion-button class="submit-btn" expand="block" (click)="submitForm()">
           <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
-          Simpan Data Kandang
+          {{ isEditMode ? 'Simpan Perubahan' : 'Simpan Data Kandang' }}
         </ion-button>
 
         <ion-button class="secondary-btn" expand="block" fill="outline" (click)="cancel()">

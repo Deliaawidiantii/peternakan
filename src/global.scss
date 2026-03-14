@@ -79,6 +79,62 @@ ion-modal {
   --box-shadow: 0 -12px 40px rgba(17, 40, 68, 0.14);
 }
 
+.app-confirm-alert {
+  --backdrop-opacity: 0.42;
+
+  .alert-wrapper {
+    border-radius: 22px;
+    border: 1px solid var(--app-border);
+    box-shadow: 0 20px 40px rgba(35, 98, 143, 0.2);
+    overflow: hidden;
+    background: var(--app-surface);
+  }
+
+  .alert-head {
+    padding-top: 18px;
+  }
+
+  .alert-title {
+    font-family: var(--app-heading-font);
+    font-size: 21px;
+    color: var(--app-text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .alert-sub-title {
+    margin-top: 4px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--app-brand-700);
+  }
+
+  .alert-message {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--app-text-secondary);
+  }
+
+  .alert-button-group {
+    border-top: 1px solid rgba(62, 143, 197, 0.12);
+    padding: 6px;
+  }
+
+  .alert-button {
+    border-radius: 14px;
+    font-weight: 700;
+    min-height: 44px;
+  }
+
+  .alert-button.confirm-cancel {
+    color: var(--app-text-secondary);
+  }
+
+  .alert-button.confirm-delete {
+    color: #ffffff;
+    background: linear-gradient(135deg, #d87464, #cf6f5f);
+  }
+}
+
 ion-list {
   background: transparent;
 }

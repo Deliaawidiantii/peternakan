@@ -52,6 +52,16 @@ export class KandangService {
     return this.http.delete(`${this.apiUrl}/kandang/${id}`, { headers });
   }
 
+  // ✅ Update Kandang
+  updateKandang(id: number, data: FormData): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.put(`${this.apiUrl}/kandang/${id}`, data, { headers });
+  }
+
   // ✅ Get by Peternak
   getKandangByPeternak(peternakId: number): Observable<any> {
     const headers = this.getHeaders();
