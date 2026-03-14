@@ -8,6 +8,13 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <div class="info-section" *ngIf="isLoading">
+    <div class="info-row">
+      <p class="info-label">Memuat detail mutasi...</p>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading">
   <!-- Informasi hewan section -->
    <h2 class="section-title">Informasi Hewan</h2>
    <div class="info-section">
@@ -98,5 +105,5 @@
 </div>
 
   
-
+  </div>
 </ion-content>

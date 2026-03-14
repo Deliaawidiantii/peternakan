@@ -15,6 +15,7 @@ export class MutasiService {
     const token = localStorage.getItem('token');
     return new HttpHeaders({
       'Authorization': token ? `Bearer ${token}` : '',
+      'Accept': 'application/json',
     });
   }
 
@@ -29,13 +30,13 @@ export class MutasiService {
   }
 
   // Create mutasi (pindah, mati, hilang, dipotong)
-  createMutasi(formData: FormData): Observable<any> {
-    return this.http.post(this.apiUrl, formData, { headers: this.getHeaders() });
+  createMutasi(payload: any): Observable<any> {
+    return this.http.post(this.apiUrl, payload, { headers: this.getHeaders() });
   }
 
   // Update mutasi
-  updateMutasi(id: number, formData: FormData): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, formData, { headers: this.getHeaders() });
+  updateMutasi(id: number, payload: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, payload, { headers: this.getHeaders() });
   }
 
   // Delete mutasi

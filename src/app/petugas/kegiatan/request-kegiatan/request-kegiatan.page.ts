@@ -71,13 +71,6 @@ export class RequestKegiatanPage implements OnInit {
       return;
     }
 
-    const loading = await this.loadingController.create({
-      message: 'Mengirim request...',
-    });
-    await loading.present();
-    this.isLoading = true;
-
-    // Call API Store Kegiatan
     const payload = { ...this.requestForm.value };
 
     // Convert date dan time format yang sesuai jika dari ionic datetime picker
@@ -109,6 +102,22 @@ export class RequestKegiatanPage implements OnInit {
     if (payload.jam_selesai) {
       payload.jam_selesai = String(payload.jam_selesai).replace('.', ':').slice(0, 5);
     }
+
+    payload.jenis = String(payload.jenis || '').trim();
+    payload.deskripsi = String(payload.deskripsi || '').trim();
+    payload.lokasi = String(payload.lokasi || '').trim();
+    payload.peternakan_id = payload.peternakan_id ? Number(payload.peternakan_id) : null;
+
+    if (!payload.jam_mulai || !payload.jam_selesai || payload.jam_selesai <= payload.jam_mulai) {
+      await this.showToast('Jam selesai harus lebih besar dari jam mulai', 'warning');
+      return;
+    }
+
+    const loading = await this.loadingController.create({
+      message: 'Mengirim request...',
+    });
+    await loading.present();
+    this.isLoading = true;
 
     this.kegiatanService.requestKegiatan(payload).subscribe({
       next: async (res) => {

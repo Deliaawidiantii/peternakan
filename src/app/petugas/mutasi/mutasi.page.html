@@ -29,11 +29,11 @@
         <ion-select placeholder="Semua Jenis" [(ngModel)]="selectedType" (ionChange)="filterData()"
           class="filter-select">
           <ion-select-option value="">Semua</ion-select-option>
-          <ion-select-option value="Mati">Mati</ion-select-option>
-          <ion-select-option value="Hilang">Hilang</ion-select-option>
-          <ion-select-option value="Dipotong">Dipotong</ion-select-option>
-          <ion-select-option value="Dijual">Dijual</ion-select-option>
-          <ion-select-option value="Dipindahkan">Dipindahkan</ion-select-option>
+          <ion-select-option value="mati">Mati</ion-select-option>
+          <ion-select-option value="hilang">Hilang</ion-select-option>
+          <ion-select-option value="dipotong">Dipotong</ion-select-option>
+          <ion-select-option value="dijual">Dijual</ion-select-option>
+          <ion-select-option value="pindah">Dipindahkan</ion-select-option>
         </ion-select>
       </div>
     </div>
@@ -47,8 +47,16 @@
       <span class="count-badge">{{ filteredMutasi.length }}</span>
     </div>
 
+    <div class="empty-state-global" *ngIf="isLoading">
+      <div class="empty-icon">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+      <h3>Memuat Data Mutasi</h3>
+      <p>Mohon tunggu sebentar...</p>
+    </div>
+
     <!-- Empty -->
-    <div class="empty-state-global" *ngIf="filteredMutasi.length === 0">
+    <div class="empty-state-global" *ngIf="!isLoading && filteredMutasi.length === 0">
       <div class="empty-icon">
         <ion-icon name="swap-horizontal-outline"></ion-icon>
       </div>
@@ -57,19 +65,19 @@
     </div>
 
     <!-- List -->
-    <div class="cards-list">
+    <div class="cards-list" *ngIf="!isLoading">
       <div class="data-card"
-        [ngClass]="item.jenis === 'Mati' ? 'border-red' : item.jenis === 'Dijual' ? 'border-green' : item.jenis === 'Dipotong' ? 'border-orange' : 'border-blue'"
-        *ngFor="let item of filteredMutasi" (click)="goToDetail(item.id, item.jenis, item.tanggal)" tappable>
-        <p class="card-title">ID Hewan: {{ item.id }}</p>
+        [ngClass]="item.jenis_mutasi === 'mati' ? 'border-red' : item.jenis_mutasi === 'dijual' ? 'border-green' : item.jenis_mutasi === 'dipotong' ? 'border-orange' : 'border-blue'"
+        *ngFor="let item of filteredMutasi" (click)="goToDetail(item.id)" tappable>
+        <p class="card-title">ID Hewan: {{ item.displayId }}</p>
         <div class="card-meta">
           <span class="meta-item">
             <ion-icon name="swap-horizontal-outline"></ion-icon>
-            {{ item.jenis }}
+            {{ item.displayJenis }}
           </span>
           <span class="meta-item">
             <ion-icon name="calendar-outline"></ion-icon>
-            {{ item.tanggal }}
+            {{ item.displayTanggal }}
           </span>
         </div>
       </div>

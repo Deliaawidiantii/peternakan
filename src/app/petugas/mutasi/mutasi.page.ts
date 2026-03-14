@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicModule, NavController, AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
+import { MutasiService } from '../../services/mutasi.service';
 
 @Component({
   selector: 'app-mutasi',
@@ -8,54 +9,92 @@ import { IonicModule, NavController, AlertController } from '@ionic/angular';
   styleUrls: ['./mutasi.page.scss'],
 })
 export class MutasiPage implements OnInit {
-
   months: string[] = [
-    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember',
   ];
 
-  selectedMonth: string = '';
-  selectedType: string = '';
+  selectedMonth = '';
+  selectedType = '';
+  isLoading = false;
 
-  mutasiList = [
-    { id: '20240512001', jenis: 'Mati', tanggal: '12 Mei 2024' },
-    { id: '20240510002', jenis: 'Hilang', tanggal: '10 Mei 2024' },
-    { id: '20240508003', jenis: 'Dipotong', tanggal: '8 Mei 2024' },
-    { id: '20240505004', jenis: 'Dijual', tanggal: '5 Mei 2024' },
-    { id: '20240503005', jenis: 'Dipindahkan', tanggal: '3 Mei 2024' },
-  ];
-
-  filteredMutasi = [...this.mutasiList];
+  mutasiList: any[] = [];
+  filteredMutasi: any[] = [];
 
   constructor(
     private navCtrl: NavController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private mutasiService: MutasiService,
   ) {}
 
   ngOnInit() {
-    this.filterData();
+    this.loadMutasi();
+  }
+
+  ionViewWillEnter() {
+    this.loadMutasi();
+  }
+
+  loadMutasi() {
+    this.isLoading = true;
+
+    this.mutasiService.getMutasi().subscribe({
+      next: (res: any) => {
+        const data = Array.isArray(res?.data)
+          ? res.data
+          : Array.isArray(res)
+            ? res
+            : [];
+
+        this.mutasiList = data.map((item: any) => ({
+          ...item,
+          displayId: item?.populasi?.code || `#${item?.populasi_id ?? item?.id}`,
+          displayJenis: this.formatJenis(item?.jenis_mutasi),
+          displayTanggal: this.formatTanggal(item?.tanggal),
+          monthName: this.getMonthName(item?.tanggal),
+        }));
+
+        this.filterData();
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Gagal memuat data mutasi:', err);
+        this.mutasiList = [];
+        this.filteredMutasi = [];
+        this.isLoading = false;
+      },
+    });
   }
 
   filterData() {
-    this.filteredMutasi = this.mutasiList.filter(item => {
+    this.filteredMutasi = this.mutasiList.filter((item) => {
       const cocokBulan = this.selectedMonth
-        ? item.tanggal.includes(this.selectedMonth)
+        ? item.monthName === this.selectedMonth
         : true;
 
       const cocokJenis = this.selectedType
-        ? item.jenis === this.selectedType
+        ? item.jenis_mutasi === this.selectedType
         : true;
 
       return cocokBulan && cocokJenis;
     });
   }
 
- goToDetail(id: string, jenis: string, tanggal: string) {
-  this.navCtrl.navigateForward('/petugas/detail-mutasi');
-}
-
-
-  //              MODAL UNTUK PILIH MUTASI
+  goToDetail(id: number) {
+    this.navCtrl.navigateForward(['/petugas/detail-mutasi'], {
+      queryParams: { id },
+    });
+  }
 
   async tambahMutasi() {
     const alert = await this.alertCtrl.create({
@@ -72,7 +111,6 @@ export class MutasiPage implements OnInit {
         {
           text: 'Pilih',
           handler: (value) => {
-            console.log('Mutasi dipilih:', value);
             this.goToFormMutasi(value);
           },
         },
@@ -82,33 +120,72 @@ export class MutasiPage implements OnInit {
     await alert.present();
   }
 
-
-  //          ROUTE BERBEDA UNTUK SETIAP MUTASI
-
   goToFormMutasi(jenis: string) {
     switch (jenis) {
       case 'Mati':
         this.navCtrl.navigateForward('/petugas/mutasi-mati');
         break;
-
       case 'Hilang':
         this.navCtrl.navigateForward('/petugas/mutasi-hilang');
         break;
-
       case 'Dipotong':
         this.navCtrl.navigateForward('/petugas/mutasi-dipotong');
         break;
-
       case 'Dijual':
         this.navCtrl.navigateForward('/petugas/mutasidijual');
         break;
-
       case 'Dipindahkan':
         this.navCtrl.navigateForward('/petugas/mutasi-pindah');
         break;
-
       default:
         console.warn('Jenis mutasi tidak dikenali:', jenis);
     }
+  }
+
+  private formatJenis(jenis: string | null | undefined): string {
+    switch (jenis) {
+      case 'mati':
+        return 'Mati';
+      case 'hilang':
+        return 'Hilang';
+      case 'dipotong':
+        return 'Dipotong';
+      case 'dijual':
+        return 'Dijual';
+      case 'pindah':
+        return 'Dipindahkan';
+      default:
+        return jenis || '-';
+    }
+  }
+
+  private formatTanggal(tanggal: string | null | undefined): string {
+    if (!tanggal) {
+      return '-';
+    }
+
+    const date = new Date(tanggal);
+    if (Number.isNaN(date.getTime())) {
+      return tanggal;
+    }
+
+    return new Intl.DateTimeFormat('id-ID', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(date);
+  }
+
+  private getMonthName(tanggal: string | null | undefined): string {
+    if (!tanggal) {
+      return '';
+    }
+
+    const date = new Date(tanggal);
+    if (Number.isNaN(date.getTime())) {
+      return '';
+    }
+
+    return this.months[date.getMonth()] || '';
   }
 }

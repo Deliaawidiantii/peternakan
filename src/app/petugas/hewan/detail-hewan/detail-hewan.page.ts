@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router'; // Tambah Router
-import { ToastController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { environment } from '../../../../environments/environment';
+import { KandangService } from '../../../services/kandang.service';
 
 @Component({
   selector: 'app-detail-hewan',
   templateUrl: './detail-hewan.page.html',
   styleUrls: ['./detail-hewan.page.scss'],
-  standalone: false
+  standalone: false,
 })
 export class DetailHewanPage implements OnInit {
-
-  hewan: any = {}; // Ubah dari null ke empty object
+  hewan: any = {};
+  kandang: any = null;
   isLoading = true;
   barcodeId = '';
   apiUrl = environment.apiUrl;
@@ -20,53 +21,52 @@ export class DetailHewanPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
+    private kandangService: KandangService,
     private toastController: ToastController,
-    private router: Router // Tambah Router
+    private router: Router,
   ) {}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    console.log('🔍 ID:', id);
-    console.log('🔑 Token exists:', !!localStorage.getItem('token'));
 
     if (id) {
       this.loadDetail(id);
-    } else {
-      this.showToast('ID hewan tidak ditemukan', 'danger');
-      this.router.navigate(['/hewan']); // Redirect ke list hewan
+      return;
     }
+
+    this.showToast('ID hewan tidak ditemukan', 'danger');
+    this.router.navigate(['/petugas/hewan']);
   }
 
   loadDetail(id: string) {
     this.isLoading = true;
 
     const token = localStorage.getItem('token');
-    console.log('🔑 Token:', token);
-    console.log('📍 Loading detail for ID:', id);
-
-    // Cek token dulu
     if (!token) {
-      console.log('❌ No token found');
+      this.isLoading = false;
       this.showToast('Sesi Anda telah berakhir', 'warning');
       this.router.navigate(['/login']);
       return;
     }
 
     const headers = {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     };
 
     this.http.get(`${this.apiUrl}/populasi/${id}`, { headers }).subscribe({
       next: (res: any) => {
-        console.log('✅ Success:', res);
-        this.hewan = res.data ?? res;
+        this.hewan = res.data ?? res ?? {};
+        this.kandang = this.normalizeKandang(this.hewan?.kandang);
 
-        // Pastikan hewan punya data
         if (!this.hewan || Object.keys(this.hewan).length === 0) {
-          console.log('⚠️ Empty data received');
+          this.isLoading = false;
           this.showToast('Data hewan tidak ditemukan', 'warning');
-          this.router.navigate(['/hewan']);
+          this.router.navigate(['/petugas/hewan']);
           return;
+        }
+
+        if (!this.kandang && this.hewan?.kandang_id) {
+          this.loadKandangDetail(Number(this.hewan.kandang_id));
         }
 
         if (this.hewan.qr_code) {
@@ -76,30 +76,21 @@ export class DetailHewanPage implements OnInit {
         this.isLoading = false;
       },
       error: (err) => {
-        console.log("❌ ERROR Object:", err);
-        console.log("❌ Status Code:", err.status);
-        console.log("❌ Error Message:", err.message);
-        console.log("❌ Error Body:", err.error);
-        
         this.isLoading = false;
 
-        // Handle 401 Unauthorized (token expired/invalid)
         if (err.status === 401) {
-          console.log('🔒 Unauthorized - removing token');
           localStorage.removeItem('token');
           this.showToast('Sesi Anda telah berakhir', 'warning');
           this.router.navigate(['/login']);
           return;
         }
 
-        // Handle 404 Not Found
         if (err.status === 404) {
           this.showToast('Data hewan tidak ditemukan', 'danger');
-          this.router.navigate(['/hewan']);
+          this.router.navigate(['/petugas/hewan']);
           return;
         }
 
-        // Handle error lainnya
         const errorMsg = err.error?.message || 'Gagal memuat detail';
         this.showToast(errorMsg, 'danger');
       },
@@ -111,16 +102,110 @@ export class DetailHewanPage implements OnInit {
   }
 
   hasKandangInfo(): boolean {
-    return !!this.hewan?.kandang;
+    return !!this.getKandangInfo() || !!this.hewan?.kandang_id;
   }
 
   formatKandangId(): string {
-    const kandang = this.hewan?.kandang;
-    if (!kandang) return '-';
+    const kandang = this.getKandangInfo();
+
+    if (!kandang && this.hewan?.kandang_id) {
+      return `KNDG${String(this.hewan.kandang_id).padStart(3, '0')}`;
+    }
+
+    if (!kandang) {
+      return '-';
+    }
+
     if (kandang.id_kandang) return kandang.id_kandang;
     if (kandang.code) return kandang.code;
     if (kandang.id) return `KNDG${String(kandang.id).padStart(3, '0')}`;
     return '-';
+  }
+
+  getNamaKandang(): string {
+    return this.getKandangInfo()?.nama_kandang || '-';
+  }
+
+  getStatusKandang(): string {
+    return this.getKandangInfo()?.status_kandang || '-';
+  }
+
+  getLokasiKandang(): string {
+    const kandang = this.getKandangInfo();
+    return (
+      kandang?.alamat ||
+      kandang?.lokasi ||
+      kandang?.wilayah?.nama_desa ||
+      this.hewan?.wilayah?.nama_desa ||
+      '-'
+    );
+  }
+
+  getKoordinatKandang(): string {
+    const titikKordinat = this.getKandangInfo()?.titik_kordinat;
+    return titikKordinat ? String(titikKordinat) : '-';
+  }
+
+  getGoogleMapsLink(): string | null {
+    const koordinat = this.parseKoordinat(this.getKandangInfo()?.titik_kordinat);
+
+    if (!koordinat) {
+      return null;
+    }
+
+    return `https://www.google.com/maps?q=${koordinat.lat},${koordinat.lng}`;
+  }
+
+  private loadKandangDetail(id: number) {
+    this.kandangService.getKandangById(id).subscribe({
+      next: (res: any) => {
+        this.kandang = res?.data ?? res ?? null;
+      },
+      error: (err) => {
+        console.warn('Gagal memuat detail kandang:', err);
+      },
+    });
+  }
+
+  private normalizeKandang(kandang: any): any {
+    return kandang && typeof kandang === 'object' ? kandang : null;
+  }
+
+  private getKandangInfo(): any {
+    return this.kandang ?? this.hewan?.kandang ?? null;
+  }
+
+  private parseKoordinat(
+    raw: string | null | undefined,
+  ): { lat: number; lng: number } | null {
+    if (!raw) {
+      return null;
+    }
+
+    const parts = String(raw)
+      .split(',')
+      .map((value) => value.trim())
+      .filter(Boolean);
+
+    if (parts.length !== 2) {
+      return null;
+    }
+
+    const lat = Number(parts[0]);
+    const lng = Number(parts[1]);
+
+    if (
+      Number.isNaN(lat) ||
+      Number.isNaN(lng) ||
+      lat < -90 ||
+      lat > 90 ||
+      lng < -180 ||
+      lng > 180
+    ) {
+      return null;
+    }
+
+    return { lat, lng };
   }
 
   async showToast(message: string, color: string) {
@@ -128,7 +213,7 @@ export class DetailHewanPage implements OnInit {
       message,
       duration: 2000,
       color,
-      position: 'bottom'
+      position: 'bottom',
     });
     toast.present();
   }

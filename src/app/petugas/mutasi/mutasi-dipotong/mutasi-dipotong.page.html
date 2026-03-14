@@ -84,7 +84,12 @@
 
   <ion-item class="input-item">
     <ion-label position="stacked">Berat Daging (kg)</ion-label>
-    <ion-input type="number" placeholder="Masukkan Berat"></ion-input>
+    <ion-input type="number" placeholder="Masukkan Berat" [(ngModel)]="beratDaging"></ion-input>
+  </ion-item>
+
+  <ion-item lines="none" class="input-item">
+    <ion-label position="stacked">Keterangan (opsional)</ion-label>
+    <ion-textarea placeholder="Tambahkan keterangan" autoGrow="true" [(ngModel)]="deskripsi"></ion-textarea>
   </ion-item>
 
   <!--  Tombol Simpan -->

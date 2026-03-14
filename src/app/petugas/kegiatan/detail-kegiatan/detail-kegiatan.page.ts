@@ -59,7 +59,12 @@ export class DetailKegiatanPage implements OnInit {
   }
 
   canStart(): boolean {
-    return this.kegiatan?.status === 'terjadwal' && !this.kegiatan?.terkunci_mulai;
+    return (
+      (this.kegiatan?.status === 'terjadwal' ||
+        this.kegiatan?.status === 'terlambat' ||
+        this.kegiatan?.status_aktual === 'terlambat') &&
+      !this.kegiatan?.terkunci_mulai
+    );
   }
 
   isRunning(): boolean {
