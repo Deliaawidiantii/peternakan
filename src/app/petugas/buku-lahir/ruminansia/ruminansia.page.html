@@ -12,17 +12,17 @@
 
   <ion-item class="input-field" lines="none">
     <ion-label position="stacked">Tanggal Lahir</ion-label>
-    <ion-input type="date" [(ngModel)]="form.tanggal_lahir" (ionChange)="generateIdAnak()" placeholder="Pilih Tanggal"></ion-input>
+    <ion-input type="date" [(ngModel)]="form.tanggal_lahir" placeholder="Pilih Tanggal"></ion-input>
   </ion-item>
 
   <ion-item class="input-field" lines="none">
     <ion-label position="stacked">ID Induk</ion-label>
-    <ion-input type="text" [(ngModel)]="form.id_induk" placeholder="Masukkan ID Induk"></ion-input>
+    <ion-input type="text" [(ngModel)]="form.id_induk" placeholder="Masukkan kode/eartag induk"></ion-input>
   </ion-item>
 
   <ion-item class="input-field" lines="none">
     <ion-label position="stacked">Jenis Ruminansia</ion-label>
-    <ion-select [(ngModel)]="form.jenis_ruminansia" (ionChange)="generateIdAnak()" placeholder="Pilih Jenis">
+    <ion-select [(ngModel)]="form.jenis_ruminansia" placeholder="Pilih Jenis">
       <ion-select-option value="sapi">Sapi</ion-select-option>
       <ion-select-option value="kambing">Kambing</ion-select-option>
       <ion-select-option value="domba">Domba</ion-select-option>
@@ -49,7 +49,7 @@
 
   <ion-item class="input-field" lines="none">
     <ion-label position="stacked">Status Kelahiran</ion-label>
-    <ion-select [(ngModel)]="form.status_kelahiran" (ionChange)="generateIdAnak()" placeholder="Pilih Status">
+    <ion-select [(ngModel)]="form.status_kelahiran" placeholder="Pilih Status">
       <ion-select-option value="normal">Normal</ion-select-option>
       <ion-select-option value="cacat">Cacat</ion-select-option>
       <ion-select-option value="mati">Mati</ion-select-option>
@@ -57,8 +57,8 @@
   </ion-item>
 
   <ion-item class="input-field" lines="none">
-    <ion-label position="stacked">ID Anak Hewan (Auto-generated)</ion-label>
-    <ion-input type="text" [(ngModel)]="form.id_anak_hewan" placeholder="ID akan di-generate otomatis" readonly></ion-input>
+    <ion-label position="stacked">ID Anak Hewan</ion-label>
+    <ion-text color="medium">ID anak dibuat otomatis setelah data berhasil tersimpan.</ion-text>
   </ion-item>
 
   <ion-item class="input-field" lines="none">
@@ -70,4 +70,3 @@
     Simpan
   </ion-button>
 </ion-content>
-

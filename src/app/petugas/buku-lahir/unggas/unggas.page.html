@@ -17,7 +17,7 @@
 
   <ion-item class="input-field" lines="none">
     <ion-label position="stacked">ID Induk</ion-label>
-    <ion-input type="text" [(ngModel)]="form.id_induk" placeholder="Masukkan ID Induk"></ion-input>
+    <ion-input type="text" [(ngModel)]="form.id_induk" placeholder="Masukkan kode/eartag induk"></ion-input>
   </ion-item>
 
   <ion-item class="input-field" lines="none">
@@ -34,9 +34,9 @@
     <ion-input type="text" [(ngModel)]="form.ras" placeholder="Masukkan Ras"></ion-input>
   </ion-item>
 
-  <!-- Incubation Summary -->
   <div class="section-divider">
     <h2 class="section-title">Ringkasan Penetasan</h2>
+    <p class="section-subtitle">Saran: ID anak unggas dibuat berdasarkan jumlah menetas, lalu otomatis dibuat satu per anak setelah data tersimpan.</p>
   </div>
 
   <ion-item class="input-field" lines="none">
@@ -49,10 +49,9 @@
     <ion-input type="number" [(ngModel)]="form.jumlah_menetas" (ionChange)="calculateTotals()" placeholder="Masukkan Jumlah" min="0"></ion-input>
   </ion-item>
 
-  <!-- Hatched Breakdown -->
   <div class="section-divider">
     <h2 class="section-title">Rincian Anak Unggas yang Menetas</h2>
-    <p class="section-subtitle">Total: {{ form.total_menetas || 0 }}</p>
+    <p class="section-subtitle">Total rincian saat ini: {{ form.total_menetas || 0 }}</p>
   </div>
 
   <ion-item class="input-field" lines="none">
@@ -67,21 +66,13 @@
 
   <ion-item class="input-field" lines="none">
     <ion-label position="stacked">Jumlah Mati</ion-label>
-    <ion-input type="number" [(ngModel)]="form.jumlah_mati" (ionChange)="calculateTotals()" placeholder="Anak yang mati saat atau setelah menetas" min="0"></ion-input>
+    <ion-input type="number" [(ngModel)]="form.jumlah_mati" (ionChange)="calculateTotals()" placeholder="Anak yang mati setelah menetas" min="0"></ion-input>
   </ion-item>
 
-  <!-- Generated IDs Display -->
-  <div class="section-divider" *ngIf="generatedIds.length > 0">
-    <h2 class="section-title">ID Anak Unggas yang Akan Dibuat</h2>
-  </div>
-
-  <div *ngIf="generatedIds && generatedIds.length > 0" class="ids-list">
-    <div *ngFor="let id of generatedIds" [ngClass]="'id-badge-' + id.status">
-      <div><strong>{{ id.label }}:</strong> {{ id.count }} ekor</div>
-      <div><small>Contoh pola: {{ id.idPattern }}</small></div>
-      <div><small>ID terbentuk: {{ id.ids.join(', ') }}</small></div>
-    </div>
-  </div>
+  <ion-item class="input-field" lines="none">
+    <ion-label position="stacked">ID Anak Hewan</ion-label>
+    <ion-text color="medium">ID anak akan dibuat otomatis untuk setiap anak yang menetas setelah data berhasil disimpan.</ion-text>
+  </ion-item>
 
   <ion-item class="input-field" lines="none">
     <ion-label position="stacked">Catatan</ion-label>

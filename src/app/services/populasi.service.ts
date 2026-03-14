@@ -32,6 +32,12 @@ export class PopulasiService {
     return this.http.post(`${this.apiUrl}/populasi`, data, { headers });
   }
 
+  // Create Populasi Batch
+  createPopulasiBatch(data: any): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.post(`${this.apiUrl}/populasi/batch`, data, { headers });
+  }
+
   // Get Detail Populasi
   getPopulasiById(id: number): Observable<any> {
     const headers = this.getHeaders();

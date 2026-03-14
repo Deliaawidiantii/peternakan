@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController, ToastController, AlertController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
+import { firstValueFrom } from 'rxjs';
 import { PopulasiService } from '../../../services/populasi.service';
 
 @Component({
@@ -10,19 +11,8 @@ import { PopulasiService } from '../../../services/populasi.service';
   standalone: false,
 })
 export class RuminansiaPage implements OnInit {
-  form: any = {
-    tanggal_lahir: '',
-    id_induk: '',
-    jenis_ruminansia: '',
-    ras: '',
-    jenis_kelamin_anak: '',
-    berat_lahir: '',
-    status_kelahiran: 'normal',
-    id_anak_hewan: '',
-    catatan: '',
-  };
-
-  isSubmitting: boolean = false;
+  form: any = this.createInitialForm();
+  isSubmitting = false;
 
   constructor(
     private router: Router,
@@ -34,46 +24,72 @@ export class RuminansiaPage implements OnInit {
 
   ngOnInit() {}
 
-  // Auto-generate ID when key fields change
-  ionViewWillLeave() {
-    this.generateIdAnak();
+  private createInitialForm() {
+    return {
+      tanggal_lahir: '',
+      id_induk: '',
+      jenis_ruminansia: '',
+      ras: '',
+      jenis_kelamin_anak: '',
+      berat_lahir: '',
+      status_kelahiran: 'normal',
+      catatan: '',
+    };
   }
 
-  generateIdAnak() {
-    // Generate ID based on pattern: JENIS-STATUS-TANGGAL-RANDOM
-    // Example: SAP-NOR-20260314-001
-    if (!this.form.jenis_ruminansia || !this.form.status_kelahiran || !this.form.tanggal_lahir) {
-      this.form.id_anak_hewan = '';
-      return;
+  private parseNumber(value: any): number | null {
+    if (value === null || value === undefined || value === '') {
+      return null;
     }
 
-    const jenisPrefixes: { [key: string]: string } = {
-      sapi: 'SAP',
-      kambing: 'KMG',
-      domba: 'DOM',
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+
+  private async findIndukByCode() {
+    const response = await firstValueFrom(
+      this.populasiService.getPopulasi({
+        code: this.form.id_induk,
+        kategori: 'ruminansia',
+        status: 'approved',
+        sort: 'desc',
+      }),
+    );
+
+    const list = Array.isArray(response?.data) ? response.data : Array.isArray(response) ? response : [];
+    const requestedCode = String(this.form.id_induk || '').trim().toLowerCase();
+
+    return (
+      list.find((item: any) => String(item?.code || '').trim().toLowerCase() === requestedCode) ||
+      list[0] ||
+      null
+    );
+  }
+
+  private buildPayload(induk: any) {
+    return {
+      kategori: 'ruminansia',
+      jenis_hewan: this.form.jenis_ruminansia,
+      ras: this.form.ras || induk?.ras || null,
+      jenis_kelamin: this.form.jenis_kelamin_anak,
+      umur: 0,
+      berat_badan: this.parseNumber(this.form.berat_lahir),
+      jumlah: 1,
+      peternakan_id: induk?.peternakan_id || induk?.peternakan?.id || null,
+      kandang_id: induk?.kandang_id || induk?.kandang?.id || null,
+      wilayah_id: induk?.wilayah_id || induk?.wilayah?.id || induk?.peternakan?.wilayah_id || null,
+      tanggal: this.form.tanggal_lahir,
+      status: this.form.status_kelahiran === 'mati' ? 'mati' : 'lahir',
+      data_tambahan: {
+        sumber: 'buku_lahir_ruminansia',
+        id_induk: this.form.id_induk,
+        status_anak: this.form.status_kelahiran,
+        catatan: this.form.catatan || null,
+      },
     };
-
-    const statusPrefixes: { [key: string]: string } = {
-      normal: 'NOR',
-      cacat: 'CAC',
-      mati: 'MAT',
-    };
-
-    const jenis = jenisPrefixes[this.form.jenis_ruminansia] || 'UNK';
-    const status = statusPrefixes[this.form.status_kelahiran] || 'UNK';
-
-    // Format tanggal: 20260314
-    const tanggalObj = new Date(this.form.tanggal_lahir);
-    const tanggalStr = tanggalObj.toISOString().slice(0, 10).replace(/-/g, '');
-
-    // Random suffix
-    const randomSuffix = String(Math.floor(Math.random() * 1000)).padStart(3, '0');
-
-    this.form.id_anak_hewan = `${jenis}-${status}-${tanggalStr}-${randomSuffix}`;
   }
 
   async submit() {
-    // Validate required fields
     if (
       !this.form.tanggal_lahir ||
       !this.form.id_induk ||
@@ -89,62 +105,45 @@ export class RuminansiaPage implements OnInit {
     const loading = await this.loadingCtrl.create({ message: 'Menyimpan data kelahiran...' });
     await loading.present();
 
-    this.generateIdAnak();
+    try {
+      const induk = await this.findIndukByCode();
 
-    // Simpan sebagai data populasi baru dengan metadata kelahiran di catatan
-    const payload: any = {
-      kategori: 'ruminansia',
-      jenis_hewan: this.form.jenis_ruminansia,
-      ras: this.form.ras || null,
-      jenis_kelamin: this.form.jenis_kelamin_anak,
-      umur: 0,
-      berat_badan: this.form.berat_lahir ? Number(this.form.berat_lahir) : null,
-      jumlah: 1,
-      status: 'masuk',
-    };
+      if (!induk) {
+        throw new Error('ID induk tidak ditemukan atau belum approved.');
+      }
 
-    this.populasiService.createPopulasi(payload).subscribe({
-      next: async () => {
-        await loading.dismiss();
-        this.isSubmitting = false;
+      const response = await firstValueFrom(this.populasiService.createPopulasi(this.buildPayload(induk)));
+      const createdId = response?.data?.code || '-';
 
-        const alert = await this.alertCtrl.create({
-          header: 'Berhasil',
-          message: 'Data kelahiran ruminansia berhasil disimpan. ID Anak: ' + this.form.id_anak_hewan,
-          buttons: ['OK'],
-          cssClass: 'custom-alert',
-        });
-        await alert.present();
-        await alert.onDidDismiss();
+      const alert = await this.alertCtrl.create({
+        header: 'Berhasil',
+        message: `Data kelahiran ruminansia berhasil disimpan. ID Anak: ${createdId}`,
+        buttons: ['OK'],
+        cssClass: 'custom-alert',
+      });
+      await alert.present();
+      await alert.onDidDismiss();
 
-        // Reset form
-        this.form = {
-          tanggal_lahir: '',
-          id_induk: '',
-          jenis_ruminansia: '',
-          ras: '',
-          jenis_kelamin_anak: '',
-          berat_lahir: '',
-          status_kelahiran: 'normal',
-          id_anak_hewan: '',
-          catatan: '',
-        };
-
-        // Navigate back
-        this.router.navigate(['/petugas/buku-lahir']);
-      },
-      error: async (err) => {
-        await loading.dismiss();
-        this.isSubmitting = false;
-        await this.showToast(err?.error?.message || 'Gagal menyimpan data kelahiran', 'danger');
-      },
-    });
+      this.form = this.createInitialForm();
+      this.router.navigate(['/petugas/buku-lahir']);
+    } catch (err: any) {
+      const validationErrors = err?.error?.errors
+        ? Object.values(err.error.errors).reduce((acc: string[], value: any) => acc.concat(value as string[]), [])
+        : [];
+      const message = validationErrors.length
+        ? validationErrors.join(', ')
+        : err?.error?.message || err?.message || 'Gagal menyimpan data kelahiran';
+      await this.showToast(message, 'danger');
+    } finally {
+      await loading.dismiss();
+      this.isSubmitting = false;
+    }
   }
 
   async showToast(message: string, color: string = 'primary') {
     const toast = await this.toastCtrl.create({
       message,
-      duration: 2000,
+      duration: 2200,
       color,
     });
     await toast.present();

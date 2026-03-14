@@ -10,6 +10,18 @@
 <ion-content class="ion-padding custom-bg">
   <h1 class="page-title">Pembaruan Status Penyakit</h1>
 
+  <ion-item class="input-field" lines="none" *ngIf="kasus">
+    <ion-label position="stacked">Ringkasan Kasus</ion-label>
+    <ion-text color="medium">
+      {{ kasus.code || '-' }} | {{ kasus.jenis_penyakit || 'Menunggu Diagnosa' }} | Validasi: {{ kasus.status_validasi || '-' }}
+    </ion-text>
+  </ion-item>
+
+  <ion-item class="input-field" lines="none" *ngIf="kasus && !isApprovedCase()">
+    <ion-label position="stacked">Status Update</ion-label>
+    <ion-text color="warning">Kasus ini belum approved, jadi status belum bisa diperbarui.</ion-text>
+  </ion-item>
+
   <ion-item class="input-field" lines="none">
     <ion-label position="stacked">Status Terbaru</ion-label>
     <ion-select [(ngModel)]="form.status_perkembangan" placeholder="Pilih Status">
@@ -40,7 +52,7 @@
     </ion-textarea>
   </ion-item>
 
-  <ion-button expand="block" class="save-btn" [disabled]="isSubmitting" (click)="submit()">
+  <ion-button expand="block" class="save-btn" [disabled]="isSubmitting || isLoadingKasus || !isApprovedCase()" (click)="submit()">
     Simpan
   </ion-button>
 </ion-content>

@@ -183,8 +183,8 @@ export class MutasiHilangPage implements OnInit {
   private getErrorMessage(err: any): string {
     if (err?.error?.errors) {
       return Object.values(err.error.errors)
-        .flat()
-        .map((value) => String(value))
+        .reduce((acc: string[], value: any) => acc.concat(value as string[]), [])
+        .map((value: string) => String(value))
         .join(' | ');
     }
 

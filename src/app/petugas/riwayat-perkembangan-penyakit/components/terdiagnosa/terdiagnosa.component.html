@@ -24,6 +24,7 @@
               fill="solid"
               class="update-btn"
               size="small"
+              [disabled]="kasus.status_validasi !== 'approved'"
               [routerLink]="['/petugas/update-status-penyakit']"
               [queryParams]="{ id: kasus.id }"
             >

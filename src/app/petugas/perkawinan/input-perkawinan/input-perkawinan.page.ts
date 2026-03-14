@@ -55,9 +55,8 @@ export class InputPerkawinanPage implements OnInit {
 
   metodePerkawinanOptions = [
     { label: 'Pilih Metode Perkawinan', value: '' },
-    { label: 'Alami', value: 'Alami' },
-    { label: 'Inseminasi Buatan', value: 'IB' },
-    { label: 'Lainnya', value: 'Lainnya' },
+    { label: 'Inseminasi Buatan', value: 'inseminasi_buatan' },
+    { label: 'Kawin Alami', value: 'kawin_alami' },
   ];
 
   inseminasiKeOptions = [
@@ -171,30 +170,23 @@ export class InputPerkawinanPage implements OnInit {
 
     const peternak = this.peternakList.find((p) => p.id == selectedId);
     if (peternak) {
-      this.formData.peternakan_id = peternak.id;
-      this.formData.namaPemilik = peternak.nama_peternak;
-      this.formData.nikPemilik = peternak.nik;
-      this.formData.alamat = peternak.alamat;
-      this.loadTernakBetinaByPemilik(String(peternak.id));
-      // Auto-fill Provinsi / Kabupaten based on Wilayah (bisa diadjust kalau wilayah sudah terpadu dengan API)
+      this.applyPemilikSelection(peternak);
     }
   }
 
   loadTernakBetinaByPemilik(peternakanId: string) {
     this.availableBetinaList = [];
-    this.formData.eartagBetina = '';
-    this.formData.populasi_id = '';
-    this.formData.jenisTernak = '';
-    this.formData.rumpunTernak = '';
-    this.formData.usiaTernak = '';
+    this.resetSelectedBetina();
 
     this.populasiService
       .getPopulasi({ peternakan_id: peternakanId, status: 'approved' })
       .subscribe((res: any) => {
         const list = Array.isArray(res?.data) ? res.data : Array.isArray(res) ? res : [];
-        this.availableBetinaList = list.filter((h: any) =>
-          String(h?.jenis_kelamin || '').toLowerCase() === 'betina',
-        );
+        this.availableBetinaList = list.filter((h: any) => {
+          const jenisKelamin = String(h?.jenis_kelamin || '').toLowerCase();
+          const status = String(h?.status || '').toLowerCase();
+          return jenisKelamin === 'betina' && !['mati', 'dijual', 'tidak_aktif'].includes(status);
+        });
       });
   }
 
@@ -326,18 +318,13 @@ export class InputPerkawinanPage implements OnInit {
   selectSearchItem(item: any) {
     switch (this.searchModalType) {
       case 'pemilik':
-        const p = item.raw;
-        this.formData.peternakan_id = p.id;
-        this.formData.namaPemilik = p.nama_peternak;
-        this.formData.nikPemilik = p.nik;
-        this.formData.alamat = p.alamat;
-        this.loadTernakBetinaByPemilik(String(p.id));
+        this.applyPemilikSelection(item.raw);
         break;
       case 'eartagBetina':
         this.formData.eartagBetina = item.value;
         this.formData.populasi_id = String(item.raw?.id || '');
-        this.formData.jenisTernak = item.raw?.kategori || item.raw?.jenis_hewan || '';
-        this.formData.rumpunTernak = item.raw?.ras || item.raw?.jenis_hewan || '';
+        this.formData.jenisTernak = item.raw?.jenis_hewan || item.raw?.kategori || '';
+        this.formData.rumpunTernak = item.raw?.ras || '-';
         this.formData.usiaTernak = String(item.raw?.umur ?? '');
         break;
       case 'provinsi':
@@ -460,6 +447,11 @@ export class InputPerkawinanPage implements OnInit {
       return;
     }
 
+    if (this.formData.metodePerkawinan === 'inseminasi_buatan' && !this.formData.idPejantan) {
+      this.showToast('ID pejantan untuk input IB diisi manual terlebih dahulu.', 'warning');
+      return;
+    }
+
     if (!this.formData.namaPemilik) {
       this.showToast('Mohon isi data pemilik terlebih dahulu!', 'warning');
       return;
@@ -473,11 +465,19 @@ export class InputPerkawinanPage implements OnInit {
     await loading.present();
     this.isSubmitting = true;
 
+    const metodeApi = this.getMetodeApiValue();
+    if (!metodeApi) {
+      await loading.dismiss();
+      this.isSubmitting = false;
+      this.showToast('Metode perkawinan tidak valid.', 'warning');
+      return;
+    }
+
     // Map form data ke format API backend
     const apiData: any = {
       eartag: this.formData.eartagBetina,
-      jenis_rumpun: `${this.formData.jenisTernak} - ${this.formData.rumpunTernak}`,
-      metode: this.formData.metodePerkawinan === 'inseminasi_buatan' ? 'IB' : 'Alami',
+      jenis_rumpun: this.buildJenisRumpun(),
+      metode: metodeApi,
       tanggal_kawin: this.formData.tanggalPerkawinan,
       status: 'menunggu_pkb',
       catatan: `Inseminasi ke-${this.formData.inseminasiKe || '-'}, Kode Produksi: ${this.formData.kodeProduksi || '-'}, Batch: ${this.formData.kodeBatch || '-'}`,
@@ -510,7 +510,7 @@ export class InputPerkawinanPage implements OnInit {
         await loading.dismiss();
         this.isSubmitting = false;
         console.log('Data Perkawinan berhasil disimpan:', response);
-        this.showToast('Data Perkawinan berhasil disimpan! ✅', 'success');
+        this.showToast('Data perkawinan berhasil disimpan.', 'success');
         this.resetForm();
       },
       error: async (error: any) => {
@@ -535,6 +535,54 @@ export class InputPerkawinanPage implements OnInit {
         this.showToast(errorMsg, 'danger');
       },
     });
+  }
+
+  private applyPemilikSelection(peternak: any) {
+    this.formData.peternakan_id = peternak.id;
+    this.formData.namaPemilik = peternak.nama_peternak;
+    this.formData.nikPemilik = peternak.nik;
+    this.formData.alamat = peternak.alamat;
+    this.applyLokasiPemilik(peternak);
+    this.loadTernakBetinaByPemilik(String(peternak.id));
+  }
+
+  private applyLokasiPemilik(peternak: any) {
+    const wilayah = peternak?.wilayah || {};
+    this.formData.provinsi = 'jawa_barat';
+    this.formData.kabupaten = 'karawang';
+    this.kabupatenList = this.kabupatenMap['jawa_barat'] || [];
+    this.kecamatanList = this.kecamatanMap['karawang'] || [];
+    this.formData.kecamatan = wilayah?.nama_kecamatan || '';
+    this.desaList = this.desaMap[this.formData.kecamatan] || [];
+    this.formData.desa = wilayah?.nama_desa || '';
+  }
+
+  private resetSelectedBetina() {
+    this.formData.eartagBetina = '';
+    this.formData.populasi_id = '';
+    this.formData.jenisTernak = '';
+    this.formData.rumpunTernak = '';
+    this.formData.usiaTernak = '';
+  }
+
+  private getMetodeApiValue(): 'IB' | 'Alami' | null {
+    if (this.formData.metodePerkawinan === 'inseminasi_buatan') {
+      return 'IB';
+    }
+
+    if (this.formData.metodePerkawinan === 'kawin_alami') {
+      return 'Alami';
+    }
+
+    return null;
+  }
+
+  private buildJenisRumpun(): string {
+    if (this.formData.jenisTernak && this.formData.rumpunTernak && this.formData.rumpunTernak !== '-') {
+      return `${this.formData.jenisTernak} - ${this.formData.rumpunTernak}`;
+    }
+
+    return this.formData.jenisTernak || this.formData.rumpunTernak || '-';
   }
 
   private async showToast(message: string, color: string = 'primary') {

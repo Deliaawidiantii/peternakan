@@ -43,11 +43,9 @@ export class PenyakitService {
   }
 
   // Update status perkembangan
-  updateStatus(id: number, formData: FormData): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
+  updateStatus(id: number, data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/penyakit/${id}/update-status`, data, {
+      headers: this.getHeaders(),
     });
-    return this.http.post(`${this.apiUrl}/penyakit/${id}/update-status`, formData, { headers });
   }
 }

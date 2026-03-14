@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PenyakitService } from '../../services/penyakit.service';
 import { LoadingController, ToastController } from '@ionic/angular';
+import { PenyakitService } from '../../services/penyakit.service';
 
 @Component({
   selector: 'app-riwayat-perkembangan-penyakit',
@@ -12,27 +12,32 @@ export class RiwayatPerkembanganPenyakitPage implements OnInit {
   selectedComponent: string | null = null;
   semuaKasus: any[] = [];
 
-  // showComponent = false;
-
-  // toggleComponent(){
-  //   this.showComponent = !this.showComponent;
-  //   console.log('showComponent:', this.showComponent);
-  // }
-
-  // backToMain(){
-  //   this.showComponent = false;
-  // }
-
   constructor(
     private penyakitService: PenyakitService,
     private loadingCtrl: LoadingController,
-    private toastCtrl: ToastController
-  ) { }
+    private toastCtrl: ToastController,
+  ) {}
 
   ngOnInit() {
-    // otomatis tampilkan komponen 'terdiagnosa' saat halaman dibuka
     this.selectedComponent = 'terdiagnosa';
+  }
+
+  ionViewWillEnter() {
     this.loadData();
+  }
+
+  private normalizeStatusPerkembangan(status: string | null | undefined): string {
+    const normalized = String(status || '').toLowerCase().replace(/[^a-z]/g, '');
+
+    if (normalized === 'dalamperkembangan') {
+      return 'dalamPerkembangan';
+    }
+
+    if (['terdiagnosa', 'sembuh', 'mati', 'selesai'].includes(normalized)) {
+      return normalized;
+    }
+
+    return 'terdiagnosa';
   }
 
   async loadData() {
@@ -40,26 +45,30 @@ export class RiwayatPerkembanganPenyakitPage implements OnInit {
     await loading.present();
 
     this.penyakitService.getPenyakit().subscribe({
-      next: (res) => {
-        loading.dismiss();
+      next: async (res) => {
+        await loading.dismiss();
         if (res.success || res.status === 'success') {
-          this.semuaKasus = res.data || res;
+          const list = Array.isArray(res.data) ? res.data : Array.isArray(res) ? res : [];
+          this.semuaKasus = list.map((kasus: any) => ({
+            ...kasus,
+            status_perkembangan: this.normalizeStatusPerkembangan(kasus.status_perkembangan),
+          }));
         }
       },
-      error: async (err) => {
-        loading.dismiss();
+      error: async () => {
+        await loading.dismiss();
         const toast = await this.toastCtrl.create({
           message: 'Gagal memuat riwayat penyakit',
           duration: 2000,
-          color: 'danger'
+          color: 'danger',
         });
-        toast.present();
-      }
+        await toast.present();
+      },
     });
   }
 
   getFilteredKasus(status: string) {
-    return this.semuaKasus.filter(k => k.status_perkembangan === status);
+    return this.semuaKasus.filter((kasus) => this.normalizeStatusPerkembangan(kasus.status_perkembangan) === status);
   }
 
   openComponent(componentName: string) {

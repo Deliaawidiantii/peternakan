@@ -4,7 +4,7 @@
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/"></ion-back-button>
       </ion-buttons>
-      <h2 class="header-title">Input IB (Inseminasi Buatan)</h2>
+      <h2 class="header-title">Input Perkawinan / IB</h2>
       <div class="header-spacer" aria-hidden="true"></div>
     </div>
   </ion-toolbar>
@@ -146,7 +146,6 @@
           <ion-select-option value="">Pilih Metode</ion-select-option>
           <ion-select-option value="inseminasi_buatan">Inseminasi Buatan</ion-select-option>
           <ion-select-option value="kawin_alami">Kawin Alami</ion-select-option>
-          <ion-select-option value="lainnya">Lainnya</ion-select-option>
         </ion-select>
       </div>
 
@@ -164,6 +163,7 @@
         <label class="form-label">ID Pejantan</label>
         <ion-input [(ngModel)]="formData.idPejantan" placeholder="Masukkan ID Pejantan" class="form-input"
           type="text"></ion-input>
+        <div class="text-xs text-gray-500 mt-1">*Untuk input IB, data pejantan diketik manual karena tidak tersedia di database</div>
       </div>
 
       <div class="form-group">
