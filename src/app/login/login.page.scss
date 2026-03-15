@@ -13,11 +13,11 @@ ion-content {
   position: relative;
   width: min(100%, 412px);
   margin: 0 auto;
-  min-height: calc(100vh - 32px);
+  min-height: calc(100dvh - 32px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 120px 0 44px;
+  padding: calc(env(safe-area-inset-top, 0px) + 96px) 0 44px;
 }
 
 .wrapper::before,
@@ -47,7 +47,7 @@ ion-content {
 
 .logo {
   position: absolute;
-  top: 38px;
+  top: calc(env(safe-area-inset-top, 0px) + 16px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
@@ -224,7 +224,7 @@ ion-input::part(icon) {
 
 @media (max-width: 420px) {
   .wrapper {
-    padding-top: 110px;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 86px);
   }
 
   .logo {
