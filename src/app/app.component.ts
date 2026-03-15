@@ -23,6 +23,7 @@ import { WebsocketService } from './services/websocket.service';
 })
 export class AppComponent implements OnInit {
   private readonly pushTokenStorageKey = 'fcm_push_token';
+  private readonly enableNativeNotificationStartup = false;
   private appStateListener: PluginListenerHandle | null = null;
   private notificationActionListener: PluginListenerHandle | null = null;
   private pushRegistrationListener: PluginListenerHandle | null = null;
@@ -65,22 +66,26 @@ export class AppComponent implements OnInit {
           console.error('Error setting status bar', e);
         }
 
-        try {
-          // Meminta izin push notification/local notification di OS
-          const permStatus = await LocalNotifications.requestPermissions();
-          console.log('Permission Notification:', permStatus.display);
-        } catch (e) {
-          console.error('Error requesting notification permission', e);
-        }
+        if (this.enableNativeNotificationStartup) {
+          try {
+            // Meminta izin push notification/local notification di OS
+            const permStatus = await LocalNotifications.requestPermissions();
+            console.log('Permission Notification:', permStatus.display);
+          } catch (e) {
+            console.error('Error requesting notification permission', e);
+          }
 
-        await this.setupNotificationListeners();
-        await this.setupPushNotifications();
+          await this.setupNotificationListeners();
+          await this.setupPushNotifications();
+        }
         await this.syncRealtimeConnection(this.authService.isLoggedIn());
-        await this.syncStoredPushToken();
+        if (this.enableNativeNotificationStartup) {
+          await this.syncStoredPushToken();
+        }
 
         this.appStateListener = await CapacitorApp.addListener('appStateChange', async (state: AppState) => {
           await this.syncRealtimeConnection(state.isActive && this.authService.isLoggedIn());
-          if (state.isActive) {
+          if (this.enableNativeNotificationStartup && state.isActive) {
             await this.syncStoredPushToken();
           }
         });
