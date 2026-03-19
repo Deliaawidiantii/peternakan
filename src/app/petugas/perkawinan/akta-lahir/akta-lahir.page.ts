@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
+import { PerkawinanService } from '../../../services/perkawinan.service';
+import { AuthService } from '../../../services/auth.service';
 
 interface RiwayatPerkawinan {
   id: string;
@@ -9,7 +11,7 @@ interface RiwayatPerkawinan {
   hasPKB: boolean;
   hasLahir: boolean;
   eartagBetina: string;
-  jenisTernak: 'Sapi' | 'Kerbau';
+  jenisTernak: string;
   rumpunTernak: string;
   umurInduk?: number;
   tanggalIB?: string;
@@ -69,104 +71,25 @@ export class AktaLahirPage implements OnInit {
   searchTerm: string = '';
   filterTanggal: string = '';
 
-  // Mock data untuk testing
-  allRiwayatList: RiwayatPerkawinan[] = [
-    {
-      id: '1',
-      status: 'Lahir',
-      hasIB: true,
-      hasPKB: true,
-      hasLahir: true,
-      eartagBetina: 'ID-001-2024',
-      jenisTernak: 'Sapi',
-      rumpunTernak: 'Simental',
-      umurInduk: 4,
-      usiaInduk: 48,
-      tanggalIB: '2024-01-15',
-      metodePerkawinan: 'IB',
-      inseminasiKe: 1,
-      kodeProduksi: 'SP-001',
-      kodeBatch: 'B-2024-01',
-      idPejantan: 'PJ-001',
-      tanggalPKB: '2024-02-20',
-      jenisPerkawinan: 'IB',
-      umurKebuntingan: 2,
-      prediksiLahir: '2024-10-15',
-      tanggalLahir: '2024-10-10',
-      jenisKelaminAnak: 'Jantan',
-      beratLahirAnak: 28,
-      kondisiAnak: 'Sehat',
-      namaPemilik: 'Budi Santoso',
-      nikPemilik: '3201234567890001',
-      telpPemilik: '081234567890',
-      alamatPemilik: 'Jl. Merdeka No. 123',
-      provinsi: 'Jawa Barat',
-      kabupaten: 'Bandung',
-      kecamatan: 'Cibiru',
-      desa: 'Cipadung',
-      namaPetugas: 'Dr. Ahmad Fauzi',
-      nikPetugas: '3201234567890123',
-      telpPetugas: '081234567890',
-      foto: 'path/to/photo.jpg',
-      createdAt: '2024-01-15T10:00:00',
-      updatedAt: '2024-10-10T14:30:00'
-    },
-    {
-      id: '2',
-      status: 'Lahir',
-      hasIB: true,
-      hasPKB: true,
-      hasLahir: true,
-      eartagBetina: 'ID-002-2024',
-      jenisTernak: 'Kerbau',
-      rumpunTernak: 'Kerbau Lumpur',
-      umurInduk: 5,
-      usiaInduk: 60,
-      tanggalIB: '2023-12-10',
-      metodePerkawinan: 'Alam',
-      tanggalPKB: '2024-01-15',
-      jenisPerkawinan: 'Alami',
-      umurKebuntingan: 3,
-      prediksiLahir: '2024-09-10',
-      tanggalLahir: '2024-09-08',
-      jenisKelaminAnak: 'Betina',
-      beratLahirAnak: 32,
-      kondisiAnak: 'Sehat',
-      namaPemilik: 'Siti Rahayu',
-      nikPemilik: '3201234567890002',
-      telpPemilik: '081234567891',
-      alamatPemilik: 'Jl. Raya Rancasari No. 45',
-      provinsi: 'Jawa Barat',
-      kabupaten: 'Bandung',
-      kecamatan: 'Rancasari',
-      desa: 'Cipamokolan',
-      namaPetugas: 'Dr. Ahmad Fauzi',
-      nikPetugas: '3201234567890123',
-      telpPetugas: '081234567890',
-      foto: 'path/to/photo2.jpg',
-      createdAt: '2023-12-10T09:00:00',
-      updatedAt: '2024-09-08T08:15:00'
-    }
-  ];
+  allRiwayatList: RiwayatPerkawinan[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private navController: NavController
-  ) {
-    console.log('AktaLahirPage constructor');
-  }
+    private navController: NavController,
+    private perkawinanService: PerkawinanService,
+    private authService: AuthService,
+    private toastCtrl: ToastController
+  ) {}
 
   ngOnInit() {
-    console.log('AktaLahirPage ngOnInit');
     this.loadDaftarAkta();
-    this.getAktaFromParams();
   }
 
   getAktaFromParams() {
     this.route.queryParams.subscribe((params: any) => {
-      console.log('Query params:', params);
       this.eartagId = params['eartagId'];
+
       
       console.log('Eartag ID:', this.eartagId);
       
@@ -268,19 +191,119 @@ export class AktaLahirPage implements OnInit {
   }
 
   /**
-   * Load daftar akta dari mock data
+   * Load daftar akta dari real API
    */
   loadDaftarAkta() {
-    // Mapping allRiwayatList menjadi daftar akta
-    this.daftarAkta = this.allRiwayatList
-      .filter(item => item.hasLahir)
-      .map((item, index) => ({
-        ...item,
-        nomorAkta: `AKT-${item.kabupaten.substring(0, 2).toUpperCase()}-${new Date().getFullYear()}-${String(index + 1).padStart(3, '0')}`
-      }));
+    this.isLoading = true;
+    this.perkawinanService.index().subscribe({
+      next: (res: any) => {
+        const rawData = res?.data || [];
+        
+        // Filter only those that already have 'sudah_melahirkan' or 'akta_terbit'
+        const bornItems = rawData.filter((item: any) => {
+          const s = String(item?.status || '');
+          return s === 'sudah_melahirkan' || s === 'akta_terbit';
+        });
 
-    this.filteredDaftarAkta = [...this.daftarAkta];
-    console.log('Daftar akta loaded:', this.daftarAkta);
+        this.allRiwayatList = bornItems.map((item: any) => this.mapRiwayatItem(item));
+
+        // Mapping allRiwayatList menjadi daftar akta
+        this.daftarAkta = this.allRiwayatList
+          .map((item, index) => {
+            const rawKab = item.kabupaten && item.kabupaten !== '-' ? item.kabupaten : 'XX';
+            const kabCode = rawKab.substring(0, 2).toUpperCase();
+            return {
+              ...item,
+              nomorAkta: `AKT-${kabCode}-${new Date().getFullYear()}-${String(index + 1).padStart(3, '0')}`
+            };
+          });
+
+        this.filteredDaftarAkta = [...this.daftarAkta];
+        this.isLoading = false;
+        
+        // After loading daftar, try to select one if eartagId is present
+        this.getAktaFromParams();
+      },
+      error: async (err: any) => {
+        this.isLoading = false;
+        const toast = await this.toastCtrl.create({
+          message: err?.error?.message || 'Gagal memuat daftar akta lahir',
+          duration: 2200,
+          color: 'danger',
+          position: 'bottom'
+        });
+        await toast.present();
+      }
+    });
+  }
+
+  private mapRiwayatItem(item: any): RiwayatPerkawinan {
+    const tambahan = item?.data_tambahan || {};
+    const lokasi = tambahan?.lokasi || {};
+    const statusBackend = String(item?.status || 'menunggu_pkb');
+
+    const hasIB = true;
+    const hasPKB = ['sudah_pkb', 'sudah_melahirkan', 'akta_terbit'].includes(statusBackend);
+    const hasLahir = ['sudah_melahirkan', 'akta_terbit'].includes(statusBackend);
+    const statusLabel: 'IB' | 'PKB' | 'Lahir' = hasLahir ? 'Lahir' : hasPKB ? 'PKB' : 'IB';
+
+    const jenisRumpun = String(item?.jenis_rumpun || '');
+    const [jenis, rumpun] = jenisRumpun.includes(' - ')
+      ? jenisRumpun.split(' - ')
+      : [item?.populasi?.jenis_hewan || '-', item?.populasi?.ras || jenisRumpun || '-'];
+
+    return {
+      id: String(item?.id || ''),
+      status: statusLabel,
+      hasIB,
+      hasPKB,
+      hasLahir,
+      eartagBetina: item?.eartag || item?.populasi?.code || '-',
+      jenisTernak: jenis || '-',
+      rumpunTernak: rumpun || '-',
+      umurInduk: tambahan?.usia_ternak ? Math.floor(Number(tambahan.usia_ternak) / 12) : undefined,
+      usiaInduk: Number(tambahan?.usia_ternak || item?.populasi?.umur || 0) || undefined,
+      tanggalIB: item?.tanggal_kawin || undefined,
+      metodePerkawinan: item?.metode || '-',
+      inseminasiKe: tambahan?.inseminasi_ke ? Number(tambahan.inseminasi_ke) : undefined,
+      kodeProduksi: tambahan?.kode_produksi || undefined,
+      kodeBatch: tambahan?.kode_batch || undefined,
+      idPejantan: tambahan?.id_pejantan || undefined,
+      tanggalPKB: item?.tanggal_pkb || undefined,
+      jenisPerkawinan: item?.metode === 'Alami' ? 'Alami' : 'IB',
+      umurKebuntingan: tambahan?.pkb?.umur_kebuntingan ? Number(tambahan.pkb.umur_kebuntingan) : undefined,
+      prediksiLahir: tambahan?.pkb?.prediksi_lahir || undefined,
+      tanggalLahir: item?.tanggal_kelahiran || undefined,
+      jenisKelaminAnak: tambahan?.lahir?.jenis_kelamin_anak || undefined,
+      beratLahirAnak: tambahan?.lahir?.berat_lahir_anak ? Number(tambahan.lahir.berat_lahir_anak) : undefined,
+      kondisiAnak: tambahan?.lahir?.kondisi_anak || undefined,
+      namaPemilik: item?.peternakan?.nama_peternak || tambahan?.nama_pemilik || '-',
+      nikPemilik: item?.peternakan?.nik || tambahan?.nik_pemilik || '-',
+      telpPemilik: item?.peternakan?.no_telp || tambahan?.telp_pemilik || '-',
+      alamatPemilik: item?.peternakan?.alamat || tambahan?.alamat || '-',
+      provinsi: lokasi?.provinsi || '-',
+      kabupaten: lokasi?.kabupaten || '-',
+      kecamatan: lokasi?.kecamatan || '-',
+      desa: lokasi?.desa || '-',
+      namaPetugas:
+        tambahan?.petugas_input_pkb?.nama ||
+        tambahan?.petugas_input_ib?.nama ||
+        this.authService.getUser()?.nama ||
+        '-',
+      nikPetugas:
+        tambahan?.petugas_input_pkb?.nik ||
+        tambahan?.petugas_input_ib?.nik ||
+        this.authService.getUser()?.nik ||
+        '-',
+      telpPetugas:
+        tambahan?.petugas_input_pkb?.telp ||
+        tambahan?.petugas_input_ib?.telp ||
+        this.authService.getUser()?.no_telp ||
+        '-',
+      foto: tambahan?.foto || undefined,
+      createdAt: item?.created_at || new Date().toISOString(),
+      updatedAt: item?.updated_at || new Date().toISOString(),
+    };
   }
 
   /**
