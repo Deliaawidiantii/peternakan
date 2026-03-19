@@ -1,4 +1,4 @@
-﻿<ion-header class="ion-no-border">
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <div class="gradient-header form-header">
       <div class="header-shell">
@@ -24,10 +24,38 @@
         <ion-input type="date" [(ngModel)]="form.tanggal_lahir" placeholder="Pilih Tanggal"></ion-input>
       </ion-item>
 
+      <!-- ID Induk — Dropdown dari data betina ruminansia -->
       <ion-item class="input-field" lines="none">
-        <ion-label position="stacked">ID Induk</ion-label>
-        <ion-input type="text" [(ngModel)]="form.id_induk" placeholder="Masukkan kode atau eartag induk"></ion-input>
+        <ion-label position="stacked">ID Induk (Betina)</ion-label>
+        <ion-select
+          [(ngModel)]="form.id_induk"
+          (ionChange)="onIndukSelected($event)"
+          placeholder="Pilih Induk"
+          interface="action-sheet"
+          [interfaceOptions]="{ header: 'Pilih ID Induk', subHeader: 'Hanya induk betina yang ditampilkan' }">
+          <ion-select-option *ngFor="let induk of filteredIndukList" [value]="induk.code">
+            {{ getIndukLabel(induk) }}
+          </ion-select-option>
+        </ion-select>
       </ion-item>
+
+      <!-- Info induk terpilih -->
+      <div class="page-card auto-id-note" *ngIf="selectedInduk">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        <div>
+          <h3>Induk Terpilih</h3>
+          <p>
+            <strong>{{ selectedInduk.code }}</strong> — 
+            {{ selectedInduk.jenis_hewan }} ({{ selectedInduk.ras || '-' }})<br>
+            Pemilik: {{ selectedInduk.peternakan?.nama_peternak || '-' }}
+          </p>
+        </div>
+      </div>
+
+      <div *ngIf="isLoadingInduk" class="ion-text-center ion-padding">
+        <ion-spinner name="dots"></ion-spinner>
+        <p style="font-size: 12px; color: #888;">Memuat data induk...</p>
+      </div>
 
       <ion-item class="input-field" lines="none">
         <ion-label position="stacked">Jenis Ruminansia</ion-label>

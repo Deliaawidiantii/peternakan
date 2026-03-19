@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { PopulasiService } from '../../services/populasi.service';
 
@@ -10,7 +10,7 @@ interface BirthRecord {
   parentId: string;
   animalType: string;
   status: string;
-  imageUrl: string;
+  kategori: string;
 }
 
 @Component({
@@ -24,60 +24,9 @@ export class BukuLahirPage implements OnInit {
   selectedMonth: string = '';
   selectedAnimalType: string = '';
   searchQuery: string = '';
+  isLoading = false;
 
-  allBirthRecords: BirthRecord[] = [
-    {
-      id: '1',
-      date: '2024-07-20',
-      childId: '#A123',
-      parentId: '#123',
-      animalType: 'sapi',
-      status: 'Hidup',
-      imageUrl:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuAu2woTfUFWjXO4IMPyKEhoXVtq7ZyC5SCrNstITE2cBZ8I2MWMx8GIsQz7Jy5A7ZoJwt_YY8xM272oi8PzeXSxZOvHgW3jvLYX3IGuM_mhGHGSXLjLS9tM7a3hSJ7UqsC0VfbxwvrB24-9RYx6cYYSVl2BWz8aps3X0_g4fUYX1HpzLG0W2AzL58L-uYnA1YDe-yAQc5bYESNm6sulBb6v5ZRBHxPccZd0lrLK7eaaAHh4W-E3wMP6ooK4vqzRUQGdeNXYMJ5OOym5',
-    },
-    {
-      id: '2',
-      date: '2024-07-15',
-      childId: '#B456',
-      parentId: '#456',
-      animalType: 'kambing',
-      status: 'Hidup',
-      imageUrl:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuDlIN5mu5B5ZRsddupUSCLr26PWTHNNUVGZ3sguvQ-laDF8ta0ApYbBRs6D2gAW-VPqrG3iHr-YUTn59F7-55Def8lKkY2zbdRKSmHSHQrVS18og8PCFAak9GwuuZZVBPEzV6qW89v05ztsxqro3usg0rEqmxJhWEvYOwpHKdhGn6Xd99StekJkm43Pau75loNF-vSn1-C1e8e9K3ZetzbRnYUBWJbCTC0TfkbglVrIK9jA4dWfXjAogFEnOYpV2Jf_o8fydcgxkF3f',
-    },
-    {
-      id: '3',
-      date: '2024-07-10',
-      childId: '#C789',
-      parentId: '#789',
-      animalType: 'ayam',
-      status: 'Mati',
-      imageUrl:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuCCQg0SppadAe9fLXWoPVpXzt-LGjnwStIRJyHgmFAo7zABYuXSq-kXwF4-ektZk1GcnW8_TQzk0U7y6u5PdFC2cYrGug2ujwH6IGwGq9DacG2kDiAFNrspfYlgosxzkkx59rrXWK15R-fWEd6E1zVMKNYTFNrSJ5xY686iExROqLyBQf23PvhTI68byOZVkExoPoZaoZR622G1WN1__921zWCu1t4O2sR4BHwRQyKrr5-NQVmRHi4cfqM10Vu58dBOneJUVYCDI40N',
-    },
-    {
-      id: '4',
-      date: '2024-06-25',
-      childId: '#D321',
-      parentId: '#321',
-      animalType: 'sapi',
-      status: 'Hidup',
-      imageUrl:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuAu2woTfUFWjXO4IMPyKEhoXVtq7ZyC5SCrNstITE2cBZ8I2MWMx8GIsQz7Jy5A7ZoJwt_YY8xM272oi8PzeXSxZOvHgW3jvLYX3IGuM_mhGHGSXLjLS9tM7a3hSJ7UqsC0VfbxwvrB24-9RYx6cYYSVl2BWz8aps3X0_g4fUYX1HpzLG0W2AzL58L-uYnA1YDe-yAQc5bYESNm6sulBb6v5ZRBHxPccZd0lrLK7eaaAHh4W-E3wMP6ooK4vqzRUQGdeNXYMJ5OOym5',
-    },
-    {
-      id: '5',
-      date: '2024-06-10',
-      childId: '#E654',
-      parentId: '#654',
-      animalType: 'bebek',
-      status: 'Hidup',
-      imageUrl:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuDlIN5mu5B5ZRsddupUSCLr26PWTHNNUVGZ3sguvQ-laDF8ta0ApYbBRs6D2gAW-VPqrG3iHr-YUTn59F7-55Def8lKkY2zbdRKSmHSHQrVS18og8PCFAak9GwuuZZVBPEzV6qW89v05ztsxqro3usg0rEqmxJhWEvYOwpHKdhGn6Xd99StekJkm43Pau75loNF-vSn1-C1e8e9K3ZetzbRnYUBWJbCTC0TfkbglVrIK9jA4dWfXjAogFEnOYpV2Jf_o8fydcgxkF3f',
-    },
-  ];
-
+  allBirthRecords: BirthRecord[] = [];
   filteredBirthRecords: BirthRecord[] = [];
   jenisTernakOptions: any[] = [];
 
@@ -85,11 +34,15 @@ export class BukuLahirPage implements OnInit {
     private actionSheetController: ActionSheetController,
     private router: Router,
     private populasiService: PopulasiService,
+    private toastCtrl: ToastController,
   ) {}
 
   ngOnInit() {
-    this.filteredBirthRecords = [...this.allBirthRecords];
     this.loadDataMaster();
+  }
+
+  ionViewWillEnter() {
+    this.loadBirthRecords();
   }
 
   loadDataMaster() {
@@ -107,6 +60,61 @@ export class BukuLahirPage implements OnInit {
     });
   }
 
+  loadBirthRecords() {
+    this.isLoading = true;
+
+    // Load populasi with status 'lahir' (birth records)
+    this.populasiService.getPopulasi({
+      sort: 'desc',
+    }).subscribe({
+      next: (res: any) => {
+        const rawData = res?.data || [];
+
+        // Filter for birth records — either status is 'lahir' or data_tambahan.sumber starts with 'buku_lahir'
+        const birthItems = rawData.filter((item: any) => {
+          const status = String(item?.status || '').toLowerCase();
+          const sumber = String(item?.data_tambahan?.sumber || '').toLowerCase();
+          return status === 'lahir' || sumber.startsWith('buku_lahir');
+        });
+
+        this.allBirthRecords = birthItems.map((item: any) => this.mapBirthRecord(item));
+        this.applyFilters();
+        this.isLoading = false;
+      },
+      error: async (err: any) => {
+        this.isLoading = false;
+        // If no data from API, show empty state
+        this.allBirthRecords = [];
+        this.filteredBirthRecords = [];
+
+        const toast = await this.toastCtrl.create({
+          message: 'Gagal memuat data kelahiran',
+          duration: 2000,
+          color: 'danger',
+          position: 'bottom',
+        });
+        await toast.present();
+      }
+    });
+  }
+
+  private mapBirthRecord(item: any): BirthRecord {
+    const tambahan = item?.data_tambahan || {};
+    const tanggal = item?.tanggal
+      ? new Date(item.tanggal).toISOString().split('T')[0]
+      : '-';
+
+    return {
+      id: String(item?.id || ''),
+      date: tanggal,
+      childId: item?.code || '-',
+      parentId: tambahan?.id_induk || '-',
+      animalType: item?.jenis_hewan || item?.kategori || '-',
+      status: tambahan?.status_anak || item?.status || '-',
+      kategori: item?.kategori || '-',
+    };
+  }
+
   // Fungsi filter data berdasarkan bulan, jenis hewan, dan pencarian
   applyFilters() {
     this.filteredBirthRecords = this.allBirthRecords.filter((record) => {
@@ -120,7 +128,8 @@ export class BukuLahirPage implements OnInit {
 
       // Filter berdasarkan jenis hewan
       if (this.selectedAnimalType) {
-        if (record.animalType.toLowerCase() !== this.selectedAnimalType.toLowerCase()) {
+        if (record.animalType.toLowerCase() !== this.selectedAnimalType.toLowerCase() &&
+            record.kategori.toLowerCase() !== this.selectedAnimalType.toLowerCase()) {
           return false;
         }
       }
@@ -129,7 +138,7 @@ export class BukuLahirPage implements OnInit {
       if (this.searchQuery.trim()) {
         const query = this.searchQuery.toLowerCase();
         const searchableText =
-          `${record.childId} ${record.parentId} ${record.animalType}`.toLowerCase();
+          `${record.childId} ${record.parentId} ${record.animalType} ${record.date}`.toLowerCase();
         if (!searchableText.includes(query)) {
           return false;
         }
@@ -159,6 +168,18 @@ export class BukuLahirPage implements OnInit {
     return 'blue';
   }
 
+  getStatusColor(status: string): string {
+    const s = (status || '').toLowerCase();
+    if (s === 'mati') return 'danger';
+    if (s === 'cacat') return 'warning';
+    return 'success';
+  }
+
+  formatStatus(status: string): string {
+    if (!status || status === '-') return '-';
+    return status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
+  }
+
   // Pilih kelompok hewan
   async pilihKelompokHewan() {
     const actionSheet = await this.actionSheetController.create({
@@ -168,7 +189,6 @@ export class BukuLahirPage implements OnInit {
           text: 'Ruminansia',
           icon: 'paw-outline',
           handler: () => {
-            console.log('Ruminansia dipilih');
             this.kelompokHewan = 'Ruminansia';
             this.router.navigate(['/petugas/ruminansia']);
           },
@@ -177,7 +197,6 @@ export class BukuLahirPage implements OnInit {
           text: 'Unggas',
           icon: 'egg-outline',
           handler: () => {
-            console.log('Unggas dipilih');
             this.kelompokHewan = 'Unggas';
             this.router.navigate(['/petugas/unggas']);
           },
@@ -186,7 +205,6 @@ export class BukuLahirPage implements OnInit {
           text: 'Primata',
           icon: 'people-outline',
           handler: () => {
-            console.log('Primata dipilih');
             this.kelompokHewan = 'Primata';
             this.router.navigate(['/petugas/primata']);
           },
@@ -195,7 +213,6 @@ export class BukuLahirPage implements OnInit {
           text: 'Kesayangan',
           icon: 'heart-outline',
           handler: () => {
-            console.log('Kesayangan dipilih');
             this.kelompokHewan = 'Kesayangan';
             this.router.navigate(['/petugas/kesayangan']);
           },

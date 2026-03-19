@@ -10,7 +10,7 @@ interface HewanData {
   rumpun: string;
   usia: number;
   pemilik: string;
-  status: 'siap' | 'belum siap' | 'dalam proses';
+  status: 'siap' | 'belum siap' | 'dalam proses' | 'selesai';
 }
 
 @Component({
@@ -73,12 +73,17 @@ export class PKBPage implements OnInit {
 
   private mapToHewan(item: any): HewanData {
     const status = String(item?.status || 'menunggu_pkb');
-    const statusMapped: 'siap' | 'belum siap' | 'dalam proses' =
-      status === 'menunggu_pkb'
-        ? 'siap'
-        : status === 'sudah_pkb'
-          ? 'dalam proses'
-          : 'belum siap';
+    let statusMapped: 'siap' | 'belum siap' | 'dalam proses' | 'selesai';
+
+    if (status === 'menunggu_pkb') {
+      statusMapped = 'siap';
+    } else if (status === 'sudah_pkb') {
+      statusMapped = 'dalam proses';
+    } else if (status === 'sudah_melahirkan' || status === 'akta_terbit') {
+      statusMapped = 'selesai';
+    } else {
+      statusMapped = 'belum siap';
+    }
 
     const jenisRaw = String(item?.populasi?.jenis_hewan || item?.jenis_rumpun || 'sapi').toLowerCase();
     const jenis: 'sapi' | 'kerbau' | 'kambing' = jenisRaw.includes('kerbau')
@@ -125,7 +130,7 @@ export class PKBPage implements OnInit {
 
   getStatusClass(status: string): string {
     const value = (status || '').toLowerCase();
-    if (value === 'siap') return 'approved';
+    if (value === 'siap' || value === 'selesai') return 'approved';
     if (value === 'dalam proses') return 'pending';
     return 'rejected';
   }
@@ -133,6 +138,7 @@ export class PKBPage implements OnInit {
   getStatusLabel(status: string): string {
     const value = (status || '').toLowerCase();
     if (value === 'siap') return 'Siap';
+    if (value === 'selesai') return 'Selesai';
     if (value === 'dalam proses') return 'Dalam Proses';
     return 'Belum Siap';
   }

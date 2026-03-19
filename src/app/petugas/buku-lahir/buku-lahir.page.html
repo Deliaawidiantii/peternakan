@@ -45,8 +45,14 @@
       </div>
     </div>
 
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="ion-text-center ion-padding" style="margin-top: 32px;">
+      <ion-spinner></ion-spinner>
+      <p style="color: #64748b; font-size: 14px;">Memuat data kelahiran...</p>
+    </div>
+
     <!-- Section Title -->
-    <div class="list-header-row">
+    <div *ngIf="!isLoading" class="list-header-row">
       <h3 class="section-label buku-lahir-section-title">
         <ion-icon name="happy-outline"></ion-icon>
         Kelahiran Terbaru
@@ -55,21 +61,24 @@
     </div>
 
     <app-empty-state
-      *ngIf="filteredBirthRecords.length === 0"
+      *ngIf="!isLoading && filteredBirthRecords.length === 0"
       icon="happy-outline"
       title="Tidak ada catatan kelahiran"
-      caption="Coba ubah kata kunci pencarian atau filter bulan dan jenis."
+      caption="Belum ada data kelahiran yang tercatat. Tambahkan data kelahiran dengan tombol + di bawah."
     ></app-empty-state>
 
-    <div class="page-card" *ngIf="filteredBirthRecords.length > 0">
-      <div class="info-item-global buku-lahir-item" *ngFor="let record of filteredBirthRecords" routerLink="/petugas/detail-kelahiran">
+    <div class="page-card" *ngIf="!isLoading && filteredBirthRecords.length > 0">
+      <div class="info-item-global buku-lahir-item" *ngFor="let record of filteredBirthRecords">
         <div class="icon-circle" [ngClass]="getRecordIconColor(record.animalType)">
           <ion-icon name="happy-outline"></ion-icon>
         </div>
 
         <div class="record-copy">
           <p class="record-title">{{ record.date }} | {{ formatAnimalLabel(record.animalType) }} | {{ record.childId }}</p>
-          <p class="record-subtitle">Induk: {{ record.parentId }} • Status: {{ record.status }}</p>
+          <p class="record-subtitle">
+            Induk: {{ record.parentId }} • 
+            Status: <span [style.color]="record.status === 'mati' ? '#ef4444' : '#22c55e'">{{ formatStatus(record.status) }}</span>
+          </p>
         </div>
 
         <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>

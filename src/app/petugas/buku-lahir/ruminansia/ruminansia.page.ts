@@ -13,6 +13,12 @@ import { PopulasiService } from '../../../services/populasi.service';
 export class RuminansiaPage implements OnInit {
   form: any = this.createInitialForm();
   isSubmitting = false;
+  isLoadingInduk = false;
+
+  // Data for dropdowns
+  indukList: any[] = [];
+  filteredIndukList: any[] = [];
+  selectedInduk: any = null;
 
   constructor(
     private router: Router,
@@ -22,7 +28,9 @@ export class RuminansiaPage implements OnInit {
     private alertCtrl: AlertController,
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loadIndukList();
+  }
 
   private createInitialForm() {
     return {
@@ -37,36 +45,74 @@ export class RuminansiaPage implements OnInit {
     };
   }
 
+  /**
+   * Load all female (betina) ruminansia animals as potential parents
+   */
+  loadIndukList() {
+    this.isLoadingInduk = true;
+    this.populasiService.getPopulasi({
+      kategori: 'ruminansia',
+      status: 'approved',
+      sort: 'desc',
+    }).subscribe({
+      next: (res: any) => {
+        const rawData = res?.data || [];
+        // Filter only Betina as induk candidates and exclude dead ones
+        this.indukList = rawData.filter((item: any) => {
+          const kelamin = String(item?.jenis_kelamin || '').toLowerCase();
+          const status = String(item?.status || '').toLowerCase();
+          return kelamin === 'betina' && status !== 'mati';
+        });
+        this.filteredIndukList = [...this.indukList];
+        this.isLoadingInduk = false;
+      },
+      error: () => {
+        this.isLoadingInduk = false;
+        this.indukList = [];
+        this.filteredIndukList = [];
+      }
+    });
+  }
+
+  /**
+   * When user selects an induk, auto-fill related fields
+   */
+  onIndukSelected(event: any) {
+    const selectedCode = event?.detail?.value;
+    if (!selectedCode) return;
+
+    this.selectedInduk = this.indukList.find(
+      (item: any) => item.code === selectedCode
+    );
+
+    if (this.selectedInduk) {
+      // Auto-fill jenis and ras from the selected parent
+      if (this.selectedInduk.jenis_hewan) {
+        this.form.jenis_ruminansia = this.selectedInduk.jenis_hewan;
+      }
+      if (this.selectedInduk.ras) {
+        this.form.ras = this.selectedInduk.ras;
+      }
+    }
+  }
+
+  getIndukLabel(item: any): string {
+    const code = item?.code || '-';
+    const jenis = item?.jenis_hewan || '';
+    const pemilik = item?.peternakan?.nama_peternak || '';
+    return `${code} - ${jenis} (${pemilik})`;
+  }
+
   private parseNumber(value: any): number | null {
     if (value === null || value === undefined || value === '') {
       return null;
     }
-
     const parsed = Number(value);
     return Number.isFinite(parsed) ? parsed : null;
   }
 
-  private async findIndukByCode() {
-    const response = await firstValueFrom(
-      this.populasiService.getPopulasi({
-        code: this.form.id_induk,
-        kategori: 'ruminansia',
-        status: 'approved',
-        sort: 'desc',
-      }),
-    );
-
-    const list = Array.isArray(response?.data) ? response.data : Array.isArray(response) ? response : [];
-    const requestedCode = String(this.form.id_induk || '').trim().toLowerCase();
-
-    return (
-      list.find((item: any) => String(item?.code || '').trim().toLowerCase() === requestedCode) ||
-      list[0] ||
-      null
-    );
-  }
-
-  private buildPayload(induk: any) {
+  private buildPayload() {
+    const induk = this.selectedInduk;
     return {
       kategori: 'ruminansia',
       jenis_hewan: this.form.jenis_ruminansia,
@@ -101,18 +147,19 @@ export class RuminansiaPage implements OnInit {
       return;
     }
 
+    if (!this.selectedInduk) {
+      await this.showToast('ID Induk tidak valid. Pilih induk dari daftar.', 'danger');
+      return;
+    }
+
     this.isSubmitting = true;
     const loading = await this.loadingCtrl.create({ message: 'Menyimpan data kelahiran...' });
     await loading.present();
 
     try {
-      const induk = await this.findIndukByCode();
-
-      if (!induk) {
-        throw new Error('ID induk tidak ditemukan atau belum approved.');
-      }
-
-      const response = await firstValueFrom(this.populasiService.createPopulasi(this.buildPayload(induk)));
+      const response = await firstValueFrom(
+        this.populasiService.createPopulasi(this.buildPayload())
+      );
       const createdId = response?.data?.code || '-';
 
       const alert = await this.alertCtrl.create({
@@ -125,6 +172,7 @@ export class RuminansiaPage implements OnInit {
       await alert.onDidDismiss();
 
       this.form = this.createInitialForm();
+      this.selectedInduk = null;
       this.router.navigate(['/petugas/buku-lahir']);
     } catch (err: any) {
       const validationErrors = err?.error?.errors
