@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NavController, ToastController } from '@ionic/angular';
 import { PerkawinanService } from '../../../services/perkawinan.service';
 import { AuthService } from '../../../services/auth.service';
+import { environment } from '../../../../environments/environment';
 
 interface RiwayatPerkawinan {
   id: string;
@@ -65,6 +66,12 @@ export class DetailRiwayatPerkawinanPage implements OnInit {
     private authService: AuthService,
     private toastCtrl: ToastController,
   ) {}
+
+  getFotoUrl(): string | undefined {
+    if (!this.riwayat?.foto) return undefined;
+    if (this.riwayat.foto.startsWith('http')) return this.riwayat.foto;
+    return `${environment.apiUrl.replace('/api', '')}/storage/${this.riwayat.foto}`;
+  }
 
   ngOnInit() {
     this.route.queryParams.subscribe((params: any) => {
