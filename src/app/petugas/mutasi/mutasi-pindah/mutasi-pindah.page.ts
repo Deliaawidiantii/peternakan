@@ -32,6 +32,7 @@ export class MutasiPindahPage implements OnInit {
   latitudeTujuan: number | null = null;
   longitudeTujuan: number | null = null;
   deskripsi = '';
+  isLuarKota = false;
   peternakan_id = '';
   populasi_id = '';
   isSubmitting = false;
@@ -134,6 +135,7 @@ export class MutasiPindahPage implements OnInit {
         lokasi_asal: lokasiAsal,
         lokasi_tujuan: lokasiTujuan,
         deskripsi: this.deskripsi.trim() || null,
+        is_luar_kota: this.isLuarKota,
       },
       'Data mutasi pindah hewan berhasil disimpan.',
     );

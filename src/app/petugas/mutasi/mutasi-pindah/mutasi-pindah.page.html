@@ -138,6 +138,18 @@
       </div>
 
       <div class="form-section">
+        <h3 class="section-title">Jenis Perpindahan</h3>
+        <ion-item lines="none" class="input-field">
+          <ion-icon name="map-outline" slot="start" color="medium"></ion-icon>
+          <ion-label>Pindah ke Luar Kota?</ion-label>
+          <ion-toggle slot="end" [(ngModel)]="isLuarKota"></ion-toggle>
+        </ion-item>
+        <p style="font-size: 12px; color: #666; margin: 4px 16px 16px;">
+          Aktifkan jika hewan dipindahkan ke luar area cakupan sehingga dihilangkan dari populasi aktif.
+        </p>
+      </div>
+
+      <div class="form-section">
         <h3 class="section-title">Catatan Tambahan</h3>
 
         <div class="form-group">
