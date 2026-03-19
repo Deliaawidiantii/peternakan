@@ -23,7 +23,7 @@ import { WebsocketService } from './services/websocket.service';
 })
 export class AppComponent implements OnInit {
   private readonly pushTokenStorageKey = 'fcm_push_token';
-  private readonly enableNativeNotificationStartup = false;
+  private readonly enableNativeNotificationStartup = true;
   private appStateListener: PluginListenerHandle | null = null;
   private notificationActionListener: PluginListenerHandle | null = null;
   private pushRegistrationListener: PluginListenerHandle | null = null;

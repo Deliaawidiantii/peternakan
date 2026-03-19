@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "834284424701",
+    "project_id": "karawang-ternak",
+    "storage_bucket": "karawang-ternak.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834284424701:android:52f80fbc65050682cedd94",
+        "android_client_info": {
+          "package_name": "karawang.ternak.apps"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABcQY_BfuK6U0BCWPi61Yyo3dZSbEek4M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
