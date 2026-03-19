@@ -52,7 +52,6 @@ export class LahirPage implements OnInit {
     private alertCtrl: AlertController,
   ) {
     this.lahirForm = this.fb.group({
-      eartagAnak: [''],
       tanggalLahir: ['', Validators.required],
       jenisKelamin: ['', Validators.required],
       kondisi: ['', Validators.required],
@@ -176,7 +175,6 @@ export class LahirPage implements OnInit {
     const mergedTambahan = {
       ...this.currentDataTambahan,
       lahir: {
-        eartag_anak: values.eartagAnak || null,
         tanggal_lahir: values.tanggalLahir,
         jenis_kelamin_anak: values.jenisKelamin,
         kondisi_anak: values.kondisi,
