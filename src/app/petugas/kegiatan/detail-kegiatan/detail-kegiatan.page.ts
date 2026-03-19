@@ -59,6 +59,10 @@ export class DetailKegiatanPage implements OnInit {
   }
 
   resolveStatusLabel(): string {
+    if (this.kegiatan?.status_aktual === 'terlewatkan') {
+      return 'Terlewatkan';
+    }
+
     if (this.kegiatan?.status_aktual === 'terlambat') {
       return 'Terlambat';
     }
@@ -71,6 +75,10 @@ export class DetailKegiatanPage implements OnInit {
   }
 
   resolveStatusClass(): string {
+    if (this.kegiatan?.status_aktual === 'terlewatkan') {
+      return 'rejected';
+    }
+
     if (this.kegiatan?.status_aktual === 'terlambat') {
       return 'rejected';
     }
@@ -96,6 +104,7 @@ export class DetailKegiatanPage implements OnInit {
       (this.kegiatan?.status === 'terjadwal' ||
         this.kegiatan?.status === 'terlambat' ||
         this.kegiatan?.status_aktual === 'terlambat') &&
+      this.kegiatan?.status_aktual !== 'terlewatkan' &&
       !this.kegiatan?.terkunci_mulai
     );
   }

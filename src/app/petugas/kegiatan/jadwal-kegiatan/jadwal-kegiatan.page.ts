@@ -105,6 +105,8 @@ export class JadwalKegiatanPage implements OnInit {
         return 'Akan Datang';
       case 'terlambat':
         return 'Terlambat';
+      case 'terlewatkan':
+        return 'Terlewatkan';
       case 'sedang_berjalan':
         return 'Sedang Berjalan';
       case 'butuh_diselesaikan':
