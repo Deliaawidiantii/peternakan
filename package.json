@@ -33,6 +33,7 @@
     "@capacitor/status-bar": "7.0.3",
     "@ionic/angular": "^8.0.0",
     "@ng-select/ng-select": "^21.5.2",
+    "html2pdf.js": "^0.14.0",
     "ionicons": "^7.0.0",
     "laravel-echo": "^2.3.0",
     "ng-select": "^1.0.2",

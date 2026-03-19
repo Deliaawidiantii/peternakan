@@ -1,42 +1,139 @@
-// Akta Lahir Page Styles
+// Akta Lahir Page Styles — matching app-wide design
+
+.custom-bg {
+  --background: #f8fafc;
+  font-family: "Public Sans", "Noto Sans", sans-serif;
+}
+
+// ===== HEADER =====
+.custom-header ion-title {
+  font-weight: 700;
+  color: #0d171b;
+  text-align: center;
+}
+
+// ===== SEGMENT BAR =====
+.segment-bar {
+  margin: 12px 16px;
+  border-radius: 12px;
+  background: #e8f0fe;
+  padding: 4px;
+
+  ion-segment-button {
+    --indicator-color: #0066cc;
+    --color: #5f7d8a;
+    --color-checked: #fff;
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+    --border-radius: 10px;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: none;
+
+    ion-icon {
+      font-size: 18px;
+      margin-bottom: 2px;
+    }
+  }
+}
+
+// ===== FILTER DATE =====
+.filter-date-item {
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
+  margin-top: 8px;
+
+  ion-icon {
+    margin-right: 8px;
+    font-size: 20px;
+  }
+}
+
+// ===== EMPTY STATE =====
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+
+  ion-icon {
+    font-size: 64px;
+    color: #c0d0da;
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    color: #5f7d8a;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 8px 0;
+  }
+
+  p {
+    color: #8fa8b5;
+    font-size: 14px;
+  }
+}
+
+// ===== LOADING STATE =====
+.loading-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: #5f7d8a;
+
+  ion-spinner {
+    margin-bottom: 12px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+}
 
 // ===== DAFTAR AKTA LIST =====
 .akta-list-item {
   background: white;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 16px;
   margin-bottom: 12px;
-  border-left: 4px solid #0066cc;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eef2f6;
 
   &:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    transform: scale(0.98);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   }
 
   .akta-item-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
   }
 
   .akta-item-left {
     flex: 1;
     display: flex;
     gap: 12px;
+    align-items: center;
   }
 
-  .akta-nomor {
-    font-size: 13px;
-    font-weight: 700;
-    color: #0066cc;
-    padding: 6px 12px;
-    background: #f0f5ff;
-    border-radius: 6px;
-    white-space: nowrap;
+  .akta-icon-wrapper {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #e8f0fe, #cde0ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    ion-icon {
+      font-size: 22px;
+      color: #0066cc;
+    }
   }
 
   .akta-info {
@@ -45,30 +142,39 @@
 
   .akta-eartag {
     font-size: 15px;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 4px;
+    font-weight: 700;
+    color: #0d171b;
+    margin-bottom: 2px;
   }
 
   .akta-pemilik {
     font-size: 13px;
-    color: #666;
+    color: #5f7d8a;
+  }
+
+  .akta-nomor {
+    font-size: 11px;
+    font-weight: 600;
+    color: #0066cc;
+    margin-top: 2px;
   }
 
   .akta-item-badge {
     ion-badge {
-      font-size: 12px;
-      padding: 6px 12px;
+      font-size: 11px;
+      padding: 5px 10px;
+      border-radius: 8px;
     }
   }
 
   .akta-item-details {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-bottom: 12px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #f0f0f0;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding: 12px;
+    background: #f8fafc;
+    border-radius: 10px;
 
     .detail-col {
       display: flex;
@@ -76,15 +182,15 @@
 
       .label {
         font-size: 11px;
-        color: #999;
+        color: #8fa8b5;
         font-weight: 500;
-        margin-bottom: 2px;
+        margin-bottom: 3px;
       }
 
       .value {
         font-size: 13px;
         font-weight: 600;
-        color: #333;
+        color: #0d171b;
       }
     }
   }
@@ -99,7 +205,7 @@
       align-items: center;
       gap: 6px;
       font-size: 12px;
-      color: #666;
+      color: #5f7d8a;
 
       ion-icon {
         font-size: 16px;
@@ -109,7 +215,7 @@
 
     .actions {
       display: flex;
-      gap: 4px;
+      gap: 2px;
 
       ion-button {
         --padding-start: 8px;
@@ -120,191 +226,227 @@
   }
 }
 
-// ===== DETAIL AKTA =====
-.detail-header {
+// ===== AKTA HEADER CARD =====
+.akta-header-card {
   text-align: center;
-  margin-bottom: 24px;
-  padding: 20px;
-  background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
-  border-radius: 12px;
+  padding: 28px 20px;
+  background: linear-gradient(135deg, #0066cc 0%, #004a99 100%);
+  border-radius: 16px;
   color: white;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
 
-  h2 {
-    font-size: 28px;
-    font-weight: 700;
-    margin: 0 0 8px 0;
-    letter-spacing: 0.5px;
+  &::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
   }
 
-  .jenis {
-    font-size: 14px;
-    opacity: 0.95;
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: -20px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .akta-header-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
     margin-bottom: 12px;
+
+    ion-icon {
+      font-size: 26px;
+      color: #fff;
+    }
   }
 
-  ion-badge {
-    padding: 8px 16px;
-    font-size: 12px;
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
+  .akta-header-title {
+    font-size: 18px;
+    font-weight: 800;
+    margin: 0 0 6px 0;
+    letter-spacing: 1px;
+  }
+
+  .akta-header-nomor {
+    font-size: 14px;
+    opacity: 0.85;
+    margin: 0 0 12px 0;
+    font-weight: 500;
+  }
+
+  .akta-header-tag {
+    ion-badge {
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
   }
 }
 
-// ===== AKTA DETAIL CARD =====
-.akta-detail-card {
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid #f0f0f0;
+// ===== INFO CARD (matching detail-penyakit) =====
+.info-card {
+  border-radius: 14px;
+  margin: 0 0 14px 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eef2f6;
+
+  ion-card-header {
+    padding-bottom: 4px;
+  }
+
+  ion-card-title {
+    color: #0d171b;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    ion-icon {
+      font-size: 20px;
+    }
+  }
 
   ion-card-content {
-    padding: 0;
+    padding-top: 4px;
   }
 }
 
-.detail-section {
-  padding: 20px;
-  border-bottom: 1px solid #f5f5f5;
+// ===== INFO ROW (matching detail-penyakit) =====
+.info-row {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  border-top: 1px solid #eef2f6;
+  padding: 10px 0;
 
-  &:last-child {
-    border-bottom: none;
-  }
-
-  h3 {
+  .label {
+    color: #5f7d8a;
     font-size: 14px;
-    font-weight: 700;
-    color: #333;
-    margin: 0 0 16px 0;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #0066cc;
-    display: inline-block;
+    font-weight: 500;
   }
 
-  .detail-grid {
+  .value {
+    color: #0d171b;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: right;
+  }
+}
+
+// ===== SIGNATURE CARD =====
+.signature-card {
+  margin-top: 8px;
+
+  .signature-section {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 24px;
+    padding: 8px 0;
 
-    @media (max-width: 480px) {
-      grid-template-columns: 1fr;
-    }
-  }
+    .sig-item {
+      text-align: center;
 
-  .grid-item {
-    display: flex;
-    flex-direction: column;
+      .sig-title {
+        font-size: 13px;
+        color: #5f7d8a;
+        font-weight: 500;
+        margin: 0 0 24px 0;
+      }
 
-    .label {
-      font-size: 12px;
-      color: #999;
-      font-weight: 500;
-      margin-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+      .sig-line {
+        border-bottom: 1px solid #333;
+        margin: 0 auto 8px;
+        width: 80%;
+      }
 
-    .value {
-      font-size: 15px;
-      color: #333;
-      font-weight: 600;
-    }
-  }
-}
-
-// ===== SIGNATURE SECTION =====
-.signature-section {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  padding: 24px 20px;
-  border-top: 2px dashed #ccc;
-
-  .sig-item {
-    text-align: center;
-
-    p {
-      font-size: 12px;
-      margin: 0 0 8px 0;
-      color: #666;
-      font-weight: 500;
-
-      &:first-child {
-        margin-bottom: 16px;
+      .sig-name {
+        font-size: 13px;
+        color: #0d171b;
+        font-weight: 700;
+        margin: 0;
       }
     }
-
-    .sig-line {
-      height: 40px;
-      border-bottom: 1px solid #333;
-      margin: 0 auto 8px;
-    }
-
-    .sig-name {
-      font-size: 12px;
-      color: #333;
-      font-weight: 600;
-    }
   }
 }
 
-// ===== BUTTON GROUP =====
-.button-group {
+// ===== ACTION BUTTONS =====
+.btn-container {
+  padding: 8px 0 24px;
   display: flex;
-  gap: 12px;
-  padding: 16px 0;
+  flex-direction: column;
+  gap: 10px;
 
-  ion-button {
-    flex: 1;
-    font-weight: 600;
+  .action-btn {
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: none;
+    --border-radius: 12px;
+    height: 48px;
   }
-}
 
-// ===== SEGMENT =====
-ion-segment {
-  --padding-bottom: 12px;
+  .cetak-btn {
+    --background: #0066cc;
+    --color: #fff;
+  }
 
-  ion-segment-button {
-    --padding-top: 12px;
-    --padding-bottom: 12px;
+  .download-btn {
+    --background: #e8a317;
+    --color: #fff;
   }
 }
 
 // ===== SEARCHBAR =====
 ion-searchbar {
-  --padding-top: 0;
-  --padding-bottom: 8px;
-  --padding-start: 0;
-  --padding-end: 0;
-  background: transparent;
-}
-
-ion-item[lines="none"] {
-  --padding-start: 0;
-  --padding-end: 0;
-  --inner-padding-start: 0;
-  --inner-padding-end: 0;
+  --border-radius: 12px;
+  --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 // ===== PRINT STYLES =====
 @media print {
   ion-header,
   ion-toolbar,
-  ion-segment,
+  .segment-bar,
   ion-searchbar,
-  .button-group,
+  .btn-container,
   .actions {
     display: none !important;
   }
 
-  .akta-detail-card {
+  .info-card {
     box-shadow: none;
-    border: 1px solid #000;
+    border: 1px solid #ccc;
     page-break-inside: avoid;
   }
 
-  .detail-header {
+  .akta-header-card {
     background: white;
     color: #333;
-    border: 1px solid #ccc;
+    border: 2px solid #0066cc;
+
+    .akta-header-badge ion-icon {
+      color: #0066cc;
+    }
+
+    ion-badge {
+      color: #333 !important;
+      border: 1px solid #ccc;
+    }
   }
 
   body {
@@ -323,49 +465,27 @@ ion-item[lines="none"] {
     .akta-item-details {
       grid-template-columns: 1fr;
       gap: 8px;
+      padding: 10px;
     }
   }
 
-  .detail-header {
-    padding: 16px;
+  .akta-header-card {
+    padding: 20px 16px;
 
-    h2 {
-      font-size: 24px;
+    .akta-header-title {
+      font-size: 16px;
     }
   }
 
-  .signature-section {
+  .signature-card .signature-section {
     grid-template-columns: 1fr;
-  }
-
-  .button-group {
-    flex-direction: column;
-  }
-}
-
-// ===== EMPTY STATE =====
-.ion-text-center {
-  ion-icon {
-    color: #ccc;
-    margin-bottom: 12px;
-  }
-
-  h2 {
-    color: #999;
-    font-size: 18px;
-    font-weight: 600;
-    margin: 12px 0 8px 0;
-  }
-
-  p {
-    color: #999;
-    font-size: 14px;
+    gap: 28px;
   }
 }
 
 // ===== BADGE =====
 ion-badge {
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 4px 10px;
   font-size: 11px;
   font-weight: 600;

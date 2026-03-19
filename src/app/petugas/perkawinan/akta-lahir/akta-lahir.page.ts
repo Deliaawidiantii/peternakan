@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavController, ToastController } from '@ionic/angular';
 import { PerkawinanService } from '../../../services/perkawinan.service';
 import { AuthService } from '../../../services/auth.service';
+import html2pdf from 'html2pdf.js';
 
 interface RiwayatPerkawinan {
   id: string;
@@ -53,7 +54,7 @@ interface RiwayatPerkawinan {
 })
 export class AktaLahirPage implements OnInit {
 
-  @ViewChild('aktaLahir') aktaLahirRef: any;
+  @ViewChild('aktaLahir') aktaLahirRef!: ElementRef;
 
   riwayat: RiwayatPerkawinan | null = null;
   eartagId: string = '';
@@ -89,9 +90,6 @@ export class AktaLahirPage implements OnInit {
   getAktaFromParams() {
     this.route.queryParams.subscribe((params: any) => {
       this.eartagId = params['eartagId'];
-
-      
-      console.log('Eartag ID:', this.eartagId);
       
       if (this.eartagId) {
         this.loadAktaData();
@@ -102,38 +100,24 @@ export class AktaLahirPage implements OnInit {
   }
 
   loadAktaData() {
-    console.log('Loading akta data...');
     this.isLoading = true;
     
-    // Cari data berdasarkan ID
     const foundRiwayat = this.allRiwayatList.find(item => {
-      console.log('Comparing:', item.id, '===', this.eartagId);
       return item.id === this.eartagId;
     });
-    
-    console.log('Found riwayat:', foundRiwayat);
     
     if (foundRiwayat && foundRiwayat.hasLahir) {
       this.riwayat = foundRiwayat;
       this.nomorAkta = this.generateNomorAkta();
-      console.log('Akta Lahir loaded:', this.riwayat);
-      console.log('Nomor Akta:', this.nomorAkta);
       this.isLoading = false;
     } else {
-      console.warn('Data lahir tidak ditemukan atau belum ada');
       this.riwayat = null;
       this.isLoading = false;
     }
   }
 
-  /**
-   * Generate nomor akta
-   * Format: AKT-[KABUPATEN]-[TAHUN]-[URUTAN]
-   * Contoh: AKT-BD-2024-001
-   */
   generateNomorAkta(): string {
     if (!this.riwayat) {
-      console.warn('Riwayat belum ada');
       return 'AKT-XXXX-0000-000';
     }
 
@@ -141,20 +125,13 @@ export class AktaLahirPage implements OnInit {
     const tahun = new Date().getFullYear();
     const urutan = String(Math.floor(Math.random() * 1000)).padStart(3, '0');
     
-    const nomorGenerated = `AKT-${kabupatenCode}-${tahun}-${urutan}`;
-    console.log('Generated nomor akta:', nomorGenerated);
-    return nomorGenerated;
+    return `AKT-${kabupatenCode}-${tahun}-${urutan}`;
   }
 
-  /**
-   * Hitung umur induk saat melahirkan
-   */
   hitungUmurInduk(): number {
     if (!this.riwayat) {
       return 0;
     }
-
-    // Jika ada umurInduk di data, gunakan itu
     return this.riwayat.umurInduk || 0;
   }
 
@@ -162,27 +139,62 @@ export class AktaLahirPage implements OnInit {
    * Cetak akta
    */
   printAkta() {
-    console.log('Print akta...');
     window.print();
   }
 
   /**
-   * Download PDF (menggunakan print to PDF browser)
+   * Download PDF menggunakan html2pdf.js
    */
-  downloadPDF() {
-    console.log('Download PDF...');
-    
-    // Gunakan window.print() untuk print to PDF
-    const printWindow = window.open('', '', 'width=800,height=600');
-    if (printWindow) {
-      // Get content dari template
-      const content = document.querySelector('.akta-container');
-      if (content) {
-        printWindow.document.write(content.innerHTML);
-        printWindow.document.close();
-        printWindow.focus();
-        printWindow.print();
-      }
+  async downloadPDF() {
+    const element = document.getElementById('akta-content');
+    if (!element) {
+      const toast = await this.toastCtrl.create({
+        message: 'Konten akta tidak ditemukan. Pilih akta terlebih dahulu.',
+        duration: 2000,
+        color: 'warning',
+        position: 'bottom'
+      });
+      await toast.present();
+      return;
+    }
+
+    const toast = await this.toastCtrl.create({
+      message: 'Menyiapkan PDF...',
+      duration: 1500,
+      color: 'primary',
+      position: 'bottom'
+    });
+    await toast.present();
+
+    const filename = `Akta_Lahir_${this.riwayat?.eartagBetina || 'Ternak'}_${this.nomorAkta}.pdf`;
+
+    const opt: any = {
+      margin:       [10, 10, 10, 10],
+      filename:     filename,
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2, useCORS: true, logging: false },
+      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    try {
+      await html2pdf().set(opt).from(element).save();
+
+      const successToast = await this.toastCtrl.create({
+        message: 'PDF berhasil diunduh!',
+        duration: 2000,
+        color: 'success',
+        position: 'bottom'
+      });
+      await successToast.present();
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      const errorToast = await this.toastCtrl.create({
+        message: 'Gagal membuat PDF. Silakan coba lagi.',
+        duration: 2000,
+        color: 'danger',
+        position: 'bottom'
+      });
+      await errorToast.present();
     }
   }
 
@@ -312,7 +324,6 @@ export class AktaLahirPage implements OnInit {
   filterDaftarAkta() {
     let filtered = [...this.daftarAkta];
 
-    // Filter by search term
     if (this.searchTerm.trim()) {
       const term = this.searchTerm.toLowerCase();
       filtered = filtered.filter(akta =>
@@ -322,7 +333,6 @@ export class AktaLahirPage implements OnInit {
       );
     }
 
-    // Filter by tanggal
     if (this.filterTanggal) {
       filtered = filtered.filter(akta => {
         const aktaTanggal = new Date(akta.tanggalLahir).toISOString().split('T')[0];
@@ -349,9 +359,11 @@ export class AktaLahirPage implements OnInit {
   downloadAktaFromList(akta: any) {
     this.riwayat = akta;
     this.nomorAkta = akta.nomorAkta;
+    this.activeTab = 'detail';
+    // Wait for view to render before generating PDF
     setTimeout(() => {
       this.downloadPDF();
-    }, 100);
+    }, 500);
   }
 
   /**
@@ -360,15 +372,16 @@ export class AktaLahirPage implements OnInit {
   printAktaFromList(akta: any) {
     this.riwayat = akta;
     this.nomorAkta = akta.nomorAkta;
+    this.activeTab = 'detail';
     setTimeout(() => {
       this.printAkta();
-    }, 100);
+    }, 500);
   }
 
   /**
    * Tab change handler
    */
   onTabChange() {
-    console.log('Active tab:', this.activeTab);
+    // no-op
   }
 }
